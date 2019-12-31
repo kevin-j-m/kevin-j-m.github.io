@@ -1,0 +1,228 @@
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+ <channel>
+   <title>ruby on Kevin Murphy</title>
+   <link>https://www.kevin-j-m.github.io/tags/ruby/</link>
+   <description>Recent content in ruby on Kevin Murphy</description>
+   <generator>Hugo -- gohugo.io</generator>
+   <copyright>Copyright &amp;copy; 2020 - Kevin Murphy</copyright>
+   <lastBuildDate>Mon, 30 Dec 2019 20:57:49 -0500</lastBuildDate>
+   
+       <atom:link href="https://www.kevin-j-m.github.io/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+   
+   
+     <item>
+       <title>Diffin&#39; Dots</title>
+       <link>https://www.kevin-j-m.github.io/posts/diffin-dots/</link>
+       <pubDate>Mon, 30 Dec 2019 21:04:53 -0500</pubDate>
+       
+       <guid>https://www.kevin-j-m.github.io/posts/diffin-dots/</guid>
+       <description>&lt;h2 id=&#34;a-sweet-surprise&#34;&gt;A Sweet Surprise&lt;/h2&gt;
+&lt;p&gt;Recently, a project needed to re-order some commits on a git branch. We
+initially performed this interactive rebase on a separate branch, so we didn&#39;t
+make a mistake on the original branch. After performing that rebase, we then
+used Github&#39;s &lt;a href=&#34;https://help.github.com/en/github/committing-changes-to-your-project/comparing-commits-across-time#comparing-branches&#34;&gt;compare view&lt;/a&gt;, expecting to see no files changed.&lt;/p&gt;
+&lt;p&gt;Instead, what we saw was every change that was introduced in all of the commits
+that were reordered on the new branch. This very much surprised us. We made no
+functional changes and were expecting to use this comparison as proof that we
+didn&#39;t accidentally drop a commit or do something terrible on accident.&lt;/p&gt;
+&lt;p&gt;We then looked to compare the branches locally. When we did that, we saw no
+diff.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;⇒ diff-test|reorder git diff master
+
+&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;END&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Did we find a bug in Github? Did our re-ordering work? At this point, we had no
+idea.&lt;/p&gt;
+&lt;h2 id=&#34;read-the-recipe&#34;&gt;Read The Recipe&lt;/h2&gt;
+&lt;p&gt;We dug into the documentation for &lt;code&gt;diff&lt;/code&gt;, a tool I use frequently,
+but don&#39;t spend much time considering how it works.&lt;/p&gt;
+&lt;p&gt;Let&#39;s read some of the help on how to use the diff tool:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;⇒ git diff --help
+GIT-DIFF&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;                                      Git Manual                                      GIT-DIFF&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+...
+       git diff &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;options&amp;gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &amp;lt;commit&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;--&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;path&amp;gt;...&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+           This form is to view the changes you have in your working tree relative to the named &amp;lt;commit&amp;gt;.
+           You can use HEAD to compare it with the latest commit, or a branch name to compare with the tip
+           of a different branch.
+
+       git diff &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;options&amp;gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &amp;lt;commit&amp;gt; &amp;lt;commit&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;--&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;path&amp;gt;...&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+           This is to view the changes between two arbitrary &amp;lt;commit&amp;gt;.
+
+       git diff &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;options&amp;gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &amp;lt;commit&amp;gt;..&amp;lt;commit&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;--&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;path&amp;gt;...&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+           This is synonymous to the previous form. If &amp;lt;commit&amp;gt; on one side is omitted, it will have the
+           same effect as using HEAD instead.
+
+       git diff &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;options&amp;gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &amp;lt;commit&amp;gt;...&amp;lt;commit&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;--&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;path&amp;gt;...&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+           This form is to view the changes on the branch containing and up to the second &amp;lt;commit&amp;gt;, starting
+           at a common ancestor of both &amp;lt;commit&amp;gt;.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Almost exclusively I&#39;ve used diff in the form of &lt;code&gt;git diff other-ref&lt;/code&gt;. And
+with that, I would see what, if any, file changes occurred between those two
+branches or commits. This is the two-dot comparison. However, Github uses the
+&lt;a href=&#34;https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-comparing-branches-in-pull-requests#three-dot-and-two-dot-git-diff-comparisons&#34;&gt;three-dot comparison&lt;/a&gt;
+by default.&lt;/p&gt;
+&lt;p&gt;In this scenario, the common ancestor is the latest commit on the reordering
+branch that wasn&#39;t reordered. After the rebase, all of those reordered commits
+have different SHAs, so are seen as different commits. As such, using the
+three-dot option, git considers all of those SHAs as different or new, so all of
+them show as changes, even though there are no differences in the file contents
+themselves.&lt;/p&gt;
+&lt;h2 id=&#34;homemade-flavor&#34;&gt;Homemade Flavor&lt;/h2&gt;
+&lt;p&gt;Let&#39;s look at demonstrating this behavior entirely locally.&lt;/p&gt;
+&lt;h3 id=&#34;setup&#34;&gt;Setup&lt;/h3&gt;
+&lt;p&gt;First, let&#39;s create a new repository:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;⇒ mkdir diff-test
+⇒ cd diff-test
+diff-test|⇒ git init .
+Initialized empty Git repository
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We&#39;ll start by adding a few new files, and making the first commit:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|master ⇒ echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Creamy Vanilla Ice Cream done Dippin’ Dots style&amp;#34;&lt;/span&gt; &amp;gt; vanilla.txt
+diff-test|master⚡ ⇒ echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Creamy Milk Chocolate Ice Cream.  Someone pass the spoon&amp;#34;&lt;/span&gt; &amp;gt; chocolate.txt
+diff-test|master⚡ ⇒ git add --all
+diff-test|master⚡ ⇒ git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;IFO: initial flavor offering&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We will then add two more commits with some additional changes:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|master ⇒ echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Dippin&amp;#39; Dots Strawberry Ice Cream is as sweet as a summer&amp;#39;s day and so berry, berry good&amp;#34;&lt;/span&gt; &amp;gt; strawberry.txt
+diff-test|master⚡ ⇒ git add --all
+diff-test|master⚡ ⇒ git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Introducing strawberry&amp;#34;&lt;/span&gt;
+
+diff-test|master ⇒ echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Orange Flavored Ice&amp;#34;&lt;/span&gt; &amp;gt; orange.txt
+diff-test|master⚡ ⇒ git add --all
+diff-test|master⚡ ⇒ git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Introducing orange&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;introduce-a-change&#34;&gt;Introduce a change&lt;/h3&gt;
+&lt;p&gt;At this point, we realize that it&#39;s important to us that orange be introduced in
+our history before strawberry.&lt;/p&gt;
+&lt;p&gt;Let&#39;s create a new branch to address this, and look at the current order of the
+commits:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|master ⇒ git checkout -b reorder
+Switched to a new branch &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;reorder&amp;#39;&lt;/span&gt;
+diff-test|reorder ⇒ git log --oneline
+
+e378256 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;HEAD -&amp;gt; reorder, master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Introducing orange
+f455e5b Introducing strawberry
+e42566b IFO: initial flavor offering
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We will then perform an interactive rebase, going back two commits in history.
+During that rebase, we will switch the order of orange and strawberry, so orange
+is first, as we need it:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|reorder ⇒ git rebase -i HEAD~2
+
+pick e378256 Introducing orange
+pick f455e5b Introducing strawberry
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;After performing the rebase, here is the order of our commits:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|reorder ⇒ git log --oneline
+
+5fa36f4 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;HEAD -&amp;gt; reorder&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Introducing strawberry
+7a1d500 Introducing orange
+e42566b IFO: initial flavor offering
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Congratulations! We&#39;ve done what we set out to do, performing a rebase to
+reorder our commits. Now let&#39;s compare that to our original branch to make sure
+everything looks to be as we&#39;d expect.&lt;/p&gt;
+&lt;h3 id=&#34;differences&#34;&gt;&lt;code&gt;diff&lt;/code&gt;erences&lt;/h3&gt;
+&lt;p&gt;We start by comparing this branch to the original branch:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|reorder ⇒ git diff master
+
+&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;END&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We see that there&#39;s no difference, which we&#39;re expecting and hoping for. No
+files changed, no functionality is different; only the history has changed.&lt;/p&gt;
+&lt;p&gt;If we diff using the two-dot version, we see the same result:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|reorder ⇒ git diff master..reorder
+
+&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;END&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;That sounds right, because according to the documentation, the two-dot usage is
+the same as not providing dots:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt; git diff &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;options&amp;gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &amp;lt;commit&amp;gt;..&amp;lt;commit&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;--&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;path&amp;gt;...&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+          This is synonymous to the previous form. If &amp;lt;commit&amp;gt; on one side is omitted, it will have the
+          same effect as using HEAD instead.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Lastly, let&#39;s perform a three-dot diff:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|reorder ⇒ git diff master...reorder
+
+diff --git a/orange.txt b/orange.txt
+new file mode &lt;span style=&#34;color:#ae81ff&#34;&gt;100644&lt;/span&gt;
+index 0000000..09d8732
+--- /dev/null
++++ b/orange.txt
+@@ -0,0 +1 @@
++Orange Flavored Ice
+diff --git a/strawberry.txt b/strawberry.txt
+new file mode &lt;span style=&#34;color:#ae81ff&#34;&gt;100644&lt;/span&gt;
+index 0000000..6ab358d
+--- /dev/null
++++ b/strawberry.txt
+@@ -0,0 +1 @@
++Dippin&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; Dots Strawberry Ice Cream is as sweet as a summer&amp;#39;&lt;/span&gt;s day and so berry, berry good
+&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;END&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here is where we see that it looks like each of those files have been changed as
+a result of this rebase. However, the files themselves &lt;strong&gt;haven&#39;t&lt;/strong&gt; changed. What
+has is the commits themselves. Their common ancestor is the initial commit of
+the repository, so everything that happened since then shows as a difference.&lt;/p&gt;
+&lt;h2 id=&#34;the-cherry-on-top&#34;&gt;The Cherry On Top&lt;/h2&gt;
+&lt;p&gt;Locally, unless you tell git otherwise, &lt;code&gt;diff&lt;/code&gt; will show you the file change
+differences between your comparisons. Github by default will show you the
+changes from the common ancestor between what&#39;s changed.&lt;/p&gt;
+&lt;p&gt;Most of the time, this different behavior won&#39;t or shouldn&#39;t matter in the
+course of your workflow. However, if you&#39;re doing something a bit more
+adventurous, or perhaps ill-advised, knowing how git will, by default, compare
+changes locally and how Github, by default, will surface those changes can be
+paramount.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/diffin-dots&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+     </item>
+   
+     <item>
+       <title>Don’t Hang Me Out To DRY</title>
+       <link>https://www.kevin-j-m.github.io/posts/rubyconf-2019/</link>
+       <pubDate>Mon, 30 Dec 2019 20:57:49 -0500</pubDate>
+       
+       <guid>https://www.kevin-j-m.github.io/posts/rubyconf-2019/</guid>
+       <description>&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
+&lt;p&gt;Close your eyes and imagine the perfect codebase to work on. I bet you’ll say it has complete test coverage. It’s fully-optimized, both in terms of performance and architectural design. And, of course, it contains only DRY code. Surely we can all agree that this is an aspirational situation. But&amp;hellip;do we &lt;strong&gt;really&lt;/strong&gt; want that?&lt;/p&gt;
+&lt;p&gt;Don’t get me wrong; these qualities are all beneficial. However, if we also think we should value everything in moderation, when should we push back on these ideals? What problems can they introduce? Let’s talk about the exceptions to some of the “rules” we all hold dear.&lt;/p&gt;
+&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=b960MApGA7A&#34;&gt;Video&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://speakerdeck.com/kevinmurphy/dont-hang-me-out-to-dry&#34;&gt;Slides&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/ivory-tower&#34;&gt;Sample App&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/ivory-tower#code-examples&#34;&gt;Code Examples&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;common-guiding-principles&#34;&gt;Common Guiding Principles&lt;/h2&gt;
+&lt;p&gt;Full test coverage, DRY code, and optimized code are all incredibly valuable, and we, as craftspeople, are better off for having them overall. But when should we push back on these ideals? What problems can they introduce?&lt;/p&gt;
+&lt;h3 id=&#34;code-coverage&#34;&gt;Code Coverage&lt;/h3&gt;
+&lt;p&gt;Code coverage provides a valuable signal about the extent to which some code is tested, but it is not sufficient for a quality metric. 100% test coverage does not mean all code paths are fully exercised, just that all lines are hit at least once in the execution of the test suite. An application with 100% test coverage can still have bugs and can still have sections of code that don&#39;t have all scenarios tested. Additionally, testing every line of code has a cost that is felt initially in the time to conceive of the tests and the test strategy. However, the larger costs are felt over time if it leads to a long test suite run time, flakey or inconsistent tests, and a large suite that needs to be continually maintained as both the technologies and requirements of the application change.&lt;/p&gt;
+&lt;h3 id=&#34;dry-code&#34;&gt;DRY Code&lt;/h3&gt;
+&lt;p&gt;DRY code helps to ensure you don&#39;t have to make a change in multiple places when the way the system should work changes; instead, everything is in the isolated abstraction. However, not repeating yourself can lead to premature optimizations or abstractions that end up saddling the codebase with a difficult-to-change architecture when it’s discovered that use cases aren’t as similar as initially thought. Certainly reach for design patterns and well-known architectural principles when the opportunity presents itself. But, consider how one might back out of such an introduction should it turn out that the choice was premature - or hold off on introducing it entirely until it’s more clear or there’s sufficient churn in that area of the codebase to warrant the attention.&lt;/p&gt;
+&lt;h3 id=&#34;performant-code&#34;&gt;Performant Code&lt;/h3&gt;
+&lt;p&gt;Performant code is objectively better than non-performant code, right? As always, the answer is, &amp;ldquo;maybe.&amp;rdquo; Code that is preemptively performance-tuned may or may not be necessary or accurate. Without the data and benchmarking, under load, to illustrate the performance impact, any improvements made in service of performance are done so based on conjecture. This could lead to unnecessary time in developing the believed performance benefit or may even introduce subtle bugs.&lt;/p&gt;
+</description>
+     </item>
+   
+     <item>
+       <title>I Know I Can, But Should I?</title>
+       <link>https://www.kevin-j-m.github.io/posts/railsconf-2019/</link>
+       <pubDate>Mon, 30 Dec 2019 17:40:50 -0500</pubDate>
+       
+       <guid>https://www.kevin-j-m.github.io/posts/railsconf-2019/</guid>
+       <description>&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
+&lt;p&gt;You &lt;strong&gt;can&lt;/strong&gt; use a hammer to drive a screw into wood, but I’d recommend a screwdriver. Why? And when is a hammer the better option? This talk will propose a framework to use when comparing alternative technical choices. I won’t decide for you, but will leave you with a structure to apply in your decision-making process.&lt;/p&gt;
+&lt;p&gt;The ruby toolbox is vast. While Rails provides a default experience, it leaves plenty of room for alternatives. In learning how to do something, you may uncover different ways to accomplish the same goal. Determine which tool fits best in your situation with these lessons.&lt;/p&gt;
+&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=2NiePLJVjNI&amp;amp;feature=youtu.be&#34;&gt;Video&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://speakerdeck.com/kevinmurphy/i-know-i-can-but-should-i-evaluating-alternatives&#34;&gt;Slides&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/evaluating-alternatives&#34;&gt;Sample App&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/evaluating-alternatives#code-examples&#34;&gt;Code Examples&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;evaluating-gnarly-alternatives&#34;&gt;Evaluating Gnarly Alternatives&lt;/h2&gt;
+&lt;p&gt;At &lt;a href=&#34;https://www.thegnar.co/&#34;&gt;The Gnar Company&lt;/a&gt;, learning about our client’s needs and providing solutions is one of the most satisfying parts of our work. Rails is a great and well-worn tool in our toolbox, but we work with you to understand your needs before ascribing a particular technology or framework. Our team works hard to make it easy to work with us.&lt;/p&gt;
+&lt;h3 id=&#34;impact&#34;&gt;Impact&lt;/h3&gt;
+&lt;p&gt;Building a customer portal with &lt;a href=&#34;https://www.thegnar.co/work/dispatch.html&#34;&gt;Dispatch&lt;/a&gt; required a keen eye on the &lt;strong&gt;impact&lt;/strong&gt; of our decisions. Working with the team we’d be handing the project off to, we ensured that any conventions we introduced met their expectations. Additionally, we needed to maintain a focus on non-functional requirements to provide fast response times and real-time communication with their customers.&lt;/p&gt;
+&lt;h3 id=&#34;cost&#34;&gt;Cost&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Cost&lt;/strong&gt; can be more than dollars and cents. Evaluating when to develop functionality yourself or utilize existing solutions is critical. When we worked to bring &lt;a href=&#34;https://www.thegnar.co/work/valor-performance.html&#34;&gt;Valor Performance&lt;/a&gt;’s product to market, we focused on delivering a custom experience for coaching sales professionals while relying on third-party services to complement the product with scheduling, communication, and authorization functionality. As our involvement on the project wound down, we helped interview and onboard their internal team. Investing in the long-term success of our clients, even beyond our involvement, is built into our process.&lt;/p&gt;
+&lt;h3 id=&#34;maintenance&#34;&gt;Maintenance&lt;/h3&gt;
+&lt;p&gt;We don’t limit our focus to the scope of our initial engagement; we make sure to account for any &lt;strong&gt;maintenance&lt;/strong&gt; activities that’ll need consideration throughout the life of your product. After delivering a foundational product for &lt;a href=&#34;https://www.thegnar.co/work/qeepsake.html&#34;&gt;Qeepsake&lt;/a&gt;, we continued to provide assistance and iterate on product features and application performance as adoption took off. While initially developing the product, we made sure to leverage best-in-breed solutions in billing and messaging to quickly provide core functionality that will continue to scale as their business grows.&lt;/p&gt;
+&lt;h3 id=&#34;consistency&#34;&gt;Consistency&lt;/h3&gt;
+&lt;p&gt;While working with a large existing development team at &lt;a href=&#34;https://www.thegnar.co/work/level-up.html&#34;&gt;LevelUp&lt;/a&gt;, it was critical to consider &lt;strong&gt;consistency&lt;/strong&gt;. We ensured we were delivering code that adhered to the team’s existing standards to provide a seamless hand-off that they were comfortable supporting. While we introduced our approach and experience to solving similar problems in different contexts, it was all done in a way that aligned with the larger team’s process.&lt;/p&gt;
+</description>
+     </item>
+   
+ </channel>
+</rss>

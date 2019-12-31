@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
  <channel>
    <title>rubyconf on Kevin Murphy</title>
-   <link>https://www.kevin-j-m.github.io/tags/rubyconf/</link>
+   <link>http://www.kevin-j-m.github.io/tags/rubyconf/</link>
    <description>Recent content in rubyconf on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2020 - Kevin Murphy</copyright>
    <lastBuildDate>Mon, 30 Dec 2019 20:57:49 -0500</lastBuildDate>
    
-       <atom:link href="https://www.kevin-j-m.github.io/tags/rubyconf/index.xml" rel="self" type="application/rss+xml" />
+       <atom:link href="http://www.kevin-j-m.github.io/tags/rubyconf/index.xml" rel="self" type="application/rss+xml" />
    
    
      <item>
        <title>Diffin&#39; Dots</title>
-       <link>https://www.kevin-j-m.github.io/posts/diffin-dots/</link>
+       <link>http://www.kevin-j-m.github.io/posts/diffin-dots/</link>
        <pubDate>Mon, 30 Dec 2019 21:04:53 -0500</pubDate>
        
-       <guid>https://www.kevin-j-m.github.io/posts/diffin-dots/</guid>
+       <guid>http://www.kevin-j-m.github.io/posts/diffin-dots/</guid>
        <description>&lt;h2 id=&#34;a-sweet-surprise&#34;&gt;A Sweet Surprise&lt;/h2&gt;
 &lt;p&gt;Recently, a project needed to re-order some commits on a git branch. We
 initially performed this interactive rebase on a separate branch, so we didn&#39;t
@@ -170,10 +170,10 @@ paramount.&lt;/p&gt;
    
      <item>
        <title>Don’t Hang Me Out To DRY</title>
-       <link>https://www.kevin-j-m.github.io/posts/rubyconf-2019/</link>
+       <link>http://www.kevin-j-m.github.io/posts/rubyconf-2019/</link>
        <pubDate>Mon, 30 Dec 2019 20:57:49 -0500</pubDate>
        
-       <guid>https://www.kevin-j-m.github.io/posts/rubyconf-2019/</guid>
+       <guid>http://www.kevin-j-m.github.io/posts/rubyconf-2019/</guid>
        <description>&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
 &lt;p&gt;Close your eyes and imagine the perfect codebase to work on. I bet you’ll say it has complete test coverage. It’s fully-optimized, both in terms of performance and architectural design. And, of course, it contains only DRY code. Surely we can all agree that this is an aspirational situation. But&amp;hellip;do we &lt;strong&gt;really&lt;/strong&gt; want that?&lt;/p&gt;
 &lt;p&gt;Don’t get me wrong; these qualities are all beneficial. However, if we also think we should value everything in moderation, when should we push back on these ideals? What problems can they introduce? Let’s talk about the exceptions to some of the “rules” we all hold dear.&lt;/p&gt;
@@ -197,10 +197,10 @@ paramount.&lt;/p&gt;
    
      <item>
        <title>I Know I Can, But Should I?</title>
-       <link>https://www.kevin-j-m.github.io/posts/railsconf-2019/</link>
+       <link>http://www.kevin-j-m.github.io/posts/railsconf-2019/</link>
        <pubDate>Mon, 30 Dec 2019 17:40:50 -0500</pubDate>
        
-       <guid>https://www.kevin-j-m.github.io/posts/railsconf-2019/</guid>
+       <guid>http://www.kevin-j-m.github.io/posts/railsconf-2019/</guid>
        <description>&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
 &lt;p&gt;You &lt;strong&gt;can&lt;/strong&gt; use a hammer to drive a screw into wood, but I’d recommend a screwdriver. Why? And when is a hammer the better option? This talk will propose a framework to use when comparing alternative technical choices. I won’t decide for you, but will leave you with a structure to apply in your decision-making process.&lt;/p&gt;
 &lt;p&gt;The ruby toolbox is vast. While Rails provides a default experience, it leaves plenty of room for alternatives. In learning how to do something, you may uncover different ways to accomplish the same goal. Determine which tool fits best in your situation with these lessons.&lt;/p&gt;

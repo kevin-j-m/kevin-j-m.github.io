@@ -17,10 +17,10 @@
        <pubDate>Tue, 31 Dec 2019 08:56:04 -0500</pubDate>
        
        <guid>https://kevin-j-m.github.io/posts/coding-for-fun-not-profit/</guid>
-       <description>&lt;p&gt;I originally wanted to call this post &amp;ldquo;Coding for Fun &lt;del&gt;And Profit&lt;/del&gt;&amp;rdquo;, but hugo
-wouldn&#39;t recognize markdown in the title of a new post, so I gave up immediately
-and renamed it, which is a perfect encapsulation of what I&#39;m looking to convey
-here.&lt;/p&gt;
+       <description>&lt;p&gt;I originally wanted to call this post &amp;ldquo;Coding for Fun &lt;del&gt;And Profit&lt;/del&gt;&amp;rdquo; with And
+Profit in strikethrough, but hugo wouldn&#39;t recognize markdown in the title of a
+new post, so I gave up immediately and renamed it, which is a perfect
+encapsulation of what I&#39;m looking to convey here.&lt;/p&gt;
 &lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
 &lt;p&gt;I&#39;ve been paid to write code for almost 15 years now. I think I&#39;m decent at it,
 and I enjoy doing it as a profession, but it&#39;s not something I do much of in my

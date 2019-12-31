@@ -6,10 +6,144 @@
    <description>Recent content in Posts on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2020 - Kevin Murphy</copyright>
-   <lastBuildDate>Mon, 30 Dec 2019 21:04:53 -0500</lastBuildDate>
+   <lastBuildDate>Tue, 31 Dec 2019 08:56:04 -0500</lastBuildDate>
    
        <atom:link href="https://kevin-j-m.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Coding for Fun (Not Profit)</title>
+       <link>https://kevin-j-m.github.io/posts/coding-for-fun-not-profit/</link>
+       <pubDate>Tue, 31 Dec 2019 08:56:04 -0500</pubDate>
+       
+       <guid>https://kevin-j-m.github.io/posts/coding-for-fun-not-profit/</guid>
+       <description>&lt;p&gt;I originally wanted to call this post &amp;ldquo;Coding for Fun &lt;del&gt;And Profit&lt;/del&gt;&amp;rdquo;, but hugo
+wouldn&#39;t recognize markdown in the title of a new post, so I gave up immediately
+and renamed it, which is a perfect encapsulation of what I&#39;m looking to convey
+here.&lt;/p&gt;
+&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
+&lt;p&gt;I&#39;ve been paid to write code for almost 15 years now. I think I&#39;m decent at it,
+and I enjoy doing it as a profession, but it&#39;s not something I do much of in my
+free time. I&#39;m not against people having side projects, spending their free
+time how they&#39;d like and doing whatever energizes them, but I write enough code
+during the day at work to satisfy my interests there. I&#39;ll never get a job
+somewhere that requires an extensive personal portfolio to show as proof of
+&amp;ldquo;passion&amp;rdquo;. I&#39;m comfortable with that, and privileged enough to be able to say
+that.&lt;/p&gt;
+&lt;p&gt;Before this, I&#39;ve also never had a personal website - ever. Sure, I maintain
+various profiles on different social networks, but I&#39;ve never had a place of my
+own on the internet. I&#39;m also probably the only Rails developer who&#39;s never
+typed &lt;code&gt;git push heroku&lt;/code&gt; in a terminal, but that&#39;s a different story.&lt;/p&gt;
+&lt;h2 id=&#34;coding-for-work&#34;&gt;Coding For Work&lt;/h2&gt;
+&lt;p&gt;I&#39;m a pretty methodical person in general, and I take that with me to work. It
+comes in handy in this business, but as with everything, it has a cost. It takes
+time and effort, but my belief is that the value for my employer or client
+outweighs that cost. Some of these items include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Requirements vetting&lt;/li&gt;
+&lt;li&gt;Alternatives analysis&lt;/li&gt;
+&lt;li&gt;Automated testing, whether through TDD or not&lt;/li&gt;
+&lt;li&gt;Code review&lt;/li&gt;
+&lt;li&gt;Maintenance and upkeep of dependencies&lt;/li&gt;
+&lt;li&gt;Clean commit history throughout the project&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Because the results of my actions affect the overall product, my team members,
+and all of my business partners, I&#39;m careful and deliberate in the work that I
+do.&lt;/p&gt;
+&lt;h2 id=&#34;coding-for-me&#34;&gt;Coding For Me&lt;/h2&gt;
+&lt;p&gt;I decided to stand this site up because I had some content I wanted to maintain,
+and I had the blessing of my employer to do so. I needed something quick and
+fast that I wouldn&#39;t need to put a lot of effort into maintaining.&lt;/p&gt;
+&lt;p&gt;I also wanted to try out something new, so knowing I only needed a static site
+generator, rather than reaching for my comfortable &lt;a href=&#34;https://middlemanapp.com/&#34;&gt;Middleman&lt;/a&gt;
+tool, I instead gave &lt;a href=&#34;https://gohugo.io/&#34;&gt;hugo&lt;/a&gt; a try. After all, it is:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The world&#39;s fastest framework for building websites&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In doing so, I of course ran into some hiccups and problems, but what I&#39;ll talk
+about here is the process, and how this was different than how I regularly work.&lt;/p&gt;
+&lt;h3 id=&#34;what-goes&#34;&gt;What Goes&lt;/h3&gt;
+&lt;h4 id=&#34;alternatives--upfront-analysis&#34;&gt;Alternatives &amp;amp; Upfront Analysis&lt;/h4&gt;
+&lt;p&gt;I went with hugo on name recognition only. I didn&#39;t even identify the core
+feature set I needed or didn&#39;t need; I just dove right in. Similarly, I could have
+arduously reviewed the vast number of &lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;themes&lt;/a&gt; in
+their gallery to find the perfect one, or customized my own. Instead, I chose
+three that seemed &amp;ldquo;fine&amp;rdquo; above the fold, and picked the one that I liked best
+after a one minute review.&lt;/p&gt;
+&lt;h4 id=&#34;focus&#34;&gt;Focus&lt;/h4&gt;
+&lt;p&gt;When I work from home, I do so from my office, with the door closed. I control
+the environment and am particular about what noises or stimuli are present.
+However, this is just for me, so instead I sat down on the couch next to my wife
+while she was watching something on TV. It&#39;s ok if it takes a bit longer, or I&#39;m
+a bit distracted, as long as I&#39;m making that trade for me and me alone.&lt;/p&gt;
+&lt;h3 id=&#34;what-stays&#34;&gt;What Stays&lt;/h3&gt;
+&lt;h4 id=&#34;verification&#34;&gt;Verification&lt;/h4&gt;
+&lt;p&gt;Testing brings comfort to me and I dislike working without tests. It helps guide
+my initial implementation, gives safety for future refactors, and provides
+confidence in delivering functionality. And most of the work that I like doing
+the most, and as such gravitate towards, rarely has a direct user-facing
+component.&lt;/p&gt;
+&lt;p&gt;However, that&#39;s &lt;strong&gt;all&lt;/strong&gt; that this site is. I don&#39;t want to spend time futzing
+with configurations that I don&#39;t need to, or meddling with the theme to eek out
+performance improvements, or evaluating updating, changing, or removing
+dependencies. But I still need to make sure it works. I spent a ton more time in
+the browser than I typically do developing for work, but it&#39;s the same process:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Identify a thin slice of functionality&lt;/li&gt;
+&lt;li&gt;Focus on implementing it&lt;/li&gt;
+&lt;li&gt;Document other observations for future work&lt;/li&gt;
+&lt;li&gt;Iterate to the next thin slice&lt;/li&gt;
+&lt;li&gt;Deliver&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The mechanism by which I worked that process changed (refreshing the browser vs.
+running a test), but the process itself stayed the same.&lt;/p&gt;
+&lt;h4 id=&#34;documentation&#34;&gt;Documentation&lt;/h4&gt;
+&lt;p&gt;Sure, my commit messages are definitely not to the degree that I would expect,
+hope, or want them to be. However, that doesn&#39;t mean that they&#39;re worthless.
+Particularly on these projects where I&#39;m moving fast, their value is more as
+&amp;ldquo;save points&amp;rdquo; than documentation (and I&#39;m not cleaning them up prior to moving
+them into a mainline branch), but they can still provide valuable information on
+&lt;em&gt;why&lt;/em&gt; a change was made.&lt;/p&gt;
+&lt;p&gt;Additionally, particularly because this is a project that I&#39;m likely to be
+revisiting infrequently, I made sure to take the time to add a README that
+includes quick examples of all the things I&#39;m going to want to do. For this
+project, that includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Creating a new post.&lt;/li&gt;
+&lt;li&gt;Running the server locally.&lt;/li&gt;
+&lt;li&gt;Deploying the changes (which there&#39;s a script for).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Because&lt;/em&gt; it&#39;s something I won&#39;t touch day-to-day, it&#39;s even &lt;strong&gt;more&lt;/strong&gt; important
+to take the few minutes to document those quick commands to save myself the time
+of needing to search for it every time that I want to edit this.&lt;/p&gt;
+&lt;h3 id=&#34;what-emerges&#34;&gt;What Emerges&lt;/h3&gt;
+&lt;h4 id=&#34;quick-assessment-of-good-enough&#34;&gt;Quick Assessment of &amp;ldquo;Good Enough&amp;rdquo;&lt;/h4&gt;
+&lt;p&gt;There&#39;s always an ideal version of what you&#39;re looking to accomplish. That
+likely manifests itself both in the code itself, as well as the user-facing
+product. And we all want to hit that ideal; however, it&#39;s not always feasible.
+And while I work diligently to reach that at work, I also do my best to be
+pragmatic about at least explaining the implications of getting to that ideal,
+presenting that to the decision-makers, and working with them to come to an
+agreement on how to proceed.&lt;/p&gt;
+&lt;p&gt;However, in this example, my goal was speed and speed alone. For example, I had
+a post to add which had some images that I wanted formatted just so. I couldn&#39;t
+figure out exactly how to position or size them to my liking. I think from
+searching for about 30 minutes I could have gotten there by having the images as
+&lt;a href=&#34;https://gohugo.io/content-management/page-resources/&#34;&gt;page resources&lt;/a&gt;, then using
+hugo&#39;s &lt;a href=&#34;https://gohugo.io/content-management/image-processing/&#34;&gt;image processing&lt;/a&gt;,
+and having those available in a &lt;a href=&#34;https://gohugo.io/content-management/shortcodes/&#34;&gt;shortcode&lt;/a&gt;
+that I reference in my post.&lt;/p&gt;
+&lt;p&gt;I could have done that, but instead - I deleted the images. They weren&#39;t
+tremendously important to the post. They certainly made things look nicer, but
+they didn&#39;t provide any explanatory value. So I removed them, and freed myself
+of the problem. And the page doesn&#39;t look exactly how I wanted it to, but it&#39;s
+done. And if I feel the need to scratch that itch in the future, I know where to
+start.&lt;/p&gt;
+&lt;p&gt;Remember the context under which you&#39;re developing, who the decision-makers are,
+and what choices you should make based on that. But work to know what you
+&lt;strong&gt;aren&#39;t&lt;/strong&gt; willing to give up in your process, regardless of the context.&lt;/p&gt;
+</description>
+     </item>
    
      <item>
        <title>Diffin&#39; Dots</title>

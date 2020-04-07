@@ -6,10 +6,30 @@
    <description>Recent content on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2020 - Kevin Murphy</copyright>
-   <lastBuildDate>Tue, 31 Dec 2019 08:56:04 -0500</lastBuildDate>
+   <lastBuildDate>Mon, 06 Apr 2020 20:05:03 -0400</lastBuildDate>
    
        <atom:link href="https://kevin-j-m.github.io/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Fake It While You Make It</title>
+       <link>https://kevin-j-m.github.io/posts/railsconf-2020/</link>
+       <pubDate>Mon, 06 Apr 2020 20:05:03 -0400</pubDate>
+       
+       <guid>https://kevin-j-m.github.io/posts/railsconf-2020/</guid>
+       <description>&lt;p&gt;I&#39;m honored to be speaking as a part of RailsConf 2020, which you can join from
+the comfort of your own &lt;a href=&#34;https://railsconf.com/&#34;&gt;couch&lt;/a&gt;! I hope you&#39;ll join my session and many others
+when they are released on May 5, 2020.&lt;/p&gt;
+&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
+&lt;p&gt;We all write code to interface with external systems, like a web service or a message queue. Can you confidently write tests without requiring the system as a dependency? How can you shield users of your code from the inner workings of the interface? Explore one attempt to answer these questions.&lt;/p&gt;
+&lt;p&gt;There&#39;s no shortage of tools at your disposal to solve these problems. This talk will introduce some available options, provide guidance on when one approach may be more appropriate than another, and discuss how to use these tools together to ease the testing process.&lt;/p&gt;
+&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/testing-services&#34;&gt;Sample App&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/testing-services#testing-methods&#34;&gt;Code Examples&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+     </item>
    
      <item>
        <title>Coding for Fun (Not Profit)</title>

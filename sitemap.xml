@@ -13,11 +13,6 @@
   </url>
   
   <url>
-    <loc>https://kevin-j-m.github.io/</loc>
-    <lastmod>2020-04-06T20:05:03-04:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://kevin-j-m.github.io/posts/</loc>
     <lastmod>2020-04-06T20:05:03-04:00</lastmod>
   </url>
@@ -74,6 +69,11 @@
   
   <url>
     <loc>https://kevin-j-m.github.io/about/</loc>
+    <lastmod>2019-12-30T17:37:33-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kevin-j-m.github.io/</loc>
     <lastmod>2019-12-30T17:37:33-05:00</lastmod>
   </url>
   

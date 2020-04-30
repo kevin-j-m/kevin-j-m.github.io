@@ -6,7 +6,7 @@
    <description>Recent content on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2020 - Kevin Murphy</copyright>
-   <lastBuildDate>Mon, 06 Apr 2020 20:05:03 -0400</lastBuildDate>
+   <lastBuildDate>Mon, 30 Dec 2019 17:37:33 -0500</lastBuildDate>
    
        <atom:link href="https://kevin-j-m.github.io/index.xml" rel="self" type="application/rss+xml" />
    
@@ -17,12 +17,12 @@
        <pubDate>Mon, 06 Apr 2020 20:05:03 -0400</pubDate>
        
        <guid>https://kevin-j-m.github.io/posts/railsconf-2020/</guid>
-       <description>&lt;p&gt;I&#39;m honored to be speaking as a part of RailsConf 2020, which you can join from
-the comfort of your own &lt;a href=&#34;https://railsconf.com/&#34;&gt;couch&lt;/a&gt;! I hope you&#39;ll join my session and many others
+       <description>&lt;p&gt;I&amp;rsquo;m honored to be speaking as a part of RailsConf 2020, which you can join from
+the comfort of your own &lt;a href=&#34;https://railsconf.com/&#34;&gt;couch&lt;/a&gt;! I hope you&amp;rsquo;ll join my session and many others
 when they are released on May 5, 2020.&lt;/p&gt;
 &lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
 &lt;p&gt;We all write code to interface with external systems, like a web service or a message queue. Can you confidently write tests without requiring the system as a dependency? How can you shield users of your code from the inner workings of the interface? Explore one attempt to answer these questions.&lt;/p&gt;
-&lt;p&gt;There&#39;s no shortage of tools at your disposal to solve these problems. This talk will introduce some available options, provide guidance on when one approach may be more appropriate than another, and discuss how to use these tools together to ease the testing process.&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s no shortage of tools at your disposal to solve these problems. This talk will introduce some available options, provide guidance on when one approach may be more appropriate than another, and discuss how to use these tools together to ease the testing process.&lt;/p&gt;
 &lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/testing-services&#34;&gt;Sample App&lt;/a&gt;&lt;/li&gt;
@@ -38,24 +38,24 @@ when they are released on May 5, 2020.&lt;/p&gt;
        
        <guid>https://kevin-j-m.github.io/posts/coding-for-fun-not-profit/</guid>
        <description>&lt;p&gt;I originally wanted to call this post &amp;ldquo;Coding for Fun &lt;del&gt;And Profit&lt;/del&gt;&amp;rdquo; with And
-Profit in strikethrough, but hugo wouldn&#39;t recognize markdown in the title of a
+Profit in strikethrough, but hugo wouldn&amp;rsquo;t recognize markdown in the title of a
 new post, so I gave up immediately and renamed it, which is a perfect
-encapsulation of what I&#39;m looking to convey here.&lt;/p&gt;
+encapsulation of what I&amp;rsquo;m looking to convey here.&lt;/p&gt;
 &lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
-&lt;p&gt;I&#39;ve been paid to write code for almost 15 years now. I think I&#39;m decent at it,
-and I enjoy doing it as a profession, but it&#39;s not something I do much of in my
-free time. I&#39;m not against people having side projects, spending their free
-time how they&#39;d like and doing whatever energizes them, but I write enough code
-during the day at work to satisfy my interests there. I&#39;ll never get a job
+&lt;p&gt;I&amp;rsquo;ve been paid to write code for almost 15 years now. I think I&amp;rsquo;m decent at it,
+and I enjoy doing it as a profession, but it&amp;rsquo;s not something I do much of in my
+free time. I&amp;rsquo;m not against people having side projects, spending their free
+time how they&amp;rsquo;d like and doing whatever energizes them, but I write enough code
+during the day at work to satisfy my interests there. I&amp;rsquo;ll never get a job
 somewhere that requires an extensive personal portfolio to show as proof of
-&amp;ldquo;passion&amp;rdquo;. I&#39;m comfortable with that, and privileged enough to be able to say
+&amp;ldquo;passion&amp;rdquo;. I&amp;rsquo;m comfortable with that, and privileged enough to be able to say
 that.&lt;/p&gt;
-&lt;p&gt;Before this, I&#39;ve also never had a personal website - ever. Sure, I maintain
-various profiles on different social networks, but I&#39;ve never had a place of my
-own on the internet. I&#39;m also probably the only Rails developer who&#39;s never
-typed &lt;code&gt;git push heroku&lt;/code&gt; in a terminal, but that&#39;s a different story.&lt;/p&gt;
+&lt;p&gt;Before this, I&amp;rsquo;ve also never had a personal website - ever. Sure, I maintain
+various profiles on different social networks, but I&amp;rsquo;ve never had a place of my
+own on the internet. I&amp;rsquo;m also probably the only Rails developer who&amp;rsquo;s never
+typed &lt;code&gt;git push heroku&lt;/code&gt; in a terminal, but that&amp;rsquo;s a different story.&lt;/p&gt;
 &lt;h2 id=&#34;coding-for-work&#34;&gt;Coding For Work&lt;/h2&gt;
-&lt;p&gt;I&#39;m a pretty methodical person in general, and I take that with me to work. It
+&lt;p&gt;I&amp;rsquo;m a pretty methodical person in general, and I take that with me to work. It
 comes in handy in this business, but as with everything, it has a cost. It takes
 time and effort, but my belief is that the value for my employer or client
 outweighs that cost. Some of these items include:&lt;/p&gt;
@@ -68,24 +68,24 @@ outweighs that cost. Some of these items include:&lt;/p&gt;
 &lt;li&gt;Clean commit history throughout the project&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Because the results of my actions affect the overall product, my team members,
-and all of my business partners, I&#39;m careful and deliberate in the work that I
+and all of my business partners, I&amp;rsquo;m careful and deliberate in the work that I
 do.&lt;/p&gt;
 &lt;h2 id=&#34;coding-for-me&#34;&gt;Coding For Me&lt;/h2&gt;
 &lt;p&gt;I decided to stand this site up because I had some content I wanted to maintain,
 and I had the blessing of my employer to do so. I needed something quick and
-fast that I wouldn&#39;t need to put a lot of effort into maintaining.&lt;/p&gt;
+fast that I wouldn&amp;rsquo;t need to put a lot of effort into maintaining.&lt;/p&gt;
 &lt;p&gt;I also wanted to try out something new, so knowing I only needed a static site
 generator, rather than reaching for my comfortable &lt;a href=&#34;https://middlemanapp.com/&#34;&gt;Middleman&lt;/a&gt;
 tool, I instead gave &lt;a href=&#34;https://gohugo.io/&#34;&gt;hugo&lt;/a&gt; a try. After all, it is:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;The world&#39;s fastest framework for building websites&lt;/p&gt;
+&lt;p&gt;The world&amp;rsquo;s fastest framework for building websites&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;In doing so, I of course ran into some hiccups and problems, but what I&#39;ll talk
+&lt;p&gt;In doing so, I of course ran into some hiccups and problems, but what I&amp;rsquo;ll talk
 about here is the process, and how this was different than how I regularly work.&lt;/p&gt;
 &lt;h3 id=&#34;what-goes&#34;&gt;What Goes&lt;/h3&gt;
 &lt;h4 id=&#34;alternatives--upfront-analysis&#34;&gt;Alternatives &amp;amp; Upfront Analysis&lt;/h4&gt;
-&lt;p&gt;I went with hugo on name recognition only. I didn&#39;t even identify the core
-feature set I needed or didn&#39;t need; I just dove right in. Similarly, I could have
+&lt;p&gt;I went with hugo on name recognition only. I didn&amp;rsquo;t even identify the core
+feature set I needed or didn&amp;rsquo;t need; I just dove right in. Similarly, I could have
 arduously reviewed the vast number of &lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;themes&lt;/a&gt; in
 their gallery to find the perfect one, or customized my own. Instead, I chose
 three that seemed &amp;ldquo;fine&amp;rdquo; above the fold, and picked the one that I liked best
@@ -94,8 +94,8 @@ after a one minute review.&lt;/p&gt;
 &lt;p&gt;When I work from home, I do so from my office, with the door closed. I control
 the environment and am particular about what noises or stimuli are present.
 However, this is just for me, so instead I sat down on the couch next to my wife
-while she was watching something on TV. It&#39;s ok if it takes a bit longer, or I&#39;m
-a bit distracted, as long as I&#39;m making that trade for me and me alone.&lt;/p&gt;
+while she was watching something on TV. It&amp;rsquo;s ok if it takes a bit longer, or I&amp;rsquo;m
+a bit distracted, as long as I&amp;rsquo;m making that trade for me and me alone.&lt;/p&gt;
 &lt;h3 id=&#34;what-stays&#34;&gt;What Stays&lt;/h3&gt;
 &lt;h4 id=&#34;verification&#34;&gt;Verification&lt;/h4&gt;
 &lt;p&gt;Testing brings comfort to me and I dislike working without tests. It helps guide
@@ -103,11 +103,11 @@ my initial implementation, gives safety for future refactors, and provides
 confidence in delivering functionality. And most of the work that I like doing
 the most, and as such gravitate towards, rarely has a direct user-facing
 component.&lt;/p&gt;
-&lt;p&gt;However, that&#39;s &lt;strong&gt;all&lt;/strong&gt; that this site is. I don&#39;t want to spend time futzing
-with configurations that I don&#39;t need to, or meddling with the theme to eek out
+&lt;p&gt;However, that&amp;rsquo;s &lt;strong&gt;all&lt;/strong&gt; that this site is. I don&amp;rsquo;t want to spend time futzing
+with configurations that I don&amp;rsquo;t need to, or meddling with the theme to eek out
 performance improvements, or evaluating updating, changing, or removing
 dependencies. But I still need to make sure it works. I spent a ton more time in
-the browser than I typically do developing for work, but it&#39;s the same process:&lt;/p&gt;
+the browser than I typically do developing for work, but it&amp;rsquo;s the same process:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Identify a thin slice of functionality&lt;/li&gt;
 &lt;li&gt;Focus on implementing it&lt;/li&gt;
@@ -119,49 +119,49 @@ the browser than I typically do developing for work, but it&#39;s the same proce
 running a test), but the process itself stayed the same.&lt;/p&gt;
 &lt;h4 id=&#34;documentation&#34;&gt;Documentation&lt;/h4&gt;
 &lt;p&gt;Sure, my commit messages are definitely not to the degree that I would expect,
-hope, or want them to be. However, that doesn&#39;t mean that they&#39;re worthless.
-Particularly on these projects where I&#39;m moving fast, their value is more as
-&amp;ldquo;save points&amp;rdquo; than documentation (and I&#39;m not cleaning them up prior to moving
+hope, or want them to be. However, that doesn&amp;rsquo;t mean that they&amp;rsquo;re worthless.
+Particularly on these projects where I&amp;rsquo;m moving fast, their value is more as
+&amp;ldquo;save points&amp;rdquo; than documentation (and I&amp;rsquo;m not cleaning them up prior to moving
 them into a mainline branch), but they can still provide valuable information on
 &lt;em&gt;why&lt;/em&gt; a change was made.&lt;/p&gt;
-&lt;p&gt;Additionally, particularly because this is a project that I&#39;m likely to be
+&lt;p&gt;Additionally, particularly because this is a project that I&amp;rsquo;m likely to be
 revisiting infrequently, I made sure to take the time to add a README that
-includes quick examples of all the things I&#39;m going to want to do. For this
+includes quick examples of all the things I&amp;rsquo;m going to want to do. For this
 project, that includes:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Creating a new post.&lt;/li&gt;
 &lt;li&gt;Running the server locally.&lt;/li&gt;
-&lt;li&gt;Deploying the changes (which there&#39;s a script for).&lt;/li&gt;
+&lt;li&gt;Deploying the changes (which there&amp;rsquo;s a script for).&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;Because&lt;/em&gt; it&#39;s something I won&#39;t touch day-to-day, it&#39;s even &lt;strong&gt;more&lt;/strong&gt; important
+&lt;p&gt;&lt;em&gt;Because&lt;/em&gt; it&amp;rsquo;s something I won&amp;rsquo;t touch day-to-day, it&amp;rsquo;s even &lt;strong&gt;more&lt;/strong&gt; important
 to take the few minutes to document those quick commands to save myself the time
 of needing to search for it every time that I want to edit this.&lt;/p&gt;
 &lt;h3 id=&#34;what-emerges&#34;&gt;What Emerges&lt;/h3&gt;
 &lt;h4 id=&#34;quick-assessment-of-good-enough&#34;&gt;Quick Assessment of &amp;ldquo;Good Enough&amp;rdquo;&lt;/h4&gt;
-&lt;p&gt;There&#39;s always an ideal version of what you&#39;re looking to accomplish. That
+&lt;p&gt;There&amp;rsquo;s always an ideal version of what you&amp;rsquo;re looking to accomplish. That
 likely manifests itself both in the code itself, as well as the user-facing
-product. And we all want to hit that ideal; however, it&#39;s not always feasible.
+product. And we all want to hit that ideal; however, it&amp;rsquo;s not always feasible.
 And while I work diligently to reach that at work, I also do my best to be
 pragmatic about at least explaining the implications of getting to that ideal,
 presenting that to the decision-makers, and working with them to come to an
 agreement on how to proceed.&lt;/p&gt;
 &lt;p&gt;However, in this example, my goal was speed and speed alone. For example, I had
-a post to add which had some images that I wanted formatted just so. I couldn&#39;t
+a post to add which had some images that I wanted formatted just so. I couldn&amp;rsquo;t
 figure out exactly how to position or size them to my liking. I think from
 searching for about 30 minutes I could have gotten there by having the images as
 &lt;a href=&#34;https://gohugo.io/content-management/page-resources/&#34;&gt;page resources&lt;/a&gt;, then using
-hugo&#39;s &lt;a href=&#34;https://gohugo.io/content-management/image-processing/&#34;&gt;image processing&lt;/a&gt;,
+hugo&amp;rsquo;s &lt;a href=&#34;https://gohugo.io/content-management/image-processing/&#34;&gt;image processing&lt;/a&gt;,
 and having those available in a &lt;a href=&#34;https://gohugo.io/content-management/shortcodes/&#34;&gt;shortcode&lt;/a&gt;
 that I reference in my post.&lt;/p&gt;
-&lt;p&gt;I could have done that, but instead - I deleted the images. They weren&#39;t
+&lt;p&gt;I could have done that, but instead - I deleted the images. They weren&amp;rsquo;t
 tremendously important to the post. They certainly made things look nicer, but
-they didn&#39;t provide any explanatory value. So I removed them, and freed myself
-of the problem. And the page doesn&#39;t look exactly how I wanted it to, but it&#39;s
+they didn&amp;rsquo;t provide any explanatory value. So I removed them, and freed myself
+of the problem. And the page doesn&amp;rsquo;t look exactly how I wanted it to, but it&amp;rsquo;s
 done. And if I feel the need to scratch that itch in the future, I know where to
 start.&lt;/p&gt;
-&lt;p&gt;Remember the context under which you&#39;re developing, who the decision-makers are,
+&lt;p&gt;Remember the context under which you&amp;rsquo;re developing, who the decision-makers are,
 and what choices you should make based on that. But work to know what you
-&lt;strong&gt;aren&#39;t&lt;/strong&gt; willing to give up in your process, regardless of the context.&lt;/p&gt;
+&lt;strong&gt;aren&amp;rsquo;t&lt;/strong&gt; willing to give up in your process, regardless of the context.&lt;/p&gt;
 </description>
      </item>
    
@@ -173,13 +173,13 @@ and what choices you should make based on that. But work to know what you
        <guid>https://kevin-j-m.github.io/posts/diffin-dots/</guid>
        <description>&lt;h2 id=&#34;a-sweet-surprise&#34;&gt;A Sweet Surprise&lt;/h2&gt;
 &lt;p&gt;Recently, a project needed to re-order some commits on a git branch. We
-initially performed this interactive rebase on a separate branch, so we didn&#39;t
+initially performed this interactive rebase on a separate branch, so we didn&amp;rsquo;t
 make a mistake on the original branch. After performing that rebase, we then
-used Github&#39;s &lt;a href=&#34;https://help.github.com/en/github/committing-changes-to-your-project/comparing-commits-across-time#comparing-branches&#34;&gt;compare view&lt;/a&gt;, expecting to see no files changed.&lt;/p&gt;
+used Github&amp;rsquo;s &lt;a href=&#34;https://help.github.com/en/github/committing-changes-to-your-project/comparing-commits-across-time#comparing-branches&#34;&gt;compare view&lt;/a&gt;, expecting to see no files changed.&lt;/p&gt;
 &lt;p&gt;Instead, what we saw was every change that was introduced in all of the commits
 that were reordered on the new branch. This very much surprised us. We made no
 functional changes and were expecting to use this comparison as proof that we
-didn&#39;t accidentally drop a commit or do something terrible on accident.&lt;/p&gt;
+didn&amp;rsquo;t accidentally drop a commit or do something terrible on accident.&lt;/p&gt;
 &lt;p&gt;We then looked to compare the branches locally. When we did that, we saw no
 diff.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;⇒ diff-test|reorder git diff master
@@ -189,8 +189,8 @@ diff.&lt;/p&gt;
 idea.&lt;/p&gt;
 &lt;h2 id=&#34;read-the-recipe&#34;&gt;Read The Recipe&lt;/h2&gt;
 &lt;p&gt;We dug into the documentation for &lt;code&gt;diff&lt;/code&gt;, a tool I use frequently,
-but don&#39;t spend much time considering how it works.&lt;/p&gt;
-&lt;p&gt;Let&#39;s read some of the help on how to use the diff tool:&lt;/p&gt;
+but don&amp;rsquo;t spend much time considering how it works.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s read some of the help on how to use the diff tool:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;⇒ git diff --help
 GIT-DIFF&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;                                      Git Manual                                      GIT-DIFF&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
 ...
@@ -209,26 +209,26 @@ GIT-DIFF&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;1&lt;span style=
        git diff &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;options&amp;gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &amp;lt;commit&amp;gt;...&amp;lt;commit&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;--&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;path&amp;gt;...&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
            This form is to view the changes on the branch containing and up to the second &amp;lt;commit&amp;gt;, starting
            at a common ancestor of both &amp;lt;commit&amp;gt;.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Almost exclusively I&#39;ve used diff in the form of &lt;code&gt;git diff other-ref&lt;/code&gt;. And
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Almost exclusively I&amp;rsquo;ve used diff in the form of &lt;code&gt;git diff other-ref&lt;/code&gt;. And
 with that, I would see what, if any, file changes occurred between those two
 branches or commits. This is the two-dot comparison. However, Github uses the
 &lt;a href=&#34;https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-comparing-branches-in-pull-requests#three-dot-and-two-dot-git-diff-comparisons&#34;&gt;three-dot comparison&lt;/a&gt;
 by default.&lt;/p&gt;
 &lt;p&gt;In this scenario, the common ancestor is the latest commit on the reordering
-branch that wasn&#39;t reordered. After the rebase, all of those reordered commits
+branch that wasn&amp;rsquo;t reordered. After the rebase, all of those reordered commits
 have different SHAs, so are seen as different commits. As such, using the
 three-dot option, git considers all of those SHAs as different or new, so all of
 them show as changes, even though there are no differences in the file contents
 themselves.&lt;/p&gt;
 &lt;h2 id=&#34;homemade-flavor&#34;&gt;Homemade Flavor&lt;/h2&gt;
-&lt;p&gt;Let&#39;s look at demonstrating this behavior entirely locally.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s look at demonstrating this behavior entirely locally.&lt;/p&gt;
 &lt;h3 id=&#34;setup&#34;&gt;Setup&lt;/h3&gt;
-&lt;p&gt;First, let&#39;s create a new repository:&lt;/p&gt;
+&lt;p&gt;First, let&amp;rsquo;s create a new repository:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;⇒ mkdir diff-test
 ⇒ cd diff-test
 diff-test|⇒ git init .
 Initialized empty Git repository
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We&#39;ll start by adding a few new files, and making the first commit:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We&amp;rsquo;ll start by adding a few new files, and making the first commit:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|master ⇒ echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Creamy Vanilla Ice Cream done Dippin’ Dots style&amp;#34;&lt;/span&gt; &amp;gt; vanilla.txt
 diff-test|master⚡ ⇒ echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Creamy Milk Chocolate Ice Cream.  Someone pass the spoon&amp;#34;&lt;/span&gt; &amp;gt; chocolate.txt
 diff-test|master⚡ ⇒ git add --all
@@ -242,9 +242,9 @@ diff-test|master ⇒ echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Ora
 diff-test|master⚡ ⇒ git add --all
 diff-test|master⚡ ⇒ git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Introducing orange&amp;#34;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;introduce-a-change&#34;&gt;Introduce a change&lt;/h3&gt;
-&lt;p&gt;At this point, we realize that it&#39;s important to us that orange be introduced in
+&lt;p&gt;At this point, we realize that it&amp;rsquo;s important to us that orange be introduced in
 our history before strawberry.&lt;/p&gt;
-&lt;p&gt;Let&#39;s create a new branch to address this, and look at the current order of the
+&lt;p&gt;Let&amp;rsquo;s create a new branch to address this, and look at the current order of the
 commits:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|master ⇒ git checkout -b reorder
 Switched to a new branch &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;reorder&amp;#39;&lt;/span&gt;
@@ -266,15 +266,15 @@ pick f455e5b Introducing strawberry
 5fa36f4 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;HEAD -&amp;gt; reorder&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Introducing strawberry
 7a1d500 Introducing orange
 e42566b IFO: initial flavor offering
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Congratulations! We&#39;ve done what we set out to do, performing a rebase to
-reorder our commits. Now let&#39;s compare that to our original branch to make sure
-everything looks to be as we&#39;d expect.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Congratulations! We&amp;rsquo;ve done what we set out to do, performing a rebase to
+reorder our commits. Now let&amp;rsquo;s compare that to our original branch to make sure
+everything looks to be as we&amp;rsquo;d expect.&lt;/p&gt;
 &lt;h3 id=&#34;differences&#34;&gt;&lt;code&gt;diff&lt;/code&gt;erences&lt;/h3&gt;
 &lt;p&gt;We start by comparing this branch to the original branch:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|reorder ⇒ git diff master
 
 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;END&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We see that there&#39;s no difference, which we&#39;re expecting and hoping for. No
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We see that there&amp;rsquo;s no difference, which we&amp;rsquo;re expecting and hoping for. No
 files changed, no functionality is different; only the history has changed.&lt;/p&gt;
 &lt;p&gt;If we diff using the two-dot version, we see the same result:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|reorder ⇒ git diff master..reorder
@@ -285,7 +285,7 @@ the same as not providing dots:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt; git diff &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;options&amp;gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &amp;lt;commit&amp;gt;..&amp;lt;commit&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;--&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&amp;lt;path&amp;gt;...&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
           This is synonymous to the previous form. If &amp;lt;commit&amp;gt; on one side is omitted, it will have the
           same effect as using HEAD instead.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Lastly, let&#39;s perform a three-dot diff:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Lastly, let&amp;rsquo;s perform a three-dot diff:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|reorder ⇒ git diff master...reorder
 
 diff --git a/orange.txt b/orange.txt
@@ -304,15 +304,15 @@ index 0000000..6ab358d
 +Dippin&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; Dots Strawberry Ice Cream is as sweet as a summer&amp;#39;&lt;/span&gt;s day and so berry, berry good
 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;END&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here is where we see that it looks like each of those files have been changed as
-a result of this rebase. However, the files themselves &lt;strong&gt;haven&#39;t&lt;/strong&gt; changed. What
+a result of this rebase. However, the files themselves &lt;strong&gt;haven&amp;rsquo;t&lt;/strong&gt; changed. What
 has is the commits themselves. Their common ancestor is the initial commit of
 the repository, so everything that happened since then shows as a difference.&lt;/p&gt;
 &lt;h2 id=&#34;the-cherry-on-top&#34;&gt;The Cherry On Top&lt;/h2&gt;
 &lt;p&gt;Locally, unless you tell git otherwise, &lt;code&gt;diff&lt;/code&gt; will show you the file change
 differences between your comparisons. Github by default will show you the
-changes from the common ancestor between what&#39;s changed.&lt;/p&gt;
-&lt;p&gt;Most of the time, this different behavior won&#39;t or shouldn&#39;t matter in the
-course of your workflow. However, if you&#39;re doing something a bit more
+changes from the common ancestor between what&amp;rsquo;s changed.&lt;/p&gt;
+&lt;p&gt;Most of the time, this different behavior won&amp;rsquo;t or shouldn&amp;rsquo;t matter in the
+course of your workflow. However, if you&amp;rsquo;re doing something a bit more
 adventurous, or perhaps ill-advised, knowing how git will, by default, compare
 changes locally and how Github, by default, will surface those changes can be
 paramount.&lt;/p&gt;
@@ -341,9 +341,9 @@ paramount.&lt;/p&gt;
 &lt;h2 id=&#34;common-guiding-principles&#34;&gt;Common Guiding Principles&lt;/h2&gt;
 &lt;p&gt;Full test coverage, DRY code, and optimized code are all incredibly valuable, and we, as craftspeople, are better off for having them overall. But when should we push back on these ideals? What problems can they introduce?&lt;/p&gt;
 &lt;h3 id=&#34;code-coverage&#34;&gt;Code Coverage&lt;/h3&gt;
-&lt;p&gt;Code coverage provides a valuable signal about the extent to which some code is tested, but it is not sufficient for a quality metric. 100% test coverage does not mean all code paths are fully exercised, just that all lines are hit at least once in the execution of the test suite. An application with 100% test coverage can still have bugs and can still have sections of code that don&#39;t have all scenarios tested. Additionally, testing every line of code has a cost that is felt initially in the time to conceive of the tests and the test strategy. However, the larger costs are felt over time if it leads to a long test suite run time, flakey or inconsistent tests, and a large suite that needs to be continually maintained as both the technologies and requirements of the application change.&lt;/p&gt;
+&lt;p&gt;Code coverage provides a valuable signal about the extent to which some code is tested, but it is not sufficient for a quality metric. 100% test coverage does not mean all code paths are fully exercised, just that all lines are hit at least once in the execution of the test suite. An application with 100% test coverage can still have bugs and can still have sections of code that don&amp;rsquo;t have all scenarios tested. Additionally, testing every line of code has a cost that is felt initially in the time to conceive of the tests and the test strategy. However, the larger costs are felt over time if it leads to a long test suite run time, flakey or inconsistent tests, and a large suite that needs to be continually maintained as both the technologies and requirements of the application change.&lt;/p&gt;
 &lt;h3 id=&#34;dry-code&#34;&gt;DRY Code&lt;/h3&gt;
-&lt;p&gt;DRY code helps to ensure you don&#39;t have to make a change in multiple places when the way the system should work changes; instead, everything is in the isolated abstraction. However, not repeating yourself can lead to premature optimizations or abstractions that end up saddling the codebase with a difficult-to-change architecture when it’s discovered that use cases aren’t as similar as initially thought. Certainly reach for design patterns and well-known architectural principles when the opportunity presents itself. But, consider how one might back out of such an introduction should it turn out that the choice was premature - or hold off on introducing it entirely until it’s more clear or there’s sufficient churn in that area of the codebase to warrant the attention.&lt;/p&gt;
+&lt;p&gt;DRY code helps to ensure you don&amp;rsquo;t have to make a change in multiple places when the way the system should work changes; instead, everything is in the isolated abstraction. However, not repeating yourself can lead to premature optimizations or abstractions that end up saddling the codebase with a difficult-to-change architecture when it’s discovered that use cases aren’t as similar as initially thought. Certainly reach for design patterns and well-known architectural principles when the opportunity presents itself. But, consider how one might back out of such an introduction should it turn out that the choice was premature - or hold off on introducing it entirely until it’s more clear or there’s sufficient churn in that area of the codebase to warrant the attention.&lt;/p&gt;
 &lt;h3 id=&#34;performant-code&#34;&gt;Performant Code&lt;/h3&gt;
 &lt;p&gt;Performant code is objectively better than non-performant code, right? As always, the answer is, &amp;ldquo;maybe.&amp;rdquo; Code that is preemptively performance-tuned may or may not be necessary or accurate. Without the data and benchmarking, under load, to illustrate the performance impact, any improvements made in service of performance are done so based on conjecture. This could lead to unnecessary time in developing the believed performance benefit or may even introduce subtle bugs.&lt;/p&gt;
 </description>

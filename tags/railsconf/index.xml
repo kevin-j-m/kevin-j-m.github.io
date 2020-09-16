@@ -12,6 +12,21 @@
    
    
      <item>
+       <title>Enough Coverage To Beat The Band</title>
+       <link>https://kevin-j-m.github.io/posts/rubyconf-2020/</link>
+       <pubDate>Wed, 16 Sep 2020 19:47:00 -0400</pubDate>
+       
+       <guid>https://kevin-j-m.github.io/posts/rubyconf-2020/</guid>
+       <description>&lt;p&gt;I&amp;rsquo;m honored to be speaking as part of RubyConf 2020, which you can join from
+&lt;a href=&#34;http://rubyconf.org/&#34;&gt;wherever&lt;/a&gt; you are. I hope you&amp;rsquo;ll join &lt;a href=&#34;http://rubyconf.org/program/sessions#session-1044&#34;&gt;my session&lt;/a&gt; and many others from Nov
+17 - 19, 2020.&lt;/p&gt;
+&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
+&lt;p&gt;The lights cut out. The crowd roars. It’s time. The band takes the stage. They’ve practiced the songs, particularly the covers. They’ve sound checked the coverage of the speakers. They know the lighting rig has the proper colored gels covering the lamps. They’re nervous, but they’ve got it all covered.&lt;/p&gt;
+&lt;p&gt;Similarly, code coverage can give you confidence before your app performs on production and also tell you how live code is used (or not used). We’ll cover how to leverage ruby’s different coverage measurement techniques in concert to assist your crew and delight your audience.&lt;/p&gt;
+</description>
+     </item>
+   
+     <item>
        <title>Fake It While You Make It</title>
        <link>https://kevin-j-m.github.io/posts/railsconf-2020/</link>
        <pubDate>Mon, 06 Apr 2020 20:05:03 -0400</pubDate>

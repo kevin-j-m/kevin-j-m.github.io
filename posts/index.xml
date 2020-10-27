@@ -18,7 +18,7 @@
        
        <guid>https://kevin-j-m.github.io/posts/coverage/</guid>
        <description>&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources&lt;/h2&gt;
-&lt;p&gt;Kevin&amp;rsquo;s slides are available for review on SpeakerDeck. The code examples that accompanied the talk are available on &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band&#34;&gt;Github&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Kevin&amp;rsquo;s slides are available for review on &lt;a href=&#34;https://speakerdeck.com/kevinmurphy/enough-coverage-to-beat-the-band&#34;&gt;SpeakerDeck&lt;/a&gt;. The code examples that accompanied the talk are available on &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band&#34;&gt;Github&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;code-coverage-modes&#34;&gt;Code Coverage Modes&lt;/h2&gt;
 &lt;p&gt;Each mode answers a different question about the code that was run under coverage:&lt;/p&gt;
 &lt;ul&gt;

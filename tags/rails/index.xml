@@ -83,6 +83,15 @@
 &lt;li&gt;For conditionals that lay out multiple code paths on a single line, this provides feedback on their individual execution where Line Coverage only considers whether any part of the line was run.&lt;/li&gt;
 &lt;li&gt;When interested in conditionals, and only conditionals, it has less noise than Lines Coverage.&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h2 id=&#34;gem-support&#34;&gt;Gem Support&lt;/h2&gt;
+&lt;p&gt;If you&amp;rsquo;d like to leverage existing abstractions on top of ruby&amp;rsquo;s Coverage module
+in your current applications, I recommend:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/simplecov-ruby/simplecov&#34;&gt;SimpleCov&lt;/a&gt; for test coverage. It
+now supports &lt;a href=&#34;https://github.com/simplecov-ruby/simplecov#branch-coverage-ruby--25&#34;&gt;branches&lt;/a&gt; coverage!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/danmayer/coverband&#34;&gt;Coverband&lt;/a&gt; for measuring coverage of
+production code. Here&amp;rsquo;s an &lt;a href=&#34;https://github.com/danmayer/coverband/blob/43c5ac94febc7a961346b0e9408d829d4d2ef8ad/test/rails5_dummy/config/coverband.rb#L15&#34;&gt;example&lt;/a&gt; on how to configure it to run using oneshot lines coverage.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;the-gnar-company&#34;&gt;The Gnar Company&lt;/h2&gt;
 &lt;p&gt;If you’d like to discuss how &lt;a href=&#34;https://www.thegnar.co/about.html&#34;&gt;The Gnar Company&lt;/a&gt; can work with you on your technical challenges, &lt;a href=&#34;https://www.thegnar.co/hire-us.html&#34;&gt;let us know&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;presentation-fonts&#34;&gt;Presentation Fonts&lt;/h2&gt;

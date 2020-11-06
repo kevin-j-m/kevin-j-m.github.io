@@ -109,7 +109,7 @@
         </li>
         
 
-        <li>3 minutes read</li>
+        <li>4 minutes read</li>
     </ul>
 </aside>
 
@@ -183,6 +183,15 @@
 <li>It provides a different frame of reference than Line Coverage, which ends up being either coarser or more granular than line coverage in different situations.</li>
 <li>For conditionals that lay out multiple code paths on a single line, this provides feedback on their individual execution where Line Coverage only considers whether any part of the line was run.</li>
 <li>When interested in conditionals, and only conditionals, it has less noise than Lines Coverage.</li>
+</ul>
+<h2 id="gem-support">Gem Support</h2>
+<p>If you&rsquo;d like to leverage existing abstractions on top of ruby&rsquo;s Coverage module
+in your current applications, I recommend:</p>
+<ul>
+<li><a href="https://github.com/simplecov-ruby/simplecov">SimpleCov</a> for test coverage. It
+now supports <a href="https://github.com/simplecov-ruby/simplecov#branch-coverage-ruby--25">branches</a> coverage!</li>
+<li><a href="https://github.com/danmayer/coverband">Coverband</a> for measuring coverage of
+production code. Here&rsquo;s an <a href="https://github.com/danmayer/coverband/blob/43c5ac94febc7a961346b0e9408d829d4d2ef8ad/test/rails5_dummy/config/coverband.rb#L15">example</a> on how to configure it to run using oneshot lines coverage.</li>
 </ul>
 <h2 id="the-gnar-company">The Gnar Company</h2>
 <p>If you’d like to discuss how <a href="https://www.thegnar.co/about.html">The Gnar Company</a> can work with you on your technical challenges, <a href="https://www.thegnar.co/hire-us.html">let us know</a>.</p>

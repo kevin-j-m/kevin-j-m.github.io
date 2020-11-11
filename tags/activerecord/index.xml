@@ -1,14 +1,14 @@
 
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
  <channel>
-   <title>Tags on Kevin Murphy</title>
-   <link>https://kevin-j-m.github.io/tags/</link>
-   <description>Recent content in Tags on Kevin Murphy</description>
+   <title>activerecord on Kevin Murphy</title>
+   <link>https://kevin-j-m.github.io/tags/activerecord/</link>
+   <description>Recent content in activerecord on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2020 - Kevin Murphy</copyright>
    <lastBuildDate>Wed, 11 Nov 2020 15:38:10 -0500</lastBuildDate>
    
-       <atom:link href="https://kevin-j-m.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+       <atom:link href="https://kevin-j-m.github.io/tags/activerecord/index.xml" rel="self" type="application/rss+xml" />
    
    
      <item>

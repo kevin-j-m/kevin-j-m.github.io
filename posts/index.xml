@@ -6,10 +6,126 @@
    <description>Recent content in Posts on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2020 - Kevin Murphy</copyright>
-   <lastBuildDate>Mon, 19 Oct 2020 08:12:10 -0400</lastBuildDate>
+   <lastBuildDate>Wed, 11 Nov 2020 15:38:10 -0500</lastBuildDate>
    
        <atom:link href="https://kevin-j-m.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Explain Like I&#39;m Five</title>
+       <link>https://kevin-j-m.github.io/posts/explain-like-im-five/</link>
+       <pubDate>Wed, 11 Nov 2020 15:38:10 -0500</pubDate>
+       
+       <guid>https://kevin-j-m.github.io/posts/explain-like-im-five/</guid>
+       <description>&lt;h2 id=&#34;explaining-myself&#34;&gt;&lt;code&gt;EXPLAIN&lt;/code&gt;ing Myself&lt;/h2&gt;
+&lt;p&gt;Running &lt;code&gt;EXPLAIN&lt;/code&gt; to show the execution plan for different database queries can
+help you understand why the performance of a particular database interaction
+is the way it is, and how you might be able to improve it. The purpose of this
+post is not to interpret and understand the results of an execution plan.
+Rather, we&amp;rsquo;ll learn five different ways you can get this information from your
+Rails app.&lt;/p&gt;
+&lt;p&gt;Some of these examples are PostgreSQL-specific.&lt;/p&gt;
+&lt;h2 id=&#34;1-activerecords-explain-method&#34;&gt;1. ActiveRecord&amp;rsquo;s &lt;code&gt;explain&lt;/code&gt; Method&lt;/h2&gt;
+&lt;p&gt;Rails already has the &lt;code&gt;explain&lt;/code&gt; method &lt;a href=&#34;https://apidock.com/rails/ActiveRecord/Relation/explain&#34;&gt;built into&lt;/a&gt; ActiveRecord for you to use.
+You can add &lt;code&gt;explain&lt;/code&gt; to any ActiveRecord relation, and you&amp;rsquo;ll receive the
+execution plan.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;where(&lt;span style=&#34;color:#e6db74&#34;&gt;email&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test@example.com&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;explain
+&lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;EXPLAIN&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;users&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;* &lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;users&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;users&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;email&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $1 &lt;span style=&#34;color:#f92672&#34;&gt;[[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;email&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test@example.com&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]]&lt;/span&gt;
+                      &lt;span style=&#34;color:#66d9ef&#34;&gt;QUERY&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;PLAN&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;-------------------------------------------------------&lt;/span&gt;
+ &lt;span style=&#34;color:#66d9ef&#34;&gt;Seq&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Scan&lt;/span&gt; on users  (cost&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;00&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;..&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;71&lt;/span&gt; rows&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; width&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;340&lt;/span&gt;)
+   &lt;span style=&#34;color:#e6db74&#34;&gt;Filter&lt;/span&gt;: ((email)&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;text &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;test@example.com&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;text)
+(&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; rows)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This gives us a great starting point, and works across various databases.
+However, if you want some additional features, like &lt;a href=&#34;https://www.postgresql.org/docs/current/sql-explain.html&#34;&gt;running&lt;/a&gt; &lt;code&gt;EXPLAIN ANALYZE&lt;/code&gt;,
+you&amp;rsquo;ll need to look elsewhere.&lt;/p&gt;
+&lt;h2 id=&#34;2-interpolating-a-query-in-an-activerecord-connection&#34;&gt;2. Interpolating a Query in an ActiveRecord Connection&lt;/h2&gt;
+&lt;p&gt;You can fall back to creating your own SQL statement and passing that into
+ActiveRecord&amp;rsquo;s &lt;code&gt;execute&lt;/code&gt; method. However, you probably don&amp;rsquo;t want to go through
+the error-prone and arduous effort of hand-writing the SQL query you just wrote
+using ActiveRecord&amp;rsquo;s syntax.&lt;/p&gt;
+&lt;p&gt;Luckily, you don&amp;rsquo;t have to! You can convert your ActiveRecord query to a string with
+&lt;code&gt;.to_sql&lt;/code&gt;, and add that into a string you provide to &lt;code&gt;execute&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ActiveRecord&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Base&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;execute(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EXPLAIN &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;where(&lt;span style=&#34;color:#e6db74&#34;&gt;email&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test@example.com&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to_sql&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;values
+&lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Seq Scan on users  (cost=0.00..2.71 rows=1 width=340)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;  Filter: ((email)::text = &amp;#39;test@example.com&amp;#39;::text)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This itself isn&amp;rsquo;t much of a win at all over using ActiveRecord&amp;rsquo;s &lt;code&gt;explain&lt;/code&gt;
+method. It&amp;rsquo;s longer, you&amp;rsquo;ve got to remember to grab the &lt;code&gt;values&lt;/code&gt; from the
+&lt;code&gt;execute&lt;/code&gt; results, and the output isn&amp;rsquo;t as nicely formatted. However, because
+this is &amp;ldquo;just SQL&amp;rdquo; that you&amp;rsquo;re running in &lt;code&gt;execute&lt;/code&gt;, you can use any features
+your database engine of choice provides, like &lt;code&gt;EXPLAIN ANALYZE&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ActiveRecord&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Base&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;execute(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EXPLAIN ANALYZE &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;where(&lt;span style=&#34;color:#e6db74&#34;&gt;email&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test@example.com&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to_sql&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;values
+&lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Seq Scan on users  (cost=0.00..2.71 rows=1 width=340) (actual time=0.184..0.233 rows=0 loops=1)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;,
+ &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;  Filter: ((email)::text = &amp;#39;test@example.com&amp;#39;::text)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;,
+ &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;  Rows Removed by Filter: 57&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;,
+ &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Planning time: 0.185 ms&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;,
+ &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Execution time: 0.472 ms&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Thanks to &lt;a href=&#34;https://github.com/mlodato517&#34;&gt;Mark Lodato&lt;/a&gt; for this recommendation.&lt;/p&gt;
+&lt;h2 id=&#34;3-the-activerecord-explain-analyze-gem&#34;&gt;3. The activerecord-explain-analyze Gem&lt;/h2&gt;
+&lt;p&gt;If you&amp;rsquo;re willing to take on a dependency to get some additional explanatory power,
+are using ActiveRecord 4 through 6, and use PostgresSQL, then
+you can reach for the &lt;a href=&#34;https://github.com/6/activerecord-explain-analyze&#34;&gt;activerecord-explain-analyze&lt;/a&gt; gem.&lt;/p&gt;
+&lt;p&gt;Now you can specify the output formatting of your &lt;code&gt;EXPLAIN&lt;/code&gt; results, and call
+&lt;code&gt;EXPLAIN ANALYZE&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;where(&lt;span style=&#34;color:#e6db74&#34;&gt;email&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test@example.com&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;explain(&lt;span style=&#34;color:#e6db74&#34;&gt;analyze&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;)
+&lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;EXPLAIN&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;users&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;* &lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;users&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;users&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;email&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $1
+&lt;span style=&#34;color:#66d9ef&#34;&gt;Seq&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Scan&lt;/span&gt; on &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;users  (cost&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;00&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;..&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;71&lt;/span&gt; rows&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; width&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;340&lt;/span&gt;) (actual time&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;120&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;..&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;128&lt;/span&gt; rows&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; loops&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+  &lt;span style=&#34;color:#e6db74&#34;&gt;Output&lt;/span&gt;: id, email, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, created_at, updated_at, time_zone, first_name, last_name, role, applicant_id, centrify_uuid, display_name, uuid, login_authorized, invite_id, legacy_identifier, disabled_at, invite_sent_at, password_last_changed_at, deprovisioning_reason
+  &lt;span style=&#34;color:#e6db74&#34;&gt;Filter&lt;/span&gt;: ((users&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;email)&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;text &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;test@example.com&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;text)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;Rows&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Removed&lt;/span&gt; by &lt;span style=&#34;color:#e6db74&#34;&gt;Filter&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;57&lt;/span&gt;
+  &lt;span style=&#34;color:#e6db74&#34;&gt;Buffers&lt;/span&gt;: shared hit&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;Planning&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;time&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;277&lt;/span&gt; ms
+&lt;span style=&#34;color:#66d9ef&#34;&gt;Execution&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;time&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;183&lt;/span&gt; ms
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;4-the-pg-eyeballs-gem&#34;&gt;4. The pg-eyeballs Gem&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/bradurani/pg-eyeballs&#34;&gt;pg-eyeballs&lt;/a&gt; is another gem that&amp;rsquo;s PostgreSQL-specific, and provides additional
+functionality that ActiveRecord&amp;rsquo;s &lt;code&gt;explain&lt;/code&gt; method does not currently.&lt;/p&gt;
+&lt;p&gt;Our sought-after &lt;code&gt;EXPLAIN ANALYZE&lt;/code&gt; is one of many options you can request:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;where(&lt;span style=&#34;color:#e6db74&#34;&gt;email&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test@example.com&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;eyeballs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;explain(&lt;span style=&#34;color:#e6db74&#34;&gt;options&lt;/span&gt;: &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:analyze&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;)
+&lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Seq Scan on users  (cost=0.00..2.71 rows=1 width=340) (actual time=0.028..0.036 rows=0 loops=1)&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  Filter: ((email)::text = &amp;#39;test@example.com&amp;#39;::text)&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  Rows Removed by Filter: 57&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;Planning time: 0.087 ms&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;Execution time: 0.084 ms&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;5-terminal-cli-of-your-database&#34;&gt;5. Terminal CLI of Your Database&lt;/h2&gt;
+&lt;p&gt;All of these prior examples have been run from within a Rails process such as the
+Rails console. However, we can skip Rails entirely and use our database
+directly. In our case with PostgreSQL, we can use &lt;code&gt;psql&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# psql -U postgres&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;After connecting, we can list which databases exist with &lt;code&gt;\l&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;postgres&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# \l&lt;/span&gt;
+                                              List of databases
+                Name                 |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
+-------------------------------------+----------+----------+------------+------------+-----------------------
+ example_app_development             | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;After finding the correct database, we can connect to it with &lt;code&gt;\c&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;postgres&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# \c example_app_development&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And then we can run any query we would like, including EXPLAIN:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;example_app_development&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# EXPLAIN SELECT * FROM USERS WHERE EMAIL = &amp;#39;test@example.com&amp;#39;;&lt;/span&gt;
+                      QUERY PLAN
+-------------------------------------------------------
+ Seq Scan on users  &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;cost&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0.00..2.71 rows&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; width&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;340&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+   Filter: &lt;span style=&#34;color:#f92672&#34;&gt;((&lt;/span&gt;email&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;::text &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;test@example.com&amp;#39;&lt;/span&gt;::text&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; rows&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Again, we have all the features available to us that our database engine
+supports, so we can use &lt;code&gt;EXPLAIN ANALYZE&lt;/code&gt; or any other functionality, without
+needing it to be built into Rails. This gives us all the power our database
+provides, but we lose the expressiveness of ActiveRecord&amp;rsquo;s query API - or
+rather, we need to find the &lt;code&gt;.to_sql&lt;/code&gt; representation of the query we&amp;rsquo;re
+interested in prior to using this.&lt;/p&gt;
+&lt;h2 id=&#34;explaining-which-to-use&#34;&gt;&lt;code&gt;EXPLAIN&lt;/code&gt;ing Which to Use&lt;/h2&gt;
+&lt;p&gt;If you&amp;rsquo;re interested in quickly getting an execution plan of an existing
+ActiveRecord query, start with using ActiveRecord&amp;rsquo;s &lt;code&gt;explain&lt;/code&gt; method.&lt;/p&gt;
+&lt;p&gt;Should you need more functionality that your database engine provides, you can
+&lt;code&gt;execute&lt;/code&gt; any query you would like to your database through ActiveRecord.&lt;/p&gt;
+&lt;p&gt;If you need that additional functionality, such as &lt;code&gt;EXPLAIN ANALYZE&lt;/code&gt;, on a
+regular basis, consider taking on an additional dependency that&amp;rsquo;ll provide that
+for you, such as &lt;code&gt;activerecord-explain-analyze&lt;/code&gt; or &lt;code&gt;pg-eyeballs&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Don&amp;rsquo;t forget you can go directly to your database without using Rails as an
+intermediary.&lt;/p&gt;
+&lt;p&gt;I hope this has &lt;code&gt;EXPLAIN&lt;/code&gt;ed a thing or two (or five) about ways to gather performance
+information for your queries. Once you decide which method is right for you,
+good luck optimizing!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/explain-like-im-five&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+     </item>
    
      <item>
        <title>Enough Coverage To Beat The Band</title>

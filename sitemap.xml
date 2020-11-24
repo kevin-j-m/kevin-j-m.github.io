@@ -3,6 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://kevin-j-m.github.io/posts/dependency-injection-plug-in/</loc>
+    <lastmod>2020-11-24T14:10:31-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kevin-j-m.github.io/</loc>
+    <lastmod>2020-11-24T14:10:31-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kevin-j-m.github.io/posts/</loc>
+    <lastmod>2020-11-24T14:10:31-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kevin-j-m.github.io/tags/ruby/</loc>
+    <lastmod>2020-11-24T14:10:31-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kevin-j-m.github.io/tags/software-design/</loc>
+    <lastmod>2020-11-24T14:10:31-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kevin-j-m.github.io/tags/</loc>
+    <lastmod>2020-11-24T14:10:31-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://kevin-j-m.github.io/tags/activerecord/</loc>
     <lastmod>2020-11-11T15:38:10-05:00</lastmod>
   </url>
@@ -13,22 +43,7 @@
   </url>
   
   <url>
-    <loc>https://kevin-j-m.github.io/</loc>
-    <lastmod>2020-11-11T15:38:10-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kevin-j-m.github.io/posts/</loc>
-    <lastmod>2020-11-11T15:38:10-05:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://kevin-j-m.github.io/tags/rails/</loc>
-    <lastmod>2020-11-11T15:38:10-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kevin-j-m.github.io/tags/</loc>
     <lastmod>2020-11-11T15:38:10-05:00</lastmod>
   </url>
   
@@ -39,11 +54,6 @@
   
   <url>
     <loc>https://kevin-j-m.github.io/posts/coverage/</loc>
-    <lastmod>2020-10-19T08:12:10-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kevin-j-m.github.io/tags/ruby/</loc>
     <lastmod>2020-10-19T08:12:10-04:00</lastmod>
   </url>
   

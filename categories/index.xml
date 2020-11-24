@@ -11,6 +11,124 @@
    
    
      <item>
+       <title>Dependency Injection: Plug In</title>
+       <link>https://kevin-j-m.github.io/posts/dependency-injection-plug-in/</link>
+       <pubDate>Tue, 24 Nov 2020 14:10:31 -0500</pubDate>
+       
+       <guid>https://kevin-j-m.github.io/posts/dependency-injection-plug-in/</guid>
+       <description>&lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage&lt;/h2&gt;
+&lt;p&gt;Dependency injection is a fancy term. It &lt;strong&gt;sounds&lt;/strong&gt; intimidating. The purpose of
+this post is to explain what dependency injection is, how to use it, and why it
+can be beneficial. To illustrate, let&amp;rsquo;s talk about playing a guitar in a
+concert, which comes from my &lt;a href=&#34;http://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
+talk about Ruby&amp;rsquo;s &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module.&lt;/p&gt;
+&lt;h2 id=&#34;sound-check&#34;&gt;Sound Check&lt;/h2&gt;
+&lt;p&gt;A guitarist in a band uses an amplifier when playing a live concert.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Guitar&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize&lt;/span&gt;
+    @amplifier &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Amplifier&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;When the guitar is played the sound travels through the amplifier, so the
+audience can hear the notes being played.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Guitar&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;strum&lt;/span&gt;(chord)
+    chord&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;phrasing&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;each &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;string_sound&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+      @amplifier&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;play(string_sound&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;amp_value)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You can play a great show with this setup! Your guitar uses the amplifier it
+defines, and all is well. Until&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;wall-of-sound&#34;&gt;Wall of Sound&lt;/h2&gt;
+&lt;p&gt;Some guitarists experiment with gear - a lot. Different amplifiers are going to
+make different sounds. However, we&amp;rsquo;ve made it very difficult for our guitar to
+be plugged in to different amplifiers.&lt;/p&gt;
+&lt;p&gt;Right now, our dependence on the amplifier class to play the sound from the
+guitar is hard-coded in the &lt;code&gt;Guitar&lt;/code&gt; class. The initializer sets up an explicit
+dependency with the &lt;code&gt;Amplifier&lt;/code&gt; class.&lt;/p&gt;
+&lt;p&gt;If we want to plug the guitar into a &lt;code&gt;LouderAmplifier&lt;/code&gt;, we can&amp;rsquo;t do that without
+changing our &lt;code&gt;Guitar&lt;/code&gt; class. Every different amplifier will require a change to
+our &lt;code&gt;Guitar&lt;/code&gt; class.&lt;/p&gt;
+&lt;h2 id=&#34;plug-and-play&#34;&gt;Plug and Play&lt;/h2&gt;
+&lt;p&gt;We can resolve this limitation by instead passing in the amplifier that&amp;rsquo;ll be
+used with the guitar when we make a new guitar.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Guitar&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize&lt;/span&gt;(amplifier)
+    @amplifier &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; amplifier
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;With this small change, our &lt;code&gt;Guitar&lt;/code&gt; can work with any amplifier that responds
+to the &lt;code&gt;play&lt;/code&gt; method. Rather than being coupled to the &lt;code&gt;Amplifier&lt;/code&gt; class, we
+require that any users of the &lt;code&gt;Guitar&lt;/code&gt; class instead explicitly pass in this
+collaborating class. This is a form of dependency injection, specifically
+&lt;a href=&#34;https://martinfowler.com/articles/injection.html#ConstructorInjectionWithPicocontainer&#34;&gt;Constructor Injection&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;sound-engineering&#34;&gt;Sound Engineering&lt;/h2&gt;
+&lt;p&gt;Now that we&amp;rsquo;ve seen an example of what dependency injection is, let&amp;rsquo;s discuss
+why we would want to use it.&lt;/p&gt;
+&lt;h3 id=&#34;flexibility&#34;&gt;Flexibility&lt;/h3&gt;
+&lt;p&gt;This is the motivation described in the example above. By removing the
+hard-coded dependency as an implementation detail of our class, we can instead
+use any dependency desired, as long as it responds to the methods that we need
+to use within the class. For us, this means that guitars can use any amplifier
+they&amp;rsquo;d like; the guitarist isn&amp;rsquo;t limited to the amp they had when first buying
+the guitar.&lt;/p&gt;
+&lt;h3 id=&#34;testing&#34;&gt;Testing&lt;/h3&gt;
+&lt;p&gt;Testing may be the first situation where the value of this flexibility can be
+appreciated. Tests are the first consumers of your implementation, and it&amp;rsquo;s
+important to listen to the implicit feedback they give you. If a class or a
+method is hard to test, it very likely will be hard to use - or at least complex
+to understand.&lt;/p&gt;
+&lt;p&gt;In reality, the difficulty in testing the &lt;code&gt;Guitar&lt;/code&gt; &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/instruments/guitar.rb&#34;&gt;class&lt;/a&gt;
+is what led to the decision to inject the amplifier in. That&amp;rsquo;s because the
+&lt;code&gt;Amplifier&lt;/code&gt; &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/amplifier.rb&#34;&gt;class&lt;/a&gt;
+is essentially a wrapper around &lt;a href=&#34;https://sonic-pi.net/&#34;&gt;Sonic Pi&lt;/a&gt;. Sonic Pi
+describes itself as a &amp;ldquo;code-based music creation and performance tool&amp;rdquo;, so
+playing the guitar with this amplifier will actually play a sound on your
+computer.&lt;/p&gt;
+&lt;p&gt;As exciting as that is, I don&amp;rsquo;t want to have Sonic Pi running just to execute my
+tests. And even if I did, I don&amp;rsquo;t need to hear the sound it would generate every
+time I run my tests. And so, I created a separate amp for testing: a
+&lt;code&gt;PracticeAmplifier&lt;/code&gt;. What does that amp do? &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/practice_amplifier.rb&#34;&gt;Absolutely nothing&lt;/a&gt;!
+And that&amp;rsquo;s perfect for my unit tests. They&amp;rsquo;re not concerned with the sound the
+amplifier makes when playing the guitar. They&amp;rsquo;re interested in exercising the
+logic that&amp;rsquo;s within the &lt;code&gt;Guitar&lt;/code&gt; class only.&lt;/p&gt;
+&lt;p&gt;More generally, maybe your class is collaborating with another class that makes
+an API call or performs file I/O. You don&amp;rsquo;t want to have to execute or mock out
+those actions in your class&amp;rsquo;s tests - it&amp;rsquo;s the collaborator&amp;rsquo;s tests that should
+be concerned with that. You can instead pass in another class that doesn&amp;rsquo;t do
+those things, providing speedy and relevant feedback in your tests.&lt;/p&gt;
+&lt;h3 id=&#34;complexity-identification&#34;&gt;Complexity Identification&lt;/h3&gt;
+&lt;p&gt;The responsibility of systems tends to grow over time. This is true not only for
+your entire application, but the different components of it, down to the
+individual classes or methods. As functionality continues to get added to
+classes, you may need to add in more and more collaborators. If each of these
+changes are made piecemeal over time, it can be difficult to step back and
+realize not only how coupled a class is to other classes, but how &lt;strong&gt;many&lt;/strong&gt;
+classes it&amp;rsquo;s coupled to.&lt;/p&gt;
+&lt;p&gt;Injecting dependencies explicitly makes it more clear &lt;em&gt;what&lt;/em&gt; this class is
+dependent on, and &lt;em&gt;how many&lt;/em&gt; things. As the list of things you need to pass in to
+a constructor or a method grows to support new features, it can serve
+as a proxy to gauge how complexity within the class or method is growing. This
+may exert more natural pressure to identify different abstractions or
+refactorings to implement.&lt;/p&gt;
+&lt;h2 id=&#34;rock-on&#34;&gt;Rock On&lt;/h2&gt;
+&lt;p&gt;Ruby&amp;rsquo;s inherent flexibility can make dependency injection a less-likely tool to
+reach for, particularly if &lt;a href=&#34;https://dhh.dk/2012/dependency-injection-is-not-a-virtue.html&#34;&gt;testing&lt;/a&gt; is when you would notice that pain initially, given the &lt;a href=&#34;https://www.youtube.com/watch?v=iEfpAp2sqiw&#34;&gt;tools&lt;/a&gt; at our
+disposal to make testing interactions with dependencies easier.&lt;/p&gt;
+&lt;p&gt;Dependency injection is also a daunting term that often carries the assumption
+that you need a heavyweight &lt;a href=&#34;https://en.wikipedia.org/wiki/Dependency_injection#Dependency_injection_frameworks&#34;&gt;framework&lt;/a&gt; to implement it. However, if you can pass in an object as an argument to an initializer (constructor) or even an individual method - congratulations, you&amp;rsquo;ve injected a dependency!&lt;/p&gt;
+&lt;p&gt;Using dependency injection can lead to less tightly-coupled code, which
+allows for more flexibility in collaborating with others, reduces the burden of
+testing, and makes it more clear when classes are growing to the point where
+their current design needs to be reconsidered.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/dependency-injection-plug-in&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+     </item>
+   
+     <item>
        <title>Explain Like I&#39;m Five</title>
        <link>https://kevin-j-m.github.io/posts/explain-like-im-five/</link>
        <pubDate>Wed, 11 Nov 2020 15:38:10 -0500</pubDate>

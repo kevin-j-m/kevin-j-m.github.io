@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="Diffin&#39; Dots"/>
 <meta name="twitter:description" content="Git comparisons of the future&hellip;today!"/>
 
-<meta name="generator" content="Hugo 0.78.1" />
+<meta name="generator" content="Hugo 0.78.2" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -112,7 +112,7 @@
     
 
 
-    <h2 id="a-sweet-surprise">A Sweet Surprise</h2>
+    <h2 id="a-sweet-surprise">A Sweet Surprise <a href="#a-sweet-surprise">🔗</a></h2>
 <p>Recently, a project needed to re-order some commits on a git branch. We
 initially performed this interactive rebase on a separate branch, so we didn&rsquo;t
 make a mistake on the original branch. After performing that rebase, we then
@@ -128,7 +128,7 @@ diff.</p>
 <span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
 </code></pre></div><p>Did we find a bug in Github? Did our re-ordering work? At this point, we had no
 idea.</p>
-<h2 id="read-the-recipe">Read The Recipe</h2>
+<h2 id="read-the-recipe">Read The Recipe <a href="#read-the-recipe">🔗</a></h2>
 <p>We dug into the documentation for <code>diff</code>, a tool I use frequently,
 but don&rsquo;t spend much time considering how it works.</p>
 <p>Let&rsquo;s read some of the help on how to use the diff tool:</p>
@@ -161,9 +161,9 @@ have different SHAs, so are seen as different commits. As such, using the
 three-dot option, git considers all of those SHAs as different or new, so all of
 them show as changes, even though there are no differences in the file contents
 themselves.</p>
-<h2 id="homemade-flavor">Homemade Flavor</h2>
+<h2 id="homemade-flavor">Homemade Flavor <a href="#homemade-flavor">🔗</a></h2>
 <p>Let&rsquo;s look at demonstrating this behavior entirely locally.</p>
-<h3 id="setup">Setup</h3>
+<h3 id="setup">Setup <a href="#setup">🔗</a></h3>
 <p>First, let&rsquo;s create a new repository:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">⇒ mkdir diff-test
 ⇒ cd diff-test
@@ -182,7 +182,7 @@ diff-test|master⚡ ⇒ git commit -m <span style="color:#e6db74">&#34;Introduci
 diff-test|master ⇒ echo <span style="color:#e6db74">&#34;Orange Flavored Ice&#34;</span> &gt; orange.txt
 diff-test|master⚡ ⇒ git add --all
 diff-test|master⚡ ⇒ git commit -m <span style="color:#e6db74">&#34;Introducing orange&#34;</span>
-</code></pre></div><h3 id="introduce-a-change">Introduce a change</h3>
+</code></pre></div><h3 id="introduce-a-change">Introduce a change <a href="#introduce-a-change">🔗</a></h3>
 <p>At this point, we realize that it&rsquo;s important to us that orange be introduced in
 our history before strawberry.</p>
 <p>Let&rsquo;s create a new branch to address this, and look at the current order of the
@@ -210,7 +210,7 @@ e42566b IFO: initial flavor offering
 </code></pre></div><p>Congratulations! We&rsquo;ve done what we set out to do, performing a rebase to
 reorder our commits. Now let&rsquo;s compare that to our original branch to make sure
 everything looks to be as we&rsquo;d expect.</p>
-<h3 id="differences"><code>diff</code>erences</h3>
+<h3 id="differences"><code>diff</code>erences <a href="#differences">🔗</a></h3>
 <p>We start by comparing this branch to the original branch:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git diff master
 
@@ -248,7 +248,7 @@ index 0000000..6ab358d
 a result of this rebase. However, the files themselves <strong>haven&rsquo;t</strong> changed. What
 has is the commits themselves. Their common ancestor is the initial commit of
 the repository, so everything that happened since then shows as a difference.</p>
-<h2 id="the-cherry-on-top">The Cherry On Top</h2>
+<h2 id="the-cherry-on-top">The Cherry On Top <a href="#the-cherry-on-top">🔗</a></h2>
 <p>Locally, unless you tell git otherwise, <code>diff</code> will show you the file change
 differences between your comparisons. Github by default will show you the
 changes from the common ancestor between what&rsquo;s changed.</p>

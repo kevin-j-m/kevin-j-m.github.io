@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="Dependency Injection: Plug In"/>
 <meta name="twitter:description" content="These go to eleven"/>
 
-<meta name="generator" content="Hugo 0.78.1" />
+<meta name="generator" content="Hugo 0.78.2" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -115,13 +115,13 @@
     
 
 
-    <h2 id="setting-the-stage">Setting the Stage</h2>
+    <h2 id="setting-the-stage">Setting the Stage <a href="#setting-the-stage">🔗</a></h2>
 <p>Dependency injection is a fancy term. It <strong>sounds</strong> intimidating. The purpose of
 this post is to explain what dependency injection is, how to use it, and why it
 can be beneficial. To illustrate, let&rsquo;s talk about playing a guitar in a
 concert, which comes from my <a href="http://rubyconf.org/program/sessions#session-1044">RubyConf 2020</a>
 talk about Ruby&rsquo;s <a href="https://docs.ruby-lang.org/en/master/Coverage.html">Coverage</a> module.</p>
-<h2 id="sound-check">Sound Check</h2>
+<h2 id="sound-check">Sound Check <a href="#sound-check">🔗</a></h2>
 <p>A guitarist in a band uses an amplifier when playing a live concert.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
@@ -139,7 +139,7 @@ audience can hear the notes being played.</p>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>You can play a great show with this setup! Your guitar uses the amplifier it
 defines, and all is well. Until&hellip;</p>
-<h2 id="wall-of-sound">Wall of Sound</h2>
+<h2 id="wall-of-sound">Wall of Sound <a href="#wall-of-sound">🔗</a></h2>
 <p>Some guitarists experiment with gear - a lot. Different amplifiers are going to
 make different sounds. However, we&rsquo;ve made it very difficult for our guitar to
 be plugged in to different amplifiers.</p>
@@ -149,7 +149,7 @@ dependency with the <code>Amplifier</code> class.</p>
 <p>If we want to plug the guitar into a <code>LouderAmplifier</code>, we can&rsquo;t do that without
 changing our <code>Guitar</code> class. Every different amplifier will require a change to
 our <code>Guitar</code> class.</p>
-<h2 id="plug-and-play">Plug and Play</h2>
+<h2 id="plug-and-play">Plug and Play <a href="#plug-and-play">🔗</a></h2>
 <p>We can resolve this limitation by instead passing in the amplifier that&rsquo;ll be
 used with the guitar when we make a new guitar.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
@@ -162,17 +162,17 @@ to the <code>play</code> method. Rather than being coupled to the <code>Amplifie
 require that any users of the <code>Guitar</code> class instead explicitly pass in this
 collaborating class. This is a form of dependency injection, specifically
 <a href="https://martinfowler.com/articles/injection.html#ConstructorInjectionWithPicocontainer">Constructor Injection</a>.</p>
-<h2 id="sound-engineering">Sound Engineering</h2>
+<h2 id="sound-engineering">Sound Engineering <a href="#sound-engineering">🔗</a></h2>
 <p>Now that we&rsquo;ve seen an example of what dependency injection is, let&rsquo;s discuss
 why we would want to use it.</p>
-<h3 id="flexibility">Flexibility</h3>
+<h3 id="flexibility">Flexibility <a href="#flexibility">🔗</a></h3>
 <p>This is the motivation described in the example above. By removing the
 hard-coded dependency as an implementation detail of our class, we can instead
 use any dependency desired, as long as it responds to the methods that we need
 to use within the class. For us, this means that guitars can use any amplifier
 they&rsquo;d like; the guitarist isn&rsquo;t limited to the amp they had when first buying
 the guitar.</p>
-<h3 id="testing">Testing</h3>
+<h3 id="testing">Testing <a href="#testing">🔗</a></h3>
 <p>Testing may be the first situation where the value of this flexibility can be
 appreciated. Tests are the first consumers of your implementation, and it&rsquo;s
 important to listen to the implicit feedback they give you. If a class or a
@@ -197,7 +197,7 @@ an API call or performs file I/O. You don&rsquo;t want to have to execute or moc
 those actions in your class&rsquo;s tests - it&rsquo;s the collaborator&rsquo;s tests that should
 be concerned with that. You can instead pass in another class that doesn&rsquo;t do
 those things, providing speedy and relevant feedback in your tests.</p>
-<h3 id="complexity-identification">Complexity Identification</h3>
+<h3 id="complexity-identification">Complexity Identification <a href="#complexity-identification">🔗</a></h3>
 <p>The responsibility of systems tends to grow over time. This is true not only for
 your entire application, but the different components of it, down to the
 individual classes or methods. As functionality continues to get added to
@@ -211,7 +211,7 @@ a constructor or a method grows to support new features, it can serve
 as a proxy to gauge how complexity within the class or method is growing. This
 may exert more natural pressure to identify different abstractions or
 refactorings to implement.</p>
-<h2 id="rock-on">Rock On</h2>
+<h2 id="rock-on">Rock On <a href="#rock-on">🔗</a></h2>
 <p>Ruby&rsquo;s inherent flexibility can make dependency injection a less-likely tool to
 reach for, particularly if <a href="https://dhh.dk/2012/dependency-injection-is-not-a-virtue.html">testing</a> is when you would notice that pain initially, given the <a href="https://www.youtube.com/watch?v=iEfpAp2sqiw">tools</a> at our
 disposal to make testing interactions with dependencies easier.</p>

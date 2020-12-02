@@ -16,13 +16,13 @@
        <pubDate>Tue, 24 Nov 2020 14:10:31 -0500</pubDate>
        
        <guid>https://kevin-j-m.github.io/posts/dependency-injection-plug-in/</guid>
-       <description>&lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage&lt;/h2&gt;
+       <description>&lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Dependency injection is a fancy term. It &lt;strong&gt;sounds&lt;/strong&gt; intimidating. The purpose of
 this post is to explain what dependency injection is, how to use it, and why it
 can be beneficial. To illustrate, let&amp;rsquo;s talk about playing a guitar in a
 concert, which comes from my &lt;a href=&#34;http://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
 talk about Ruby&amp;rsquo;s &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module.&lt;/p&gt;
-&lt;h2 id=&#34;sound-check&#34;&gt;Sound Check&lt;/h2&gt;
+&lt;h2 id=&#34;sound-check&#34;&gt;Sound Check &lt;a href=&#34;#sound-check&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;A guitarist in a band uses an amplifier when playing a live concert.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Guitar&lt;/span&gt;
   &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize&lt;/span&gt;
@@ -40,7 +40,7 @@ audience can hear the notes being played.&lt;/p&gt;
 &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You can play a great show with this setup! Your guitar uses the amplifier it
 defines, and all is well. Until&amp;hellip;&lt;/p&gt;
-&lt;h2 id=&#34;wall-of-sound&#34;&gt;Wall of Sound&lt;/h2&gt;
+&lt;h2 id=&#34;wall-of-sound&#34;&gt;Wall of Sound &lt;a href=&#34;#wall-of-sound&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Some guitarists experiment with gear - a lot. Different amplifiers are going to
 make different sounds. However, we&amp;rsquo;ve made it very difficult for our guitar to
 be plugged in to different amplifiers.&lt;/p&gt;
@@ -50,7 +50,7 @@ dependency with the &lt;code&gt;Amplifier&lt;/code&gt; class.&lt;/p&gt;
 &lt;p&gt;If we want to plug the guitar into a &lt;code&gt;LouderAmplifier&lt;/code&gt;, we can&amp;rsquo;t do that without
 changing our &lt;code&gt;Guitar&lt;/code&gt; class. Every different amplifier will require a change to
 our &lt;code&gt;Guitar&lt;/code&gt; class.&lt;/p&gt;
-&lt;h2 id=&#34;plug-and-play&#34;&gt;Plug and Play&lt;/h2&gt;
+&lt;h2 id=&#34;plug-and-play&#34;&gt;Plug and Play &lt;a href=&#34;#plug-and-play&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;We can resolve this limitation by instead passing in the amplifier that&amp;rsquo;ll be
 used with the guitar when we make a new guitar.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Guitar&lt;/span&gt;
@@ -63,17 +63,17 @@ to the &lt;code&gt;play&lt;/code&gt; method. Rather than being coupled to the &l
 require that any users of the &lt;code&gt;Guitar&lt;/code&gt; class instead explicitly pass in this
 collaborating class. This is a form of dependency injection, specifically
 &lt;a href=&#34;https://martinfowler.com/articles/injection.html#ConstructorInjectionWithPicocontainer&#34;&gt;Constructor Injection&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;sound-engineering&#34;&gt;Sound Engineering&lt;/h2&gt;
+&lt;h2 id=&#34;sound-engineering&#34;&gt;Sound Engineering &lt;a href=&#34;#sound-engineering&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Now that we&amp;rsquo;ve seen an example of what dependency injection is, let&amp;rsquo;s discuss
 why we would want to use it.&lt;/p&gt;
-&lt;h3 id=&#34;flexibility&#34;&gt;Flexibility&lt;/h3&gt;
+&lt;h3 id=&#34;flexibility&#34;&gt;Flexibility &lt;a href=&#34;#flexibility&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This is the motivation described in the example above. By removing the
 hard-coded dependency as an implementation detail of our class, we can instead
 use any dependency desired, as long as it responds to the methods that we need
 to use within the class. For us, this means that guitars can use any amplifier
 they&amp;rsquo;d like; the guitarist isn&amp;rsquo;t limited to the amp they had when first buying
 the guitar.&lt;/p&gt;
-&lt;h3 id=&#34;testing&#34;&gt;Testing&lt;/h3&gt;
+&lt;h3 id=&#34;testing&#34;&gt;Testing &lt;a href=&#34;#testing&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Testing may be the first situation where the value of this flexibility can be
 appreciated. Tests are the first consumers of your implementation, and it&amp;rsquo;s
 important to listen to the implicit feedback they give you. If a class or a
@@ -98,7 +98,7 @@ an API call or performs file I/O. You don&amp;rsquo;t want to have to execute or
 those actions in your class&amp;rsquo;s tests - it&amp;rsquo;s the collaborator&amp;rsquo;s tests that should
 be concerned with that. You can instead pass in another class that doesn&amp;rsquo;t do
 those things, providing speedy and relevant feedback in your tests.&lt;/p&gt;
-&lt;h3 id=&#34;complexity-identification&#34;&gt;Complexity Identification&lt;/h3&gt;
+&lt;h3 id=&#34;complexity-identification&#34;&gt;Complexity Identification &lt;a href=&#34;#complexity-identification&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The responsibility of systems tends to grow over time. This is true not only for
 your entire application, but the different components of it, down to the
 individual classes or methods. As functionality continues to get added to
@@ -112,7 +112,7 @@ a constructor or a method grows to support new features, it can serve
 as a proxy to gauge how complexity within the class or method is growing. This
 may exert more natural pressure to identify different abstractions or
 refactorings to implement.&lt;/p&gt;
-&lt;h2 id=&#34;rock-on&#34;&gt;Rock On&lt;/h2&gt;
+&lt;h2 id=&#34;rock-on&#34;&gt;Rock On &lt;a href=&#34;#rock-on&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Ruby&amp;rsquo;s inherent flexibility can make dependency injection a less-likely tool to
 reach for, particularly if &lt;a href=&#34;https://dhh.dk/2012/dependency-injection-is-not-a-virtue.html&#34;&gt;testing&lt;/a&gt; is when you would notice that pain initially, given the &lt;a href=&#34;https://www.youtube.com/watch?v=iEfpAp2sqiw&#34;&gt;tools&lt;/a&gt; at our
 disposal to make testing interactions with dependencies easier.&lt;/p&gt;
@@ -134,7 +134,7 @@ their current design needs to be reconsidered.&lt;/p&gt;
        <pubDate>Wed, 11 Nov 2020 15:38:10 -0500</pubDate>
        
        <guid>https://kevin-j-m.github.io/posts/explain-like-im-five/</guid>
-       <description>&lt;h2 id=&#34;explaining-myself&#34;&gt;&lt;code&gt;EXPLAIN&lt;/code&gt;ing Myself&lt;/h2&gt;
+       <description>&lt;h2 id=&#34;explaining-myself&#34;&gt;&lt;code&gt;EXPLAIN&lt;/code&gt;ing Myself &lt;a href=&#34;#explaining-myself&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Running &lt;code&gt;EXPLAIN&lt;/code&gt; to show the execution plan for different database queries can
 help you understand why the performance of a particular database interaction
 is the way it is, and how you might be able to improve it. The purpose of this
@@ -142,7 +142,7 @@ post is not to interpret and understand the results of an execution plan.
 Rather, we&amp;rsquo;ll learn five different ways you can get this information from your
 Rails app.&lt;/p&gt;
 &lt;p&gt;Some of these examples are PostgreSQL-specific.&lt;/p&gt;
-&lt;h2 id=&#34;1-activerecords-explain-method&#34;&gt;1. ActiveRecord&amp;rsquo;s &lt;code&gt;explain&lt;/code&gt; Method&lt;/h2&gt;
+&lt;h2 id=&#34;1-activerecords-explain-method&#34;&gt;1. ActiveRecord&amp;rsquo;s &lt;code&gt;explain&lt;/code&gt; Method &lt;a href=&#34;#1-activerecords-explain-method&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Rails already has the &lt;code&gt;explain&lt;/code&gt; method &lt;a href=&#34;https://apidock.com/rails/ActiveRecord/Relation/explain&#34;&gt;built into&lt;/a&gt; ActiveRecord for you to use.
 You can add &lt;code&gt;explain&lt;/code&gt; to any ActiveRecord relation, and you&amp;rsquo;ll receive the
 execution plan.&lt;/p&gt;
@@ -156,7 +156,7 @@ execution plan.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This gives us a great starting point, and works across various databases.
 However, if you want some additional features, like &lt;a href=&#34;https://www.postgresql.org/docs/current/sql-explain.html&#34;&gt;running&lt;/a&gt; &lt;code&gt;EXPLAIN ANALYZE&lt;/code&gt;,
 you&amp;rsquo;ll need to look elsewhere.&lt;/p&gt;
-&lt;h2 id=&#34;2-interpolating-a-query-in-an-activerecord-connection&#34;&gt;2. Interpolating a Query in an ActiveRecord Connection&lt;/h2&gt;
+&lt;h2 id=&#34;2-interpolating-a-query-in-an-activerecord-connection&#34;&gt;2. Interpolating a Query in an ActiveRecord Connection &lt;a href=&#34;#2-interpolating-a-query-in-an-activerecord-connection&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;You can fall back to creating your own SQL statement and passing that into
 ActiveRecord&amp;rsquo;s &lt;code&gt;execute&lt;/code&gt; method. However, you probably don&amp;rsquo;t want to go through
 the error-prone and arduous effort of hand-writing the SQL query you just wrote
@@ -177,7 +177,7 @@ your database engine of choice provides, like &lt;code&gt;EXPLAIN ANALYZE&lt;/co
  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Planning time: 0.185 ms&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;,
  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Execution time: 0.472 ms&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Thanks to &lt;a href=&#34;https://github.com/mlodato517&#34;&gt;Mark Lodato&lt;/a&gt; for this recommendation.&lt;/p&gt;
-&lt;h2 id=&#34;3-the-activerecord-explain-analyze-gem&#34;&gt;3. The activerecord-explain-analyze Gem&lt;/h2&gt;
+&lt;h2 id=&#34;3-the-activerecord-explain-analyze-gem&#34;&gt;3. The activerecord-explain-analyze Gem &lt;a href=&#34;#3-the-activerecord-explain-analyze-gem&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;If you&amp;rsquo;re willing to take on a dependency to get some additional explanatory power,
 are using ActiveRecord 4 through 6, and use PostgresSQL, then
 you can reach for the &lt;a href=&#34;https://github.com/6/activerecord-explain-analyze&#34;&gt;activerecord-explain-analyze&lt;/a&gt; gem.&lt;/p&gt;
@@ -192,13 +192,13 @@ you can reach for the &lt;a href=&#34;https://github.com/6/activerecord-explain-
   &lt;span style=&#34;color:#e6db74&#34;&gt;Buffers&lt;/span&gt;: shared hit&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
 &lt;span style=&#34;color:#66d9ef&#34;&gt;Planning&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;time&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;277&lt;/span&gt; ms
 &lt;span style=&#34;color:#66d9ef&#34;&gt;Execution&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;time&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;183&lt;/span&gt; ms
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;4-the-pg-eyeballs-gem&#34;&gt;4. The pg-eyeballs Gem&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;4-the-pg-eyeballs-gem&#34;&gt;4. The pg-eyeballs Gem &lt;a href=&#34;#4-the-pg-eyeballs-gem&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/bradurani/pg-eyeballs&#34;&gt;pg-eyeballs&lt;/a&gt; is another gem that&amp;rsquo;s PostgreSQL-specific, and provides additional
 functionality that ActiveRecord&amp;rsquo;s &lt;code&gt;explain&lt;/code&gt; method does not currently.&lt;/p&gt;
 &lt;p&gt;Our sought-after &lt;code&gt;EXPLAIN ANALYZE&lt;/code&gt; is one of many options you can request:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;where(&lt;span style=&#34;color:#e6db74&#34;&gt;email&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test@example.com&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;eyeballs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;explain(&lt;span style=&#34;color:#e6db74&#34;&gt;options&lt;/span&gt;: &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:analyze&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;)
 &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Seq Scan on users  (cost=0.00..2.71 rows=1 width=340) (actual time=0.028..0.036 rows=0 loops=1)&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  Filter: ((email)::text = &amp;#39;test@example.com&amp;#39;::text)&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  Rows Removed by Filter: 57&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;Planning time: 0.087 ms&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;Execution time: 0.084 ms&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;5-terminal-cli-of-your-database&#34;&gt;5. Terminal CLI of Your Database&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;5-terminal-cli-of-your-database&#34;&gt;5. Terminal CLI of Your Database &lt;a href=&#34;#5-terminal-cli-of-your-database&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;All of these prior examples have been run from within a Rails process such as the
 Rails console. However, we can skip Rails entirely and use our database
 directly. In our case with PostgreSQL, we can use &lt;code&gt;psql&lt;/code&gt;.&lt;/p&gt;
@@ -225,7 +225,7 @@ needing it to be built into Rails. This gives us all the power our database
 provides, but we lose the expressiveness of ActiveRecord&amp;rsquo;s query API - or
 rather, we need to find the &lt;code&gt;.to_sql&lt;/code&gt; representation of the query we&amp;rsquo;re
 interested in prior to using this.&lt;/p&gt;
-&lt;h2 id=&#34;explaining-which-to-use&#34;&gt;&lt;code&gt;EXPLAIN&lt;/code&gt;ing Which to Use&lt;/h2&gt;
+&lt;h2 id=&#34;explaining-which-to-use&#34;&gt;&lt;code&gt;EXPLAIN&lt;/code&gt;ing Which to Use &lt;a href=&#34;#explaining-which-to-use&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;If you&amp;rsquo;re interested in quickly getting an execution plan of an existing
 ActiveRecord query, start with using ActiveRecord&amp;rsquo;s &lt;code&gt;explain&lt;/code&gt; method.&lt;/p&gt;
 &lt;p&gt;Should you need more functionality that your database engine provides, you can
@@ -250,9 +250,9 @@ good luck optimizing!&lt;/p&gt;
        <pubDate>Mon, 19 Oct 2020 08:12:10 -0400</pubDate>
        
        <guid>https://kevin-j-m.github.io/posts/coverage/</guid>
-       <description>&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources&lt;/h2&gt;
+       <description>&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources &lt;a href=&#34;#presentation-resources&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Kevin&amp;rsquo;s slides are available for review on &lt;a href=&#34;https://speakerdeck.com/kevinmurphy/enough-coverage-to-beat-the-band&#34;&gt;SpeakerDeck&lt;/a&gt;. The code examples that accompanied the talk are available on &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band&#34;&gt;Github&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;code-coverage-modes&#34;&gt;Code Coverage Modes&lt;/h2&gt;
+&lt;h2 id=&#34;code-coverage-modes&#34;&gt;Code Coverage Modes &lt;a href=&#34;#code-coverage-modes&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Each mode answers a different question about the code that was run under coverage:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Lines - how many times was each line executed?&lt;/li&gt;
@@ -260,7 +260,7 @@ good luck optimizing!&lt;/p&gt;
 &lt;li&gt;Methods - how many times was each method executed?&lt;/li&gt;
 &lt;li&gt;Branches - how many times was each conditional executed?&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;lines&#34;&gt;Lines&lt;/h3&gt;
+&lt;h3 id=&#34;lines&#34;&gt;Lines &lt;a href=&#34;#lines&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 
 
 &lt;p class=&#34;float-image coverage-emoji&#34;&gt;
@@ -269,12 +269,12 @@ good luck optimizing!&lt;/p&gt;
 
 
 &lt;p&gt;This is the “classic” implementation of providing coverage. Each relevant line, that is those that aren’t things like empty lines or “end” statements, has a counter that is incremented each time the line is visited in code execution while coverage is running. At the conclusion, you will see how many times each line is executed.&lt;/p&gt;
-&lt;h4 id=&#34;benefits&#34;&gt;Benefits&lt;/h4&gt;
+&lt;h4 id=&#34;benefits&#34;&gt;Benefits &lt;a href=&#34;#benefits&#34;&gt;🔗&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;This is the default mode for coverage.&lt;/li&gt;
 &lt;li&gt;Most of the time, this option will provide you with the information you want.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;oneshot-lines&#34;&gt;Oneshot Lines&lt;/h3&gt;
+&lt;h3 id=&#34;oneshot-lines&#34;&gt;Oneshot Lines &lt;a href=&#34;#oneshot-lines&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 
 
 &lt;p class=&#34;float-image coverage-emoji&#34;&gt;
@@ -283,12 +283,12 @@ good luck optimizing!&lt;/p&gt;
 
 
 &lt;p&gt;Similar to Line Coverage, this also documents that a relevant line was executed while coverage was running. However, it’s a binary report of whether it was executed or not. It will not tell you how often. This may be sufficient in many cases, and comes with the benefit of being more performant every subsequent time a particular line of code is executed under coverage.&lt;/p&gt;
-&lt;h4 id=&#34;benefits-1&#34;&gt;Benefits&lt;/h4&gt;
+&lt;h4 id=&#34;benefits-1&#34;&gt;Benefits &lt;a href=&#34;#benefits-1&#34;&gt;🔗&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Oneshot provides you with nothing more than if a line of application code is executed in a test suite.&lt;/li&gt;
 &lt;li&gt;As long as being constrained to knowing if something ran or not, and not knowing how often, is sufficient, Oneshot Line Coverage provides the same feedback as Line Coverage with better performance.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods &lt;a href=&#34;#methods&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 
 
 &lt;p class=&#34;float-image coverage-emoji&#34;&gt;
@@ -297,11 +297,11 @@ good luck optimizing!&lt;/p&gt;
 
 
 &lt;p&gt;Method Coverage brings the granularity of Line Coverage up to a coarser grain. Rather than tracking individual lines, it’s concerned with whether a particular method is executed. It can be a 10 line method where the first line is the only line ever executed. Method Coverage will still consider that as executed the same as a 20 line method where each line is executed.&lt;/p&gt;
-&lt;h4 id=&#34;benefits-2&#34;&gt;Benefits&lt;/h4&gt;
+&lt;h4 id=&#34;benefits-2&#34;&gt;Benefits &lt;a href=&#34;#benefits-2&#34;&gt;🔗&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;This has a targeted focus to be able to answer a more specific question - is this method executed? - with easier to process feedback.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;branches&#34;&gt;Branches&lt;/h3&gt;
+&lt;h3 id=&#34;branches&#34;&gt;Branches &lt;a href=&#34;#branches&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 
 
 &lt;p class=&#34;float-image coverage-emoji&#34;&gt;
@@ -310,13 +310,13 @@ good luck optimizing!&lt;/p&gt;
 
 
 &lt;p&gt;Branch Coverage tracks execution of different conditional paths and documents how often those different paths are run. The unique benefit that this provides over Line Coverage is in conditionals that execute multiple code paths in a single line, such as ternary statements. You may have a part of that conditional that’s never run or tested, but you wouldn’t know that if you’re relying on Line Coverage alone.&lt;/p&gt;
-&lt;h4 id=&#34;benefits-3&#34;&gt;Benefits&lt;/h4&gt;
+&lt;h4 id=&#34;benefits-3&#34;&gt;Benefits &lt;a href=&#34;#benefits-3&#34;&gt;🔗&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;It provides a different frame of reference than Line Coverage, which ends up being either coarser or more granular than line coverage in different situations.&lt;/li&gt;
 &lt;li&gt;For conditionals that lay out multiple code paths on a single line, this provides feedback on their individual execution where Line Coverage only considers whether any part of the line was run.&lt;/li&gt;
 &lt;li&gt;When interested in conditionals, and only conditionals, it has less noise than Lines Coverage.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;gem-support&#34;&gt;Gem Support&lt;/h2&gt;
+&lt;h2 id=&#34;gem-support&#34;&gt;Gem Support &lt;a href=&#34;#gem-support&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;If you&amp;rsquo;d like to leverage existing abstractions on top of ruby&amp;rsquo;s Coverage module
 in your current applications, I recommend:&lt;/p&gt;
 &lt;ul&gt;
@@ -325,20 +325,20 @@ now supports &lt;a href=&#34;https://github.com/simplecov-ruby/simplecov#branch-
 &lt;li&gt;&lt;a href=&#34;https://github.com/danmayer/coverband&#34;&gt;Coverband&lt;/a&gt; for measuring coverage of
 production code. Here&amp;rsquo;s an &lt;a href=&#34;https://github.com/danmayer/coverband/blob/43c5ac94febc7a961346b0e9408d829d4d2ef8ad/test/rails5_dummy/config/coverband.rb#L15&#34;&gt;example&lt;/a&gt; on how to configure it to run using oneshot lines coverage.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;the-gnar-company&#34;&gt;The Gnar Company&lt;/h2&gt;
+&lt;h2 id=&#34;the-gnar-company&#34;&gt;The Gnar Company &lt;a href=&#34;#the-gnar-company&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;If you’d like to discuss how &lt;a href=&#34;https://www.thegnar.co/about.html&#34;&gt;The Gnar Company&lt;/a&gt; can work with you on your technical challenges, &lt;a href=&#34;https://www.thegnar.co/hire-us.html&#34;&gt;let us know&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;presentation-fonts&#34;&gt;Presentation Fonts&lt;/h2&gt;
+&lt;h2 id=&#34;presentation-fonts&#34;&gt;Presentation Fonts &lt;a href=&#34;#presentation-fonts&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The main content of all my slides, for code examples and similar text, is Arial Narrow.&lt;/p&gt;
 &lt;p&gt;Slide titles and big statement fonts are The Fragile, available from &lt;a href=&#34;https://www.theninhotline.com/features/fonts/&#34;&gt;The NIN Hotline&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Supplemental content, like my twitter handle and text pointing to areas
 explaining what coverage output represents are The Wretched, also available from
 &lt;a href=&#34;https://www.theninhotline.com/features/fonts/&#34;&gt;The NIN Hotline&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;presentation-photo-credits&#34;&gt;Presentation Photo Credits&lt;/h2&gt;
+&lt;h2 id=&#34;presentation-photo-credits&#34;&gt;Presentation Photo Credits &lt;a href=&#34;#presentation-photo-credits&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;All photos used in the presentation are from the band &lt;a href=&#34;https://www.nin.com/&#34;&gt;Nine Inch Nails&lt;/a&gt;, and released on
 their &lt;a href=&#34;https://www.flickr.com/photos/nineinchnails/&#34;&gt;flickr&lt;/a&gt; account with a &lt;a href=&#34;https://creativecommons.org/licenses/by-nc-sa/2.0/&#34;&gt;Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic&lt;/a&gt; license.&lt;/p&gt;
 &lt;p&gt;Below I&amp;rsquo;ve embedded all the images used to link directly to their original
 source.&lt;/p&gt;
-&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;h3 id=&#34;introduction&#34;&gt;Introduction &lt;a href=&#34;#introduction&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 
 
 &lt;a data-flickr-embed=&#34;true&#34; data-header=&#34;true&#34; data-footer=&#34;true&#34; href=&#34;https://www.flickr.com/photos/nineinchnails/2738980841/&#34; title=&#34;Nine Inch Nails Live @ Lollapalooza - Chicago, IL, 8.03.08&#34;&gt;&lt;img src=&#34;https://live.staticflickr.com/2222/2738980841_dbc739b957_c.jpg&#34; width=&#34;800&#34; height=&#34;533&#34; alt=&#34;Nine Inch Nails Live @ Lollapalooza - Chicago, IL, 8.03.08&#34;&gt;&lt;/a&gt;&lt;script async src=&#34;//embedr.flickr.com/assets/client-code.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
@@ -349,7 +349,7 @@ source.&lt;/p&gt;
 &lt;a data-flickr-embed=&#34;true&#34; data-header=&#34;true&#34; data-footer=&#34;true&#34; href=&#34;https://www.flickr.com/photos/nineinchnails/3639150601/&#34; title=&#34;Nine Inch Nails live @ PNC Bank Arts Center, Holmdel, NJ, 6.06.09&#34;&gt;&lt;img src=&#34;https://live.staticflickr.com/3606/3639150601_409c17e154_c.jpg&#34; width=&#34;800&#34; height=&#34;534&#34; alt=&#34;Nine Inch Nails live @ PNC Bank Arts Center, Holmdel, NJ, 6.06.09&#34;&gt;&lt;/a&gt;&lt;script async src=&#34;//embedr.flickr.com/assets/client-code.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
 
 
-&lt;h3 id=&#34;lines-coverage&#34;&gt;Lines Coverage&lt;/h3&gt;
+&lt;h3 id=&#34;lines-coverage&#34;&gt;Lines Coverage &lt;a href=&#34;#lines-coverage&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 
 
 &lt;a data-flickr-embed=&#34;true&#34; data-header=&#34;true&#34; data-footer=&#34;true&#34; href=&#34;https://www.flickr.com/photos/nineinchnails/3573650628/&#34; title=&#34;Nine Inch Nails Live @ Shoreline Amphitheatre - Mountain View, CA, 5.22.09&#34;&gt;&lt;img src=&#34;https://live.staticflickr.com/2455/3573650628_75ed822d85_c.jpg&#34; width=&#34;800&#34; height=&#34;533&#34; alt=&#34;Nine Inch Nails Live @ Shoreline Amphitheatre - Mountain View, CA, 5.22.09&#34;&gt;&lt;/a&gt;&lt;script async src=&#34;//embedr.flickr.com/assets/client-code.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
@@ -380,7 +380,7 @@ source.&lt;/p&gt;
 &lt;a data-flickr-embed=&#34;true&#34; data-header=&#34;true&#34; data-footer=&#34;true&#34; href=&#34;https://www.flickr.com/photos/nineinchnails/3639938714/&#34; title=&#34;Nine Inch Nails live @ Starlight Theatre, Kansas City, MO, 5.27.09&#34;&gt;&lt;img src=&#34;https://live.staticflickr.com/3664/3639938714_81c6079524_c.jpg&#34; width=&#34;800&#34; height=&#34;534&#34; alt=&#34;Nine Inch Nails live @ Starlight Theatre, Kansas City, MO, 5.27.09&#34;&gt;&lt;/a&gt;&lt;script async src=&#34;//embedr.flickr.com/assets/client-code.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
 
 
-&lt;h3 id=&#34;oneshot-lines-coverage&#34;&gt;Oneshot Lines Coverage&lt;/h3&gt;
+&lt;h3 id=&#34;oneshot-lines-coverage&#34;&gt;Oneshot Lines Coverage &lt;a href=&#34;#oneshot-lines-coverage&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 
 
 &lt;a data-flickr-embed=&#34;true&#34; data-header=&#34;true&#34; data-footer=&#34;true&#34; href=&#34;https://www.flickr.com/photos/nineinchnails/3639113025/&#34; title=&#34;Nine Inch Nails Live @ Sasquatch Festival in George, WA, on 5.24.09&#34;&gt;&lt;img src=&#34;https://live.staticflickr.com/2460/3639113025_dee5235b96_c.jpg&#34; width=&#34;800&#34; height=&#34;534&#34; alt=&#34;Nine Inch Nails Live @ Sasquatch Festival in George, WA, on 5.24.09&#34;&gt;&lt;/a&gt;&lt;script async src=&#34;//embedr.flickr.com/assets/client-code.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
@@ -431,7 +431,7 @@ source.&lt;/p&gt;
 &lt;a data-flickr-embed=&#34;true&#34; data-header=&#34;true&#34; data-footer=&#34;true&#34; href=&#34;https://www.flickr.com/photos/nineinchnails/2997174649/&#34; title=&#34;Nine Inch Nails Live @ Arena Santiago - Santiago, Chile, 10.04.08&#34;&gt;&lt;img src=&#34;https://live.staticflickr.com/3276/2997174649_c8067aa285_z.jpg&#34; width=&#34;640&#34; height=&#34;426&#34; alt=&#34;Nine Inch Nails Live @ Arena Santiago - Santiago, Chile, 10.04.08&#34;&gt;&lt;/a&gt;&lt;script async src=&#34;//embedr.flickr.com/assets/client-code.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
 
 
-&lt;h3 id=&#34;methods-coverage&#34;&gt;Methods Coverage&lt;/h3&gt;
+&lt;h3 id=&#34;methods-coverage&#34;&gt;Methods Coverage &lt;a href=&#34;#methods-coverage&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 
 
 &lt;a data-flickr-embed=&#34;true&#34; data-header=&#34;true&#34; data-footer=&#34;true&#34; href=&#34;https://www.flickr.com/photos/nineinchnails/10722216364&#34; title=&#34;Nine Inch Nails Live: Tension 2013&#34;&gt;&lt;img src=&#34;https://live.staticflickr.com/3723/10722216364_e307c51d3b_z.jpg&#34; width=&#34;640&#34; height=&#34;427&#34; alt=&#34;Nine Inch Nails Live: Tension 2013&#34;&gt;&lt;/a&gt;&lt;script async src=&#34;//embedr.flickr.com/assets/client-code.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
@@ -487,7 +487,7 @@ source.&lt;/p&gt;
 &lt;a data-flickr-embed=&#34;true&#34; data-header=&#34;true&#34; data-footer=&#34;true&#34; href=&#34;https://www.flickr.com/photos/nineinchnails/2738948949/&#34; title=&#34;Nine Inch Nails Live @ Key Arena - Seattle, WA, 7.26.08&#34;&gt;&lt;img src=&#34;https://live.staticflickr.com/3223/2738948949_a6e508137f_z.jpg&#34; width=&#34;640&#34; height=&#34;426&#34; alt=&#34;Nine Inch Nails Live @ Key Arena - Seattle, WA, 7.26.08&#34;&gt;&lt;/a&gt;&lt;script async src=&#34;//embedr.flickr.com/assets/client-code.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
 
 
-&lt;h3 id=&#34;branches-coverage&#34;&gt;Branches Coverage&lt;/h3&gt;
+&lt;h3 id=&#34;branches-coverage&#34;&gt;Branches Coverage &lt;a href=&#34;#branches-coverage&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 
 
 &lt;a data-flickr-embed=&#34;true&#34; data-header=&#34;true&#34; data-footer=&#34;true&#34; href=&#34;https://www.flickr.com/photos/nineinchnails/3032765125/&#34; title=&#34;Nine Inch Nails Live @ DCU Center - Worcester, MA, 11.09.08 (with surprise guest Peter Murphy)&#34;&gt;&lt;img src=&#34;https://live.staticflickr.com/3044/3032765125_0cea90d73b_z.jpg&#34; width=&#34;640&#34; height=&#34;426&#34; alt=&#34;Nine Inch Nails Live @ DCU Center - Worcester, MA, 11.09.08 (with surprise guest Peter Murphy)&#34;&gt;&lt;/a&gt;&lt;script async src=&#34;//embedr.flickr.com/assets/client-code.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
@@ -523,7 +523,7 @@ source.&lt;/p&gt;
 &lt;a data-flickr-embed=&#34;true&#34; data-header=&#34;true&#34; data-footer=&#34;true&#34; href=&#34;https://www.flickr.com/photos/nineinchnails/3017100564/&#34; title=&#34;Nine Inch Nails Live @ House Of Blues - Atlantic City, New Jersey, 11.06.08 (with surprise guest Peter Murphy)&#34;&gt;&lt;img src=&#34;https://live.staticflickr.com/3017/3017100564_0a48c0b815_z.jpg&#34; width=&#34;640&#34; height=&#34;426&#34; alt=&#34;Nine Inch Nails Live @ House Of Blues - Atlantic City, New Jersey, 11.06.08 (with surprise guest Peter Murphy)&#34;&gt;&lt;/a&gt;&lt;script async src=&#34;//embedr.flickr.com/assets/client-code.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
 
 
-&lt;h3 id=&#34;closing&#34;&gt;Closing&lt;/h3&gt;
+&lt;h3 id=&#34;closing&#34;&gt;Closing &lt;a href=&#34;#closing&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 
 
 &lt;a data-flickr-embed=&#34;true&#34; data-header=&#34;true&#34; data-footer=&#34;true&#34; href=&#34;https://www.flickr.com/photos/nineinchnails/3639141695/&#34; title=&#34;Nine Inch Nails live @ DTE Energy Music Theatre, Clarkston, MI, 5.31.09&#34;&gt;&lt;img src=&#34;https://live.staticflickr.com/3360/3639141695_836a8f0745_z.jpg&#34; width=&#34;427&#34; height=&#34;640&#34; alt=&#34;Nine Inch Nails live @ DTE Energy Music Theatre, Clarkston, MI, 5.31.09&#34;&gt;&lt;/a&gt;&lt;script async src=&#34;//embedr.flickr.com/assets/client-code.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
@@ -541,7 +541,7 @@ source.&lt;/p&gt;
        <description>&lt;p&gt;I&amp;rsquo;m honored to be speaking as part of RubyConf 2020, which you can join from
 &lt;a href=&#34;http://rubyconf.org/&#34;&gt;wherever&lt;/a&gt; you are. I hope you&amp;rsquo;ll join &lt;a href=&#34;http://rubyconf.org/program/sessions#session-1044&#34;&gt;my session&lt;/a&gt; and many others from Nov
 17 - 19, 2020.&lt;/p&gt;
-&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
+&lt;h2 id=&#34;abstract&#34;&gt;Abstract &lt;a href=&#34;#abstract&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The lights cut out. The crowd roars. It’s time. The band takes the stage. They’ve practiced the songs, particularly the covers. They’ve sound checked the coverage of the speakers. They know the lighting rig has the proper colored gels covering the lamps. They’re nervous, but they’ve got it all covered.&lt;/p&gt;
 &lt;p&gt;Similarly, code coverage can give you confidence before your app performs on production and also tell you how live code is used (or not used). We’ll cover how to leverage ruby’s different coverage measurement techniques in concert to assist your crew and delight your audience.&lt;/p&gt;
 </description>
@@ -556,10 +556,10 @@ source.&lt;/p&gt;
        <description>&lt;p&gt;I&amp;rsquo;m honored to be speaking as a part of RailsConf 2020, which you can join from
 the comfort of your own &lt;a href=&#34;https://railsconf.com/&#34;&gt;couch&lt;/a&gt;! I hope you&amp;rsquo;ll join &lt;a href=&#34;https://railsconf.com/2020/video/kevin-murphy-fake-it-while-you-make-it&#34;&gt;my session&lt;/a&gt; and many others
 when they are released on May 5, 2020.&lt;/p&gt;
-&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
+&lt;h2 id=&#34;abstract&#34;&gt;Abstract &lt;a href=&#34;#abstract&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;We all write code to interface with external systems, like a web service or a message queue. Can you confidently write tests without requiring the system as a dependency? How can you shield users of your code from the inner workings of the interface? Explore one attempt to answer these questions.&lt;/p&gt;
 &lt;p&gt;There&amp;rsquo;s no shortage of tools at your disposal to solve these problems. This talk will introduce some available options, provide guidance on when one approach may be more appropriate than another, and discuss how to use these tools together to ease the testing process.&lt;/p&gt;
-&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources&lt;/h2&gt;
+&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources &lt;a href=&#34;#presentation-resources&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://youtu.be/iEfpAp2sqiw&#34;&gt;Video&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/testing-services&#34;&gt;Sample App&lt;/a&gt;&lt;/li&gt;
@@ -578,7 +578,7 @@ when they are released on May 5, 2020.&lt;/p&gt;
 Profit in strikethrough, but hugo wouldn&amp;rsquo;t recognize markdown in the title of a
 new post, so I gave up immediately and renamed it, which is a perfect
 encapsulation of what I&amp;rsquo;m looking to convey here.&lt;/p&gt;
-&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
+&lt;h2 id=&#34;background&#34;&gt;Background &lt;a href=&#34;#background&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;I&amp;rsquo;ve been paid to write code for almost 15 years now. I think I&amp;rsquo;m decent at it,
 and I enjoy doing it as a profession, but it&amp;rsquo;s not something I do much of in my
 free time. I&amp;rsquo;m not against people having side projects, spending their free
@@ -591,7 +591,7 @@ that.&lt;/p&gt;
 various profiles on different social networks, but I&amp;rsquo;ve never had a place of my
 own on the internet. I&amp;rsquo;m also probably the only Rails developer who&amp;rsquo;s never
 typed &lt;code&gt;git push heroku&lt;/code&gt; in a terminal, but that&amp;rsquo;s a different story.&lt;/p&gt;
-&lt;h2 id=&#34;coding-for-work&#34;&gt;Coding For Work&lt;/h2&gt;
+&lt;h2 id=&#34;coding-for-work&#34;&gt;Coding For Work &lt;a href=&#34;#coding-for-work&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;I&amp;rsquo;m a pretty methodical person in general, and I take that with me to work. It
 comes in handy in this business, but as with everything, it has a cost. It takes
 time and effort, but my belief is that the value for my employer or client
@@ -607,7 +607,7 @@ outweighs that cost. Some of these items include:&lt;/p&gt;
 &lt;p&gt;Because the results of my actions affect the overall product, my team members,
 and all of my business partners, I&amp;rsquo;m careful and deliberate in the work that I
 do.&lt;/p&gt;
-&lt;h2 id=&#34;coding-for-me&#34;&gt;Coding For Me&lt;/h2&gt;
+&lt;h2 id=&#34;coding-for-me&#34;&gt;Coding For Me &lt;a href=&#34;#coding-for-me&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;I decided to stand this site up because I had some content I wanted to maintain,
 and I had the blessing of my employer to do so. I needed something quick and
 fast that I wouldn&amp;rsquo;t need to put a lot of effort into maintaining.&lt;/p&gt;
@@ -619,22 +619,22 @@ tool, I instead gave &lt;a href=&#34;https://gohugo.io/&#34;&gt;hugo&lt;/a&gt; a
 &lt;/blockquote&gt;
 &lt;p&gt;In doing so, I of course ran into some hiccups and problems, but what I&amp;rsquo;ll talk
 about here is the process, and how this was different than how I regularly work.&lt;/p&gt;
-&lt;h3 id=&#34;what-goes&#34;&gt;What Goes&lt;/h3&gt;
-&lt;h4 id=&#34;alternatives--upfront-analysis&#34;&gt;Alternatives &amp;amp; Upfront Analysis&lt;/h4&gt;
+&lt;h3 id=&#34;what-goes&#34;&gt;What Goes &lt;a href=&#34;#what-goes&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;alternatives--upfront-analysis&#34;&gt;Alternatives &amp;amp; Upfront Analysis &lt;a href=&#34;#alternatives--upfront-analysis&#34;&gt;🔗&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;I went with hugo on name recognition only. I didn&amp;rsquo;t even identify the core
 feature set I needed or didn&amp;rsquo;t need; I just dove right in. Similarly, I could have
 arduously reviewed the vast number of &lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;themes&lt;/a&gt; in
 their gallery to find the perfect one, or customized my own. Instead, I chose
 three that seemed &amp;ldquo;fine&amp;rdquo; above the fold, and picked the one that I liked best
 after a one minute review.&lt;/p&gt;
-&lt;h4 id=&#34;focus&#34;&gt;Focus&lt;/h4&gt;
+&lt;h4 id=&#34;focus&#34;&gt;Focus &lt;a href=&#34;#focus&#34;&gt;🔗&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;When I work from home, I do so from my office, with the door closed. I control
 the environment and am particular about what noises or stimuli are present.
 However, this is just for me, so instead I sat down on the couch next to my wife
 while she was watching something on TV. It&amp;rsquo;s ok if it takes a bit longer, or I&amp;rsquo;m
 a bit distracted, as long as I&amp;rsquo;m making that trade for me and me alone.&lt;/p&gt;
-&lt;h3 id=&#34;what-stays&#34;&gt;What Stays&lt;/h3&gt;
-&lt;h4 id=&#34;verification&#34;&gt;Verification&lt;/h4&gt;
+&lt;h3 id=&#34;what-stays&#34;&gt;What Stays &lt;a href=&#34;#what-stays&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;verification&#34;&gt;Verification &lt;a href=&#34;#verification&#34;&gt;🔗&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Testing brings comfort to me and I dislike working without tests. It helps guide
 my initial implementation, gives safety for future refactors, and provides
 confidence in delivering functionality. And most of the work that I like doing
@@ -654,7 +654,7 @@ the browser than I typically do developing for work, but it&amp;rsquo;s the same
 &lt;/ul&gt;
 &lt;p&gt;The mechanism by which I worked that process changed (refreshing the browser vs.
 running a test), but the process itself stayed the same.&lt;/p&gt;
-&lt;h4 id=&#34;documentation&#34;&gt;Documentation&lt;/h4&gt;
+&lt;h4 id=&#34;documentation&#34;&gt;Documentation &lt;a href=&#34;#documentation&#34;&gt;🔗&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Sure, my commit messages are definitely not to the degree that I would expect,
 hope, or want them to be. However, that doesn&amp;rsquo;t mean that they&amp;rsquo;re worthless.
 Particularly on these projects where I&amp;rsquo;m moving fast, their value is more as
@@ -673,8 +673,8 @@ project, that includes:&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Because&lt;/em&gt; it&amp;rsquo;s something I won&amp;rsquo;t touch day-to-day, it&amp;rsquo;s even &lt;strong&gt;more&lt;/strong&gt; important
 to take the few minutes to document those quick commands to save myself the time
 of needing to search for it every time that I want to edit this.&lt;/p&gt;
-&lt;h3 id=&#34;what-emerges&#34;&gt;What Emerges&lt;/h3&gt;
-&lt;h4 id=&#34;quick-assessment-of-good-enough&#34;&gt;Quick Assessment of &amp;ldquo;Good Enough&amp;rdquo;&lt;/h4&gt;
+&lt;h3 id=&#34;what-emerges&#34;&gt;What Emerges &lt;a href=&#34;#what-emerges&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;quick-assessment-of-good-enough&#34;&gt;Quick Assessment of &amp;ldquo;Good Enough&amp;rdquo; &lt;a href=&#34;#quick-assessment-of-good-enough&#34;&gt;🔗&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;There&amp;rsquo;s always an ideal version of what you&amp;rsquo;re looking to accomplish. That
 likely manifests itself both in the code itself, as well as the user-facing
 product. And we all want to hit that ideal; however, it&amp;rsquo;s not always feasible.
@@ -708,7 +708,7 @@ and what choices you should make based on that. But work to know what you
        <pubDate>Mon, 30 Dec 2019 21:04:53 -0500</pubDate>
        
        <guid>https://kevin-j-m.github.io/posts/diffin-dots/</guid>
-       <description>&lt;h2 id=&#34;a-sweet-surprise&#34;&gt;A Sweet Surprise&lt;/h2&gt;
+       <description>&lt;h2 id=&#34;a-sweet-surprise&#34;&gt;A Sweet Surprise &lt;a href=&#34;#a-sweet-surprise&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Recently, a project needed to re-order some commits on a git branch. We
 initially performed this interactive rebase on a separate branch, so we didn&amp;rsquo;t
 make a mistake on the original branch. After performing that rebase, we then
@@ -724,7 +724,7 @@ diff.&lt;/p&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;END&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Did we find a bug in Github? Did our re-ordering work? At this point, we had no
 idea.&lt;/p&gt;
-&lt;h2 id=&#34;read-the-recipe&#34;&gt;Read The Recipe&lt;/h2&gt;
+&lt;h2 id=&#34;read-the-recipe&#34;&gt;Read The Recipe &lt;a href=&#34;#read-the-recipe&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;We dug into the documentation for &lt;code&gt;diff&lt;/code&gt;, a tool I use frequently,
 but don&amp;rsquo;t spend much time considering how it works.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s read some of the help on how to use the diff tool:&lt;/p&gt;
@@ -757,9 +757,9 @@ have different SHAs, so are seen as different commits. As such, using the
 three-dot option, git considers all of those SHAs as different or new, so all of
 them show as changes, even though there are no differences in the file contents
 themselves.&lt;/p&gt;
-&lt;h2 id=&#34;homemade-flavor&#34;&gt;Homemade Flavor&lt;/h2&gt;
+&lt;h2 id=&#34;homemade-flavor&#34;&gt;Homemade Flavor &lt;a href=&#34;#homemade-flavor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Let&amp;rsquo;s look at demonstrating this behavior entirely locally.&lt;/p&gt;
-&lt;h3 id=&#34;setup&#34;&gt;Setup&lt;/h3&gt;
+&lt;h3 id=&#34;setup&#34;&gt;Setup &lt;a href=&#34;#setup&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;First, let&amp;rsquo;s create a new repository:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;⇒ mkdir diff-test
 ⇒ cd diff-test
@@ -778,7 +778,7 @@ diff-test|master⚡ ⇒ git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;
 diff-test|master ⇒ echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Orange Flavored Ice&amp;#34;&lt;/span&gt; &amp;gt; orange.txt
 diff-test|master⚡ ⇒ git add --all
 diff-test|master⚡ ⇒ git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Introducing orange&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;introduce-a-change&#34;&gt;Introduce a change&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;introduce-a-change&#34;&gt;Introduce a change &lt;a href=&#34;#introduce-a-change&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;At this point, we realize that it&amp;rsquo;s important to us that orange be introduced in
 our history before strawberry.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s create a new branch to address this, and look at the current order of the
@@ -806,7 +806,7 @@ e42566b IFO: initial flavor offering
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Congratulations! We&amp;rsquo;ve done what we set out to do, performing a rebase to
 reorder our commits. Now let&amp;rsquo;s compare that to our original branch to make sure
 everything looks to be as we&amp;rsquo;d expect.&lt;/p&gt;
-&lt;h3 id=&#34;differences&#34;&gt;&lt;code&gt;diff&lt;/code&gt;erences&lt;/h3&gt;
+&lt;h3 id=&#34;differences&#34;&gt;&lt;code&gt;diff&lt;/code&gt;erences &lt;a href=&#34;#differences&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;We start by comparing this branch to the original branch:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;diff-test|reorder ⇒ git diff master
 
@@ -844,7 +844,7 @@ index 0000000..6ab358d
 a result of this rebase. However, the files themselves &lt;strong&gt;haven&amp;rsquo;t&lt;/strong&gt; changed. What
 has is the commits themselves. Their common ancestor is the initial commit of
 the repository, so everything that happened since then shows as a difference.&lt;/p&gt;
-&lt;h2 id=&#34;the-cherry-on-top&#34;&gt;The Cherry On Top&lt;/h2&gt;
+&lt;h2 id=&#34;the-cherry-on-top&#34;&gt;The Cherry On Top &lt;a href=&#34;#the-cherry-on-top&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Locally, unless you tell git otherwise, &lt;code&gt;diff&lt;/code&gt; will show you the file change
 differences between your comparisons. Github by default will show you the
 changes from the common ancestor between what&amp;rsquo;s changed.&lt;/p&gt;
@@ -865,23 +865,23 @@ paramount.&lt;/p&gt;
        <pubDate>Mon, 30 Dec 2019 20:57:49 -0500</pubDate>
        
        <guid>https://kevin-j-m.github.io/posts/rubyconf-2019/</guid>
-       <description>&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
+       <description>&lt;h2 id=&#34;abstract&#34;&gt;Abstract &lt;a href=&#34;#abstract&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Close your eyes and imagine the perfect codebase to work on. I bet you’ll say it has complete test coverage. It’s fully-optimized, both in terms of performance and architectural design. And, of course, it contains only DRY code. Surely we can all agree that this is an aspirational situation. But&amp;hellip;do we &lt;strong&gt;really&lt;/strong&gt; want that?&lt;/p&gt;
 &lt;p&gt;Don’t get me wrong; these qualities are all beneficial. However, if we also think we should value everything in moderation, when should we push back on these ideals? What problems can they introduce? Let’s talk about the exceptions to some of the “rules” we all hold dear.&lt;/p&gt;
-&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources&lt;/h2&gt;
+&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources &lt;a href=&#34;#presentation-resources&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=b960MApGA7A&#34;&gt;Video&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://speakerdeck.com/kevinmurphy/dont-hang-me-out-to-dry&#34;&gt;Slides&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/ivory-tower&#34;&gt;Sample App&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/ivory-tower#code-examples&#34;&gt;Code Examples&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;common-guiding-principles&#34;&gt;Common Guiding Principles&lt;/h2&gt;
+&lt;h2 id=&#34;common-guiding-principles&#34;&gt;Common Guiding Principles &lt;a href=&#34;#common-guiding-principles&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Full test coverage, DRY code, and optimized code are all incredibly valuable, and we, as craftspeople, are better off for having them overall. But when should we push back on these ideals? What problems can they introduce?&lt;/p&gt;
-&lt;h3 id=&#34;code-coverage&#34;&gt;Code Coverage&lt;/h3&gt;
+&lt;h3 id=&#34;code-coverage&#34;&gt;Code Coverage &lt;a href=&#34;#code-coverage&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Code coverage provides a valuable signal about the extent to which some code is tested, but it is not sufficient for a quality metric. 100% test coverage does not mean all code paths are fully exercised, just that all lines are hit at least once in the execution of the test suite. An application with 100% test coverage can still have bugs and can still have sections of code that don&amp;rsquo;t have all scenarios tested. Additionally, testing every line of code has a cost that is felt initially in the time to conceive of the tests and the test strategy. However, the larger costs are felt over time if it leads to a long test suite run time, flakey or inconsistent tests, and a large suite that needs to be continually maintained as both the technologies and requirements of the application change.&lt;/p&gt;
-&lt;h3 id=&#34;dry-code&#34;&gt;DRY Code&lt;/h3&gt;
+&lt;h3 id=&#34;dry-code&#34;&gt;DRY Code &lt;a href=&#34;#dry-code&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;DRY code helps to ensure you don&amp;rsquo;t have to make a change in multiple places when the way the system should work changes; instead, everything is in the isolated abstraction. However, not repeating yourself can lead to premature optimizations or abstractions that end up saddling the codebase with a difficult-to-change architecture when it’s discovered that use cases aren’t as similar as initially thought. Certainly reach for design patterns and well-known architectural principles when the opportunity presents itself. But, consider how one might back out of such an introduction should it turn out that the choice was premature - or hold off on introducing it entirely until it’s more clear or there’s sufficient churn in that area of the codebase to warrant the attention.&lt;/p&gt;
-&lt;h3 id=&#34;performant-code&#34;&gt;Performant Code&lt;/h3&gt;
+&lt;h3 id=&#34;performant-code&#34;&gt;Performant Code &lt;a href=&#34;#performant-code&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Performant code is objectively better than non-performant code, right? As always, the answer is, &amp;ldquo;maybe.&amp;rdquo; Code that is preemptively performance-tuned may or may not be necessary or accurate. Without the data and benchmarking, under load, to illustrate the performance impact, any improvements made in service of performance are done so based on conjecture. This could lead to unnecessary time in developing the believed performance benefit or may even introduce subtle bugs.&lt;/p&gt;
 </description>
      </item>
@@ -892,25 +892,25 @@ paramount.&lt;/p&gt;
        <pubDate>Mon, 30 Dec 2019 17:40:50 -0500</pubDate>
        
        <guid>https://kevin-j-m.github.io/posts/railsconf-2019/</guid>
-       <description>&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
+       <description>&lt;h2 id=&#34;abstract&#34;&gt;Abstract &lt;a href=&#34;#abstract&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;You &lt;strong&gt;can&lt;/strong&gt; use a hammer to drive a screw into wood, but I’d recommend a screwdriver. Why? And when is a hammer the better option? This talk will propose a framework to use when comparing alternative technical choices. I won’t decide for you, but will leave you with a structure to apply in your decision-making process.&lt;/p&gt;
 &lt;p&gt;The ruby toolbox is vast. While Rails provides a default experience, it leaves plenty of room for alternatives. In learning how to do something, you may uncover different ways to accomplish the same goal. Determine which tool fits best in your situation with these lessons.&lt;/p&gt;
-&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources&lt;/h2&gt;
+&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources &lt;a href=&#34;#presentation-resources&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=2NiePLJVjNI&amp;amp;feature=youtu.be&#34;&gt;Video&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://speakerdeck.com/kevinmurphy/i-know-i-can-but-should-i-evaluating-alternatives&#34;&gt;Slides&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/evaluating-alternatives&#34;&gt;Sample App&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/evaluating-alternatives#code-examples&#34;&gt;Code Examples&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;evaluating-gnarly-alternatives&#34;&gt;Evaluating Gnarly Alternatives&lt;/h2&gt;
+&lt;h2 id=&#34;evaluating-gnarly-alternatives&#34;&gt;Evaluating Gnarly Alternatives &lt;a href=&#34;#evaluating-gnarly-alternatives&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;At &lt;a href=&#34;https://www.thegnar.co/&#34;&gt;The Gnar Company&lt;/a&gt;, learning about our client’s needs and providing solutions is one of the most satisfying parts of our work. Rails is a great and well-worn tool in our toolbox, but we work with you to understand your needs before ascribing a particular technology or framework. Our team works hard to make it easy to work with us.&lt;/p&gt;
-&lt;h3 id=&#34;impact&#34;&gt;Impact&lt;/h3&gt;
+&lt;h3 id=&#34;impact&#34;&gt;Impact &lt;a href=&#34;#impact&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Building a customer portal with &lt;a href=&#34;https://www.thegnar.co/work/dispatch.html&#34;&gt;Dispatch&lt;/a&gt; required a keen eye on the &lt;strong&gt;impact&lt;/strong&gt; of our decisions. Working with the team we’d be handing the project off to, we ensured that any conventions we introduced met their expectations. Additionally, we needed to maintain a focus on non-functional requirements to provide fast response times and real-time communication with their customers.&lt;/p&gt;
-&lt;h3 id=&#34;cost&#34;&gt;Cost&lt;/h3&gt;
+&lt;h3 id=&#34;cost&#34;&gt;Cost &lt;a href=&#34;#cost&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Cost&lt;/strong&gt; can be more than dollars and cents. Evaluating when to develop functionality yourself or utilize existing solutions is critical. When we worked to bring &lt;a href=&#34;https://www.thegnar.co/work/valor-performance.html&#34;&gt;Valor Performance&lt;/a&gt;’s product to market, we focused on delivering a custom experience for coaching sales professionals while relying on third-party services to complement the product with scheduling, communication, and authorization functionality. As our involvement on the project wound down, we helped interview and onboard their internal team. Investing in the long-term success of our clients, even beyond our involvement, is built into our process.&lt;/p&gt;
-&lt;h3 id=&#34;maintenance&#34;&gt;Maintenance&lt;/h3&gt;
+&lt;h3 id=&#34;maintenance&#34;&gt;Maintenance &lt;a href=&#34;#maintenance&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;We don’t limit our focus to the scope of our initial engagement; we make sure to account for any &lt;strong&gt;maintenance&lt;/strong&gt; activities that’ll need consideration throughout the life of your product. After delivering a foundational product for &lt;a href=&#34;https://www.thegnar.co/work/qeepsake.html&#34;&gt;Qeepsake&lt;/a&gt;, we continued to provide assistance and iterate on product features and application performance as adoption took off. While initially developing the product, we made sure to leverage best-in-breed solutions in billing and messaging to quickly provide core functionality that will continue to scale as their business grows.&lt;/p&gt;
-&lt;h3 id=&#34;consistency&#34;&gt;Consistency&lt;/h3&gt;
+&lt;h3 id=&#34;consistency&#34;&gt;Consistency &lt;a href=&#34;#consistency&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;While working with a large existing development team at &lt;a href=&#34;https://www.thegnar.co/work/level-up.html&#34;&gt;LevelUp&lt;/a&gt;, it was critical to consider &lt;strong&gt;consistency&lt;/strong&gt;. We ensured we were delivering code that adhered to the team’s existing standards to provide a seamless hand-off that they were comfortable supporting. While we introduced our approach and experience to solving similar problems in different contexts, it was all done in a way that aligned with the larger team’s process.&lt;/p&gt;
 </description>
      </item>

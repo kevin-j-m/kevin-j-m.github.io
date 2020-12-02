@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="Don’t Hang Me Out To DRY"/>
 <meta name="twitter:description" content="RubyConf 2019"/>
 
-<meta name="generator" content="Hugo 0.78.1" />
+<meta name="generator" content="Hugo 0.78.2" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -118,23 +118,23 @@
     
 
 
-    <h2 id="abstract">Abstract</h2>
+    <h2 id="abstract">Abstract <a href="#abstract">🔗</a></h2>
 <p>Close your eyes and imagine the perfect codebase to work on. I bet you’ll say it has complete test coverage. It’s fully-optimized, both in terms of performance and architectural design. And, of course, it contains only DRY code. Surely we can all agree that this is an aspirational situation. But&hellip;do we <strong>really</strong> want that?</p>
 <p>Don’t get me wrong; these qualities are all beneficial. However, if we also think we should value everything in moderation, when should we push back on these ideals? What problems can they introduce? Let’s talk about the exceptions to some of the “rules” we all hold dear.</p>
-<h2 id="presentation-resources">Presentation Resources</h2>
+<h2 id="presentation-resources">Presentation Resources <a href="#presentation-resources">🔗</a></h2>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=b960MApGA7A">Video</a></li>
 <li><a href="https://speakerdeck.com/kevinmurphy/dont-hang-me-out-to-dry">Slides</a></li>
 <li><a href="https://github.com/kevin-j-m/ivory-tower">Sample App</a></li>
 <li><a href="https://github.com/kevin-j-m/ivory-tower#code-examples">Code Examples</a></li>
 </ul>
-<h2 id="common-guiding-principles">Common Guiding Principles</h2>
+<h2 id="common-guiding-principles">Common Guiding Principles <a href="#common-guiding-principles">🔗</a></h2>
 <p>Full test coverage, DRY code, and optimized code are all incredibly valuable, and we, as craftspeople, are better off for having them overall. But when should we push back on these ideals? What problems can they introduce?</p>
-<h3 id="code-coverage">Code Coverage</h3>
+<h3 id="code-coverage">Code Coverage <a href="#code-coverage">🔗</a></h3>
 <p>Code coverage provides a valuable signal about the extent to which some code is tested, but it is not sufficient for a quality metric. 100% test coverage does not mean all code paths are fully exercised, just that all lines are hit at least once in the execution of the test suite. An application with 100% test coverage can still have bugs and can still have sections of code that don&rsquo;t have all scenarios tested. Additionally, testing every line of code has a cost that is felt initially in the time to conceive of the tests and the test strategy. However, the larger costs are felt over time if it leads to a long test suite run time, flakey or inconsistent tests, and a large suite that needs to be continually maintained as both the technologies and requirements of the application change.</p>
-<h3 id="dry-code">DRY Code</h3>
+<h3 id="dry-code">DRY Code <a href="#dry-code">🔗</a></h3>
 <p>DRY code helps to ensure you don&rsquo;t have to make a change in multiple places when the way the system should work changes; instead, everything is in the isolated abstraction. However, not repeating yourself can lead to premature optimizations or abstractions that end up saddling the codebase with a difficult-to-change architecture when it’s discovered that use cases aren’t as similar as initially thought. Certainly reach for design patterns and well-known architectural principles when the opportunity presents itself. But, consider how one might back out of such an introduction should it turn out that the choice was premature - or hold off on introducing it entirely until it’s more clear or there’s sufficient churn in that area of the codebase to warrant the attention.</p>
-<h3 id="performant-code">Performant Code</h3>
+<h3 id="performant-code">Performant Code <a href="#performant-code">🔗</a></h3>
 <p>Performant code is objectively better than non-performant code, right? As always, the answer is, &ldquo;maybe.&rdquo; Code that is preemptively performance-tuned may or may not be necessary or accurate. Without the data and benchmarking, under load, to illustrate the performance impact, any improvements made in service of performance are done so based on conjecture. This could lead to unnecessary time in developing the believed performance benefit or may even introduce subtle bugs.</p>
 
 

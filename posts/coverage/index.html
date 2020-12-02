@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="Enough Coverage To Beat The Band"/>
 <meta name="twitter:description" content="Using Coverage To Stage A Concert Tour"/>
 
-<meta name="generator" content="Hugo 0.78.1" />
+<meta name="generator" content="Hugo 0.78.2" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -118,9 +118,9 @@
     
 
 
-    <h2 id="presentation-resources">Presentation Resources</h2>
+    <h2 id="presentation-resources">Presentation Resources <a href="#presentation-resources">🔗</a></h2>
 <p>Kevin&rsquo;s slides are available for review on <a href="https://speakerdeck.com/kevinmurphy/enough-coverage-to-beat-the-band">SpeakerDeck</a>. The code examples that accompanied the talk are available on <a href="https://github.com/kevin-j-m/ruby_cover_band">Github</a>.</p>
-<h2 id="code-coverage-modes">Code Coverage Modes</h2>
+<h2 id="code-coverage-modes">Code Coverage Modes <a href="#code-coverage-modes">🔗</a></h2>
 <p>Each mode answers a different question about the code that was run under coverage:</p>
 <ul>
 <li>Lines - how many times was each line executed?</li>
@@ -128,7 +128,7 @@
 <li>Methods - how many times was each method executed?</li>
 <li>Branches - how many times was each conditional executed?</li>
 </ul>
-<h3 id="lines">Lines</h3>
+<h3 id="lines">Lines <a href="#lines">🔗</a></h3>
 
 
 <p class="float-image coverage-emoji">
@@ -137,12 +137,12 @@
 
 
 <p>This is the “classic” implementation of providing coverage. Each relevant line, that is those that aren’t things like empty lines or “end” statements, has a counter that is incremented each time the line is visited in code execution while coverage is running. At the conclusion, you will see how many times each line is executed.</p>
-<h4 id="benefits">Benefits</h4>
+<h4 id="benefits">Benefits <a href="#benefits">🔗</a></h4>
 <ul>
 <li>This is the default mode for coverage.</li>
 <li>Most of the time, this option will provide you with the information you want.</li>
 </ul>
-<h3 id="oneshot-lines">Oneshot Lines</h3>
+<h3 id="oneshot-lines">Oneshot Lines <a href="#oneshot-lines">🔗</a></h3>
 
 
 <p class="float-image coverage-emoji">
@@ -151,12 +151,12 @@
 
 
 <p>Similar to Line Coverage, this also documents that a relevant line was executed while coverage was running. However, it’s a binary report of whether it was executed or not. It will not tell you how often. This may be sufficient in many cases, and comes with the benefit of being more performant every subsequent time a particular line of code is executed under coverage.</p>
-<h4 id="benefits-1">Benefits</h4>
+<h4 id="benefits-1">Benefits <a href="#benefits-1">🔗</a></h4>
 <ul>
 <li>Oneshot provides you with nothing more than if a line of application code is executed in a test suite.</li>
 <li>As long as being constrained to knowing if something ran or not, and not knowing how often, is sufficient, Oneshot Line Coverage provides the same feedback as Line Coverage with better performance.</li>
 </ul>
-<h3 id="methods">Methods</h3>
+<h3 id="methods">Methods <a href="#methods">🔗</a></h3>
 
 
 <p class="float-image coverage-emoji">
@@ -165,11 +165,11 @@
 
 
 <p>Method Coverage brings the granularity of Line Coverage up to a coarser grain. Rather than tracking individual lines, it’s concerned with whether a particular method is executed. It can be a 10 line method where the first line is the only line ever executed. Method Coverage will still consider that as executed the same as a 20 line method where each line is executed.</p>
-<h4 id="benefits-2">Benefits</h4>
+<h4 id="benefits-2">Benefits <a href="#benefits-2">🔗</a></h4>
 <ul>
 <li>This has a targeted focus to be able to answer a more specific question - is this method executed? - with easier to process feedback.</li>
 </ul>
-<h3 id="branches">Branches</h3>
+<h3 id="branches">Branches <a href="#branches">🔗</a></h3>
 
 
 <p class="float-image coverage-emoji">
@@ -178,13 +178,13 @@
 
 
 <p>Branch Coverage tracks execution of different conditional paths and documents how often those different paths are run. The unique benefit that this provides over Line Coverage is in conditionals that execute multiple code paths in a single line, such as ternary statements. You may have a part of that conditional that’s never run or tested, but you wouldn’t know that if you’re relying on Line Coverage alone.</p>
-<h4 id="benefits-3">Benefits</h4>
+<h4 id="benefits-3">Benefits <a href="#benefits-3">🔗</a></h4>
 <ul>
 <li>It provides a different frame of reference than Line Coverage, which ends up being either coarser or more granular than line coverage in different situations.</li>
 <li>For conditionals that lay out multiple code paths on a single line, this provides feedback on their individual execution where Line Coverage only considers whether any part of the line was run.</li>
 <li>When interested in conditionals, and only conditionals, it has less noise than Lines Coverage.</li>
 </ul>
-<h2 id="gem-support">Gem Support</h2>
+<h2 id="gem-support">Gem Support <a href="#gem-support">🔗</a></h2>
 <p>If you&rsquo;d like to leverage existing abstractions on top of ruby&rsquo;s Coverage module
 in your current applications, I recommend:</p>
 <ul>
@@ -193,20 +193,20 @@ now supports <a href="https://github.com/simplecov-ruby/simplecov#branch-coverag
 <li><a href="https://github.com/danmayer/coverband">Coverband</a> for measuring coverage of
 production code. Here&rsquo;s an <a href="https://github.com/danmayer/coverband/blob/43c5ac94febc7a961346b0e9408d829d4d2ef8ad/test/rails5_dummy/config/coverband.rb#L15">example</a> on how to configure it to run using oneshot lines coverage.</li>
 </ul>
-<h2 id="the-gnar-company">The Gnar Company</h2>
+<h2 id="the-gnar-company">The Gnar Company <a href="#the-gnar-company">🔗</a></h2>
 <p>If you’d like to discuss how <a href="https://www.thegnar.co/about.html">The Gnar Company</a> can work with you on your technical challenges, <a href="https://www.thegnar.co/hire-us.html">let us know</a>.</p>
-<h2 id="presentation-fonts">Presentation Fonts</h2>
+<h2 id="presentation-fonts">Presentation Fonts <a href="#presentation-fonts">🔗</a></h2>
 <p>The main content of all my slides, for code examples and similar text, is Arial Narrow.</p>
 <p>Slide titles and big statement fonts are The Fragile, available from <a href="https://www.theninhotline.com/features/fonts/">The NIN Hotline</a>.</p>
 <p>Supplemental content, like my twitter handle and text pointing to areas
 explaining what coverage output represents are The Wretched, also available from
 <a href="https://www.theninhotline.com/features/fonts/">The NIN Hotline</a>.</p>
-<h2 id="presentation-photo-credits">Presentation Photo Credits</h2>
+<h2 id="presentation-photo-credits">Presentation Photo Credits <a href="#presentation-photo-credits">🔗</a></h2>
 <p>All photos used in the presentation are from the band <a href="https://www.nin.com/">Nine Inch Nails</a>, and released on
 their <a href="https://www.flickr.com/photos/nineinchnails/">flickr</a> account with a <a href="https://creativecommons.org/licenses/by-nc-sa/2.0/">Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic</a> license.</p>
 <p>Below I&rsquo;ve embedded all the images used to link directly to their original
 source.</p>
-<h3 id="introduction">Introduction</h3>
+<h3 id="introduction">Introduction <a href="#introduction">🔗</a></h3>
 
 
 <a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/nineinchnails/2738980841/" title="Nine Inch Nails Live @ Lollapalooza - Chicago, IL, 8.03.08"><img src="https://live.staticflickr.com/2222/2738980841_dbc739b957_c.jpg" width="800" height="533" alt="Nine Inch Nails Live @ Lollapalooza - Chicago, IL, 8.03.08"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
@@ -217,7 +217,7 @@ source.</p>
 <a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/nineinchnails/3639150601/" title="Nine Inch Nails live @ PNC Bank Arts Center, Holmdel, NJ, 6.06.09"><img src="https://live.staticflickr.com/3606/3639150601_409c17e154_c.jpg" width="800" height="534" alt="Nine Inch Nails live @ PNC Bank Arts Center, Holmdel, NJ, 6.06.09"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 
-<h3 id="lines-coverage">Lines Coverage</h3>
+<h3 id="lines-coverage">Lines Coverage <a href="#lines-coverage">🔗</a></h3>
 
 
 <a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/nineinchnails/3573650628/" title="Nine Inch Nails Live @ Shoreline Amphitheatre - Mountain View, CA, 5.22.09"><img src="https://live.staticflickr.com/2455/3573650628_75ed822d85_c.jpg" width="800" height="533" alt="Nine Inch Nails Live @ Shoreline Amphitheatre - Mountain View, CA, 5.22.09"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
@@ -248,7 +248,7 @@ source.</p>
 <a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/nineinchnails/3639938714/" title="Nine Inch Nails live @ Starlight Theatre, Kansas City, MO, 5.27.09"><img src="https://live.staticflickr.com/3664/3639938714_81c6079524_c.jpg" width="800" height="534" alt="Nine Inch Nails live @ Starlight Theatre, Kansas City, MO, 5.27.09"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 
-<h3 id="oneshot-lines-coverage">Oneshot Lines Coverage</h3>
+<h3 id="oneshot-lines-coverage">Oneshot Lines Coverage <a href="#oneshot-lines-coverage">🔗</a></h3>
 
 
 <a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/nineinchnails/3639113025/" title="Nine Inch Nails Live @ Sasquatch Festival in George, WA, on 5.24.09"><img src="https://live.staticflickr.com/2460/3639113025_dee5235b96_c.jpg" width="800" height="534" alt="Nine Inch Nails Live @ Sasquatch Festival in George, WA, on 5.24.09"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
@@ -299,7 +299,7 @@ source.</p>
 <a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/nineinchnails/2997174649/" title="Nine Inch Nails Live @ Arena Santiago - Santiago, Chile, 10.04.08"><img src="https://live.staticflickr.com/3276/2997174649_c8067aa285_z.jpg" width="640" height="426" alt="Nine Inch Nails Live @ Arena Santiago - Santiago, Chile, 10.04.08"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 
-<h3 id="methods-coverage">Methods Coverage</h3>
+<h3 id="methods-coverage">Methods Coverage <a href="#methods-coverage">🔗</a></h3>
 
 
 <a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/nineinchnails/10722216364" title="Nine Inch Nails Live: Tension 2013"><img src="https://live.staticflickr.com/3723/10722216364_e307c51d3b_z.jpg" width="640" height="427" alt="Nine Inch Nails Live: Tension 2013"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
@@ -355,7 +355,7 @@ source.</p>
 <a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/nineinchnails/2738948949/" title="Nine Inch Nails Live @ Key Arena - Seattle, WA, 7.26.08"><img src="https://live.staticflickr.com/3223/2738948949_a6e508137f_z.jpg" width="640" height="426" alt="Nine Inch Nails Live @ Key Arena - Seattle, WA, 7.26.08"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 
-<h3 id="branches-coverage">Branches Coverage</h3>
+<h3 id="branches-coverage">Branches Coverage <a href="#branches-coverage">🔗</a></h3>
 
 
 <a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/nineinchnails/3032765125/" title="Nine Inch Nails Live @ DCU Center - Worcester, MA, 11.09.08 (with surprise guest Peter Murphy)"><img src="https://live.staticflickr.com/3044/3032765125_0cea90d73b_z.jpg" width="640" height="426" alt="Nine Inch Nails Live @ DCU Center - Worcester, MA, 11.09.08 (with surprise guest Peter Murphy)"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
@@ -391,7 +391,7 @@ source.</p>
 <a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/nineinchnails/3017100564/" title="Nine Inch Nails Live @ House Of Blues - Atlantic City, New Jersey, 11.06.08 (with surprise guest Peter Murphy)"><img src="https://live.staticflickr.com/3017/3017100564_0a48c0b815_z.jpg" width="640" height="426" alt="Nine Inch Nails Live @ House Of Blues - Atlantic City, New Jersey, 11.06.08 (with surprise guest Peter Murphy)"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 
-<h3 id="closing">Closing</h3>
+<h3 id="closing">Closing <a href="#closing">🔗</a></h3>
 
 
 <a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/nineinchnails/3639141695/" title="Nine Inch Nails live @ DTE Energy Music Theatre, Clarkston, MI, 5.31.09"><img src="https://live.staticflickr.com/3360/3639141695_836a8f0745_z.jpg" width="427" height="640" alt="Nine Inch Nails live @ DTE Energy Music Theatre, Clarkston, MI, 5.31.09"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>

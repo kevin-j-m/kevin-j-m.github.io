@@ -6,10 +6,172 @@
    <description>Recent content in ruby on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2020 - Kevin Murphy</copyright>
-   <lastBuildDate>Tue, 24 Nov 2020 14:10:31 -0500</lastBuildDate>
+   <lastBuildDate>Thu, 03 Dec 2020 12:10:31 -0500</lastBuildDate>
    
        <atom:link href="https://kevin-j-m.github.io/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Shedding a Light on Duck Typing</title>
+       <link>https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/</link>
+       <pubDate>Thu, 03 Dec 2020 12:10:31 -0500</pubDate>
+       
+       <guid>https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/</guid>
+       <description>&lt;h2 id=&#34;ruby-software-design-concert-series&#34;&gt;Ruby Software Design Concert Series &lt;a href=&#34;#ruby-software-design-concert-series&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;Dependency Injection: Plug In&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Shedding a Light on Duck Typing&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Duck typing is commonly used by Rubyists and other users of dynamic languages.
+We&amp;rsquo;ll demonstrate duck typing by helping a concert lighting team set up the
+lighting for a band, which comes from my &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt; talk about Ruby&amp;rsquo;s
+&lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module.&lt;/p&gt;
+&lt;h2 id=&#34;stage-design&#34;&gt;Stage Design &lt;a href=&#34;#stage-design&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;To light the stage for our concert, we have a wide range of lights to
+use.&lt;/p&gt;
+&lt;p&gt;We have our trusty can, or &lt;a href=&#34;https://en.wikipedia.org/wiki/Stage_lighting_instrument#PAR_lights&#34;&gt;PAR&lt;/a&gt;, lights.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;CanLight&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;trigger&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;color&lt;/span&gt;:, &lt;span style=&#34;color:#e6db74&#34;&gt;effect&lt;/span&gt;:)
+  &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We have &lt;a href=&#34;https://en.wikipedia.org/wiki/Stage_lighting_instrument#Spotlights&#34;&gt;spotlights&lt;/a&gt; tasked on each band member.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Spotlight&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;trigger&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;color&lt;/span&gt;:, &lt;span style=&#34;color:#e6db74&#34;&gt;effect&lt;/span&gt;:)
+  &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We have fancy &lt;a href=&#34;https://en.wikipedia.org/wiki/Intelligent_lighting&#34;&gt;moving lights&lt;/a&gt; for versatile coverage across the stage.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;MovingLight&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;trigger&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;color&lt;/span&gt;:, &lt;span style=&#34;color:#e6db74&#34;&gt;effect&lt;/span&gt;:)
+  &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We even have a &lt;a href=&#34;https://en.wikipedia.org/wiki/Beam_projector&#34;&gt;beam projector&lt;/a&gt;
+for a more powerful spotlight effect.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BeamProjector&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;trigger&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;color&lt;/span&gt;:, &lt;span style=&#34;color:#e6db74&#34;&gt;effect&lt;/span&gt;:)
+    &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;What any of these lights do isn&amp;rsquo;t important here. What is key to notice is that
+you operate them all by calling the &lt;code&gt;trigger&lt;/code&gt; method.&lt;/p&gt;
+&lt;h2 id=&#34;a-light-touch&#34;&gt;A Light Touch &lt;a href=&#34;#a-light-touch&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The stage lighting technicians, just like the band, are performers in the
+concert. For every single note of every single song, they need to make sure that
+the visual aesthetic of the stage is set &lt;em&gt;just so&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;All of these lights are managed by a central controller, from which they can
+power on all the lights in preparation for a show.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LightingController&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize&lt;/span&gt;
+    @powered_lights &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {}
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;turn_on_lights&lt;/span&gt;
+    @powered_lights&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:beam_projector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;BeamProjector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new
+    @powered_lights&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:can&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;CanLight&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new
+    @powered_lights&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:moving_light&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;MovingLight&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new
+    @powered_lights&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:spotlight&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Spotlight&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;As I mentioned, for every note of every song, they need to make sure the lights
+look exactly as they&amp;rsquo;re supposed to. This is tracked as the lighting&amp;rsquo;s
+composition.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LightingComposition&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;attr_reader&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:light_name&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;attr_reader&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:color&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;attr_reader&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:effect&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;ducking-into-lights-on-stage&#34;&gt;Ducking into Lights on Stage &lt;a href=&#34;#ducking-into-lights-on-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;As the band is playing the show, the lighting technicians follow note-for-note
+and need to apply the composition.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Song&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;play&lt;/span&gt;
+    @notes&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;note&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt;
+
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @guitar&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;play(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @vocal&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sing(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @drum&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hit(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @keyboardist&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;program(note) }
+&lt;span style=&#34;display:block;width:100%;background-color:#3c3d38&#34;&gt;      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @lighting&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;set_lighting(note) }
+&lt;/span&gt;
+      composition&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:value&lt;/span&gt;)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Because each of our different lights respond to the same message (&lt;code&gt;trigger&lt;/code&gt;)
+with the same signature, the lighting controller doesn&amp;rsquo;t need to care, or even
+know, about which light it&amp;rsquo;s operating. All it knows is that it needs to send
+it the trigger signal and apply the required composition.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LightingController&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;set_lighting&lt;/span&gt;(note)
+    lighting_composition &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; note&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;lighting
+
+    trigger(@powered_lights&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;lighting_composition&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;light_name&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;, lighting_composition)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;trigger&lt;/span&gt;(light, composition)
+    light&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;trigger(
+      &lt;span style=&#34;color:#e6db74&#34;&gt;color&lt;/span&gt;: composition&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;color,
+      &lt;span style=&#34;color:#e6db74&#34;&gt;effect&lt;/span&gt;: composition&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;effect,
+    )
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The &lt;code&gt;LightingController&lt;/code&gt;&amp;rsquo;s &lt;code&gt;trigger&lt;/code&gt; method is taking advantage of duck typing.
+Ruby doesn&amp;rsquo;t care what kind of object it&amp;rsquo;s calling in its &lt;code&gt;light&lt;/code&gt; argument. All
+that matters is that it responds to &lt;code&gt;trigger&lt;/code&gt;. We also used duck typing when we
+discussed &lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;dependency injection&lt;/a&gt;. Our guitar
+didn&amp;rsquo;t care how the amplifier made sound, or even if it did make sound. All that
+matters at runtime to satisfy Ruby is that the object we pass in responds to
+&lt;code&gt;play&lt;/code&gt; and accepts an argument.&lt;/p&gt;
+&lt;h2 id=&#34;static-lighting&#34;&gt;Static Lighting &lt;a href=&#34;#static-lighting&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;If you&amp;rsquo;re more familiar with static languages or different typing systems, and
+you need to define common behavior for what a set of classes do, you may be
+familiar with an interface. For example, let&amp;rsquo;s use Java to define an interface
+for our lights.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Light&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;trigger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Color color&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; LightingEffect effect&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Each of our lights would then implement this interface, defining their own
+implementation of what they do when the light is triggered.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Spotlight&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;implements&lt;/span&gt; Light &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;@Override&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;trigger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Color color&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; LightingEffect effect&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;// Turn the light on or off
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We can now set our &lt;code&gt;LightingController&lt;/code&gt;&amp;rsquo;s &lt;code&gt;trigger&lt;/code&gt; method to accept any kind of
+light.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LightingController&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;trigger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Light light&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; LightingComposition composition&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+    light&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;trigger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;composition&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;color&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; composition&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;effect&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This satisfies Java&amp;rsquo;s type system, because anything that implements
+the &lt;code&gt;Light&lt;/code&gt; interface is required to respond to the &lt;code&gt;trigger&lt;/code&gt; method accepting
+those types of arguments.&lt;/p&gt;
+&lt;p&gt;Because of duck typing in Ruby, defining this contract and enforcing it is
+unnecessary. However, Ruby 3 will be &lt;a href=&#34;https://www.ruby-lang.org/en/news/2020/09/25/ruby-3-0-0-preview1-released/&#34;&gt;shipping&lt;/a&gt; with a way to define type
+signatures, called &lt;a href=&#34;https://github.com/ruby/rbs&#34;&gt;RBS&lt;/a&gt;. RBS includes a mechanism
+to define interfaces, which you can read more about &lt;a href=&#34;https://developer.squareup.com/blog/the-state-of-ruby-3-typing/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;rock-on&#34;&gt;Rock On &lt;a href=&#34;#rock-on&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Duck typing is a core design feature of Ruby and other dynamic languages;
+however, it does require a degree of trust. Because everything is determined at
+runtime, there&amp;rsquo;s nothing stopping you from passing in an object to a method that
+doesn&amp;rsquo;t respond to the methods it needs to. That will generate an
+exception, but that may be too late to get that feedback. However, to many
+Rubyists, the flexibility this approach provides often outweighs the cost.&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;re coming from a static typing system, or desiring more direction or
+enforcement about what&amp;rsquo;s expected to be provided as an argument, then
+investigate defining interface types with RBS, which will be part of Ruby 3.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/shedding-light-on-duck-typing&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+     </item>
    
      <item>
        <title>Dependency Injection: Plug In</title>
@@ -17,11 +179,16 @@
        <pubDate>Tue, 24 Nov 2020 14:10:31 -0500</pubDate>
        
        <guid>https://kevin-j-m.github.io/posts/dependency-injection-plug-in/</guid>
-       <description>&lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+       <description>&lt;h2 id=&#34;ruby-software-design-concert-series&#34;&gt;Ruby Software Design Concert Series &lt;a href=&#34;#ruby-software-design-concert-series&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Dependency Injection: Plug In&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;Shedding a Light on Duck Typing&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Dependency injection is a fancy term. It &lt;strong&gt;sounds&lt;/strong&gt; intimidating. The purpose of
 this post is to explain what dependency injection is, how to use it, and why it
 can be beneficial. To illustrate, let&amp;rsquo;s talk about playing a guitar in a
-concert, which comes from my &lt;a href=&#34;http://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
+concert, which comes from my &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
 talk about Ruby&amp;rsquo;s &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module.&lt;/p&gt;
 &lt;h2 id=&#34;sound-check&#34;&gt;Sound Check &lt;a href=&#34;#sound-check&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;A guitarist in a band uses an amplifier when playing a live concert.&lt;/p&gt;

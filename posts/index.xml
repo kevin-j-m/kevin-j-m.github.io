@@ -6,10 +6,133 @@
    <description>Recent content in Posts on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2020 - Kevin Murphy</copyright>
-   <lastBuildDate>Thu, 03 Dec 2020 12:10:31 -0500</lastBuildDate>
+   <lastBuildDate>Sat, 05 Dec 2020 14:00:55 -0500</lastBuildDate>
    
        <atom:link href="https://kevin-j-m.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Synthesizing Composition With Delegation</title>
+       <link>https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/</link>
+       <pubDate>Sat, 05 Dec 2020 14:00:55 -0500</pubDate>
+       
+       <guid>https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/</guid>
+       <description>&lt;h2 id=&#34;ruby-software-design-concert-series&#34;&gt;Ruby Software Design Concert Series &lt;a href=&#34;#ruby-software-design-concert-series&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;Dependency Injection: Plug In&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;Shedding a Light on Duck Typing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Synthesizing Composition With Delegation&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Any application will be comprised of multiple components - in Object-Oriented
+languages, typically classes. Sometimes these classes even work together!
+External users of one of these classes may not know that behind the scenes there
+are more classes working together, nor do they care. The public API does what
+they need it to, and anything else is an implementation detail. However, keeping
+the specialization of these different classes apart, but using them together,
+is beneficial.&lt;/p&gt;
+&lt;p&gt;To demonstrate using composition to model a complex system and using delegation
+in that composition, we will explore how a synthesizer can handle memory
+management to store presets of sounds. This example comes from my &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
+talk about Ruby&amp;rsquo;s
+&lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module.&lt;/p&gt;
+&lt;h2 id=&#34;noise-reduction&#34;&gt;Noise Reduction &lt;a href=&#34;#noise-reduction&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The &lt;a href=&#34;https://en.wikipedia.org/wiki/Synthesizer&#34;&gt;synthesizer&lt;/a&gt; is an instrument
+capable of producing a wide array of sounds. A collection of sounds and effects are known as a patch.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Patch&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;attr_reader&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:sound&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;attr_reader&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:effect&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;attr_reader&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:filter&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;attr_reader&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:oscillator&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You can save these patches on the synthesizer&amp;rsquo;s memory and recall them later for
+easy access.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;patch &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Patch&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new
+synth &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Synthesizer&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new
+
+synth&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;save_patch(&lt;span style=&#34;color:#e6db74&#34;&gt;location&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;:b1&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;patch&lt;/span&gt;: patch)
+synth&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;set_patch(patch)
+synth&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;play_key(&lt;span style=&#34;color:#e6db74&#34;&gt;note&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;:a&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;duration&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;save-you-the-trouble&#34;&gt;Save You the Trouble &lt;a href=&#34;#save-you-the-trouble&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Much like the actual instrument is comprised of various subcomponents, our
+&lt;code&gt;Synthesizer&lt;/code&gt; is made up of various classes that specialize in its area of
+expertise.&lt;/p&gt;
+&lt;p&gt;For example, our synthesizer above doesn&amp;rsquo;t know how to save a patch to its
+onboard memory. It relies on its patch memory to handle that.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Synthesizer&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;save_patch&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;location&lt;/span&gt;:, &lt;span style=&#34;color:#e6db74&#34;&gt;patch&lt;/span&gt;:)
+    @patch_memory&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;write(&lt;span style=&#34;color:#e6db74&#34;&gt;location&lt;/span&gt;: location, &lt;span style=&#34;color:#e6db74&#34;&gt;patch&lt;/span&gt;: patch)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;All the synthesizer itself knows is what &lt;em&gt;message&lt;/em&gt; to send to the memory to
+have it do that. The synthesizer is &lt;strong&gt;delegating&lt;/strong&gt; the responsibility of storing
+these patches to the patch memory instance.&lt;/p&gt;
+&lt;p&gt;Anyone playing the synthesizer does not need to be concerned with how it&amp;rsquo;s
+storing these patches, just that it&amp;rsquo;s doing it. Anyone using our synthesizer
+class isn&amp;rsquo;t aware that there is a separate patch memory class that the
+synthesizer is using.&lt;/p&gt;
+&lt;p&gt;At the same time, our synthesizer doesn&amp;rsquo;t know directly how to access its memory.
+It relies on the &lt;code&gt;PatchMemory&lt;/code&gt; class for that, and delegates any responsibility
+related to memory management to that class. As Sandi Metz describes in
+&lt;a href=&#34;https://www.poodr.com/&#34;&gt;Practical Object-Oriented Design In Ruby&lt;/a&gt;, a synthesizer
+&lt;em&gt;has a&lt;/em&gt; patch memory, as it &lt;em&gt;has a&lt;/em&gt; series of other parts, and those are
+composed together to deliver all the functionality that a synthesizer
+provides.&lt;/p&gt;
+&lt;h2 id=&#34;key-benefits-to-delegation&#34;&gt;Key Benefits to Delegation &lt;a href=&#34;#key-benefits-to-delegation&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Delegation provides a few important drivers that make it easier to wrangle
+complex systems.&lt;/p&gt;
+&lt;h3 id=&#34;specialization&#34;&gt;Specialization &lt;a href=&#34;#specialization&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Our patch memory component is solely focused on interfacing with the onboard
+memory of the instrument, which is where it saves and recalls stored sounds.
+Its tests can dig into all of the edge cases and minutiae that need to be
+accounted for. The implementation can make very specific decisions so that it
+is extremely performant without other areas of the system needing to worry
+about that.&lt;/p&gt;
+&lt;p&gt;A synthesizer itself is a complex system. The memory management is only one
+small part of it. The strength and value-add of our &lt;code&gt;Synthesizer&lt;/code&gt; class is in
+organizing all of these components together, knowing the right messages to pass
+to them, with a public API that doesn&amp;rsquo;t require intimate knowledge of all those
+details. If the internals of our &lt;code&gt;Synthesizer&lt;/code&gt; class handled all of this
+responsibility itself, it would quickly become unwieldy, difficult to navigate,
+hard to read, a challenge to troubleshoot, a burden to test, and feared when
+changes are required.&lt;/p&gt;
+&lt;h3 id=&#34;flexibility--reuse&#34;&gt;Flexibility &amp;amp; Reuse &lt;a href=&#34;#flexibility--reuse&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;In reality, there are many different kinds of synthesizer, all of which have
+different capabilities. Some may be able to store 1,000 different patches on
+board. Others may only have capacity for four. Still more may have expandable
+memory, where you can plug in a USB device for nearly infinite storage.&lt;/p&gt;
+&lt;p&gt;Rather than needing to create entirely different synthesizer classes to handle
+any of these scenarios, instead we only need to model those differences in patch
+memory classes. Our synthesizer can then use any of those and still maintain the
+rest of its functionality, without needing to duplicate it across different
+classes.&lt;/p&gt;
+&lt;p&gt;In this &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/instruments/synthesizer.rb#L41-L47&#34;&gt;example&lt;/a&gt;,
+our synthesizer changes its memory capabilities based on the brand that it is.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize_memory&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; @brand &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:moog&lt;/span&gt;
+    @patch_memory &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;MoogPatchMemory&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;elsif&lt;/span&gt; @brand &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:nord&lt;/span&gt;
+    @patch_memory &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;NordPatchMemory&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Thanks to &lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;duck typing&lt;/a&gt;, as long as these patch
+memory classes respond to the same messages, our &lt;code&gt;Synthesizer&lt;/code&gt; class can use
+either of them interchangeably.&lt;/p&gt;
+&lt;h2 id=&#34;rock-on&#34;&gt;Rock On &lt;a href=&#34;#rock-on&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Composing classes together allows us to create a fully-functional system. A
+class that uses another class to handle a request or responsibility is
+delegating that duty to the helper class. Delegation can encapsulate the
+knowledge of different specialties for code organization without external
+consumers needing to know or care about that implementation detail. Delegating
+responsibility to different classes can also make it easier for the system to
+change, making it more likely to promote code reuse.&lt;/p&gt;
+&lt;p&gt;Next we&amp;rsquo;re going to play one of the greatest hits in software design:
+inheritance.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/synthesizing-composition-with-delegation&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+     </item>
    
      <item>
        <title>Shedding a Light on Duck Typing</title>
@@ -21,6 +144,7 @@
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;Dependency Injection: Plug In&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Shedding a Light on Duck Typing&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Duck typing is commonly used by Rubyists and other users of dynamic languages.
@@ -167,6 +291,7 @@ Rubyists, the flexibility this approach provides often outweighs the cost.&lt;/p
 &lt;p&gt;If you&amp;rsquo;re coming from a static typing system, or desiring more direction or
 enforcement about what&amp;rsquo;s expected to be provided as an argument, then
 investigate defining interface types with RBS, which will be part of Ruby 3.&lt;/p&gt;
+&lt;p&gt;Our concert series continues with a discussion on &lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;composition and delegation&lt;/a&gt;.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/shedding-light-on-duck-typing&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -183,6 +308,7 @@ investigate defining interface types with RBS, which will be part of Ruby 3.&lt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;Dependency Injection: Plug In&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;Shedding a Light on Duck Typing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Dependency injection is a fancy term. It &lt;strong&gt;sounds&lt;/strong&gt; intimidating. The purpose of
@@ -290,6 +416,7 @@ that you need a heavyweight &lt;a href=&#34;https://en.wikipedia.org/wiki/Depend
 allows for more flexibility in collaborating with others, reduces the burden of
 testing, and makes it more clear when classes are growing to the point where
 their current design needs to be reconsidered.&lt;/p&gt;
+&lt;p&gt;The next post in our series explains using &lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;duck typing&lt;/a&gt; in ruby.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/dependency-injection-plug-in&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;

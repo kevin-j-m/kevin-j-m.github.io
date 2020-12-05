@@ -1,0 +1,269 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Kevin Murphy: Software Developer" />
+<meta name="author" content="Kevin Murphy" /><meta property="og:title" content="Synthesizing Composition With Delegation" />
+<meta property="og:description" content="Orchestrating the sum so you don&rsquo;t need to know the parts" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/" />
+<meta property="article:published_time" content="2020-12-05T14:00:55-05:00" />
+<meta property="article:modified_time" content="2020-12-05T14:00:55-05:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Synthesizing Composition With Delegation"/>
+<meta name="twitter:description" content="Orchestrating the sum so you don&rsquo;t need to know the parts"/>
+
+<meta name="generator" content="Hugo 0.78.2" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevin-j-m.github.io/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  <link rel="stylesheet" type="text/css" href="https://kevin-j-m.github.io/css/styles.css" /><link rel='stylesheet' href='https://kevin-j-m.github.io/css/link-style.css'><link rel='stylesheet' href='https://kevin-j-m.github.io/css/code-scroll.css'><link rel='stylesheet' href='https://kevin-j-m.github.io/css/coverage-emoji.css'></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevin-j-m.github.io/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Musings of a Boston-based Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevin-j-m.github.io/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevin-j-m.github.io/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Synthesizing Composition With Delegation</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2020-12-05T14:00:55-05:00">Dec 5, 2020</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevin-j-m.github.io/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevin-j-m.github.io/tags/software-design">#software-design</a>
+                
+                    , 
+                    <a href="https://kevin-j-m.github.io/tags/software-design-concert-series">#software-design-concert-series</a>
+                
+            </em>
+        </li>
+        
+
+        <li>5 minutes read</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="ruby-software-design-concert-series">Ruby Software Design Concert Series <a href="#ruby-software-design-concert-series">🔗</a></h2>
+<ol>
+<li><a href="https://kevin-j-m.github.io/posts/dependency-injection-plug-in/">Dependency Injection: Plug In</a></li>
+<li><a href="https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/">Shedding a Light on Duck Typing</a></li>
+<li><strong>Synthesizing Composition With Delegation</strong></li>
+</ol>
+<h2 id="setting-the-stage">Setting the Stage <a href="#setting-the-stage">🔗</a></h2>
+<p>Any application will be comprised of multiple components - in Object-Oriented
+languages, typically classes. Sometimes these classes even work together!
+External users of one of these classes may not know that behind the scenes there
+are more classes working together, nor do they care. The public API does what
+they need it to, and anything else is an implementation detail. However, keeping
+the specialization of these different classes apart, but using them together,
+is beneficial.</p>
+<p>To demonstrate using composition to model a complex system and using delegation
+in that composition, we will explore how a synthesizer can handle memory
+management to store presets of sounds. This example comes from my <a href="https://rubyconf.org/program/sessions#session-1044">RubyConf 2020</a>
+talk about Ruby&rsquo;s
+<a href="https://docs.ruby-lang.org/en/master/Coverage.html">Coverage</a> module.</p>
+<h2 id="noise-reduction">Noise Reduction <a href="#noise-reduction">🔗</a></h2>
+<p>The <a href="https://en.wikipedia.org/wiki/Synthesizer">synthesizer</a> is an instrument
+capable of producing a wide array of sounds. A collection of sounds and effects are known as a patch.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Patch</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:sound</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:effect</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:filter</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:oscillator</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>You can save these patches on the synthesizer&rsquo;s memory and recall them later for
+easy access.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">patch <span style="color:#f92672">=</span> <span style="color:#66d9ef">Patch</span><span style="color:#f92672">.</span>new
+synth <span style="color:#f92672">=</span> <span style="color:#66d9ef">Synthesizer</span><span style="color:#f92672">.</span>new
+
+synth<span style="color:#f92672">.</span>save_patch(<span style="color:#e6db74">location</span>: <span style="color:#e6db74">:b1</span>, <span style="color:#e6db74">patch</span>: patch)
+synth<span style="color:#f92672">.</span>set_patch(patch)
+synth<span style="color:#f92672">.</span>play_key(<span style="color:#e6db74">note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">1</span>)
+</code></pre></div><h2 id="save-you-the-trouble">Save You the Trouble <a href="#save-you-the-trouble">🔗</a></h2>
+<p>Much like the actual instrument is comprised of various subcomponents, our
+<code>Synthesizer</code> is made up of various classes that specialize in its area of
+expertise.</p>
+<p>For example, our synthesizer above doesn&rsquo;t know how to save a patch to its
+onboard memory. It relies on its patch memory to handle that.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Synthesizer</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">save_patch</span>(<span style="color:#e6db74">location</span>:, <span style="color:#e6db74">patch</span>:)
+    @patch_memory<span style="color:#f92672">.</span>write(<span style="color:#e6db74">location</span>: location, <span style="color:#e6db74">patch</span>: patch)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>All the synthesizer itself knows is what <em>message</em> to send to the memory to
+have it do that. The synthesizer is <strong>delegating</strong> the responsibility of storing
+these patches to the patch memory instance.</p>
+<p>Anyone playing the synthesizer does not need to be concerned with how it&rsquo;s
+storing these patches, just that it&rsquo;s doing it. Anyone using our synthesizer
+class isn&rsquo;t aware that there is a separate patch memory class that the
+synthesizer is using.</p>
+<p>At the same time, our synthesizer doesn&rsquo;t know directly how to access its memory.
+It relies on the <code>PatchMemory</code> class for that, and delegates any responsibility
+related to memory management to that class. As Sandi Metz describes in
+<a href="https://www.poodr.com/">Practical Object-Oriented Design In Ruby</a>, a synthesizer
+<em>has a</em> patch memory, as it <em>has a</em> series of other parts, and those are
+composed together to deliver all the functionality that a synthesizer
+provides.</p>
+<h2 id="key-benefits-to-delegation">Key Benefits to Delegation <a href="#key-benefits-to-delegation">🔗</a></h2>
+<p>Delegation provides a few important drivers that make it easier to wrangle
+complex systems.</p>
+<h3 id="specialization">Specialization <a href="#specialization">🔗</a></h3>
+<p>Our patch memory component is solely focused on interfacing with the onboard
+memory of the instrument, which is where it saves and recalls stored sounds.
+Its tests can dig into all of the edge cases and minutiae that need to be
+accounted for. The implementation can make very specific decisions so that it
+is extremely performant without other areas of the system needing to worry
+about that.</p>
+<p>A synthesizer itself is a complex system. The memory management is only one
+small part of it. The strength and value-add of our <code>Synthesizer</code> class is in
+organizing all of these components together, knowing the right messages to pass
+to them, with a public API that doesn&rsquo;t require intimate knowledge of all those
+details. If the internals of our <code>Synthesizer</code> class handled all of this
+responsibility itself, it would quickly become unwieldy, difficult to navigate,
+hard to read, a challenge to troubleshoot, a burden to test, and feared when
+changes are required.</p>
+<h3 id="flexibility--reuse">Flexibility &amp; Reuse <a href="#flexibility--reuse">🔗</a></h3>
+<p>In reality, there are many different kinds of synthesizer, all of which have
+different capabilities. Some may be able to store 1,000 different patches on
+board. Others may only have capacity for four. Still more may have expandable
+memory, where you can plug in a USB device for nearly infinite storage.</p>
+<p>Rather than needing to create entirely different synthesizer classes to handle
+any of these scenarios, instead we only need to model those differences in patch
+memory classes. Our synthesizer can then use any of those and still maintain the
+rest of its functionality, without needing to duplicate it across different
+classes.</p>
+<p>In this <a href="https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/instruments/synthesizer.rb#L41-L47">example</a>,
+our synthesizer changes its memory capabilities based on the brand that it is.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize_memory</span>
+  <span style="color:#66d9ef">if</span> @brand <span style="color:#f92672">==</span> <span style="color:#e6db74">:moog</span>
+    @patch_memory <span style="color:#f92672">=</span> <span style="color:#66d9ef">MoogPatchMemory</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">elsif</span> @brand <span style="color:#f92672">==</span> <span style="color:#e6db74">:nord</span>
+    @patch_memory <span style="color:#f92672">=</span> <span style="color:#66d9ef">NordPatchMemory</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Thanks to <a href="https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/">duck typing</a>, as long as these patch
+memory classes respond to the same messages, our <code>Synthesizer</code> class can use
+either of them interchangeably.</p>
+<h2 id="rock-on">Rock On <a href="#rock-on">🔗</a></h2>
+<p>Composing classes together allows us to create a fully-functional system. A
+class that uses another class to handle a request or responsibility is
+delegating that duty to the helper class. Delegation can encapsulate the
+knowledge of different specialties for code organization without external
+consumers needing to know or care about that implementation detail. Delegating
+responsibility to different classes can also make it easier for the system to
+change, making it more likely to promote code reuse.</p>
+<p>Next we&rsquo;re going to play one of the greatest hits in software design:
+inheritance.</p>
+<blockquote>
+<p>This post originally published on <a href="https://blog.thegnar.co/synthesizing-composition-with-delegation">The Gnar Company blog</a>.</p>
+</blockquote>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/"><i class="fa fa-chevron-circle-left"></i> Shedding a Light on Duck Typing</a>
+        </li>
+        
+        
+    </ul>
+</section>
+    
+    
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2020 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevin-j-m.github.io/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="https://kevin-j-m.github.io/js/scripts.js"></script>
+
+</body>
+
+</html>
+

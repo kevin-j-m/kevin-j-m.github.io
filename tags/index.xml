@@ -6,10 +6,233 @@
    <description>Recent content in Tags on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2020 - Kevin Murphy</copyright>
-   <lastBuildDate>Sat, 05 Dec 2020 14:00:55 -0500</lastBuildDate>
+   <lastBuildDate>Thu, 10 Dec 2020 16:56:38 -0500</lastBuildDate>
    
        <atom:link href="https://kevin-j-m.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Inheritance Derivative Songwriting</title>
+       <link>https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/</link>
+       <pubDate>Thu, 10 Dec 2020 16:56:38 -0500</pubDate>
+       
+       <guid>https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/</guid>
+       <description>&lt;h2 id=&#34;ruby-software-design-concert-series&#34;&gt;Ruby Software Design Concert Series &lt;a href=&#34;#ruby-software-design-concert-series&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;Dependency Injection: Plug In&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;Shedding a Light on Duck Typing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inheritance: Derivative Songwriting&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Inheritance sets up a relationship or a taxonomy between classes to allow for
+code reuse. It is both a commonly reached for and commonly derided tool which
+has its place, but must be wielded with care. We&amp;rsquo;ll use inheritance to write new
+songs for our concert setlist, an example which comes from my &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
+talk about Ruby&amp;rsquo;s
+&lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module.&lt;/p&gt;
+&lt;h2 id=&#34;song-structure&#34;&gt;Song Structure &lt;a href=&#34;#song-structure&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;When you create a song, it needs a name (or at least a working title) and a
+series of notes. The notes may change over time, and the title may be refined,
+but for our purposes, we&amp;rsquo;re not calling it a song until there&amp;rsquo;s a bit more than
+an empty page.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Song&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;notes&lt;/span&gt;: &lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt;, name:)
+    @notes &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; notes
+    @name &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; name
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;When you&amp;rsquo;re writing songs for a band or yourself, you need to be able to play the
+song. In this example, our song is written for a band that has a known number of
+instruments.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Song&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;play&lt;/span&gt;
+    @notes&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;note&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt;
+
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @guitar&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;play(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @vocal&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sing(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @drum&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hit(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @keyboardist&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;program(note) }
+
+      composition&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:value&lt;/span&gt;)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;For every note (representing a beat or measure of the song) each member of the
+band needs to play their part simultaneously. All of these instruments playing
+together note for note comprise the song.&lt;/p&gt;
+&lt;h2 id=&#34;on-repeat&#34;&gt;On Repeat &lt;a href=&#34;#on-repeat&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;A touring band is going to play the same song &lt;strong&gt;many&lt;/strong&gt; times night after night.
+For each concert on the tour, the band needs to construct a setlist of all the
+songs that they&amp;rsquo;ll play that night, and in what order.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Setlist&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;add_song&lt;/span&gt;(song)
+    @songs &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; song
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Transcribing all the notes for each song over and over again for every concert
+would be tedious and unnecessary. To save all that work, each song that could
+appear in the band&amp;rsquo;s setlist is catalogued as a separate class.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;TheLineBeginsToBlur&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize&lt;/span&gt;
+    @name &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;The Line Begins To Blur&amp;#34;&lt;/span&gt;
+    @notes &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; verse_1 &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; chorus &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; verse_2 &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; chorus &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; solo &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; outro
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We don&amp;rsquo;t need to accept any arguments for the name of the song or the notes
+because it&amp;rsquo;s already a fully-formed song. We&amp;rsquo;re not going to change the
+arrangement in the middle of the tour. However, we &lt;strong&gt;do&lt;/strong&gt; need to be able to
+play the song. As such, let&amp;rsquo;s copy and paste the &lt;code&gt;play&lt;/code&gt; method as something we
+can do for our specific song here.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;TheLineBeginsToBlur&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;play&lt;/span&gt;
+    @notes&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;note&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt;
+
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @guitar&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;play(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @vocal&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sing(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @drum&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hit(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @keyboardist&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;program(note) }
+
+      composition&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:value&lt;/span&gt;)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This is great because we now have a stable of songs we can pull from every night
+when creating our setlist; however, rewriting the &lt;code&gt;play&lt;/code&gt; method in each song is
+not great. If the implementation of &lt;code&gt;play&lt;/code&gt; needs to change, we need to
+propagate that change across every song. If we forget to add a &lt;code&gt;play&lt;/code&gt; method to
+one of our songs, everyone is going to look foolish when the band is staring
+blankly at each other, unsure of what to do.&lt;/p&gt;
+&lt;h2 id=&#34;composing-a-song&#34;&gt;Composing a Song &lt;a href=&#34;#composing-a-song&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Taking a note from our earlier post on
+&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;composition and delegation&lt;/a&gt;, we can
+build a class that&amp;rsquo;s solely responsible for playing the song.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;SongPerformer&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize&lt;/span&gt;(notes)
+    @notes &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; notes
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;play&lt;/span&gt;
+    @notes&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;note&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt;
+
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @guitar&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;play(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @vocal&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sing(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @drum&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hit(note) }
+      composition &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new { @keyboardist&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;program(note) }
+
+      composition&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:value&lt;/span&gt;)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;All of our songs can then use that performer and delegate the responsibility of
+playing to it.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;TheLineBeginsToBlur&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;play&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;SongPerformer&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(@notes)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;play
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We have now isolated the responsibility of playing the song to one place. If we
+need to change the way in which songs are played in totality, we can do so in
+the &lt;code&gt;SongPerformer&lt;/code&gt; and that change will be reflected in all of our songs. We
+can even &lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;dependency inject&lt;/a&gt; the performer class
+into the song, allowing us to set up different arrangements of the same song.
+Even with those benefits, we &lt;em&gt;do&lt;/em&gt; still have to remember to implement a &lt;code&gt;play&lt;/code&gt;
+method that calls our &lt;code&gt;SongPerformer&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;There is another option we can explore: inheritance.&lt;/p&gt;
+&lt;h2 id=&#34;playing-the-hits&#34;&gt;Playing the Hits &lt;a href=&#34;#playing-the-hits&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;We can leverage our existing, generic, &lt;code&gt;Song&lt;/code&gt; class and have all of our classes
+about specific songs &lt;em&gt;inherit&lt;/em&gt; the behavior of the &lt;code&gt;Song&lt;/code&gt; class.&lt;/p&gt;
+&lt;p&gt;By doing this, our different songs don&amp;rsquo;t need to implement the &lt;code&gt;play&lt;/code&gt; method.
+They&amp;rsquo;ll get this behavior from &lt;code&gt;Song&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;TheLineBeginsToBlur&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Song&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;(
+      name: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;The Line Begins To Blur&amp;#34;&lt;/span&gt;,
+      &lt;span style=&#34;color:#e6db74&#34;&gt;notes&lt;/span&gt;: verse_1 &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; chorus &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; verse_2 &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; chorus &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; solo &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; outro,
+    )
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We denote that we&amp;rsquo;re inheriting from the &lt;code&gt;Song&lt;/code&gt; class with &lt;code&gt;&amp;lt; Song&lt;/code&gt;. &lt;code&gt;Song&lt;/code&gt; is
+our &amp;ldquo;base class&amp;rdquo;. In our constructor, we then call &lt;code&gt;Song&lt;/code&gt;&amp;rsquo;s constructor with
+&lt;code&gt;super&lt;/code&gt;, passing in the title of the song and the notes that should be played
+with the song. &lt;code&gt;TheLineBeginsToBlur&lt;/code&gt; has no reference to &lt;code&gt;play&lt;/code&gt; in its class
+definition. It still responds to it because &lt;code&gt;Song&lt;/code&gt; does, and we&amp;rsquo;re
+inheriting all of &lt;code&gt;Song&lt;/code&gt;s behavior.&lt;/p&gt;
+&lt;p&gt;When we discussed composition, we mentioned Sandi Metz&amp;rsquo;s &lt;a href=&#34;https://www.poodr.com/&#34;&gt;Practical Object-Oriented Design In Ruby&lt;/a&gt;
+for her recommendation to use composition when modeling a &lt;em&gt;has a&lt;/em&gt; relationship.
+In that same section, she recommends using inheritance when you encounter an
+&lt;em&gt;is a&lt;/em&gt; relationship. In our case, a particular song is a &lt;strong&gt;specialized&lt;/strong&gt;
+version of our &lt;code&gt;Song&lt;/code&gt; class.&lt;/p&gt;
+&lt;p&gt;Inheritance is a common design choice in Object-Oriented languages. Specifically
+in Ruby, if you&amp;rsquo;ve worked with Rails, then you&amp;rsquo;ve likely used inheritance all
+over the place. All of your models inherit from &lt;code&gt;ApplicationRecord&lt;/code&gt; (ultimately
+inheriting from &lt;code&gt;ActiveRecord::Base&lt;/code&gt;) and all of your controllers inherit
+from &lt;code&gt;ApplicationController&lt;/code&gt; (ultimately inheriting from
+&lt;code&gt;ActionController::Base&lt;/code&gt;).&lt;/p&gt;
+&lt;h2 id=&#34;a-measured-approach&#34;&gt;A Measured Approach &lt;a href=&#34;#a-measured-approach&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Inheritance does come with some drawbacks. Enough that it&amp;rsquo;s commonly recommended
+to avoid. You may have encountered the phrase, &amp;ldquo;prefer composition over
+inheritance&amp;rdquo; before. Let&amp;rsquo;s discuss why that is.&lt;/p&gt;
+&lt;h3 id=&#34;transparency&#34;&gt;Transparency &lt;a href=&#34;#transparency&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Inheritance makes it more difficult to know what behaviors a particular class
+has. None of our song classes that inherit from &lt;code&gt;Song&lt;/code&gt; have a &lt;code&gt;play&lt;/code&gt; method
+in their class definition. However, because they all inherit from &lt;code&gt;Song&lt;/code&gt;, they
+all respond to &lt;code&gt;play&lt;/code&gt;. Determining that is not obvious based on a quick reading
+of the class.&lt;/p&gt;
+&lt;h3 id=&#34;limitations-of-base-class&#34;&gt;Limitations of Base Class &lt;a href=&#34;#limitations-of-base-class&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Any inheriting classes shouldn&amp;rsquo;t necessarily do things differently than how the
+base class does. Of course, you &lt;em&gt;can&lt;/em&gt; do this, but it should be used very
+judiciously. We could redefine the &lt;code&gt;play&lt;/code&gt; method in a particular class - sharing
+the rest of the behavior and redefining &lt;code&gt;play&lt;/code&gt; for our one-off special
+exception. The issue is that these exceptions start to pile up, we end up
+chipping away at the commonality, and the shared understanding of what it means
+to inherit from the base class gets eroded with each change that seems small
+on its own.&lt;/p&gt;
+&lt;p&gt;For our songs, if we suddenly need to write a song for a string quartet, our
+&lt;code&gt;Song&lt;/code&gt; class isn&amp;rsquo;t helpful. It assumes a guitar, vocalist, drummer, and
+keyboardist. While particularly in Ruby we have an out by being able to redefine
+any method definition, from a design perspective, we should be willing to accept
+the limitations that inheritance places on us within the scope of our domain.
+If those limitations cannot be respected, then consider another organizational
+structure, like composition.&lt;/p&gt;
+&lt;h3 id=&#34;future-inflexibility&#34;&gt;Future Inflexibility &lt;a href=&#34;#future-inflexibility&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;It&amp;rsquo;s often impossible to know how your system will evolve over time. Inheritance
+can lock you in to a very specific representation of how your system should be
+modeled, and the assumptions that went into developing that structure may not
+hold true as features are needed to be added and the needs that the application
+must serve grow.&lt;/p&gt;
+&lt;p&gt;This rigidity over time ends up getting pushed and strained
+enough that maintaining inheritance structures becomes difficult. In my
+opinion, it is this long-view perspective that becomes the principal reason why
+inheritance is sparsely recommended by practitioners. It can work great as
+long as you have perfect knowledge about both the current and future state of
+your system. The reality is, it&amp;rsquo;s extremely rare to be in that situation.&lt;/p&gt;
+&lt;p&gt;In this example, our application is modeling a concert tour for one band, the
+members and makeup of which &lt;strong&gt;shouldn&amp;rsquo;t&lt;/strong&gt; change throughout the course of the
+tour. We&amp;rsquo;ve made the bet that even if the guitarist we start the tour with is
+replaced, there will still &lt;strong&gt;be&lt;/strong&gt; a guitarist, and we will not have picked up a
+french horn player along the way to play two of the songs. From a practicality
+standpoint, it&amp;rsquo;s reasonable to be tied to this rigid structure of how to play
+each of these songs on stage in the context of this application. However, from
+the onset, we&amp;rsquo;ve already identified one way in which this structure may come
+back to haunt us.&lt;/p&gt;
+&lt;h2 id=&#34;rock-on&#34;&gt;Rock On &lt;a href=&#34;#rock-on&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Inheritance is often reached for as a quick and easy way to achieve code reuse.
+It does just that; however, it imposes limitations and constraints on your system
+that can make it more difficult or painful to change over time. Those
+limitations may be intentional and required guardrails - but often times, they
+end up being factors that cause pain, tears, multiple &amp;ldquo;code spikes&amp;rdquo;, and
+&amp;ldquo;technical debt sprints&amp;rdquo; to allow for needed future functionality. Inheritance
+shouldn&amp;rsquo;t be avoided wholesale based on this, but it should be carefully and
+judiciously applied in your systems.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/inheritance-derivative-songwriting&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+     </item>
    
      <item>
        <title>Synthesizing Composition With Delegation</title>
@@ -22,6 +245,7 @@
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;Dependency Injection: Plug In&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;Shedding a Light on Duck Typing&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Synthesizing Composition With Delegation&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Any application will be comprised of multiple components - in Object-Oriented
@@ -127,7 +351,7 @@ consumers needing to know or care about that implementation detail. Delegating
 responsibility to different classes can also make it easier for the system to
 change, making it more likely to promote code reuse.&lt;/p&gt;
 &lt;p&gt;Next we&amp;rsquo;re going to play one of the greatest hits in software design:
-inheritance.&lt;/p&gt;
+&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;inheritance&lt;/a&gt;.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/synthesizing-composition-with-delegation&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -145,6 +369,7 @@ inheritance.&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;Dependency Injection: Plug In&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Shedding a Light on Duck Typing&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Duck typing is commonly used by Rubyists and other users of dynamic languages.
@@ -309,6 +534,7 @@ investigate defining interface types with RBS, which will be part of Ruby 3.&lt;
 &lt;li&gt;&lt;strong&gt;Dependency Injection: Plug In&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;Shedding a Light on Duck Typing&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Dependency injection is a fancy term. It &lt;strong&gt;sounds&lt;/strong&gt; intimidating. The purpose of

@@ -6,10 +6,100 @@
    <description>Recent content in Tags on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2020 - Kevin Murphy</copyright>
-   <lastBuildDate>Thu, 10 Dec 2020 16:56:38 -0500</lastBuildDate>
+   <lastBuildDate>Mon, 14 Dec 2020 18:48:24 -0500</lastBuildDate>
    
        <atom:link href="https://kevin-j-m.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Using Sonic Pi to Play Music With Ruby</title>
+       <link>https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/</link>
+       <pubDate>Mon, 14 Dec 2020 18:48:24 -0500</pubDate>
+       
+       <guid>https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/</guid>
+       <description>&lt;h2 id=&#34;ruby-software-design-concert-series&#34;&gt;Ruby Software Design Concert Series &lt;a href=&#34;#ruby-software-design-concert-series&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;Dependency Injection: Plug In&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;Shedding a Light on Duck Typing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Using Sonic Pi To Play Music With Ruby&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;My &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
+talk about Ruby&amp;rsquo;s &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module
+uses examples about playing live music. As such, I had the ambitious goal of
+delivering a live performance of some music during the presentation. This ended
+up getting cut for a variety of reasons (time, concern about the audio working
+on the streaming platform, the reality of ambition turning into actual work to
+do), but I built out the structure to support this for one instrument, the
+guitar. This is the first of two posts that&amp;rsquo;ll describe the work that I did to
+support this.&lt;/p&gt;
+&lt;p&gt;First, I had to figure out if it was possible to make this happen. I wanted to
+hook into my existing code samples and trigger musical notes from them somehow.
+As such, I decided to build my first amplifier, virtually, without fear of
+blowing up any capacitors.&lt;/p&gt;
+&lt;h2 id=&#34;parts-list&#34;&gt;Parts List &lt;a href=&#34;#parts-list&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;In the earlier post on &lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;dependency injection&lt;/a&gt;,
+I created a &lt;code&gt;PracticeAmplifier&lt;/code&gt; &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/practice_amplifier.rb&#34;&gt;class&lt;/a&gt;
+that did nothing so I could use it in tests, rather than the &amp;ldquo;regular&amp;rdquo; amplifier.&lt;/p&gt;
+&lt;p&gt;What the &amp;ldquo;regular&amp;rdquo; &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/amplifier.rb&#34;&gt;amplifier&lt;/a&gt;
+does is interface with &lt;a href=&#34;https://sonic-pi.net/&#34;&gt;Sonic Pi&lt;/a&gt;, which is awesome
+software that&amp;rsquo;ll make sound and music driven by code. Sonic Pi comes with
+an &lt;a href=&#34;https://sonic-pi.net/tutorial.html#section-1-2&#34;&gt;IDE&lt;/a&gt; of sorts that you can
+use to program the composition you&amp;rsquo;d like to play, and get immediate feedback
+from hearing how your code is translated into audio. It&amp;rsquo;s a great way to lose
+track of time for a night or two (or more). However, I was envisioning
+controlling my audio from the code examples directly. I didn&amp;rsquo;t want to have to
+work within the IDE.&lt;/p&gt;
+&lt;p&gt;To get around using the IDE directly, I found the &lt;a href=&#34;https://github.com/Widdershin/sonic-pi-cli&#34;&gt;sonic-pi-cli&lt;/a&gt;
+gem. Its principal use case is to be used directly in the
+&lt;a href=&#34;https://github.com/Widdershin/sonic-pi-cli/blob/c4280f98edcec4de99801d013ec946cc47787932/bin/sonic_pi&#34;&gt;terminal&lt;/a&gt;.
+However, it&amp;rsquo;s a gem, and written in ruby, and the core functionality is
+available in a &lt;a href=&#34;https://github.com/Widdershin/sonic-pi-cli/blob/c4280f98edcec4de99801d013ec946cc47787932/lib/sonic_pi.rb&#34;&gt;class&lt;/a&gt;
+that you can use in any of your code.&lt;/p&gt;
+&lt;h2 id=&#34;wiring-schematic&#34;&gt;Wiring Schematic &lt;a href=&#34;#wiring-schematic&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;With enough knowledge and conviction to be dangerous, I set out wiring up my
+amplifier. The CLI requires that Sonic Pi itself is running, and first ensures
+it can communicate with it - and to do so, it needs to know what port the
+software is running on. Sonic Pi used to always run on the same port; however,
+it has since changed to run on a &lt;a href=&#34;https://github.com/sonic-pi-net/sonic-pi/commit/d245d93c5b797ad76fa333f829c32d67480af96c&#34;&gt;dynamically-determined&lt;/a&gt; port.&lt;/p&gt;
+&lt;p&gt;The CLI already implemented the functionality to &lt;a href=&#34;https://github.com/Widdershin/sonic-pi-cli/blob/20a18f91b4aa24de9f4b187aa20c69334ddf0329/bin/sonic_pi#L13-L33&#34;&gt;find the port&lt;/a&gt;
+to send to the &lt;code&gt;SonicPi&lt;/code&gt; class, so for demonstration purposes, I copied that in
+my initializer.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Amplifier&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize&lt;/span&gt;
+    @port &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; find_port
+    @speaker &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;SonicPi&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(@port)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt;
+
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;find_port&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# Code from sonic-pi-cli&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Needing to find the port is now something that the &lt;code&gt;SonicPi&lt;/code&gt; class can do &lt;a href=&#34;https://github.com/Widdershin/sonic-pi-cli/pull/23&#34;&gt;by itself&lt;/a&gt;
+as of version v0.2.0; however, this work preceded that.&lt;/p&gt;
+&lt;p&gt;The rest of the functionality in the &lt;code&gt;Amplifier&lt;/code&gt; class is now to &lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;delegate&lt;/a&gt; commands to the &lt;code&gt;@speaker&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Amplifier&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;play&lt;/span&gt;(sound)
+    @speaker&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;run(sound)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;rock-on&#34;&gt;Rock On &lt;a href=&#34;#rock-on&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Using this amplifier still requires knowing all the correct
+&lt;a href=&#34;https://sonic-pi.net/tutorial.html#section-2-1&#34;&gt;commands&lt;/a&gt; to send to Sonic Pi,
+and Sonic Pi must be running; however, we can now trigger it to execute these
+commands from outside of its IDE. We have a way to &lt;em&gt;send&lt;/em&gt; sound
+out of our ruby code.&lt;/p&gt;
+&lt;p&gt;In our next post, we&amp;rsquo;ll take a look at how we &lt;em&gt;generate&lt;/em&gt; the sound to send from
+a guitar to an amplifier.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/using-sonic-pi-to-play-music-with-ruby&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+     </item>
    
      <item>
        <title>Inheritance: Derivative Songwriting</title>
@@ -23,6 +113,7 @@
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;Shedding a Light on Duck Typing&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Inheritance: Derivative Songwriting&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;Using Sonic Pi To Play Music With Ruby&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Inheritance sets up a relationship or a taxonomy between classes to allow for
@@ -228,6 +319,10 @@ end up being factors that cause pain, tears, multiple &amp;ldquo;code spikes&amp
 &amp;ldquo;technical debt sprints&amp;rdquo; to allow for needed future functionality. Inheritance
 shouldn&amp;rsquo;t be avoided wholesale based on this, but it should be carefully and
 judiciously applied in your systems.&lt;/p&gt;
+&lt;p&gt;Our next post will move a little further from theory and explore how to build an
+&lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;interface to Sonic Pi&lt;/a&gt;,
+so that these principles can work together to actually make sounds on your
+computer.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/inheritance-derivative-songwriting&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -246,6 +341,7 @@ judiciously applied in your systems.&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;Shedding a Light on Duck Typing&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Synthesizing Composition With Delegation&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;Using Sonic Pi To Play Music With Ruby&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Any application will be comprised of multiple components - in Object-Oriented
@@ -370,6 +466,7 @@ change, making it more likely to promote code reuse.&lt;/p&gt;
 &lt;li&gt;&lt;strong&gt;Shedding a Light on Duck Typing&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;Using Sonic Pi To Play Music With Ruby&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Duck typing is commonly used by Rubyists and other users of dynamic languages.
@@ -535,6 +632,7 @@ investigate defining interface types with RBS, which will be part of Ruby 3.&lt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;Shedding a Light on Duck Typing&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;Using Sonic Pi To Play Music With Ruby&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Dependency injection is a fancy term. It &lt;strong&gt;sounds&lt;/strong&gt; intimidating. The purpose of

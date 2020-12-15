@@ -168,7 +168,7 @@ software is running on. Sonic Pi used to always run on the same port; however,
 it has since changed to run on a <a href="https://github.com/sonic-pi-net/sonic-pi/commit/d245d93c5b797ad76fa333f829c32d67480af96c">dynamically-determined</a> port.</p>
 <p>The CLI already implemented the functionality to <a href="https://github.com/Widdershin/sonic-pi-cli/blob/20a18f91b4aa24de9f4b187aa20c69334ddf0329/bin/sonic_pi#L13-L33">find the port</a>
 to send to the <code>SonicPi</code> class, so for demonstration purposes, I copied that in
-my initializer.</p>
+my constructor.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Amplifier</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
     @port <span style="color:#f92672">=</span> find_port

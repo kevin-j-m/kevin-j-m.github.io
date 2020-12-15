@@ -259,7 +259,7 @@ software is running on. Sonic Pi used to always run on the same port; however,
 it has since changed to run on a &lt;a href=&#34;https://github.com/sonic-pi-net/sonic-pi/commit/d245d93c5b797ad76fa333f829c32d67480af96c&#34;&gt;dynamically-determined&lt;/a&gt; port.&lt;/p&gt;
 &lt;p&gt;The CLI already implemented the functionality to &lt;a href=&#34;https://github.com/Widdershin/sonic-pi-cli/blob/20a18f91b4aa24de9f4b187aa20c69334ddf0329/bin/sonic_pi#L13-L33&#34;&gt;find the port&lt;/a&gt;
 to send to the &lt;code&gt;SonicPi&lt;/code&gt; class, so for demonstration purposes, I copied that in
-my initializer.&lt;/p&gt;
+my constructor.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Amplifier&lt;/span&gt;
   &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize&lt;/span&gt;
     @port &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; find_port

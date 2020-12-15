@@ -12,6 +12,198 @@
    
    
      <item>
+       <title>Stringing Code Together to Play Music</title>
+       <link>https://kevin-j-m.github.io/posts/stringing-code-together-to-play-music/</link>
+       <pubDate>Tue, 15 Dec 2020 07:03:46 -0500</pubDate>
+       
+       <guid>https://kevin-j-m.github.io/posts/stringing-code-together-to-play-music/</guid>
+       <description>&lt;h2 id=&#34;ruby-software-design-concert-series&#34;&gt;Ruby Software Design Concert Series &lt;a href=&#34;#ruby-software-design-concert-series&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;Dependency Injection: Plug In&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;Shedding a Light on Duck Typing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;Using Sonic Pi To Play Music With Ruby&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stringing Code Together To Play Music&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;In our &lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;last post&lt;/a&gt;, I talked about how I built an interface to &lt;a href=&#34;https://sonic-pi.net&#34;&gt;Sonic Pi&lt;/a&gt; when
+I was preparing my &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt; talk about Ruby&amp;rsquo;s &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module. At the
+end of that post, we could send sounds to Sonic Pi. Today, we&amp;rsquo;ll have our code
+play the guitar, and send those sounds to our amplifier.&lt;/p&gt;
+&lt;h2 id=&#34;string-theory&#34;&gt;String Theory &lt;a href=&#34;#string-theory&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;A guitar is a string instrument, and each of those strings make a sound when you
+play them. For this example we&amp;rsquo;ll focus on the happy path, which is that
+plucking the string plays the expected note. The code I built also considers
+that strings can break, and attempting to play broken strings won&amp;rsquo;t work. You
+can look at the &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/instruments/guitar/string.rb#L20-L28&#34;&gt;full implementation&lt;/a&gt;
+to see how that works.&lt;/p&gt;
+&lt;p&gt;Plucking an individual string creates a new sound.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;String&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;pluck&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;fret&lt;/span&gt;:)
+    &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+    play_note(fret)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt;
+
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;play_note&lt;/span&gt;(fret)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;StringSound&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(
+      &lt;span style=&#34;color:#e6db74&#34;&gt;string_number&lt;/span&gt;: @number,
+      &lt;span style=&#34;color:#e6db74&#34;&gt;tuning_note&lt;/span&gt;: tuning_note,
+      &lt;span style=&#34;color:#e6db74&#34;&gt;fret_number&lt;/span&gt;: fret,
+    )
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The &lt;code&gt;@number&lt;/code&gt; variable is which string on the guitar it is, with index 0 being
+the low E, and index 5 being the high E, in standard tuning. The &lt;code&gt;tuning_note&lt;/code&gt;
+is what note that string is tuned to, because any string &lt;strong&gt;can&lt;/strong&gt; be tuned to any
+note. Again, for simplicity here, we&amp;rsquo;ll assume standard tuning (EADGBE).&lt;/p&gt;
+&lt;p&gt;Our &lt;code&gt;StringSound&lt;/code&gt; class converts that information into the command we&amp;rsquo;ll send to
+Sonic Pi. All notes in Sonic Pi are represented with a &lt;a href=&#34;https://sonic-pi.net/tutorial#section-2-1&#34;&gt;number&lt;/a&gt;,
+and we can also use &amp;ldquo;traditional&amp;rdquo; note names, passed to it as a symbol. We can
+use that to figure out the note our string would play if you plucked it without
+pressing down on a fret.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;StringSound&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;playable_note_root&lt;/span&gt;
+    playable_note_key&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dig(@string_number, @tuning_note)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;playable_note_key&lt;/span&gt;
+    {
+      &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; { &lt;span style=&#34;color:#e6db74&#34;&gt;e&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;:e2&lt;/span&gt; },
+      &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; { &lt;span style=&#34;color:#e6db74&#34;&gt;a&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;:a2&lt;/span&gt; },
+      &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; { &lt;span style=&#34;color:#e6db74&#34;&gt;d&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;:d3&lt;/span&gt; },
+      &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; { &lt;span style=&#34;color:#e6db74&#34;&gt;g&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;:g3&lt;/span&gt; },
+      &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; { &lt;span style=&#34;color:#e6db74&#34;&gt;b&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;:b3&lt;/span&gt; },
+      &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; { &lt;span style=&#34;color:#e6db74&#34;&gt;e&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;:e4&lt;/span&gt; },
+    }
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The number next to the note (the &lt;code&gt;2&lt;/code&gt; in &lt;code&gt;:e2&lt;/code&gt; for the low E string) represents
+the octave.&lt;/p&gt;
+&lt;p&gt;A helpful thing here is that the note is still a number to Sonic Pi. We can add
+the fret number pressed on the string to the root note of the string and Sonic
+Pi will know what note that is.
+We&amp;rsquo;ll construct a Sonic Pi command to send to our &lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;amplifier&lt;/a&gt;
+to play that note.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;StringSound&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;amp_value&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;(note(:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;playable_note_root&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;) + &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;@fret_number&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;)&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This is all in a string (the data type, not the part of the instrument),
+because we&amp;rsquo;re going to pass it to Sonic Pi via the
+&lt;a href=&#34;https://github.com/Widdershin/sonic-pi-cli/&#34;&gt;sonic-pi-cli gem&lt;/a&gt;.
+This is going to execute the &lt;code&gt;note&lt;/code&gt; method in Sonic Pi to play that single
+tone.&lt;/p&gt;
+&lt;h2 id=&#34;plucking-a-single-string&#34;&gt;Plucking a Single String &lt;a href=&#34;#plucking-a-single-string&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Our guitarist is interfacing with the guitar as a whole, which is &lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;composed&lt;/a&gt; of
+many strings. They&amp;rsquo;ll first place their fingers on the neck of the guitar.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FingerPlacement&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;attr_reader&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:fret&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;attr_reader&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:string_number&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And pluck an individual string with that placement.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Guitar&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;pick&lt;/span&gt;(finger_placement, &lt;span style=&#34;color:#e6db74&#34;&gt;duration&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+    result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; strings&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;finger_placement&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;string_number&lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;pluck(&lt;span style=&#34;color:#e6db74&#34;&gt;fret&lt;/span&gt;: finger_placement&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;fret)
+    @amplifier&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;play(sound_output(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;play &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;result&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;amp_value&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;duration&lt;/span&gt;: duration))
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here our guitar is adding details to the command that we&amp;rsquo;ll send to
+Sonic Pi. We have the information about the note to play from the string, but
+now we want it to sound like a note from a guitar, and we&amp;rsquo;ll rely on the
+guitarist to say how long to play the note for (the duration).&lt;/p&gt;
+&lt;p&gt;We can do this in Sonic Pi by specifying the synthesizer to use when playing the
+note, and we&amp;rsquo;ll choose one that sounds like a guitar.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Guitar&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sound_output&lt;/span&gt;(play_operation, &lt;span style=&#34;color:#e6db74&#34;&gt;duration&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+    &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;with_synth :pluck do&amp;#34;&lt;/span&gt;,
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;play_operation&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;, release: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;duration&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;,
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;end&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;join(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;strip
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If you wanted to play this directly in Sonic Pi&amp;rsquo;s IDE, it would look more
+familiar:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;with_synth &lt;span style=&#34;color:#e6db74&#34;&gt;:pluck&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+  play note(&lt;span style=&#34;color:#e6db74&#34;&gt;:e2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;), &lt;span style=&#34;color:#e6db74&#34;&gt;release&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;However, we need to package this all up in a string to then send that command
+over to Sonic Pi via the sonic-pi-cli gem.&lt;/p&gt;
+&lt;p&gt;Our amplifier, passed in via &lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;dependency injection&lt;/a&gt;,
+then takes that command and sends it to Sonic Pi, producing a sound!&lt;/p&gt;
+&lt;h2 id=&#34;strike-a-chord&#34;&gt;Strike a Chord &lt;a href=&#34;#strike-a-chord&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Sonic Pi already knows how to play &lt;a href=&#34;https://sonic-pi.net/tutorial#section-8-2&#34;&gt;chords&lt;/a&gt;,
+so this could be a quick section; however, we&amp;rsquo;re going to replicate that
+functionality a little differently. We&amp;rsquo;re doing this because of the reality I
+mentioned when talking about strings - and that is, they can break. If a string
+is broken, the note in the chord that string would regularly play shouldn&amp;rsquo;t be
+heard.&lt;/p&gt;
+&lt;p&gt;As such, we need to go string by string to determine the notes to play. Even
+though the reasoning is to handle broken strings, we&amp;rsquo;re not going to consider
+that case in this explanation. You can view the &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/instruments/guitar.rb#L23-L41&#34;&gt;full
+implementation&lt;/a&gt;
+to see how that&amp;rsquo;s handled.&lt;/p&gt;
+&lt;p&gt;We first need to know which notes we should play:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Guitar&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;strum&lt;/span&gt;(chord, &lt;span style=&#34;color:#e6db74&#34;&gt;duration&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+    notes &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
+      strings&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;pluck(&lt;span style=&#34;color:#e6db74&#34;&gt;fret&lt;/span&gt;: chord&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;first_fret),
+      strings&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;pluck(&lt;span style=&#34;color:#e6db74&#34;&gt;fret&lt;/span&gt;: chord&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;second_fret),
+      strings&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;pluck(&lt;span style=&#34;color:#e6db74&#34;&gt;fret&lt;/span&gt;: chord&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;third_fret),
+      strings&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;pluck(&lt;span style=&#34;color:#e6db74&#34;&gt;fret&lt;/span&gt;: chord&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;fourth_fret),
+      strings&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;pluck(&lt;span style=&#34;color:#e6db74&#34;&gt;fret&lt;/span&gt;: chord&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;fifth_fret),
+      strings&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;pluck(&lt;span style=&#34;color:#e6db74&#34;&gt;fret&lt;/span&gt;: chord&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sixth_fret),
+    &lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;map(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:amp_value&lt;/span&gt;)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We&amp;rsquo;ll then take all of those notes and pass them to our amplifier, using Sonic
+Pi&amp;rsquo;s &lt;code&gt;play_pattern_timed&lt;/code&gt; &lt;a href=&#34;https://github.com/hashbangstudio/Sonic-Pi-Examples/blob/master/10-play-pattern-timed.rb&#34;&gt;method&lt;/a&gt;.
+This also allows us to define a time between each note, so we can place a small
+amount of time in between each to simulate the time it would take your hand to
+complete a downstroke across all the strings.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Guitar&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;strum&lt;/span&gt;(chord, &lt;span style=&#34;color:#e6db74&#34;&gt;duration&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+    notes &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[...].&lt;/span&gt;map(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:amp_value&lt;/span&gt;)
+
+    @amplifier&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;play(
+      sound_output(
+        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;play_pattern_timed [&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;pattern_notes&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;, &amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;], 0.05&amp;#34;&lt;/span&gt;,
+        &lt;span style=&#34;color:#e6db74&#34;&gt;duration&lt;/span&gt;: duration,
+      )
+    )
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The 0.05 is our amount of time it&amp;rsquo;ll take to pluck from one string to the next
+when playing a chord.&lt;/p&gt;
+&lt;h2 id=&#34;rock-on&#34;&gt;Rock On &lt;a href=&#34;#rock-on&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Combining a few key software design principles, we were able to create a
+flexible, extensible, and testable system for playing music over the course of a
+few blog posts.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;re now armed with an amplifier that knows how to communicate with &lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;Sonic Pi&lt;/a&gt;
+that&amp;rsquo;s passed in to our guitar via &lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;dependency injection&lt;/a&gt; (but could send the notes anywhere as long as the injected class &lt;a href=&#34;https://kevin-j-m.github.io/posts/shedding-light-on-duck-typing/&#34;&gt;responds&lt;/a&gt; to the right methods). Our guitar is &lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;composed&lt;/a&gt; of various strings, each of which are responsible for knowing what sound to make.&lt;/p&gt;
+&lt;p&gt;Given a songwriter who knows how to
+&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;consistently write&lt;/a&gt; for our band, we can
+play chords and individual notes on our guitar as the &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/songs/the_line_begins_to_blur.rb&#34;&gt;song&lt;/a&gt; requires.&lt;/p&gt;
+
+
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/GncJGXdS6R8?rel=0&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+
+&lt;p&gt;If you listen closely at :14, you can hear a string break. Even with these
+principles in place, mistakes and errors happen. Make sure your system is
+prepared to handle errors in a fault-tolerant way - but that&amp;rsquo;s a different blog
+series altogether. Thanks for joining me in this exploration.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/stringing-code-together-to-play-music&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+     </item>
+   
+     <item>
        <title>Using Sonic Pi to Play Music With Ruby</title>
        <link>https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/</link>
        <pubDate>Mon, 14 Dec 2020 18:48:24 -0500</pubDate>
@@ -24,6 +216,7 @@
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Using Sonic Pi To Play Music With Ruby&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/stringing-code-together-to-play-music/&#34;&gt;Stringing Code Together To Play Music&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;My &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
@@ -94,7 +287,7 @@ and Sonic Pi must be running; however, we can now trigger it to execute these
 commands from outside of its IDE. We have a way to &lt;em&gt;send&lt;/em&gt; sound
 out of our ruby code.&lt;/p&gt;
 &lt;p&gt;In our next post, we&amp;rsquo;ll take a look at how we &lt;em&gt;generate&lt;/em&gt; the sound to send from
-a guitar to an amplifier.&lt;/p&gt;
+a &lt;a href=&#34;https://kevin-j-m.github.io/posts/stringing-code-together-to-play-music/&#34;&gt;guitar&lt;/a&gt; to an amplifier.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;This post originally published on &lt;a href=&#34;https://blog.thegnar.co/using-sonic-pi-to-play-music-with-ruby&#34;&gt;The Gnar Company blog&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -114,6 +307,7 @@ a guitar to an amplifier.&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Inheritance: Derivative Songwriting&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;Using Sonic Pi To Play Music With Ruby&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/stringing-code-together-to-play-music/&#34;&gt;Stringing Code Together To Play Music&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Inheritance sets up a relationship or a taxonomy between classes to allow for
@@ -342,6 +536,7 @@ computer.&lt;/p&gt;
 &lt;li&gt;&lt;strong&gt;Synthesizing Composition With Delegation&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;Using Sonic Pi To Play Music With Ruby&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/stringing-code-together-to-play-music/&#34;&gt;Stringing Code Together To Play Music&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Any application will be comprised of multiple components - in Object-Oriented
@@ -467,6 +662,7 @@ change, making it more likely to promote code reuse.&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;Using Sonic Pi To Play Music With Ruby&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/stringing-code-together-to-play-music/&#34;&gt;Stringing Code Together To Play Music&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Duck typing is commonly used by Rubyists and other users of dynamic languages.
@@ -633,6 +829,7 @@ investigate defining interface types with RBS, which will be part of Ruby 3.&lt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/synthesizing-composition-with-delegation/&#34;&gt;Synthesizing Composition With Delegation&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/inheritance-derivative-songwriting/&#34;&gt;Inheritance: Derivative Songwriting&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;Using Sonic Pi To Play Music With Ruby&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/stringing-code-together-to-play-music/&#34;&gt;Stringing Code Together To Play Music&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Dependency injection is a fancy term. It &lt;strong&gt;sounds&lt;/strong&gt; intimidating. The purpose of

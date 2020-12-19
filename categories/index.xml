@@ -1144,6 +1144,11 @@ now supports &lt;a href=&#34;https://github.com/simplecov-ruby/simplecov#branch-
 &lt;li&gt;&lt;a href=&#34;https://github.com/danmayer/coverband&#34;&gt;Coverband&lt;/a&gt; for measuring coverage of
 production code. Here&amp;rsquo;s an &lt;a href=&#34;https://github.com/danmayer/coverband/blob/43c5ac94febc7a961346b0e9408d829d4d2ef8ad/test/rails5_dummy/config/coverband.rb#L15&#34;&gt;example&lt;/a&gt; on how to configure it to run using oneshot lines coverage.&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h2 id=&#34;supplemental-content&#34;&gt;Supplemental Content &lt;a href=&#34;#supplemental-content&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I have a series of blog posts using the live music examples I wrote for the talk
+to describe various software design principles. The first post is about
+&lt;a href=&#34;https://kevin-j-m.github.io/posts/dependency-injection-plug-in/&#34;&gt;dependency injection&lt;/a&gt;.
+You can see the full series &lt;a href=&#34;https://kevin-j-m.github.io/tags/software-design-concert-series/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;the-gnar-company&#34;&gt;The Gnar Company &lt;a href=&#34;#the-gnar-company&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;If you’d like to discuss how &lt;a href=&#34;https://www.thegnar.co/about.html&#34;&gt;The Gnar Company&lt;/a&gt; can work with you on your technical challenges, &lt;a href=&#34;https://www.thegnar.co/hire-us.html&#34;&gt;let us know&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;presentation-fonts&#34;&gt;Presentation Fonts &lt;a href=&#34;#presentation-fonts&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;

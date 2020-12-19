@@ -28,7 +28,7 @@
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;In our &lt;a href=&#34;https://kevin-j-m.github.io/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;last post&lt;/a&gt;, I talked about how I built an interface to &lt;a href=&#34;https://sonic-pi.net&#34;&gt;Sonic Pi&lt;/a&gt; when
-I was preparing my &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt; talk about Ruby&amp;rsquo;s &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module. At the
+I was preparing my &lt;a href=&#34;https://youtu.be/EyLO0EEm3BQ&#34;&gt;RubyConf 2020&lt;/a&gt; talk about Ruby&amp;rsquo;s &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module. At the
 end of that post, we could send sounds to Sonic Pi. Today, we&amp;rsquo;ll have our code
 play the guitar, and send those sounds to our amplifier.&lt;/p&gt;
 &lt;h2 id=&#34;string-theory&#34;&gt;String Theory &lt;a href=&#34;#string-theory&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
@@ -219,7 +219,7 @@ series altogether. Thanks for joining me in this exploration.&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;https://kevin-j-m.github.io/posts/stringing-code-together-to-play-music/&#34;&gt;Stringing Code Together To Play Music&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;My &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
+&lt;p&gt;My &lt;a href=&#34;https://youtu.be/EyLO0EEm3BQ&#34;&gt;RubyConf 2020&lt;/a&gt;
 talk about Ruby&amp;rsquo;s &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module
 uses examples about playing live music. As such, I had the ambitious goal of
 delivering a live performance of some music during the presentation. This ended
@@ -313,7 +313,7 @@ a &lt;a href=&#34;https://kevin-j-m.github.io/posts/stringing-code-together-to-p
 &lt;p&gt;Inheritance sets up a relationship or a taxonomy between classes to allow for
 code reuse. It is both a commonly reached for and commonly derided tool which
 has its place, but must be wielded with care. We&amp;rsquo;ll use inheritance to write new
-songs for our concert setlist, an example which comes from my &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
+songs for our concert setlist, an example which comes from my &lt;a href=&#34;https://youtu.be/EyLO0EEm3BQ&#34;&gt;RubyConf 2020&lt;/a&gt;
 talk about Ruby&amp;rsquo;s
 &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module.&lt;/p&gt;
 &lt;h2 id=&#34;song-structure&#34;&gt;Song Structure &lt;a href=&#34;#song-structure&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
@@ -548,7 +548,7 @@ the specialization of these different classes apart, but using them together,
 is beneficial.&lt;/p&gt;
 &lt;p&gt;To demonstrate using composition to model a complex system and using delegation
 in that composition, we will explore how a synthesizer can handle memory
-management to store presets of sounds. This example comes from my &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
+management to store presets of sounds. This example comes from my &lt;a href=&#34;https://youtu.be/EyLO0EEm3BQ&#34;&gt;RubyConf 2020&lt;/a&gt;
 talk about Ruby&amp;rsquo;s
 &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module.&lt;/p&gt;
 &lt;h2 id=&#34;noise-reduction&#34;&gt;Noise Reduction &lt;a href=&#34;#noise-reduction&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
@@ -667,7 +667,7 @@ change, making it more likely to promote code reuse.&lt;/p&gt;
 &lt;h2 id=&#34;setting-the-stage&#34;&gt;Setting the Stage &lt;a href=&#34;#setting-the-stage&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Duck typing is commonly used by Rubyists and other users of dynamic languages.
 We&amp;rsquo;ll demonstrate duck typing by helping a concert lighting team set up the
-lighting for a band, which comes from my &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt; talk about Ruby&amp;rsquo;s
+lighting for a band, which comes from my &lt;a href=&#34;https://youtu.be/EyLO0EEm3BQ&#34;&gt;RubyConf 2020&lt;/a&gt; talk about Ruby&amp;rsquo;s
 &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module.&lt;/p&gt;
 &lt;h2 id=&#34;stage-design&#34;&gt;Stage Design &lt;a href=&#34;#stage-design&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;To light the stage for our concert, we have a wide range of lights to
@@ -835,7 +835,7 @@ investigate defining interface types with RBS, which will be part of Ruby 3.&lt;
 &lt;p&gt;Dependency injection is a fancy term. It &lt;strong&gt;sounds&lt;/strong&gt; intimidating. The purpose of
 this post is to explain what dependency injection is, how to use it, and why it
 can be beneficial. To illustrate, let&amp;rsquo;s talk about playing a guitar in a
-concert, which comes from my &lt;a href=&#34;https://rubyconf.org/program/sessions#session-1044&#34;&gt;RubyConf 2020&lt;/a&gt;
+concert, which comes from my &lt;a href=&#34;https://youtu.be/EyLO0EEm3BQ&#34;&gt;RubyConf 2020&lt;/a&gt;
 talk about Ruby&amp;rsquo;s &lt;a href=&#34;https://docs.ruby-lang.org/en/master/Coverage.html&#34;&gt;Coverage&lt;/a&gt; module.&lt;/p&gt;
 &lt;h2 id=&#34;sound-check&#34;&gt;Sound Check &lt;a href=&#34;#sound-check&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;A guitarist in a band uses an amplifier when playing a live concert.&lt;/p&gt;
@@ -1067,7 +1067,11 @@ good luck optimizing!&lt;/p&gt;
        
        <guid>https://kevin-j-m.github.io/posts/coverage/</guid>
        <description>&lt;h2 id=&#34;presentation-resources&#34;&gt;Presentation Resources &lt;a href=&#34;#presentation-resources&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Kevin&amp;rsquo;s slides are available for review on &lt;a href=&#34;https://speakerdeck.com/kevinmurphy/enough-coverage-to-beat-the-band&#34;&gt;SpeakerDeck&lt;/a&gt;. The code examples that accompanied the talk are available on &lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band&#34;&gt;Github&lt;/a&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://youtu.be/EyLO0EEm3BQ&#34;&gt;Video&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://speakerdeck.com/kevinmurphy/enough-coverage-to-beat-the-band&#34;&gt;Slides&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kevin-j-m/ruby_cover_band&#34;&gt;Code Examples&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;code-coverage-modes&#34;&gt;Code Coverage Modes &lt;a href=&#34;#code-coverage-modes&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Each mode answers a different question about the code that was run under coverage:&lt;/p&gt;
 &lt;ul&gt;

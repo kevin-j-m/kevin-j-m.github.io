@@ -6,10 +6,19 @@
    <description>Recent content on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2021 - Kevin Murphy</copyright>
-   <lastBuildDate>Wed, 06 Jan 2021 12:20:07 -0500</lastBuildDate>
+   <lastBuildDate>Wed, 13 Jan 2021 18:20:36 -0500</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Nokogiri Notoriety</title>
+       <link>https://kevinjmurphy.com/posts/nokogiri-notoriety/</link>
+       <pubDate>Wed, 13 Jan 2021 18:20:36 -0500</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/nokogiri-notoriety/</guid>
+       <description>&lt;p&gt;Last week, I wrote a &lt;a href=&#34;https://kevinjmurphy.com/posts/caching-all-native-gem-platforms/&#34;&gt;post&lt;/a&gt; onmy employer&amp;rsquo;s &lt;a href=&#34;https://blog.thegnar.co/caching-all-native-gem-platforms&#34;&gt;blog&lt;/a&gt;about how to set up the correct bundler configurationto support caching multiple platforms of gems. This came up with the latest Nokogirirelease, where pre-built binaries for various platforms are now available, soyou don&amp;rsquo;t need to install from source.&lt;/p&gt;&lt;p&gt;That post has been featured in Ruby Weekly &lt;a href=&#34;https://rubyweekly.com/issues/534&#34;&gt;#534&lt;/a&gt;!&lt;/p&gt;&lt;figure class=&#34;mid&#34;&gt;    &lt;img src=&#34;https://kevinjmurphy.com/img/ruby_weekly_534.png&#34;/&gt; &lt;/figure&gt;&lt;p&gt;I was also humbled to receive this tweet reply from a Nokogiri maintainer:&lt;/p&gt;&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;I&amp;#39;ve linked out to your post from the &amp;quot;Troubleshooting&amp;quot; section of the installation guide. Thanks again!&lt;a href=&#34;https://t.co/tG76v2bojF&#34;&gt;https://t.co/tG76v2bojF&lt;/a&gt;&lt;/p&gt;&amp;mdash; mike dalessio (@flavorjones) &lt;a href=&#34;https://twitter.com/flavorjones/status/1347195095079137285?ref_src=twsrc%5Etfw&#34;&gt;January 7, 2021&lt;/a&gt;&lt;/blockquote&gt;&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;p&gt;In case you can&amp;rsquo;t read that, the tweet from Mike Dalessio says:&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;I&amp;rsquo;ve linked out to your post from the &amp;ldquo;Troubleshooting&amp;rdquo; section of the installation guide. Thanks again!&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;And &lt;a href=&#34;https://nokogiri.org/tutorials/installing_nokogiri.html#using-vendorcache-to-deploy-to-another-architecture&#34;&gt;here I am&lt;/a&gt;in the Nokogiri tutorials!&lt;/p&gt;&lt;figure class=&#34;mid&#34;&gt;    &lt;img src=&#34;https://kevinjmurphy.com/img/nokogiri_tutorial.png&#34;/&gt; &lt;/figure&gt;&lt;p&gt;The commit adding me to the guide is &lt;a href=&#34;https://github.com/sparklemotion/nokogiri.org/commit/173ecdc110c738d0c5708934eb51d03e8e9f418d&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Thanks to Peter Cooper for featuring me in Ruby Weekly, and Mike Dalessio foradding me to Nokogiri&amp;rsquo;s guides!&lt;/p&gt;</description>
+     </item>
    
      <item>
        <title>Caching All Native Ruby Gem Platforms</title>

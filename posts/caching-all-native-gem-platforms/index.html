@@ -127,11 +127,11 @@
 architectures. If you cache your gems, you may need to cache multiple platforms,
 because your development team is spread across various platforms or you deploy
 to a different platform. To do this, you can use:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle cache <span style="color:#75715e"># cache gems in vendor/cache</span>
-bundle lock --add-platform x86_64-linux <span style="color:#75715e"># add additional platforms</span>
-bundle package --all-platforms <span style="color:#75715e"># cache multiple platforms</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle cache <span style="color:#75715e"># cache gems in vendor/cache </span>
+bundle lock --add-platform x86_64-linux <span style="color:#75715e"># add additional platforms </span>
+bundle package --all-platforms <span style="color:#75715e"># cache multiple platforms </span>
 </code></pre></div><p>On bundler version 1.x, add:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle config specific_platform true
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle config specific_platform true 
 </code></pre></div><h2 id="native-nokogiri">Native Nokogiri <a href="#native-nokogiri">🔗</a></h2>
 <p>Nokogiri 1.11.0 has been released, and one of the exciting <a href="https://github.com/sparklemotion/nokogiri/blob/007662fc216902a5ae186cb78b0d46f7f48b8d92/CHANGELOG.md#v1110--2021-01-03">updates</a>
 is the inclusion of pre-compiled native gems for various platforms! If you&rsquo;re
@@ -152,7 +152,7 @@ most important one that requires all gems to be vendored is that some
 applications are deployed to, and the deployments are created in, environments
 where they <strong>cannot</strong> access <a href="https://rubygems.org/">RubyGems</a> directly.</p>
 <p>We need to tell bundler to cache our gems.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle cache
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle cache 
 </code></pre></div><p>Running that on an existing application will add <code>.gem</code> files into the <code>vendor/cache</code>
 <a href="https://github.com/kevin-j-m/bundler_2_cache_all_platforms/commit/75c7ddb8f569e33cdd09e0ee1c4a377885318416">directory</a>.</p>
 <h2 id="platform-dependence">Platform Dependence <a href="#platform-dependence">🔗</a></h2>

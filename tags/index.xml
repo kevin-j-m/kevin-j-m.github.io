@@ -6,10 +6,19 @@
    <description>Recent content in Tags on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2021 - Kevin Murphy</copyright>
-   <lastBuildDate>Wed, 13 Jan 2021 18:20:36 -0500</lastBuildDate>
+   <lastBuildDate>Thu, 11 Feb 2021 15:20:36 -0500</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/tags/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Featured in Ruby Weekly</title>
+       <link>https://kevinjmurphy.com/posts/ruby-weekly-539/</link>
+       <pubDate>Thu, 11 Feb 2021 15:20:36 -0500</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/ruby-weekly-539/</guid>
+       <description>&lt;p&gt;I&amp;rsquo;m honored to be in this week&amp;rsquo;s Ruby Weekly, &lt;a href=&#34;https://rubyweekly.com/issues/539&#34;&gt;#539&lt;/a&gt;.&lt;/p&gt;&lt;figure class=&#34;mid&#34;&gt;    &lt;img src=&#34;https://kevinjmurphy.com/img/ruby_weekly_539.png&#34;/&gt; &lt;/figure&gt;&lt;p&gt;The article they included is a &lt;a href=&#34;https://kevinjmurphy.com/posts/using-sonic-pi-to-play-music-with-ruby/&#34;&gt;post&lt;/a&gt; from my employer&amp;rsquo;s &lt;a href=&#34;https://blog.thegnar.co/using-sonic-pi-to-play-music-with-ruby&#34;&gt;blog&lt;/a&gt; that waspart of my self-described &amp;ldquo;Software Design Concert Series&amp;rdquo;. You can read it tolearn about how to trigger Sonic Pi from within your ruby code.&lt;/p&gt;</description>
+     </item>
    
      <item>
        <title>Nokogiri Notoriety</title>

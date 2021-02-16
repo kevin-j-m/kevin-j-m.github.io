@@ -1,0 +1,261 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Querying PaperTrail Object Changes in JSON - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Kevin Murphy: Software Developer" />
+<meta name="author" content="Kevin Murphy" /><meta property="og:title" content="Querying PaperTrail Object Changes in JSON" />
+<meta property="og:description" content="Reliving the past has never felt so futuristic" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/querying-papertrail-object-changes-json/" />
+<meta property="article:published_time" content="2021-02-15T16:47:03-05:00" />
+<meta property="article:modified_time" content="2021-02-15T16:47:03-05:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Querying PaperTrail Object Changes in JSON"/>
+<meta name="twitter:description" content="Reliving the past has never felt so futuristic"/>
+
+<meta name="generator" content="Hugo 0.80.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Musings of a Boston-based Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Querying PaperTrail Object Changes in JSON</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2021-02-15T16:47:03-05:00">Feb 15, 2021</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/papertrail">#papertrail</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/postgres">#postgres</a>
+                
+            </em>
+        </li>
+        
+
+        <li>4 minutes read</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p><a href="https://github.com/paper-trail-gem/paper_trail">PaperTrail</a> may be a fit for
+your rails app if you&rsquo;ve ever wanted help answering the question, &ldquo;what
+series of events conspired to put my database in this state?&rdquo; It acts as a time
+capsule, storing each change made to instances of your models that you have
+PaperTrail turned on for.</p>
+<p>Let&rsquo;s create a user. Unfortunately, we can&rsquo;t make up our mind about which
+email to use, so we change that a few times.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>create(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Kevin&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Murphy&#34;</span>)
+<span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>update(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;km@example.com&#34;</span>)
+<span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>update(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span>)
+</code></pre></div><p>We have PaperTrail set to <a href="https://github.com/paper-trail-gem/paper_trail#only">track changes</a>
+made to a user&rsquo;s email. Later on, we may need to do some archaelogy to figure
+out why this user&rsquo;s email address isn&rsquo;t &ldquo;km@example.com&rdquo;. Let&rsquo;s investigate how
+PaperTrail can help with that.</p>
+<h2 id="using-papertrails-api">Using PaperTrail&rsquo;s API <a href="#using-papertrails-api">🔗</a></h2>
+<p>PaperTrail provides a few options to <a href="https://github.com/paper-trail-gem/paper_trail#3b-navigating-versions">navigate</a>
+changes made over the history of our object. We&rsquo;re going to use
+<code>where_object_changes</code> to figure out what happened with &ldquo;km@example.com&rdquo;.
+<code>where_object_changes</code> will find any time the provided attributes changed to
+<strong>or</strong> from the values provided.</p>
+<p>Let&rsquo;s first find out if this user&rsquo;s email ever was &ldquo;km@example.com&rdquo;.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where_object_changes(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;km@example.com&#34;</span>)<span style="color:#f92672">.</span>count
+<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">2</span>
+</code></pre></div><p>Now we know that at some point in time, this user&rsquo;s email was stored as
+&ldquo;km@example.com&rdquo;. We can hone in on the changes, and specifically only look at
+the email address changes.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions
+    <span style="color:#f92672">.</span>where_object_changes(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;km@example.com&#34;</span>)
+    <span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)
+    <span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
+<span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">&#34;km@example.com&#34;</span><span style="color:#f92672">]</span>},
+   {<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;km@example.com&#34;</span>, <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
+</code></pre></div><p>Any PaperTrail Version has an <code>object_changes</code> attribute. The value of that
+attribute is a hash. The keys of that hash are the attributes that changed, and
+the value is a tuple (as an array) that shows first the value that attribute
+changed from, and the value it changed to.</p>
+<p>Here we&rsquo;re finding all versions that have to do with the email address
+&ldquo;km@example.com&rdquo; and only showing the changes to the email address.</p>
+<p>This first version shows that the email address changed from &ldquo;kevin@example.com&rdquo;
+to &ldquo;km@example.com&rdquo;. Later on, the second version shows the email address
+changing from &ldquo;km@example.com&rdquo; to &ldquo;kevinfinal@example.com&rdquo;.</p>
+<h2 id="enhanced-json-querying">Enhanced JSON Querying <a href="#enhanced-json-querying">🔗</a></h2>
+<p>If <a href="https://github.com/paper-trail-gem/paper_trail#postgresql-json-column-type-support">PaperTrail versions</a>
+are stored as JSON or JSONB in Postgres, we have some more detailed queries we
+can write by digging into Postgres' <a href="https://www.postgresql.org/docs/9.4/functions-json.html">JSON functions</a>.</p>
+<h3 id="changed">Changed <a href="#changed">🔗</a></h3>
+<p>Sometimes we may not have an attribute value that we want to search for. We may
+need to first know when an attribute changed to anything at all. Let&rsquo;s look for
+any time that this user&rsquo;s email attribute changed.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;object_changes -&gt; &#39;email&#39; IS NOT NULL&#34;</span>)<span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
+<span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;kevin@example.com&#34;</span><span style="color:#f92672">]</span>},
+ {<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">&#34;km@example.com&#34;</span><span style="color:#f92672">]</span>},
+ {<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;km@example.com&#34;</span>, <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
+</code></pre></div><p>The first version is logged when you initially create the row in your database,
+which is why it changes from the empty string to &ldquo;kevin@example.com&rdquo;. From
+there, we see the additional updates to email, as all versions have changed the
+email address.</p>
+<h3 id="changing-from">Changing From <a href="#changing-from">🔗</a></h3>
+<p>While the prior query gives us <em>less</em> specificity than PaperTrail provides with
+<code>where_object_changes</code>, we may also benefit from <em>more</em> specificity. For
+example, we may want to know when the user&rsquo;s email changed from
+&ldquo;km@example.com&rdquo;, and not care about when it changed to &ldquo;km@example.com&rdquo;.</p>
+<p>We <strong>can</strong> use <code>where_object_changes</code>, but to find out which changes are only
+changing the value from &ldquo;km@example.com&rdquo;, we&rsquo;ll need to scan the results
+ourselves or in memory, rather than relying on the database.</p>
+<p>However, we can construct a query ourselves to tell us only when an attribute
+changed from a value.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;object_changes -&gt;&gt;&#39;email&#39; ILIKE &#39;[</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">km@example.com</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">,%&#39;&#34;</span>)<span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
+<span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;km@example.com&#34;</span>, <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
+</code></pre></div><p>Remember that the object changes of an attribute are stored as a tuple in an
+array. The first value in the array is the value the attribute changed from, and
+the second value is the value the attribute changed to.</p>
+<p>This query looks within the <code>object_changes</code> attribute, and checks to see if the
+value of the <code>email</code> field within that attribute has the email address we&rsquo;re
+looking for as the first element in the tuple. The opening bracket before the
+email address in escaped quotes is the start of the array/tuple.</p>
+<h3 id="changing-to">Changing To <a href="#changing-to">🔗</a></h3>
+<p>We can also construct a query to look for versions on the other side of the
+equation. We can find all instances where the attribute changed <em>to</em> a
+particular value.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;object_changes -&gt;&gt;&#39;email&#39; ILIKE &#39;[%,</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">km@example.com</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">]&#39;&#34;</span>)<span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
+<span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">&#34;km@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
+</code></pre></div><p>When looking for what the value changed to, we want to look in our tuple to find
+the email address in question as the last element, which will be preceded by a
+comma and have an ending bracket after it.</p>
+<h2 id="trailing-off">Trailing Off <a href="#trailing-off">🔗</a></h2>
+<p>Thanks to storing our PaperTrail versions in a JSON format, we were able to
+sneak in an applied lesson on Postgres' powerful JSON functions and
+operators while also reviewing the structure of data that&rsquo;s used by PaperTrail
+to track any versions of our database records.</p>
+<blockquote>
+<p>This post originally published on <a href="https://blog.thegnar.co/querying-papertrail-object-changes-json">The Gnar Company blog</a>.</p>
+</blockquote>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/ruby-weekly-539/"><i class="fa fa-chevron-circle-left"></i> Featured in Ruby Weekly</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2021 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+
+</body>
+
+</html>
+

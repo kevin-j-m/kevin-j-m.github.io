@@ -11,6 +11,15 @@
    
    
      <item>
+       <title>Featured in Ruby Weekly 541</title>
+       <link>https://kevinjmurphy.com/posts/ruby-weekly-541/</link>
+       <pubDate>Thu, 25 Feb 2021 18:20:36 -0500</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/ruby-weekly-541/</guid>
+       <description>&lt;p&gt;I&amp;rsquo;m excited to be in this week&amp;rsquo;s Ruby Weekly, &lt;a href=&#34;https://rubyweekly.com/issues/541&#34;&gt;#541&lt;/a&gt;.&lt;/p&gt;&lt;figure class=&#34;mid&#34;&gt;    &lt;img src=&#34;https://kevinjmurphy.com/img/ruby_weekly_541.png&#34;/&gt; &lt;/figure&gt;&lt;p&gt;The article they included is a &lt;a href=&#34;https://kevinjmurphy.com/posts/querying-papertrail-object-changes-json/&#34;&gt;post&lt;/a&gt;from my employer&amp;rsquo;s &lt;a href=&#34;https://blog.thegnar.co/querying-papertrail-object-changes-json&#34;&gt;blog&lt;/a&gt;about querying for JSON data in your database. The specific use case is usingPaperTrail&amp;rsquo;s versions to query for what changed.&lt;/p&gt;</description>
+     </item>
+   
+     <item>
        <title>Querying PaperTrail Object Changes in JSON</title>
        <link>https://kevinjmurphy.com/posts/querying-papertrail-object-changes-json/</link>
        <pubDate>Mon, 15 Feb 2021 16:47:03 -0500</pubDate>

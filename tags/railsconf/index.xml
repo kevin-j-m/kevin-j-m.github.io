@@ -6,10 +6,19 @@
    <description>Recent content in railsconf on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2021 - Kevin Murphy</copyright>
-   <lastBuildDate>Mon, 06 Apr 2020 20:05:03 -0400</lastBuildDate>
+   <lastBuildDate>Mon, 08 Mar 2021 08:12:10 -0400</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/tags/railsconf/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Engineering MBA</title>
+       <link>https://kevinjmurphy.com/posts/engineering-mba/</link>
+       <pubDate>Mon, 08 Mar 2021 08:12:10 -0400</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/engineering-mba/</guid>
+       <description>&lt;p&gt;I&amp;rsquo;m honored to be speaking as part of RailsConf 2021, which you can join from&lt;a href=&#34;http://railsconf.com/&#34;&gt;wherever&lt;/a&gt; you are. I hope you&amp;rsquo;ll join &lt;a href=&#34;https://railsconf.com/program/sessions#session-1136&#34;&gt;my session&lt;/a&gt;and many others from April 13 - 15, 2021.&lt;/p&gt;&lt;h2 id=&#34;abstract&#34;&gt;Abstract &lt;a href=&#34;#abstract&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Improve your work as a developer with an introduction to strategic planning,situational leadership, and process management. No balance sheets or incomestatements here; join me to learn the MBA skills valuable to developers withoutthe opportunity costs of lost wages or additional student loans.&lt;/p&gt;&lt;p&gt;Demystify the strategic frameworks your management team may use to makedecisions and learn how you can use those same concepts in your daily work.Explore the synergy one developer achieved by going to business school (sorry,the synergy comment slipped out - old habit).&lt;/p&gt;&lt;h2 id=&#34;apply-to-graduate&#34;&gt;Apply To Graduate &lt;a href=&#34;#apply-to-graduate&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p style=&#34;text-align: center;&#34;&gt;  &lt;a href=&#34;https://engineering-mba-diploma.herokuapp.com/&#34;)&gt;Claim Your Diploma&lt;/a&gt;&lt;/p&gt;</description>
+     </item>
    
      <item>
        <title>Featured in Ruby Weekly 541</title>

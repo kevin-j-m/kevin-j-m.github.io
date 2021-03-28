@@ -137,7 +137,13 @@
     
 
 
-    <h2 id="pop-quiz">Pop Quiz <a href="#pop-quiz">🔗</a></h2>
+    <h2 id="exceptional-behavior-in-rails">Exceptional Behavior in Rails <a href="#exceptional-behavior-in-rails">🔗</a></h2>
+<ol>
+<li><strong>(W)rapping About Exceptional Behavior In Rails</strong></li>
+<li><a href="https://kevinjmurphy.com/posts/wrapping-up-rails-exceptional-behavior/">Wrapping Up Rails Exceptional Behavior</a></li>
+</ol>
+<h2 id="reset">Reset <a href="#reset">🔗</a></h2>
+<h2 id="pop-quiz">Pop Quiz <a href="#pop-quiz">🔗</a></h2>
 <p>Consider the following controller:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FoosController</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActionController</span><span style="color:#f92672">::</span><span style="color:#66d9ef">API</span>
   rescue_from <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">RecordNotFound</span>, <span style="color:#e6db74">with</span>: <span style="color:#e6db74">:raise_not_found</span>
@@ -368,7 +374,7 @@ interesting, and asked where it&rsquo;s being invoked with <code>caller</code>.<
 </ul>
 <p>We still don&rsquo;t know where the <code>ActiveRecord::RecordNotFound</code> exception is coming
 from.</p>
-<p>We&rsquo;ll take another look at this with fresh eyes in our next post.</p>
+<p>We&rsquo;ll take another look at this with fresh eyes in our <a href="https://kevinjmurphy.com/posts/wrapping-up-rails-exceptional-behavior/">next post</a>.</p>
 <blockquote>
 <p>This post originally published on <a href="https://blog.thegnar.co/wrapping-about-exceptional-behavior-in-rails">The Gnar Company blog</a>.</p>
 </blockquote>
@@ -384,6 +390,10 @@ from.</p>
             <a href="https://kevinjmurphy.com/posts/engineering-mba/"><i class="fa fa-chevron-circle-left"></i> Engineering MBA</a>
         </li>
         
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/wrapping-up-rails-exceptional-behavior/">Wrapping Up Rails Exceptional Behavior <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
         
     </ul>
 </section>

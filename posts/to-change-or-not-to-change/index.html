@@ -1,0 +1,282 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>To Change or Not to Change - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Kevin Murphy: Software Developer" />
+<meta name="author" content="Kevin Murphy" /><meta property="og:title" content="To Change or Not to Change" />
+<meta property="og:description" content="Here are more questions to try to answer THAT question" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/to-change-or-not-to-change/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-18T07:29:25-04:00" />
+<meta property="article:modified_time" content="2021-04-18T07:29:25-04:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="To Change or Not to Change"/>
+<meta name="twitter:description" content="Here are more questions to try to answer THAT question"/>
+
+<meta name="generator" content="Hugo 0.82.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Musings of a Boston-based Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>To Change or Not to Change</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2021-04-18T07:29:25-04:00">Apr 18, 2021</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/software-design">#software-design</a>
+                
+            </em>
+        </li>
+        
+
+        <li>5 minute read</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="optional-feedback">Optional Feedback <a href="#optional-feedback">🔗</a></h2>
+<p>Imagine you&rsquo;ve just wrapped up a new feature and submitted it for code review,
+which includes the following method:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(base_price, promo_code)
+  <span style="color:#75715e"># calculation</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>One of your team members reviews the change, and leaves a suggestion.</p>
+<blockquote>
+<p>You could consider using keyword arguments for this method.</p>
+</blockquote>
+<p>That would change the method to look like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(<span style="color:#e6db74">base_price</span>:, <span style="color:#e6db74">promo_code</span>:)
+  <span style="color:#75715e"># calculation</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Do you make this change? How do you decide?</p>
+<h2 id="evaluating-this-suggestion">Evaluating This Suggestion <a href="#evaluating-this-suggestion">🔗</a></h2>
+<p>At <a href="https://railsconf.com/2019/program/sessions#session-759">RailsConf 2019</a>, I
+asked the question, &ldquo;<a href="https://www.youtube.com/watch?v=2NiePLJVjNI">I know I can, but should I?</a>&rdquo;
+The talk provides a set of criteria you can use to make a choice between
+alternatives. Let&rsquo;s apply that here.</p>
+<h3 id="impact">Impact <a href="#impact">🔗</a></h3>
+<p>From a functionality perspective, this makes no perceived difference. The code
+will work the same one way or another and neither have any known or noticeable
+implications, such as performance.</p>
+<p>However, this alternative arose from a reaction a team member had who also needs
+to work on this code, so there must be some value in this suggestion to them.
+Additionally, this change, one way or another, will end up serving as prior art
+that may be used to base future decisions on.</p>
+<p>The change itself has very limited impact on the code itself, but it does look
+like there&rsquo;s a possible impact to the team worth exploring.</p>
+<h3 id="cost">Cost <a href="#cost">🔗</a></h3>
+<p>Any change involves risk - and risk has a cost. For example, here we can&rsquo;t only
+make the change to the method&rsquo;s signature. We also need to modify any callers
+to use the keyword arguments. If we miss one,
+and don&rsquo;t have complete test coverage, we may miss a call site - resulting in a
+runtime exception when the code is executed in production.</p>
+<p>Considering that this is the place this method is introduced, this risk
+<em>should</em> be clear to mitigate. Any callers will be in this changeset, so we
+should be able to identify them while reviewing this change. Making this change
+itself is not particularly risky.</p>
+<p>Changing this method to keyword arguments should not take much time - I&rsquo;ve
+already made the change to the method above! Now we only need to change the
+callers. Even if this were an urgent need to get deployed as soon as possible,
+it seems reasonable that we could implement this here and now should we choose
+to.</p>
+<h3 id="maintenance">Maintenance <a href="#maintenance">🔗</a></h3>
+<p>Using keyword arguments here provides two benefits to callers: readability and
+flexibility.</p>
+<p>I&rsquo;m going to intentionally obscure variable names to make a point here, but
+calling our method before looked like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_calculation_results</span>
+  calculator <span style="color:#f92672">=</span> <span style="color:#66d9ef">Calculator</span><span style="color:#f92672">.</span>new
+<span style="display:block;width:100%;background-color:#3c3d38">  result <span style="color:#f92672">=</span> calculator<span style="color:#f92672">.</span>complex_calculation(@x, @y)
+</span>
+  puts result
+<span style="color:#66d9ef">end</span></code></pre></div>
+<p>Compare this to the keyword args approach:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_calculation_results</span>
+  calculator <span style="color:#f92672">=</span> <span style="color:#66d9ef">Calculator</span><span style="color:#f92672">.</span>new
+<span style="display:block;width:100%;background-color:#3c3d38">  result <span style="color:#f92672">=</span> complex_calculation(
+</span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#e6db74">base_price</span>: @x,
+</span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#e6db74">promo_code</span>: @y,
+</span><span style="display:block;width:100%;background-color:#3c3d38">  )
+</span>
+  puts result
+<span style="color:#66d9ef">end</span></code></pre></div>
+<p>It&rsquo;s more verbose, but subjectively, I think it&rsquo;s also more readable and
+understandable.</p>
+<p>It also frees us from caring about the position or order of the arguments.
+Calling the method this way works as well:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  result <span style="color:#f92672">=</span> complex_calculation(
+    <span style="color:#e6db74">promo_code</span>: @y,
+    <span style="color:#e6db74">base_price</span>: @x,
+  )
+</code></pre></div><p>I would tend to believe that the clarity and flexibility gained from the keyword
+arguments would make it easier to maintain code that used this method. It can
+also prevent against subtle bugs, where you accidentally meant to pass <code>@x</code> as the
+base price, but instead you passed <code>@y</code> first, because you forgot which argument
+should be in what order.</p>
+<p>This seems like a maintenance win!</p>
+<h3 id="consistency">Consistency <a href="#consistency">🔗</a></h3>
+<p>Keyword arguments were added to the ruby langauge in <a href="https://www.ruby-lang.org/en/news/2013/02/24/ruby-2-0-0-p0-is-released/">Ruby 2.0.0</a>, originally
+released in 2013. In my experience, its usage is not a surprise to most
+rubyists, nor an unwelcome one. Even if someone is unfamiliar with them,
+understanding the basic usage of them is well-received.</p>
+<p>We&rsquo;ll talk more about consistency at the end.</p>
+<h2 id="verdict">Verdict <a href="#verdict">🔗</a></h2>
+<p>We have an alternative that has no identified net impact on the function of the
+code, but that a team member has a stated preference for. The change would not
+require an intense lift to accommodate, nor maintain. It (subjectively) improves
+readability and can prevent against subtle errors, and it uses a language
+feature that&rsquo;s been supported for many, many years.</p>
+<p>In a vacuum, this suggestion seems like a net positive. Given our criteria here,
+we should accept this change!</p>
+<p>Different changes will be evaluated against the
+criteria differently, and the weighted importance of the criteria will change,
+but we can still use the rubric as a framework for how to make a decision.</p>
+<p>For an in-depth explanation of these criteria, I recommend watching the <a href="https://www.youtube.com/watch?v=2NiePLJVjNI&amp;feature=youtu.be">full
+talk</a>.</p>
+<h2 id="is-it-that-simple">Is It That Simple? <a href="#is-it-that-simple">🔗</a></h2>
+<p>I said above that when considering this suggestion in isolation, it seems like a
+net benefit. However, this code does not exist in a vacuum. It&rsquo;s part of an
+existing application, and needs to fit in with the rest of the ecosystem. I
+left out any discussion of consistency with the application itself.</p>
+<p>If keyword arguments aren&rsquo;t used anywhere else in the application, should we
+reject the change because it&rsquo;s inconsistent? What criteria can we use to
+determine how to maintain consistency <strong>and</strong> support change? We&rsquo;ll explore that
+in our next post.</p>
+<blockquote>
+<p>This post originally published on <a href="https://blog.thegnar.co/to-change-or-not-to-change">The Gnar Company blog</a>.</p>
+</blockquote>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/wrapping-up-rails-exceptional-behavior/"><i class="fa fa-chevron-circle-left"></i> Wrapping Up Rails Exceptional Behavior</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2021 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+
+</body>
+
+</html>
+

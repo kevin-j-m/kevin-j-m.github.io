@@ -1,0 +1,267 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Consistency Conundrum - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Kevin Murphy: Software Developer" />
+<meta name="author" content="Kevin Murphy" /><meta property="og:title" content="Consistency Conundrum" />
+<meta property="og:description" content="If the only constant is change, how do we keep our code consistent?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/consistency-conundrum/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-24T14:14:09-04:00" />
+<meta property="article:modified_time" content="2021-04-24T14:14:09-04:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Consistency Conundrum"/>
+<meta name="twitter:description" content="If the only constant is change, how do we keep our code consistent?"/>
+
+<meta name="generator" content="Hugo 0.82.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Musings of a Boston-based Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Consistency Conundrum</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2021-04-24T14:14:09-04:00">Apr 24, 2021</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/software-design">#software-design</a>
+                
+            </em>
+        </li>
+        
+
+        <li>4 minute read</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="evaluating-alternatives">Evaluating Alternatives <a href="#evaluating-alternatives">🔗</a></h2>
+<ul>
+<li><a href="https://kevinjmurphy.com/posts/to-change-or-not-to-change/">To Change Or Not To Change</a></li>
+<li><strong>Consistency Conundrum</strong></li>
+</ul>
+<h2 id="consistent-starting-point">Consistent Starting Point <a href="#consistent-starting-point">🔗</a></h2>
+<p>In our <a href="https://kevinjmurphy.com/posts/to-change-or-not-to-change/">previous</a> post, we wrote the following
+code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(base_price, promo_code)
+  <span style="color:#75715e"># calculation</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>We received this suggestion in code review:</p>
+<blockquote>
+<p>You could consider using keyword arguments for this method.</p>
+</blockquote>
+<p>On the whole, we agree that keyword arguments would benefit this method.
+However, if keyword arguments are never used in this application, does that mean
+we shouldn&rsquo;t do it? We don&rsquo;t want to be inconsistent!</p>
+<p>Let&rsquo;s consider some choices we could make specifically in regards to consistency
+within our application.</p>
+<h2 id="options">Options <a href="#options">🔗</a></h2>
+<h3 id="do-nothing">Do Nothing <a href="#do-nothing">🔗</a></h3>
+<p>Generally, I don&rsquo;t think this gets the credit it deserves as an
+explicitly-defined option. The inertia of the system may be too great to warrant
+making the change. The choice to write or structure code in the application this
+way may be intentional and necessary. It may introduce too much cognitive
+overhead to justify making the change. There are lots of excuses I could make to
+justify not doing the work!</p>
+<p>I don&rsquo;t think any of these apply to our keyword arguments example. However, if
+someone suggested:</p>
+<blockquote>
+<p>This computation is natively supported in <a href="https://numpy.org/">NumPy</a>. Have
+you considered integrating that?</p>
+</blockquote>
+<p>Then I may want to cross-reference the implementations for correctness, but I
+may not want to rewrite my application in Python or explore Ruby/Python bridges
+to use that one function. I&rsquo;m drawing on the consistency of the rest of my
+application being written in Ruby to justify that choice.</p>
+<h3 id="make-the-change-everywhere">Make The Change Everywhere <a href="#make-the-change-everywhere">🔗</a></h3>
+<p>We could decide to invest the time and energy to use this convention
+<em>everywhere</em> immediately. Then, we&rsquo;d be consistent throughout our application!</p>
+<p>In the case of our keyword arguments example, I would advise against that,
+unless there are only one or two other places where we&rsquo;d use them, and they&rsquo;re
+easily identified.</p>
+<p>Even then, I&rsquo;d think twice about it. Any change has a risk, and changing the
+working code purely in the name of consistency is a risk with limited upside.</p>
+<p>However, consider this change:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">desired_widgets</span>
+  <span style="color:#66d9ef">Widget</span><span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;status IN </span><span style="color:#e6db74">#{</span>user_input<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>With the following code review suggestion:</p>
+<blockquote>
+<p>We should modify this method to sanitize user input before sending it as part
+of a database query.</p>
+</blockquote>
+<p>If we created the query like this because it&rsquo;s consistent with how other
+queries are written, then it&rsquo;s time to drop everything and change that everywhere.
+We&rsquo;ve opened ourselves up to <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL injection</a>
+attacks and we need to immediately invest the time to remediate those issues for
+our application&rsquo;s health and safety.</p>
+<p>As a side note, consider a static security analysis tool like
+<a href="https://brakemanscanner.org/">Brakeman</a> to <a href="https://github.com/TheGnarCo/gnarails/blob/fe72e5fe74455400088d89f7af2a2d9bf1899d26/templates/bin/brakeman">run automatically</a>
+as part of your <a href="https://github.com/TheGnarCo/gnarails/blob/fe72e5fe74455400088d89f7af2a2d9bf1899d26/templates/.circleci/config.yml#L49-L51">build process</a>
+so that your application is not solely relying on reviewers' eyes to catch
+critical security implications.</p>
+<h3 id="make-the-change-here-and-going-forward">Make The Change Here, And Going Forward <a href="#make-the-change-here-and-going-forward">🔗</a></h3>
+<p>For our keyword arguments example, I suggested not to make the change
+everywhere. However, that doesn&rsquo;t mean we should ignore it in the name of
+consistency. If there&rsquo;s a demonstrated benefit, we should take advantage of
+that. Instead, we can embrace the consistency of the standard <em>going forward</em>.
+As you make future changes, be mindful of current best practices and
+conventions, and change existing code to meet those conventions as you have
+another reason to change the code.</p>
+<p>Lastly, document these conventions so that it&rsquo;s clear to all team members what
+the expectations are going forward if you encounter this question. That can
+reduce ambiguity and help people understand why this internal inconsistency exists.</p>
+<p>This approach of leaving the code better than you found it can apply
+to long-reaching goals as well. If you&rsquo;re converting an application from
+<a href="https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html">JavaScript to TypeScript</a>,
+you can convert files as you need to change them. If
+you&rsquo;re updating an application from <a href="https://relishapp.com/rspec/rspec-rails/docs/feature-specs/feature-spec">feature specs</a>
+to <a href="https://relishapp.com/rspec/rspec-rails/docs/system-specs/system-spec">system specs</a>,
+you can do that as you change the area of code the feature spec is testing.</p>
+<h2 id="being-consistently-inconsistent">Being Consistently Inconsistent <a href="#being-consistently-inconsistent">🔗</a></h2>
+<p>Software development is a rapidly evolving ecosystem of best practices, tools,
+and approaches. While we don&rsquo;t intend to chase trends, we also need to
+incorporate new improvements that will benefit our applications - as long as
+we&rsquo;re intentional about them. For a healthy, long-running application, that
+can mean applying new paradigms in areas under active development, while leaving
+existing work in its current state for the time being.</p>
+<p>Living in the two worlds can be uncomfortable, and it is inconsistent. But it&rsquo;s
+intentional inconsistency with a plan towards consistency and based on a value
+judgement on the cost of the change vs. the benefit it&rsquo;ll provide.</p>
+<blockquote>
+<p>This post originally published on <a href="https://blog.thegnar.co/to-change-or-not-to-change">The Gnar Company blog</a>.</p>
+</blockquote>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/to-change-or-not-to-change/"><i class="fa fa-chevron-circle-left"></i> To Change or Not to Change</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2021 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+
+</body>
+
+</html>
+

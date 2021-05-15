@@ -2,31 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://kevinjmurphy.com/tags/activerecord/</loc>
+    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/activerecord-new-block/</loc>
+    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/rails/</loc>
+    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
+  </url><url>
     <loc>https://kevinjmurphy.com/posts/consistency-conundrum/</loc>
     <lastmod>2021-04-24T14:14:09-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2021-04-24T14:14:09-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2021-04-24T14:14:09-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
-    <lastmod>2021-04-24T14:14:09-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/tags/software-design/</loc>
-    <lastmod>2021-04-24T14:14:09-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
     <lastmod>2021-04-24T14:14:09-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/to-change-or-not-to-change/</loc>
     <lastmod>2021-04-18T07:29:25-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/debugging/</loc>
-    <lastmod>2021-03-28T14:15:20-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/rails/</loc>
     <lastmod>2021-03-28T14:15:20-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/wrapping-up-rails-exceptional-behavior/</loc>
@@ -97,9 +103,6 @@
   </url><url>
     <loc>https://kevinjmurphy.com/posts/dependency-injection-plug-in/</loc>
     <lastmod>2020-11-24T14:10:31-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/activerecord/</loc>
-    <lastmod>2020-11-11T15:38:10-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/explain-like-im-five/</loc>
     <lastmod>2020-11-11T15:38:10-05:00</lastmod>

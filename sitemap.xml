@@ -2,25 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://kevinjmurphy.com/tags/conference/</loc>
+    <lastmod>2021-05-19T10:50:20-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2021-05-19T10:50:20-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2021-05-19T10:50:20-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/rails/</loc>
+    <lastmod>2021-05-19T10:50:20-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/railsconf/</loc>
+    <lastmod>2021-05-19T10:50:20-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/railsconf-roundup-2021/</loc>
+    <lastmod>2021-05-19T10:50:20-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2021-05-19T10:50:20-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/speaking/</loc>
+    <lastmod>2021-05-19T10:50:20-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2021-05-19T10:50:20-04:00</lastmod>
+  </url><url>
     <loc>https://kevinjmurphy.com/tags/activerecord/</loc>
     <lastmod>2021-05-14T12:20:07-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/activerecord-new-block/</loc>
-    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/rails/</loc>
-    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
-    <lastmod>2021-05-14T12:20:07-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
     <lastmod>2021-05-14T12:20:07-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/consistency-conundrum/</loc>
@@ -44,13 +56,7 @@
     <loc>https://kevinjmurphy.com/tags/bundler/</loc>
     <lastmod>2021-03-21T20:24:01-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/tags/conference/</loc>
-    <lastmod>2021-03-12T20:30:07-05:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/posts/engineering-mba/</loc>
-    <lastmod>2021-03-12T20:30:07-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/railsconf/</loc>
     <lastmod>2021-03-12T20:30:07-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/engineering-mba-railsconf/</loc>

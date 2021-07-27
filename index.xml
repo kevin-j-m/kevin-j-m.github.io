@@ -6,10 +6,19 @@
    <description>Recent content on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2021 - Kevin Murphy</copyright>
-   <lastBuildDate>Mon, 19 Jul 2021 08:08:53 -0400</lastBuildDate>
+   <lastBuildDate>Tue, 27 Jul 2021 19:13:09 -0400</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>CSV Validation Post Sharing</title>
+       <link>https://kevinjmurphy.com/posts/csv-validation-sharing/</link>
+       <pubDate>Tue, 27 Jul 2021 19:13:09 -0400</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/csv-validation-sharing/</guid>
+       <description>&lt;p&gt;Last week, I wrote a &lt;a href=&#34;https://kevinjmurphy.com/posts/active-model-validations-csv/&#34;&gt;post&lt;/a&gt; on myemployer&amp;rsquo;s &lt;a href=&#34;https://blog.thegnar.co/active-model-validations-csv&#34;&gt;blog&lt;/a&gt; aboutvalidating input from a CSV file using &lt;code&gt;ActiveModel::Validations&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;That post was featured in Ruby Weekly &lt;a href=&#34;https://rubyweekly.com/issues/562&#34;&gt;#562&lt;/a&gt;.&lt;/p&gt;&lt;figure class=&#34;mid&#34;&gt;&lt;img src=&#34;https://kevinjmurphy.com/img/ruby_weekly_562.png&#34;/&gt;&lt;/figure&gt;&lt;p&gt;It was also shared in Awesome Ruby &lt;a href=&#34;https://ruby.libhunt.com/newsletter/270&#34;&gt;#270&lt;/a&gt;. This is the first time I&amp;rsquo;ve been inAwesome Ruby!&lt;/p&gt;&lt;figure class=&#34;mid&#34;&gt;&lt;img src=&#34;https://kevinjmurphy.com/img/awesome_ruby_270.png&#34;/&gt;&lt;/figure&gt;&lt;p&gt;All of my blog posts are cross-posted on &lt;a href=&#34;https://dev.to/kevin_j_m&#34;&gt;dev.to&lt;/a&gt;,and their ruby community was nice enough to share my post with their twitterfollowers.&lt;/p&gt;&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;ro&#34; dir=&#34;ltr&#34;&gt;Validate CSV Input With ActiveModel::Validations&lt;br&gt;&lt;br&gt;{ author: &lt;a href=&#34;https://twitter.com/kevin_j_m?ref_src=twsrc%5Etfw&#34;&gt;@kevin_j_m&lt;/a&gt; } &lt;a href=&#34;https://twitter.com/hashtag/DEVCommunity?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#DEVCommunity&lt;/a&gt;&lt;a href=&#34;https://t.co/8AYMpkX7yc&#34;&gt;https://t.co/8AYMpkX7yc&lt;/a&gt;&lt;/p&gt;&amp;mdash; The Ruby Dev (@the_ruby_dev) &lt;a href=&#34;https://twitter.com/the_ruby_dev/status/1417522440431968261?ref_src=twsrc%5Etfw&#34;&gt;July 20, 2021&lt;/a&gt;&lt;/blockquote&gt;&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;p&gt;In case you can&amp;rsquo;t read that, the tweet says:&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;Validate CSV Input With ActiveModel::Validations&lt;/p&gt;&lt;p&gt;{ author: @kevin_j_m } #DEVCommunity&lt;/p&gt;&lt;/blockquote&gt;</description>
+     </item>
    
      <item>
        <title>Validate CSV Input With ActiveModel::Validations</title>

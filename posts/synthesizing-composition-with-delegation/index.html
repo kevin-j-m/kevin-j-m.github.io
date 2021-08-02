@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="Synthesizing Composition With Delegation"/>
 <meta name="twitter:description" content="Orchestrating the sum so you don&rsquo;t need to know the parts"/>
 
-<meta name="generator" content="Hugo 0.85.0" />
+<meta name="generator" content="Hugo 0.86.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -159,7 +159,7 @@ talk about Ruby&rsquo;s
 <h2 id="noise-reduction">Noise Reduction <a href="#noise-reduction">🔗</a></h2>
 <p>The <a href="https://en.wikipedia.org/wiki/Synthesizer">synthesizer</a> is an instrument
 capable of producing a wide array of sounds. A collection of sounds and effects are known as a patch.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Patch</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Patch</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:sound</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:effect</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:filter</span>
@@ -167,7 +167,7 @@ capable of producing a wide array of sounds. A collection of sounds and effects 
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>You can save these patches on the synthesizer&rsquo;s memory and recall them later for
 easy access.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">patch <span style="color:#f92672">=</span> <span style="color:#66d9ef">Patch</span><span style="color:#f92672">.</span>new
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">patch <span style="color:#f92672">=</span> <span style="color:#66d9ef">Patch</span><span style="color:#f92672">.</span>new
 synth <span style="color:#f92672">=</span> <span style="color:#66d9ef">Synthesizer</span><span style="color:#f92672">.</span>new
 
 synth<span style="color:#f92672">.</span>save_patch(<span style="color:#e6db74">location</span>: <span style="color:#e6db74">:b1</span>, <span style="color:#e6db74">patch</span>: patch)
@@ -179,7 +179,7 @@ synth<span style="color:#f92672">.</span>play_key(<span style="color:#e6db74">no
 expertise.</p>
 <p>For example, our synthesizer above doesn&rsquo;t know how to save a patch to its
 onboard memory. It relies on its patch memory to handle that.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Synthesizer</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Synthesizer</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">save_patch</span>(<span style="color:#e6db74">location</span>:, <span style="color:#e6db74">patch</span>:)
     @patch_memory<span style="color:#f92672">.</span>write(<span style="color:#e6db74">location</span>: location, <span style="color:#e6db74">patch</span>: patch)
   <span style="color:#66d9ef">end</span>
@@ -228,7 +228,7 @@ rest of its functionality, without needing to duplicate it across different
 classes.</p>
 <p>In this <a href="https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/instruments/synthesizer.rb#L41-L47">example</a>,
 our synthesizer changes its memory capabilities based on the brand that it is.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize_memory</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize_memory</span>
   <span style="color:#66d9ef">if</span> @brand <span style="color:#f92672">==</span> <span style="color:#e6db74">:moog</span>
     @patch_memory <span style="color:#f92672">=</span> <span style="color:#66d9ef">MoogPatchMemory</span><span style="color:#f92672">.</span>new
   <span style="color:#66d9ef">elsif</span> @brand <span style="color:#f92672">==</span> <span style="color:#e6db74">:nord</span>

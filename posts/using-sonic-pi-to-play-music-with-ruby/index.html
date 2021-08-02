@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="Using Sonic Pi to Play Music With Ruby"/>
 <meta name="twitter:description" content="Amplifying the impact of your code"/>
 
-<meta name="generator" content="Hugo 0.85.0" />
+<meta name="generator" content="Hugo 0.86.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -185,7 +185,7 @@ it has since changed to run on a <a href="https://github.com/sonic-pi-net/sonic-
 <p>The CLI already implemented the functionality to <a href="https://github.com/Widdershin/sonic-pi-cli/blob/20a18f91b4aa24de9f4b187aa20c69334ddf0329/bin/sonic_pi#L13-L33">find the port</a>
 to send to the <code>SonicPi</code> class, so for demonstration purposes, I copied that in
 my constructor.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Amplifier</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Amplifier</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
     @port <span style="color:#f92672">=</span> find_port
     @speaker <span style="color:#f92672">=</span> <span style="color:#66d9ef">SonicPi</span><span style="color:#f92672">.</span>new(@port)
@@ -200,7 +200,7 @@ my constructor.</p>
 </code></pre></div><p>Needing to find the port is now something that the <code>SonicPi</code> class can do <a href="https://github.com/Widdershin/sonic-pi-cli/pull/23">by itself</a>
 as of version v0.2.0; however, this work preceded that.</p>
 <p>The rest of the functionality in the <code>Amplifier</code> class is now to <a href="https://kevinjmurphy.com/posts/synthesizing-composition-with-delegation/">delegate</a> commands to the <code>@speaker</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Amplifier</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Amplifier</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>(sound)
     @speaker<span style="color:#f92672">.</span>run(sound)
   <span style="color:#66d9ef">end</span>

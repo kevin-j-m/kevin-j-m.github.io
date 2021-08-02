@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="Wrapping Up Rails Exceptional Behavior"/>
 <meta name="twitter:description" content="Putting a bow on our investigation"/>
 
-<meta name="generator" content="Hugo 0.85.0" />
+<meta name="generator" content="Hugo 0.86.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -157,7 +157,7 @@ reading the code again, and, almost immediately, we see a <a href="https://githu
 end
 </code></pre><p>The exception that is passed in is modified. Let&rsquo;s look at this
 <code>original_exception</code> <a href="https://github.com/rails/rails/blob/63d3f3f4d868a5ed9eacf00af2a80278aa005051/actionpack/lib/action_dispatch/middleware/exception_wrapper.rb#L106-L112">method</a>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">original_exception</span>(exception)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">original_exception</span>(exception)
   <span style="color:#66d9ef">if</span> @@rescue_responses<span style="color:#f92672">.</span>has_key?(exception<span style="color:#f92672">.</span>cause<span style="color:#f92672">.</span>class<span style="color:#f92672">.</span>name)
     exception<span style="color:#f92672">.</span>cause
   <span style="color:#66d9ef">else</span>
@@ -175,13 +175,13 @@ and a <code>RecordNotFound</code> exception is supposed to return a 404 status c
 <p>We now have a handle on the behavior in Rails 5; however, this investigation
 started because we noticed it was different in Rails 5 and Rails 6. Let&rsquo;s check
 in on the <code>ExceptionWrapper</code> initializer in <a href="https://github.com/rails/rails/blob/0440369d03ae99f9f044b00e39dcd3d9871c65c2/actionpack/lib/action_dispatch/middleware/exception_wrapper.rb#L46-L48">Rails 6</a>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(backtrace_cleaner, exception)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(backtrace_cleaner, exception)
   @backtrace_cleaner <span style="color:#f92672">=</span> backtrace_cleaner
   @exception <span style="color:#f92672">=</span> exception
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>No longer are we retrieving the <code>original_exception</code>. That doesn&rsquo;t tell the
 whole story though. When we ask for the <a href="https://github.com/rails/rails/blob/4c78cc8b04861f02d660aefc37979eb2244db6ba/actionpack/lib/action_dispatch/middleware/exception_wrapper.rb#L62">status code</a>, we&rsquo;re not using <code>@exception</code>. Instead, we now have an <code>unwrapped_exception</code> to <a href="https://github.com/rails/rails/blob/4c78cc8b04861f02d660aefc37979eb2244db6ba/actionpack/lib/action_dispatch/middleware/exception_wrapper.rb#L49-L55">investigate</a>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unwrapped_exception</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unwrapped_exception</span>
   <span style="color:#66d9ef">if</span> wrapper_exceptions<span style="color:#f92672">.</span>include?(exception<span style="color:#f92672">.</span>class<span style="color:#f92672">.</span>to_s)
     exception<span style="color:#f92672">.</span>cause
   <span style="color:#66d9ef">else</span>

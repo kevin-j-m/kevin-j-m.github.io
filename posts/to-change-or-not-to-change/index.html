@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="To Change or Not to Change"/>
 <meta name="twitter:description" content="Here are more questions to try to answer THAT question"/>
 
-<meta name="generator" content="Hugo 0.85.0" />
+<meta name="generator" content="Hugo 0.86.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -139,7 +139,7 @@
 <h2 id="optional-feedback">Optional Feedback <a href="#optional-feedback">🔗</a></h2>
 <p>Imagine you&rsquo;ve just wrapped up a new feature and submitted it for code review,
 which includes the following method:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(base_price, promo_code)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(base_price, promo_code)
   <span style="color:#75715e"># calculation</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>One of your team members reviews the change, and leaves a suggestion.</p>
@@ -147,7 +147,7 @@ which includes the following method:</p>
 <p>You could consider using keyword arguments for this method.</p>
 </blockquote>
 <p>That would change the method to look like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(<span style="color:#e6db74">base_price</span>:, <span style="color:#e6db74">promo_code</span>:)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(<span style="color:#e6db74">base_price</span>:, <span style="color:#e6db74">promo_code</span>:)
   <span style="color:#75715e"># calculation</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>Do you make this change? How do you decide?</p>
@@ -186,14 +186,14 @@ to.</p>
 flexibility.</p>
 <p>I&rsquo;m going to intentionally obscure variable names to make a point here, but
 calling our method before looked like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_calculation_results</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_calculation_results</span>
   calculator <span style="color:#f92672">=</span> <span style="color:#66d9ef">Calculator</span><span style="color:#f92672">.</span>new
 <span style="display:block;width:100%;background-color:#3c3d38">  result <span style="color:#f92672">=</span> calculator<span style="color:#f92672">.</span>complex_calculation(@x, @y)
 </span>
   puts result
 <span style="color:#66d9ef">end</span></code></pre></div>
 <p>Compare this to the keyword args approach:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_calculation_results</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_calculation_results</span>
   calculator <span style="color:#f92672">=</span> <span style="color:#66d9ef">Calculator</span><span style="color:#f92672">.</span>new
 <span style="display:block;width:100%;background-color:#3c3d38">  result <span style="color:#f92672">=</span> complex_calculation(
 </span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#e6db74">base_price</span>: @x,
@@ -206,7 +206,7 @@ calling our method before looked like this:</p>
 understandable.</p>
 <p>It also frees us from caring about the position or order of the arguments.
 Calling the method this way works as well:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  result <span style="color:#f92672">=</span> complex_calculation(
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  result <span style="color:#f92672">=</span> complex_calculation(
     <span style="color:#e6db74">promo_code</span>: @y,
     <span style="color:#e6db74">base_price</span>: @x,
   )

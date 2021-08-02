@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="Diffin&#39; Dots"/>
 <meta name="twitter:description" content="Git comparisons of the future&hellip;today!"/>
 
-<meta name="generator" content="Hugo 0.85.0" />
+<meta name="generator" content="Hugo 0.86.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -139,7 +139,7 @@ functional changes and were expecting to use this comparison as proof that we
 didn&rsquo;t accidentally drop a commit or do something terrible on accident.</p>
 <p>We then looked to compare the branches locally. When we did that, we saw no
 diff.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">⇒ diff-test|reorder git diff master
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">⇒ diff-test|reorder git diff master
 
 <span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
 </code></pre></div><p>Did we find a bug in Github? Did our re-ordering work? At this point, we had no
@@ -148,7 +148,7 @@ idea.</p>
 <p>We dug into the documentation for <code>diff</code>, a tool I use frequently,
 but don&rsquo;t spend much time considering how it works.</p>
 <p>Let&rsquo;s read some of the help on how to use the diff tool:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">⇒ git diff --help
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">⇒ git diff --help
 GIT-DIFF<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>                                      Git Manual                                      GIT-DIFF<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>
 ...
        git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
@@ -181,17 +181,17 @@ themselves.</p>
 <p>Let&rsquo;s look at demonstrating this behavior entirely locally.</p>
 <h3 id="setup">Setup <a href="#setup">🔗</a></h3>
 <p>First, let&rsquo;s create a new repository:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">⇒ mkdir diff-test
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">⇒ mkdir diff-test
 ⇒ cd diff-test
 diff-test|⇒ git init .
 Initialized empty Git repository
 </code></pre></div><p>We&rsquo;ll start by adding a few new files, and making the first commit:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|master ⇒ echo <span style="color:#e6db74">&#34;Creamy Vanilla Ice Cream done Dippin’ Dots style&#34;</span> &gt; vanilla.txt
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|master ⇒ echo <span style="color:#e6db74">&#34;Creamy Vanilla Ice Cream done Dippin’ Dots style&#34;</span> &gt; vanilla.txt
 diff-test|master⚡ ⇒ echo <span style="color:#e6db74">&#34;Creamy Milk Chocolate Ice Cream.  Someone pass the spoon&#34;</span> &gt; chocolate.txt
 diff-test|master⚡ ⇒ git add --all
 diff-test|master⚡ ⇒ git commit -m <span style="color:#e6db74">&#34;IFO: initial flavor offering&#34;</span>
 </code></pre></div><p>We will then add two more commits with some additional changes:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|master ⇒ echo <span style="color:#e6db74">&#34;Dippin&#39; Dots Strawberry Ice Cream is as sweet as a summer&#39;s day and so berry, berry good&#34;</span> &gt; strawberry.txt
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|master ⇒ echo <span style="color:#e6db74">&#34;Dippin&#39; Dots Strawberry Ice Cream is as sweet as a summer&#39;s day and so berry, berry good&#34;</span> &gt; strawberry.txt
 diff-test|master⚡ ⇒ git add --all
 diff-test|master⚡ ⇒ git commit -m <span style="color:#e6db74">&#34;Introducing strawberry&#34;</span>
 
@@ -203,7 +203,7 @@ diff-test|master⚡ ⇒ git commit -m <span style="color:#e6db74">&#34;Introduci
 our history before strawberry.</p>
 <p>Let&rsquo;s create a new branch to address this, and look at the current order of the
 commits:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|master ⇒ git checkout -b reorder
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|master ⇒ git checkout -b reorder
 Switched to a new branch <span style="color:#e6db74">&#39;reorder&#39;</span>
 diff-test|reorder ⇒ git log --oneline
 
@@ -213,12 +213,12 @@ e42566b IFO: initial flavor offering
 </code></pre></div><p>We will then perform an interactive rebase, going back two commits in history.
 During that rebase, we will switch the order of orange and strawberry, so orange
 is first, as we need it:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git rebase -i HEAD~2
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git rebase -i HEAD~2
 
 pick e378256 Introducing orange
 pick f455e5b Introducing strawberry
 </code></pre></div><p>After performing the rebase, here is the order of our commits:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git log --oneline
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git log --oneline
 
 5fa36f4 <span style="color:#f92672">(</span>HEAD -&gt; reorder<span style="color:#f92672">)</span> Introducing strawberry
 7a1d500 Introducing orange
@@ -228,22 +228,22 @@ reorder our commits. Now let&rsquo;s compare that to our original branch to make
 everything looks to be as we&rsquo;d expect.</p>
 <h3 id="differences"><code>diff</code>erences <a href="#differences">🔗</a></h3>
 <p>We start by comparing this branch to the original branch:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git diff master
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git diff master
 
 <span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
 </code></pre></div><p>We see that there&rsquo;s no difference, which we&rsquo;re expecting and hoping for. No
 files changed, no functionality is different; only the history has changed.</p>
 <p>If we diff using the two-dot version, we see the same result:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git diff master..reorder
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git diff master..reorder
 
 <span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
 </code></pre></div><p>That sounds right, because according to the documentation, the two-dot usage is
 the same as not providing dots:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt;..&lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt;..&lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
           This is synonymous to the previous form. If &lt;commit&gt; on one side is omitted, it will have the
           same effect as using HEAD instead.
 </code></pre></div><p>Lastly, let&rsquo;s perform a three-dot diff:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git diff master...reorder
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git diff master...reorder
 
 diff --git a/orange.txt b/orange.txt
 new file mode <span style="color:#ae81ff">100644</span>

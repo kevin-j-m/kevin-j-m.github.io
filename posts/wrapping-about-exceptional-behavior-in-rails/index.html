@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="(W)rapping About Exceptional Behavior in Rails"/>
 <meta name="twitter:description" content="Unwrapping a mystery"/>
 
-<meta name="generator" content="Hugo 0.85.0" />
+<meta name="generator" content="Hugo 0.86.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -145,7 +145,7 @@
 <h2 id="reset">Reset <a href="#reset">🔗</a></h2>
 <h2 id="pop-quiz">Pop Quiz <a href="#pop-quiz">🔗</a></h2>
 <p>Consider the following controller:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FoosController</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActionController</span><span style="color:#f92672">::</span><span style="color:#66d9ef">API</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FoosController</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActionController</span><span style="color:#f92672">::</span><span style="color:#66d9ef">API</span>
   rescue_from <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">RecordNotFound</span>, <span style="color:#e6db74">with</span>: <span style="color:#e6db74">:raise_not_found</span>
 
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create</span>
@@ -164,10 +164,10 @@ However, we&rsquo;re <a href="https://api.rubyonrails.org/v6.1.1/classes/ActiveS
 receive?</p>
 <h2 id="it-depends">It Depends <a href="#it-depends">🔗</a></h2>
 <p>In Rails 6, we get a 500.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; curl -I -X POST localhost:3000/foos
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; curl -I -X POST localhost:3000/foos
 HTTP/1.1 <span style="color:#ae81ff">500</span> Internal Server Error
 </code></pre></div><p>However, in Rails 5, we get a 404.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; curl -I -X POST localhost:3000/foos
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; curl -I -X POST localhost:3000/foos
 HTTP/1.1 <span style="color:#ae81ff">404</span> Not Found
 </code></pre></div><p>Why does this difference exist? Let&rsquo;s dig into how to investigate.</p>
 <h2 id="research">Research <a href="#research">🔗</a></h2>
@@ -193,7 +193,7 @@ no longer considering it a special case.</li>
 status code. If we search through the Rails codebase for <a href="https://github.com/rails/rails/search?p=1&amp;q=RecordNotFound">RecordNotFound</a> or <a href="https://github.com/rails/rails/search?p=1&amp;q=not_found">not_found</a> (which is the <a href="https://guides.rubyonrails.org/layouts_and_rendering.html#using-render">symbol representation</a> of the status code), we get a number of results - but there are fewer for <code>not_found</code>, so let&rsquo;s look through that.</p>
 <p>Towards the bottom of the first page of results (as of this writing), we see the
 <code>ExceptionWrapper</code> class, which includes <a href="https://github.com/rails/rails/blob/291a3d2ef29a3842d1156ada7526f4ee60dd2b59/actionpack/lib/action_dispatch/middleware/exception_wrapper.rb#L8-L24">this</a>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  cattr_accessor <span style="color:#e6db74">:rescue_responses</span>, <span style="color:#e6db74">default</span>: <span style="color:#66d9ef">Hash</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">:internal_server_error</span>)<span style="color:#f92672">.</span>merge!(
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  cattr_accessor <span style="color:#e6db74">:rescue_responses</span>, <span style="color:#e6db74">default</span>: <span style="color:#66d9ef">Hash</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">:internal_server_error</span>)<span style="color:#f92672">.</span>merge!(
       <span style="color:#e6db74">&#34;ActionController::RoutingError&#34;</span>                     <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:not_found</span>,
       <span style="color:#e6db74">&#34;AbstractController::ActionNotFound&#34;</span>                 <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:not_found</span>,
       <span style="color:#e6db74">&#34;ActionController::MethodNotAllowed&#34;</span>                 <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:method_not_allowed</span>,
@@ -214,7 +214,7 @@ status code. If we search through the Rails codebase for <a href="https://github
 This seems promising - but <code>ActiveRecord::RecordNotFound</code> isn&rsquo;t in this hash!</p>
 <p>If we search further, we will eventually run into <a href="https://github.com/rails/rails/blob/d75c2a175215c0f6d011b60f1c9f2b6466184adb/activerecord/lib/active_record/railtie.rb#L22-L27">ActiveRecord&rsquo;s railtie</a>,
 which includes:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">config<span style="color:#f92672">.</span>action_dispatch<span style="color:#f92672">.</span>rescue_responses<span style="color:#f92672">.</span>merge!(
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">config<span style="color:#f92672">.</span>action_dispatch<span style="color:#f92672">.</span>rescue_responses<span style="color:#f92672">.</span>merge!(
   <span style="color:#e6db74">&#34;ActiveRecord::RecordNotFound&#34;</span>   <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:not_found</span>,
   <span style="color:#e6db74">&#34;ActiveRecord::StaleObjectError&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:conflict</span>,
   <span style="color:#e6db74">&#34;ActiveRecord::RecordInvalid&#34;</span>    <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:unprocessable_entity</span>,
@@ -225,7 +225,7 @@ which includes:</p>
 to status codes occurs!</p>
 <h3 id="pull-out-some-tools">Pull Out Some Tools <a href="#pull-out-some-tools">🔗</a></h3>
 <p>Returning to the <code>ExceptionWrapper</code> class, we see the <code>status_code_for_exception</code> <a href="https://github.com/rails/rails/blob/291a3d2ef29a3842d1156ada7526f4ee60dd2b59/actionpack/lib/action_dispatch/middleware/exception_wrapper.rb#L117-L119">method</a>, which looks to take in an exception class and convert it to a status code, based on the <code>@@rescue_responses</code> hash.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">status_code_for_exception</span>(class_name)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">status_code_for_exception</span>(class_name)
   <span style="color:#66d9ef">Rack</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Utils</span><span style="color:#f92672">.</span>status_code(@@rescue_responses<span style="color:#f92672">[</span>class_name<span style="color:#f92672">]</span>)
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>Maybe if we could see what class name is getting passed into that, we could see
@@ -239,18 +239,18 @@ that&rsquo;s not our code; how can we do that?</p>
 of any dependency using bundler&rsquo;s <code>open</code> <a href="https://bundler.io/bundle_open.html">command</a>.
 Rails itself is a series of gems, and we can see that this <code>ExceptionWrapper</code>
 is part of <code>actionpack</code>, so let&rsquo;s open that up:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bundle open actionpack
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bundle open actionpack
 </code></pre></div><p>This will open up the source code for the <code>actionpack</code> gem in the editor you have
 defined. We open the <code>ExceptionWrapper</code> class, and we know we want to find out
 what value is passed to it, but we&rsquo;re not sure what else we might want to see
 while we&rsquo;re there. Using <a href="https://ruby-doc.org/stdlib-3.0.0/libdoc/irb/rdoc/Binding.html">Ruby&rsquo;s</a> <code>binding.irb</code>, we can <a href="https://jemma.dev/blog/binding-irb">start a console</a> when we hit that method.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">status_code_for_exception</span>(class_name)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">status_code_for_exception</span>(class_name)
   binding<span style="color:#f92672">.</span>irb
   <span style="color:#66d9ef">Rack</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Utils</span><span style="color:#f92672">.</span>status_code(@@rescue_responses<span style="color:#f92672">[</span>class_name<span style="color:#f92672">]</span>)
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>After starting a rails server, and issuing a request to our endpoint via curl,
 we eventually hit our breakpoint:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#e6db74">From</span>: <span style="color:#e6db74">/ruby/</span><span style="color:#ae81ff">2</span><span style="color:#f92672">.</span><span style="color:#ae81ff">6</span><span style="color:#f92672">.</span><span style="color:#ae81ff">6</span><span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>ruby<span style="color:#f92672">/</span>gems<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#f92672">.</span><span style="color:#ae81ff">6</span><span style="color:#f92672">.</span><span style="color:#ae81ff">0</span><span style="color:#f92672">/</span>gems<span style="color:#f92672">/</span>actionpack<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span><span style="color:#f92672">.</span><span style="color:#ae81ff">2</span><span style="color:#f92672">.</span><span style="color:#ae81ff">4</span><span style="color:#f92672">.</span><span style="color:#ae81ff">5</span><span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>action_dispatch<span style="color:#f92672">/</span>middleware<span style="color:#f92672">/</span>exception_wrapper<span style="color:#f92672">.</span>rb <span style="color:#960050;background-color:#1e0010">@</span> line <span style="color:#ae81ff">86</span> :
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#e6db74">From</span>: <span style="color:#e6db74">/ruby/</span><span style="color:#ae81ff">2</span><span style="color:#f92672">.</span><span style="color:#ae81ff">6</span><span style="color:#f92672">.</span><span style="color:#ae81ff">6</span><span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>ruby<span style="color:#f92672">/</span>gems<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#f92672">.</span><span style="color:#ae81ff">6</span><span style="color:#f92672">.</span><span style="color:#ae81ff">0</span><span style="color:#f92672">/</span>gems<span style="color:#f92672">/</span>actionpack<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span><span style="color:#f92672">.</span><span style="color:#ae81ff">2</span><span style="color:#f92672">.</span><span style="color:#ae81ff">4</span><span style="color:#f92672">.</span><span style="color:#ae81ff">5</span><span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>action_dispatch<span style="color:#f92672">/</span>middleware<span style="color:#f92672">/</span>exception_wrapper<span style="color:#f92672">.</span>rb <span style="color:#960050;background-color:#1e0010">@</span> line <span style="color:#ae81ff">86</span> :
 
     <span style="color:#ae81ff">81</span>:         <span style="color:#e6db74">&#34;Full Trace&#34;</span> <span style="color:#f92672">=&gt;</span> full_trace_with_ids
     <span style="color:#ae81ff">82</span>:       }
@@ -269,7 +269,7 @@ irb(<span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672"
 </code></pre></div><p>This isn&rsquo;t surprising that we&rsquo;re getting the <code>RuntimeError</code>, but doesn&rsquo;t help
 explain how we&rsquo;re getting a 404 returned. Let&rsquo;s exit and regroup on a new
 strategy.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">irb(<span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ExceptionWrapper</span>):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> exit
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">irb(<span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ExceptionWrapper</span>):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> exit
 <span style="color:#66d9ef">Completed</span> <span style="color:#ae81ff">500</span> <span style="color:#66d9ef">Internal</span> <span style="color:#66d9ef">Server</span> <span style="color:#66d9ef">Error</span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span>ms (<span style="color:#e6db74">ActiveRecord</span>: <span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#ae81ff">0</span>ms)
 
 
@@ -291,12 +291,12 @@ strategy.</p>
 irb(<span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ExceptionWrapper</span>):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span>
 </code></pre></div><p>Wait! This method is called a second time. And that time, the class name is
 <em>still</em> <code>&quot;RuntimeError&quot;</code>. It gets called a <strong>third</strong> time, and that time, we see:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">irb(<span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ExceptionWrapper</span>):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> class_name
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">irb(<span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ExceptionWrapper</span>):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> class_name
 <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;ActiveRecord::RecordNotFound&#34;</span>
 </code></pre></div><p>We&rsquo;ve found our <code>NotFound</code>! But - what do we do now?</p>
 <h3 id="calling-in-a-favor"><code>Call</code>ing In A Favor <a href="#calling-in-a-favor">🔗</a></h3>
 <p>We&rsquo;re still in our console session, and we&rsquo;ve executed the <code>status_code_for_exception</code> for the third time when processing a single HTTP request. What&rsquo;s calling this method? Ruby will tell us its <a href="https://ruby-doc.org/core-3.0.0/Kernel.html#method-i-caller">caller</a>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">irb(<span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ExceptionWrapper</span>):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> caller
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">irb(<span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ExceptionWrapper</span>):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> caller
 <span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;/ruby/2.6.6/lib/ruby/2.6.0/irb/workspace.rb:85:in `eval&#39;&#34;</span>,
 <span style="color:#e6db74">&#34;/ruby/2.6.6/lib/ruby/2.6.0/irb/workspace.rb:85:in `evaluate&#39;&#34;</span>,
 <span style="color:#e6db74">&#34;/ruby/2.6.6/lib/ruby/2.6.0/irb/context.rb:385:in `evaluate&#39;&#34;</span>,
@@ -351,7 +351,7 @@ irb(<span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672"
 <code>status_code_for_exception</code>. Tracing our way backwards from
 <code>status_code_for_exception</code>, we eventually find where the <code>ExceptionWrapper</code> is
 <a href="https://github.com/rails/rails/blob/63d3f3f4d868a5ed9eacf00af2a80278aa005051/actionpack/lib/action_dispatch/middleware/debug_exceptions.rb#L78">created</a>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">render_exception</span>(request, exception)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">render_exception</span>(request, exception)
   backtrace_cleaner <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>get_header(<span style="color:#e6db74">&#34;action_dispatch.backtrace_cleaner&#34;</span>)
   wrapper <span style="color:#f92672">=</span> <span style="color:#66d9ef">ExceptionWrapper</span><span style="color:#f92672">.</span>new(backtrace_cleaner, exception)
   <span style="color:#f92672">...</span>
@@ -362,7 +362,7 @@ irb(<span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672"
 <p>We&rsquo;ve been at this for a while, and we&rsquo;ve got a lead to track down, but at this
 point, let&rsquo;s take a break. We should clean up our mess by <a href="https://bundler.io/man/bundle-pristine.1.html">restoring</a>
 <code>actionpack</code> back to how it was before.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bundle pristine
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bundle pristine
 </code></pre></div><p>Let&rsquo;s take stock in what we&rsquo;ve done:</p>
 <ul>
 <li>Identified that Rails has a list of exceptions that it maps to specific HTTP

@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="ActiveRecord&#39;s New Takes a Block, Kid"/>
 <meta name="twitter:description" content="Hangin&#39; Tough With All The Ways To Initialize An Object"/>
 
-<meta name="generator" content="Hugo 0.85.0" />
+<meta name="generator" content="Hugo 0.86.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -138,13 +138,13 @@
 <p>If we want to make a new instance of an ActiveRecord model with particular
 attributes, we have a number of options.</p>
 <p>We can pass the attributes in as a hash:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">u <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Jordan&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Knight&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">u <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Jordan&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Knight&#34;</span>)
 </code></pre></div><p>We can set the attributes after creating the object:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">u <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>new
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">u <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>new
 u<span style="color:#f92672">.</span>first_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jordan&#34;</span>
 u<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Knight&#34;</span>
 </code></pre></div><p>And there&rsquo;s a third option - we can <em>also</em> pass <code>new</code> a block:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">u <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>user<span style="color:#f92672">|</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">u <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>user<span style="color:#f92672">|</span>
   user<span style="color:#f92672">.</span>first_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jordan&#34;</span>
   user<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Knight&#34;</span>
 <span style="color:#66d9ef">end</span>
@@ -152,13 +152,13 @@ u<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</sp
 <p>Let&rsquo;s say we have a system that members of a band use to check their tour
 schedule. Band members are users, and when we add a member, we want to make a
 user for them.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_member</span>(<span style="color:#e6db74">first_name</span>:, <span style="color:#e6db74">last_name</span>:)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_member</span>(<span style="color:#e6db74">first_name</span>:, <span style="color:#e6db74">last_name</span>:)
   @members <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">first_name</span>: first_name, <span style="color:#e6db74">last_name</span>: last_name)
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>Additionally, users have a username attribute, and we want to keep that unique
 within a given band. We also want the system to define the username when we add
 a band member.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_member</span>(<span style="color:#e6db74">first_name</span>:, <span style="color:#e6db74">last_name</span>:)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_member</span>(<span style="color:#e6db74">first_name</span>:, <span style="color:#e6db74">last_name</span>:)
   username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>band_name<span style="color:#e6db74">}</span><span style="color:#e6db74">_</span><span style="color:#e6db74">#{</span>last_name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
   <span style="color:#66d9ef">if</span> @members<span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:last_name</span>)<span style="color:#f92672">.</span>include?(last_name)
     username <span style="color:#f92672">&lt;&lt;</span> unique_value
@@ -176,7 +176,7 @@ a band member.</p>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>However, if we prefer the aesthetic, we can also define those attributes in a
 block:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_member</span>(<span style="color:#e6db74">first_name</span>:, <span style="color:#e6db74">last_name</span>:)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_member</span>(<span style="color:#e6db74">first_name</span>:, <span style="color:#e6db74">last_name</span>:)
   @members <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>user<span style="color:#f92672">|</span>
     user<span style="color:#f92672">.</span>first_name <span style="color:#f92672">=</span> first_name
     user<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> last_name
@@ -189,7 +189,7 @@ block:</p>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><h2 id="seeing-the-result-the-right-stuffhttpsenwikipediaorgwikiyou_got_it_the_right_stuff">Seeing The Result (<a href="https://en.wikipedia.org/wiki/You_Got_It_(The_Right_Stuff)">The Right Stuff</a>) <a href="#seeing-the-result-the-right-stuffhttpsenwikipediaorgwikiyou_got_it_the_right_stuff">🔗</a></h2>
 <p>Let&rsquo;s check our work to see the usernames of our band members.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> pry(main)<span style="color:#f92672">&gt;</span> band <span style="color:#f92672">=</span> <span style="color:#66d9ef">Band</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">&#34;New Kids on the Block&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> pry(main)<span style="color:#f92672">&gt;</span> band <span style="color:#f92672">=</span> <span style="color:#66d9ef">Band</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">&#34;New Kids on the Block&#34;</span>)
 <span style="color:#f92672">[</span><span style="color:#ae81ff">2</span><span style="color:#f92672">]</span> pry(main)<span style="color:#f92672">&gt;</span> band<span style="color:#f92672">.</span>add_member(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Jordan&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Knight&#34;</span>)
 <span style="color:#f92672">[</span><span style="color:#ae81ff">3</span><span style="color:#f92672">]</span> pry(main)<span style="color:#f92672">&gt;</span> band<span style="color:#f92672">.</span>add_member(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Donnie&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Wahlberg&#34;</span>)
 <span style="color:#f92672">[</span><span style="color:#ae81ff">4</span><span style="color:#f92672">]</span> pry(main)<span style="color:#f92672">&gt;</span> band<span style="color:#f92672">.</span>add_member(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Jonathan&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Knight&#34;</span>)
@@ -203,7 +203,7 @@ claimed the username <code>&quot;New_Kids_on_the_Block_Knight&quot;</code>.</p>
 <p>If you&rsquo;re familiar with Ruby&rsquo;s <code>tap</code> <a href="https://docs.ruby-lang.org/en/master/Kernel.html#method-i-tap">method</a>,
 you might be wondering what all the fuss is about. We can do the same thing
 with <code>tap</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_member</span>(<span style="color:#e6db74">first_name</span>:, <span style="color:#e6db74">last_name</span>:)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_member</span>(<span style="color:#e6db74">first_name</span>:, <span style="color:#e6db74">last_name</span>:)
   @members <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>new<span style="color:#f92672">.</span>tap <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>user<span style="color:#f92672">|</span>
     user<span style="color:#f92672">.</span>first_name <span style="color:#f92672">=</span> first_name
     user<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> last_name
@@ -220,23 +220,23 @@ to <code>new</code> or not, based on what the object inherits from?</p>
 <p>That&rsquo;s fair, but <code>new</code> is not the only ActiveRecord method that takes a block.
 Others include <code>create</code>, <code>build</code>, and <code>find_or_initialize_by</code>. There the
 differences with <code>tap</code> start to show:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">new_user <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>create(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Jordan&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Knight&#34;</span>)<span style="color:#f92672">.</span>tap <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>u<span style="color:#f92672">|</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">new_user <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>create(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Jordan&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Knight&#34;</span>)<span style="color:#f92672">.</span>tap <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>u<span style="color:#f92672">|</span>
   u<span style="color:#f92672">.</span>first_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jonathan&#34;</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>Our <code>new_user</code> has the first name of Jonathan, resulting from the call to <code>tap</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">new_user<span style="color:#f92672">.</span>first_name
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">new_user<span style="color:#f92672">.</span>first_name
 <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;Jonathan&#34;</span>
 </code></pre></div><p>However, that&rsquo;s only persisted in memory - not in the database. What we stored
 in the database is what we passed to <code>create</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">new_user<span style="color:#f92672">.</span>reload<span style="color:#f92672">.</span>first_name
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">new_user<span style="color:#f92672">.</span>reload<span style="color:#f92672">.</span>first_name
 <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;Jordan&#34;</span>
 </code></pre></div><p>We can also pass a block to <code>create</code> directly:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">new_user <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>create(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Jordan&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Knight&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>u<span style="color:#f92672">|</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">new_user <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>create(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Jordan&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Knight&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>u<span style="color:#f92672">|</span>
   u<span style="color:#f92672">.</span>first_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jonathan&#34;</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>And in that case, the first name of the user in memory and in the database is
 Jonathan.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">new_user<span style="color:#f92672">.</span>first_name
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">new_user<span style="color:#f92672">.</span>first_name
 <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;Jonathan&#34;</span>
 new_user<span style="color:#f92672">.</span>reload<span style="color:#f92672">.</span>first_name
 <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;Jonathan&#34;</span>

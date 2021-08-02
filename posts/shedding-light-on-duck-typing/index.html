@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="Shedding a Light on Duck Typing"/>
 <meta name="twitter:description" content="It&rsquo;s time to light the lights"/>
 
-<meta name="generator" content="Hugo 0.85.0" />
+<meta name="generator" content="Hugo 0.86.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -152,19 +152,19 @@ lighting for a band, which comes from my <a href="https://youtu.be/EyLO0EEm3BQ">
 <p>To light the stage for our concert, we have a wide range of lights to
 use.</p>
 <p>We have our trusty can, or <a href="https://en.wikipedia.org/wiki/Stage_lighting_instrument#PAR_lights">PAR</a>, lights.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CanLight</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CanLight</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">trigger</span>(<span style="color:#e6db74">color</span>:, <span style="color:#e6db74">effect</span>:)
   <span style="color:#f92672">...</span>
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>We have <a href="https://en.wikipedia.org/wiki/Stage_lighting_instrument#Spotlights">spotlights</a> tasked on each band member.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Spotlight</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Spotlight</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">trigger</span>(<span style="color:#e6db74">color</span>:, <span style="color:#e6db74">effect</span>:)
   <span style="color:#f92672">...</span>
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>We have fancy <a href="https://en.wikipedia.org/wiki/Intelligent_lighting">moving lights</a> for versatile coverage across the stage.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MovingLight</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MovingLight</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">trigger</span>(<span style="color:#e6db74">color</span>:, <span style="color:#e6db74">effect</span>:)
   <span style="color:#f92672">...</span>
   <span style="color:#66d9ef">end</span>
@@ -172,7 +172,7 @@ use.</p>
 
 </code></pre></div><p>We even have a <a href="https://en.wikipedia.org/wiki/Beam_projector">beam projector</a>
 for a more powerful spotlight effect.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BeamProjector</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BeamProjector</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">trigger</span>(<span style="color:#e6db74">color</span>:, <span style="color:#e6db74">effect</span>:)
     <span style="color:#f92672">...</span>
   <span style="color:#66d9ef">end</span>
@@ -185,7 +185,7 @@ concert. For every single note of every single song, they need to make sure that
 the visual aesthetic of the stage is set <em>just so</em>.</p>
 <p>All of these lights are managed by a central controller, from which they can
 power on all the lights in preparation for a show.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LightingController</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LightingController</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
     @powered_lights <span style="color:#f92672">=</span> {}
   <span style="color:#66d9ef">end</span>
@@ -200,7 +200,7 @@ power on all the lights in preparation for a show.</p>
 </code></pre></div><p>As I mentioned, for every note of every song, they need to make sure the lights
 look exactly as they&rsquo;re supposed to. This is tracked as the lighting&rsquo;s
 composition.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LightingComposition</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LightingComposition</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:light_name</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:color</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:effect</span>
@@ -208,7 +208,7 @@ composition.</p>
 </code></pre></div><h2 id="ducking-into-lights-on-stage">Ducking into Lights on Stage <a href="#ducking-into-lights-on-stage">🔗</a></h2>
 <p>As the band is playing the show, the lighting technicians follow note-for-note
 and need to apply the composition.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Song</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Song</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>
     @notes<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>note<span style="color:#f92672">|</span>
       composition <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
@@ -227,7 +227,7 @@ and need to apply the composition.</p>
 with the same signature, the lighting controller doesn&rsquo;t need to care, or even
 know, about which light it&rsquo;s operating. All it knows is that it needs to send
 it the trigger signal and apply the required composition.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LightingController</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LightingController</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_lighting</span>(note)
     lighting_composition <span style="color:#f92672">=</span> note<span style="color:#f92672">.</span>lighting
 
@@ -253,12 +253,12 @@ matters at runtime to satisfy Ruby is that the object we pass in responds to
 you need to define common behavior for what a set of classes do, you may be
 familiar with an interface. For example, let&rsquo;s use Java to define an interface
 for our lights.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Light</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Light</span> <span style="color:#f92672">{</span>
   <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">trigger</span><span style="color:#f92672">(</span>Color color<span style="color:#f92672">,</span> LightingEffect effect<span style="color:#f92672">)</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>Each of our lights would then implement this interface, defining their own
 implementation of what they do when the light is triggered.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Spotlight</span> <span style="color:#66d9ef">implements</span> Light <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Spotlight</span> <span style="color:#66d9ef">implements</span> Light <span style="color:#f92672">{</span>
   <span style="color:#a6e22e">@Override</span>
   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">trigger</span><span style="color:#f92672">(</span>Color color<span style="color:#f92672">,</span> LightingEffect effect<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     <span style="color:#75715e">// Turn the light on or off
@@ -266,7 +266,7 @@ implementation of what they do when the light is triggered.</p>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>We can now set our <code>LightingController</code>&rsquo;s <code>trigger</code> method to accept any kind of
 light.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LightingController</span> <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LightingController</span> <span style="color:#f92672">{</span>
   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">trigger</span><span style="color:#f92672">(</span>Light light<span style="color:#f92672">,</span> LightingComposition composition<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     light<span style="color:#f92672">.</span><span style="color:#a6e22e">trigger</span><span style="color:#f92672">(</span>composition<span style="color:#f92672">.</span><span style="color:#a6e22e">color</span><span style="color:#f92672">,</span> composition<span style="color:#f92672">.</span><span style="color:#a6e22e">effect</span><span style="color:#f92672">);</span>
   <span style="color:#f92672">}</span>

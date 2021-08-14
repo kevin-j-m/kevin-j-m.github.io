@@ -2,28 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://kevinjmurphy.com/posts/csv-validation-sharing/</loc>
-    <lastmod>2021-07-27T19:13:09-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2021-07-27T19:13:09-04:00</lastmod>
+    <lastmod>2021-08-14T14:05:07-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2021-07-27T19:13:09-04:00</lastmod>
+    <lastmod>2021-08-14T14:05:07-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/rails/</loc>
+    <lastmod>2021-08-14T14:05:07-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2021-08-14T14:05:07-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2021-08-14T14:05:07-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/temporary-state-in-tests/</loc>
+    <lastmod>2021-08-14T14:05:07-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/csv-validation-sharing/</loc>
     <lastmod>2021-07-27T19:13:09-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/self-promotion/</loc>
     <lastmod>2021-07-27T19:13:09-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
-    <lastmod>2021-07-27T19:13:09-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/tags/data/</loc>
-    <lastmod>2021-07-19T08:08:53-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/rails/</loc>
     <lastmod>2021-07-19T08:08:53-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/active-model-validations-csv/</loc>

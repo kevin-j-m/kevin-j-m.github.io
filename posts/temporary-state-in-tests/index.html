@@ -146,7 +146,7 @@ we can use to simulate that.</p>
 notifier <span style="color:#f92672">=</span> <span style="color:#66d9ef">Notifier</span><span style="color:#f92672">.</span>new
 expect(notifier<span style="color:#f92672">.</span>send_notification?)<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">true</span>
 </code></pre></div><p>When we do this, we want to ensure that the results are <em>temporary</em>. Other
-tests, or even areas within a given test, shouldn&rsquo;t be affected bythis state
+tests, or even areas within a given test, shouldn&rsquo;t be affected by this state
 change. It should still be whatever day the tests are <strong>really</strong> run otherwise.</p>
 <p>Now, in the case of these helpers from Rails, according to the documentation:</p>
 <blockquote>

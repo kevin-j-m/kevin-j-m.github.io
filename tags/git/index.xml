@@ -12,6 +12,15 @@
    
    
      <item>
+       <title>Temporary State With Blocks Post Sharing</title>
+       <link>https://kevinjmurphy.com/posts/temporary-state-blocks-sharing/</link>
+       <pubDate>Sun, 22 Aug 2021 19:13:09 -0400</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/temporary-state-blocks-sharing/</guid>
+       <description>&lt;p&gt;Last week, I wrote a &lt;a href=&#34;https://kevinjmurphy.com/posts/temporary-state-in-tests/&#34;&gt;post&lt;/a&gt; on myemployer&amp;rsquo;s &lt;a href=&#34;https://blog.thegnar.co/temporary-state-in-tests&#34;&gt;blog&lt;/a&gt; about using blocks in ruby to temporarily alter the state ofthe application, and how that can be particularly helpful in tests.&lt;/p&gt;&lt;p&gt;That post was featured in Ruby Radar &lt;a href=&#34;https://rubyradar.dev/issues/ruby-radar-12-back-to-our-regularly-scheduled-programming-726989&#34;&gt;#12&lt;/a&gt;.&lt;/p&gt;&lt;figure class=&#34;mid&#34;&gt;&lt;img src=&#34;https://kevinjmurphy.com/img/ruby_radar_12.png&#34;/&gt;&lt;/figure&gt;</description>
+     </item>
+   
+     <item>
        <title>Temporary State in Tests: Bloc(k) Party</title>
        <link>https://kevinjmurphy.com/posts/temporary-state-in-tests/</link>
        <pubDate>Sat, 14 Aug 2021 14:05:07 -0400</pubDate>

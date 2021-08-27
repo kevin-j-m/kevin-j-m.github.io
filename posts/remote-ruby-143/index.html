@@ -1,0 +1,196 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Best Practices Are The Best For Whom? - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Kevin Murphy: Software Developer" />
+<meta name="author" content="Kevin Murphy" /><meta property="og:title" content="Best Practices Are The Best For Whom?" />
+<meta property="og:description" content="Appearance on the Remote Ruby Podcast" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/remote-ruby-143/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-26T19:13:09-04:00" />
+<meta property="article:modified_time" content="2021-08-26T19:13:09-04:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Best Practices Are The Best For Whom?"/>
+<meta name="twitter:description" content="Appearance on the Remote Ruby Podcast"/>
+
+<meta name="generator" content="Hugo 0.87.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Best Practices Are The Best For Whom?</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2021-08-26T19:13:09-04:00">Aug 26, 2021</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/self-promotion">#self-promotion</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/podcast">#podcast</a>
+                
+            </em>
+        </li>
+        
+
+        <li>6 minute read</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>I had a great time talking to Andrew Mason, Jason Charnes , and Chris Oliver on Remote Ruby. The episode was just released, and you can listen to it <a href="https://remoteruby.transistor.fm/143">here</a>.</p>
+<p>There&rsquo;s something bothering me that I feel I didn&rsquo;t say all that clearly. I mention that these rules (test coverage, DRY, and performant code are the examples given in the conversation) feel easy, but are hard to apply in practice.</p>
+<p>Who am I saying they&rsquo;re easy for? You may think I&rsquo;m talking about the people who we ask to use them. And that may be true - it may be easy, or easier, to follow the rule.</p>
+<p>However, that&rsquo;s not what gets me worked up about this. Instead, I think it&rsquo;s easy or easier for the people who <strong>say</strong> the rule, and does a disservice to those who we ask to apply it, unless it&rsquo;s backed up with a lot more support.</p>
+<h2 id="testing-for-coverage">Testing for coverage <a href="#testing-for-coverage">🔗</a></h2>
+<p>My thoughts here apply in a lot of scenarios, but let&rsquo;s use a tangible example. I&rsquo;ll choose test coverage because we spend a lot of the episode talking about it, and metrics in general, and I think it&rsquo;s pretty illustrative for what I want to say.</p>
+<p>I like writing tests. They give me fast feedback. They allow me to validate my architecture and design. They give me confidence to make future changes. I&rsquo;m bought in. Writing tests is part of my workflow. Having a test coverage bar or metric that we track isn&rsquo;t likely to change the way I write code - at least, not in what I consider a materially valuable way. No, the apps I work with don&rsquo;t have 100% test coverage. My goal is to have sufficient coverage that I feel confident making a change and documenting current behavior. That&rsquo;s a lot harder to quantify - but if you know how to quantify confidence - let me know!</p>
+<p>But what about the person who doesn&rsquo;t write tests? Mandating tests will be good for the project, right? People who aren&rsquo;t as familiar with writing tests will do so, and the project will be better off because there are tests now, right? Maybe.</p>
+<h2 id="impacts-of-best-practices-as-mandates">Impacts of best practices as mandates <a href="#impacts-of-best-practices-as-mandates">🔗</a></h2>
+<p>The person who isn&rsquo;t familiar with or comfortable writing tests likely still has ways that they get confidence that their code works or validates their assumptions or gets feedback on their progress. A new tester isn&rsquo;t going to start getting that comfort from tests solely because they have to write them.</p>
+<p>Why is the team writing tests now? Because a computer will yell at them if they don&rsquo;t, and/or their code won&rsquo;t get merged. It&rsquo;s a box to check. Without the training and backing of why testing is important and valuable, and giving people the space to learn, grow, and experiment - they can resent it.</p>
+<p>What good are the tests you have then? They made your metric look good, but what are you going to use them for? It&rsquo;s unclear, beyond demonstrating that they exist and giving your CI provider more money if you&rsquo;re billed by minute usage.</p>
+<p>Are these tests going to help you catch a bug before it gets into production, or fix one that&rsquo;s already there? Did these tests help inform the choices developers made while writing the code that accompanies the test? Did these tests allow for immediate, small steps with fast feedback?</p>
+<p>I don&rsquo;t know - and neither do you probably. Those things are hard to measure. They&rsquo;re also a lot of the value people believe they get out of testing. Capturing or enforcing test coverage metrics in a vacuum does nothing to help inform how much better off you are than if you had no tests at all. It&rsquo;s a proxy measure that&rsquo;s difficult to draw conclusions from without digging deeper.</p>
+<h2 id="why-bother-following-the-rules">Why bother following the rules? <a href="#why-bother-following-the-rules">🔗</a></h2>
+<p>This doesn&rsquo;t mean don&rsquo;t write tests. It can give you insights you didn&rsquo;t have before! Chris Oliver talked about the pay gem, and how different vendors may support features differently, or not at all. Testing can reveal that to you in a quicker/safer way than other explorations. Not only because a test may fail - but because the work Chris does, and things he researched, in order to have that test fail, gives more information about how the vendor&rsquo;s feature works. If you want to know more about that, I have another talk about testing (and designing interactions with) third-party dependencies <a href="https://kevinjmurphy.com/posts/railsconf-2020/">here</a>.</p>
+<p>I&rsquo;m on &ldquo;team testing&rdquo;. My process of getting there came from a lot of opportunities to learn from testing, experiencing it, and having the chance to be &ldquo;saved&rdquo; by them. Forcing tests may increase the likelihood those things happen, but I think you&rsquo;ll have a harder time convincing people on the value of tests if they exist to appease a number.</p>
+<p>A test you wish you&rsquo;d written may have more impact on your career than one you wrote perfectly. The experience of not having that safety net, of not having that immediate feedback, and coming to terms with the consequences of that over the life of a project will stick with you. That doesn&rsquo;t mean don&rsquo;t write tests. But recognize it might not click for someone until they <em>know</em> this concept exists, they <em>know</em> they didn&rsquo;t use it, and now they <em>know</em> how much worse off they are right now without it.</p>
+<p>This doesn&rsquo;t mean don&rsquo;t track test coverage. It can be motivating! Jason Charnes mentioned using it to drive an increase in coverage on a project. Once he got the value he sought out of the tests, the metric/number itself didn&rsquo;t matter as much, so he moved on. Jason got the benefit he wanted, and the metric may have helped drive him there, but I&rsquo;m betting that the benefit wasn&rsquo;t seeing a bigger number on his test coverage %.</p>
+<h2 id="put-in-the-work">Put in the work <a href="#put-in-the-work">🔗</a></h2>
+<p>It&rsquo;s easy to say these rules and walk away feeling like we&rsquo;ve shared some wisdom. What&rsquo;s harder is putting in the work to help a person grow so they happen upon their own wisdom. We need to have support structures in place so people can learn about these things, and wrestle with them, and gain familiarity. Then they&rsquo;re not rules to be followed - they become shared values we benefit from, and they&rsquo;re used when we see a benefit.</p>
+<p>Thanks Andrew, Jason, and Chris for having me on.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/temporary-state-blocks-sharing/"><i class="fa fa-chevron-circle-left"></i> Temporary State With Blocks Post Sharing</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2021 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+
+</body>
+
+</html>
+

@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="Validate CSV Input With ActiveModel::Validations"/>
 <meta name="twitter:description" content="Data input processes may be subject to different business rules than the data it ultimately correlates to in your system. You can still use familiar tools to apply those constraints and validations that only apply in this one case. Learn how to improve the robustness of CSV file ingestion using ActiveModel::Validations in this article."/>
 
-<meta name="generator" content="Hugo 0.87.0" />
+<meta name="generator" content="Hugo 0.88.1" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -151,7 +151,7 @@ how we expect. That all seems great. Until, that is, we actually run it.</p>
 <h2 id="book-checked-out">Book Checked Out <a href="#book-checked-out">🔗</a></h2>
 <p>We execute our parser on the first data file we receive, and it quickly stops
 with the following error:</p>
-<pre><code>NoMethodError: undefined method `update' for nil:NilClass
+<pre tabindex="0"><code>NoMethodError: undefined method `update' for nil:NilClass
 </code></pre><p>On inspecting the state of our database, we see that the first three books in
 the CSV file had their publication dates updated, but the rest didn&rsquo;t. Looking
 at the fourth row in the CSV, we discover that the ISBN for that row isn&rsquo;t in

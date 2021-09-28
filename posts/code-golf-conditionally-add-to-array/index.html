@@ -1,0 +1,260 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Code Golf: Conditionally Add To An Array - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Ruby&#39;s expressiveness and vast API provides a myriad of ways to solve the same problem. This post proposes different ways to add elements to an array only if a certain condition applies." />
+<meta name="author" content="Kevin Murphy" /><meta property="og:title" content="Code Golf: Conditionally Add To An Array" />
+<meta property="og:description" content="Ruby&#39;s expressiveness and vast API provides a myriad of ways to solve the same problem. This post proposes different ways to add elements to an array only if a certain condition applies." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/code-golf-conditionally-add-to-array/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-09-28T19:00:07-04:00" />
+<meta property="article:modified_time" content="2021-09-28T19:00:07-04:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Code Golf: Conditionally Add To An Array"/>
+<meta name="twitter:description" content="Ruby&#39;s expressiveness and vast API provides a myriad of ways to solve the same problem. This post proposes different ways to add elements to an array only if a certain condition applies."/>
+
+<meta name="generator" content="Hugo 0.88.1" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Code Golf: Conditionally Add To An Array</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2021-09-28T19:00:07-04:00">Sep 28, 2021</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+            </em>
+        </li>
+        
+
+        <li>3 minute read</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="the-grass-is-always-greener">The Grass Is Always Greener <a href="#the-grass-is-always-greener">🔗</a></h2>
+<p>We&rsquo;re building a system to track a golfer&rsquo;s statuses during a tournament. This is
+a competitive tournament with people who are much better than I will ever be, so
+if a golfer is currently scoring under <a href="https://en.wikipedia.org/wiki/Par_(score)">par</a>, they&rsquo;re in contention to win. On this 18 hole course, if they&rsquo;ve played the first nine holes, they&rsquo;ve made the <a href="https://www.golfcompendium.com/2020/07/the-turn-definition-golf-course.html">turn</a>.</p>
+<p>Let&rsquo;s explore a number of ways we can build up an array that keeps track of
+which, if any, of these statuses a particular golfer qualifies for. Not content
+to settle for one that works, we&rsquo;ll dig into a variety of options.</p>
+<h2 id="teeing-up-an-option">Teeing Up An Option <a href="#teeing-up-an-option">🔗</a></h2>
+<p>We can start with an empty array, and explicitly add in any of the statuses that
+the golfer meets the conditions for.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
+  statuses <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
+
+  <span style="color:#66d9ef">if</span> under_par?
+    statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;in_contention&#34;</span>
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">if</span> back_nine?
+    statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;past_the_turn&#34;</span>
+  <span style="color:#66d9ef">end</span>
+
+  statuses
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>There&rsquo;s nothing tremendously exciting here, and that&rsquo;s not a bad thing! It&rsquo;s
+reasonably clear what this is doing.</p>
+<h2 id="tapping-it-in">Tapping It In <a href="#tapping-it-in">🔗</a></h2>
+<p>We can make the prior suggestion a little more terse by using <a href="https://docs.ruby-lang.org/en/master/Kernel.html#method-i-tap">tap</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
+  <span style="color:#f92672">[].</span>tap <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>statuses<span style="color:#f92672">|</span>
+    <span style="color:#66d9ef">if</span> under_par?
+      statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;in_contention&#34;</span>
+    <span style="color:#66d9ef">end</span>
+
+    <span style="color:#66d9ef">if</span> back_nine?
+      statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;past_the_turn&#34;</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>This eliminates the need for the <code>statuses</code> temporary array from the prior
+section.</p>
+<h2 id="taking-a-compact-swing">Taking a Compact Swing <a href="#taking-a-compact-swing">🔗</a></h2>
+<p>We can also build our array to have an entry for each of the conditionals we
+have, and removing the ones that aren&rsquo;t relevant.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
+  <span style="color:#f92672">[</span>
+    under_par? ? <span style="color:#e6db74">&#34;in_contention&#34;</span> : <span style="color:#66d9ef">nil</span>,
+    back_nine? ? <span style="color:#e6db74">&#34;past_the_turn&#34;</span> : <span style="color:#66d9ef">nil</span>,
+  <span style="color:#f92672">].</span>compact
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>By using <a href="https://ruby-doc.org/core-3.0.1/Array.html#method-i-compact">compact</a>,
+we&rsquo;ll remove any <code>nil</code> values - and we&rsquo;ll take advantage of that functionality
+by explicitly adding <code>nil</code> if the golfer doesn&rsquo;t meet that condition.</p>
+<h2 id="working-on-your-backswing-takeaway">Working On Your Backswing Takeaway <a href="#working-on-your-backswing-takeaway">🔗</a></h2>
+<p>Speaking of taking things away, we can also do the opposite of the first
+approach. We&rsquo;ll start by having each status, and then <em>removing</em> the ones that
+do <strong>not</strong> meet the necessary condition.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
+  statuses <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;in_contention&#34;</span>, <span style="color:#e6db74">&#34;past_the_turn&#34;</span><span style="color:#f92672">]</span>
+
+  <span style="color:#66d9ef">unless</span> under_par?
+    statuses <span style="color:#f92672">-=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;in_contention&#34;</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">unless</span> back_nine?
+    statuses <span style="color:#f92672">-=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;past_the_turn&#34;</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">end</span>
+
+  statuses
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>This may be more helpful in situations where there are a lot more statuses, and
+only a few of them may need to be removed for certain reasons. It may also help
+when the full list of statuses persists on its own elsewhere, but then you also
+need a subset of them in a particular case.</p>
+<h2 id="selecting-the-right-club">Selecting The Right Club <a href="#selecting-the-right-club">🔗</a></h2>
+<p>Lastly, we&rsquo;ll put together a hash keyed on the statuses where the value is the result of the conditions. We can then flex some familiarity with Ruby&rsquo;s <a href="https://ruby-doc.org/core-3.0.1/Enumerable.html">Enumerable module</a> to pick out the applicable sections of the hash, returning only the statuses.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
+  {
+    <span style="color:#e6db74">&#34;in_contention&#34;</span> <span style="color:#f92672">=&gt;</span> under_par?,
+    <span style="color:#e6db74">&#34;past_the_turn&#34;</span> <span style="color:#f92672">=&gt;</span> back_nine?,
+  }<span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>_status, condition<span style="color:#f92672">|</span> condition }<span style="color:#f92672">.</span>keys
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Similar to the prior suggestion, this may be helpful when you want to have the
+full list of statuses and their associated conditions all compiled in one place,
+but then want to peel off which are relevant for a particular golfer at this
+time.</p>
+<h2 id="asking-help-from-the-caddie">Asking Help From The Caddie <a href="#asking-help-from-the-caddie">🔗</a></h2>
+<p>Here are some of the ways that we might solve this problem. What other ways
+could we build this functionality? <a href="https://twitter.com/kevin_j_m">Let me know</a>
+what other approaches you would take.</p>
+<blockquote>
+<p>This post originally published on <a href="https://blog.thegnar.co/code-golf-conditionally-add-to-array">The Gnar Company blog</a>.</p>
+</blockquote>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/ruby-io-buffer/"><i class="fa fa-chevron-circle-left"></i> Buffered IO Streams In Ruby</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2021 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+
+</body>
+
+</html>
+

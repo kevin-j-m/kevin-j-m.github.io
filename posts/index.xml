@@ -6,10 +6,19 @@
    <description>Recent content in Posts on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2021 - Kevin Murphy</copyright>
-   <lastBuildDate>Tue, 28 Sep 2021 19:00:07 -0400</lastBuildDate>
+   <lastBuildDate>Fri, 15 Oct 2021 07:00:07 -0400</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/posts/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Gnarly Endings</title>
+       <link>https://kevinjmurphy.com/posts/gnarly-endings/</link>
+       <pubDate>Fri, 15 Oct 2021 07:00:07 -0400</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/gnarly-endings/</guid>
+       <description>&lt;p&gt;Today is my last day at &lt;a href=&#34;https://www.thegnar.com/&#34;&gt;The Gnar Company&lt;/a&gt;. I joinedthe company over five years ago excited to work with a great group ofindividuals, many of whom I&amp;rsquo;d worked with before. Though many of the people havechanged, and the team has grown, the people that work at The Gnar are stillsome of the greatest people I&amp;rsquo;ve had the pleasure to work with.&lt;/p&gt;&lt;p&gt;I&amp;rsquo;m thankful to every member of the team, past and present, who helped makeworking at The Gnar Company the special experience that it is.&lt;/p&gt;</description>
+     </item>
    
      <item>
        <title>Code Golf: Conditionally Add To An Array</title>

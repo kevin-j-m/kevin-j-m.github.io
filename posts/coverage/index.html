@@ -161,7 +161,7 @@
 </p>
 
 
-<p>This is the “classic” implementation of providing coverage. Each relevant line, that is those that aren’t things like empty lines or “end” statements, has a counter that is incremented each time the line is visited in code execution while coverage is running. At the conclusion, you will see how many times each line is executed.</p>
+<p>This is the “classic” implementation of providing coverage. Each relevant line, that is those that aren’t things like empty lines or <code>end</code> statements, has a counter that is incremented each time the line is visited in code execution while coverage is running. At the conclusion, you will see how many times each line is executed.</p>
 <h4 id="benefits">Benefits <a href="#benefits">🔗</a></h4>
 <ul>
 <li>This is the default mode for coverage.</li>
@@ -175,11 +175,11 @@
 </p>
 
 
-<p>Similar to Line Coverage, this also documents that a relevant line was executed while coverage was running. However, it’s a binary report of whether it was executed or not. It will not tell you how often. This may be sufficient in many cases, and comes with the benefit of being more performant every subsequent time a particular line of code is executed under coverage.</p>
+<p>Similar to lines coverage, this also documents that a relevant line was executed while coverage was running. However, it’s a binary report of whether it was executed or not. It will not tell you how often. This may be sufficient in many cases, and comes with the benefit of being more performant every subsequent time a particular line of code is executed under coverage.</p>
 <h4 id="benefits-1">Benefits <a href="#benefits-1">🔗</a></h4>
 <ul>
 <li>Oneshot provides you with nothing more than if a line of application code is executed in a test suite.</li>
-<li>As long as being constrained to knowing if something ran or not, and not knowing how often, is sufficient, Oneshot Line Coverage provides the same feedback as Line Coverage with better performance.</li>
+<li>As long as being constrained to knowing if something ran or not, and not knowing how often, is sufficient, oneshot lines coverage provides the same feedback as lines coverage with better performance.</li>
 </ul>
 <h3 id="methods">Methods <a href="#methods">🔗</a></h3>
 
@@ -189,7 +189,7 @@
 </p>
 
 
-<p>Method Coverage brings the granularity of Line Coverage up to a coarser grain. Rather than tracking individual lines, it’s concerned with whether a particular method is executed. It can be a 10 line method where the first line is the only line ever executed. Method Coverage will still consider that as executed the same as a 20 line method where each line is executed.</p>
+<p>Methods coverage brings the granularity of lines coverage up to a coarser grain. Rather than tracking individual lines, it’s concerned with whether a particular method is executed. It can be a 10 line method where the first line is the only line ever executed. Methods coverage will still consider that as executed the same as a 20 line method where each line is executed.</p>
 <h4 id="benefits-2">Benefits <a href="#benefits-2">🔗</a></h4>
 <ul>
 <li>This has a targeted focus to be able to answer a more specific question - is this method executed? - with easier to process feedback.</li>
@@ -202,15 +202,15 @@
 </p>
 
 
-<p>Branch Coverage tracks execution of different conditional paths and documents how often those different paths are run. The unique benefit that this provides over Line Coverage is in conditionals that execute multiple code paths in a single line, such as ternary statements. You may have a part of that conditional that’s never run or tested, but you wouldn’t know that if you’re relying on Line Coverage alone.</p>
+<p>Branches coverage tracks execution of different conditional paths and documents how often those different paths are run. The unique benefit that this provides over lines coverage is in conditionals that execute multiple code paths in a single line, such as ternary statements. You may have a part of that conditional that’s never run or tested, but you wouldn&rsquo;t know that if you’re relying on lines coverage alone.</p>
 <h4 id="benefits-3">Benefits <a href="#benefits-3">🔗</a></h4>
 <ul>
-<li>It provides a different frame of reference than Line Coverage, which ends up being either coarser or more granular than line coverage in different situations.</li>
-<li>For conditionals that lay out multiple code paths on a single line, this provides feedback on their individual execution where Line Coverage only considers whether any part of the line was run.</li>
-<li>When interested in conditionals, and only conditionals, it has less noise than Lines Coverage.</li>
+<li>It provides a different frame of reference than lines coverage, which ends up being either coarser or more granular than line coverage in different situations.</li>
+<li>For conditionals that lay out multiple code paths on a single line, this provides feedback on their individual execution where lines coverage only considers whether any part of the line was run.</li>
+<li>When interested in conditionals, and only conditionals, it has less noise than lines coverage.</li>
 </ul>
 <h2 id="gem-support">Gem Support <a href="#gem-support">🔗</a></h2>
-<p>If you&rsquo;d like to leverage existing abstractions on top of ruby&rsquo;s Coverage module
+<p>If you&rsquo;d like to leverage existing abstractions on top of ruby&rsquo;s coverage module
 in your current applications, I recommend:</p>
 <ul>
 <li><a href="https://github.com/simplecov-ruby/simplecov">SimpleCov</a> for test coverage. It
@@ -223,8 +223,6 @@ production code. Here&rsquo;s an <a href="https://github.com/danmayer/coverband/
 to describe various software design principles. The first post is about
 <a href="https://kevinjmurphy.com/posts/dependency-injection-plug-in/">dependency injection</a>.
 You can see the full series <a href="https://kevinjmurphy.com/tags/software-design-concert-series/">here</a>.</p>
-<h2 id="the-gnar-company">The Gnar Company <a href="#the-gnar-company">🔗</a></h2>
-<p>If you’d like to discuss how <a href="https://www.thegnar.co/about.html">The Gnar Company</a> can work with you on your technical challenges, <a href="https://www.thegnar.co/hire-us.html">let us know</a>.</p>
 <h2 id="presentation-fonts">Presentation Fonts <a href="#presentation-fonts">🔗</a></h2>
 <p>The main content of all my slides, for code examples and similar text, is Arial Narrow.</p>
 <p>Slide titles and big statement fonts are The Fragile, available from <a href="https://www.theninhotline.com/features/fonts/">The NIN Hotline</a>.</p>

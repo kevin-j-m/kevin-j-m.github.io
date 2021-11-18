@@ -2,23 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2021-11-17T19:04:22-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2021-11-17T19:04:22-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2021-11-17T19:04:22-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/ruby-setter-return-value/</loc>
+    <lastmod>2021-11-17T19:04:22-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2021-11-17T19:04:22-05:00</lastmod>
+  </url><url>
     <loc>https://kevinjmurphy.com/tags/career/</loc>
     <lastmod>2021-10-25T07:00:07-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/vendr-start/</loc>
     <lastmod>2021-10-25T07:00:07-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2021-10-25T07:00:07-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2021-10-25T07:00:07-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
-    <lastmod>2021-10-25T07:00:07-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
-    <lastmod>2021-10-21T20:00:07-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/rubys-got-you-covered/</loc>
     <lastmod>2021-10-21T20:00:07-04:00</lastmod>

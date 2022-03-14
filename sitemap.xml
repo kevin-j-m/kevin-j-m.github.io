@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://kevinjmurphy.com/posts/find-or-initialize-by-block/</loc>
+    <lastmod>2022-03-14T07:30:41-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2022-03-14T07:30:41-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2022-03-14T07:30:41-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/rails/</loc>
+    <lastmod>2022-03-14T07:30:41-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2022-03-14T07:30:41-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2022-03-14T07:30:41-04:00</lastmod>
+  </url><url>
     <loc>https://kevinjmurphy.com/tags/business/</loc>
     <lastmod>2022-02-28T07:19:33-05:00</lastmod>
   </url><url>
@@ -11,25 +29,16 @@
     <loc>https://kevinjmurphy.com/tags/career/</loc>
     <lastmod>2022-02-28T07:19:33-05:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2022-02-28T07:19:33-05:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/tags/leadership/</loc>
     <lastmod>2022-02-28T07:19:33-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/management/</loc>
     <lastmod>2022-02-28T07:19:33-05:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2022-02-28T07:19:33-05:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/tags/productivity/</loc>
     <lastmod>2022-02-28T07:19:33-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/soft-skills/</loc>
-    <lastmod>2022-02-28T07:19:33-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
     <lastmod>2022-02-28T07:19:33-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/core-competency/</loc>
@@ -46,9 +55,6 @@
   </url><url>
     <loc>https://kevinjmurphy.com/tags/personal/</loc>
     <lastmod>2021-12-13T17:04:22-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
-    <lastmod>2021-11-17T19:04:22-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/ruby-setter-return-value/</loc>
     <lastmod>2021-11-17T19:04:22-05:00</lastmod>
@@ -82,9 +88,6 @@
   </url><url>
     <loc>https://kevinjmurphy.com/posts/temporary-state-blocks-sharing/</loc>
     <lastmod>2021-08-22T19:13:09-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/rails/</loc>
-    <lastmod>2021-08-14T14:05:07-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/temporary-state-in-tests/</loc>
     <lastmod>2021-08-14T14:05:07-04:00</lastmod>

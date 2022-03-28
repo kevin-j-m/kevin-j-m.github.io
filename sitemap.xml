@@ -2,13 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://kevinjmurphy.com/posts/find-or-initialize-by-block/</loc>
-    <lastmod>2022-03-14T07:30:41-04:00</lastmod>
+    <loc>https://kevinjmurphy.com/posts/available-for-hire-2022/</loc>
+    <lastmod>2022-03-28T12:16:47-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/career/</loc>
+    <lastmod>2022-03-28T12:16:47-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2022-03-14T07:30:41-04:00</lastmod>
+    <lastmod>2022-03-28T12:16:47-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2022-03-28T12:16:47-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2022-03-28T12:16:47-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/find-or-initialize-by-block/</loc>
     <lastmod>2022-03-14T07:30:41-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/rails/</loc>
@@ -17,16 +26,10 @@
     <loc>https://kevinjmurphy.com/tags/ruby/</loc>
     <lastmod>2022-03-14T07:30:41-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
-    <lastmod>2022-03-14T07:30:41-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/tags/business/</loc>
     <lastmod>2022-02-28T07:19:33-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/business-process-management/</loc>
-    <lastmod>2022-02-28T07:19:33-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/career/</loc>
     <lastmod>2022-02-28T07:19:33-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/leadership/</loc>

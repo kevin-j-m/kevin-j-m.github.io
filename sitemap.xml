@@ -2,28 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://kevinjmurphy.com/posts/browser-history/</loc>
+    <lastmod>2022-04-13T08:55:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/conference/</loc>
+    <lastmod>2022-04-13T08:55:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2022-04-13T08:55:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2022-04-13T08:55:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/railsconf/</loc>
+    <lastmod>2022-04-13T08:55:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2022-04-13T08:55:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2022-04-13T08:55:10-04:00</lastmod>
+  </url><url>
     <loc>https://kevinjmurphy.com/posts/available-for-hire-2022/</loc>
     <lastmod>2022-03-28T12:16:47-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/career/</loc>
     <lastmod>2022-03-28T12:16:47-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2022-03-28T12:16:47-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2022-03-28T12:16:47-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
-    <lastmod>2022-03-28T12:16:47-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/posts/find-or-initialize-by-block/</loc>
     <lastmod>2022-03-14T07:30:41-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/rails/</loc>
-    <lastmod>2022-03-14T07:30:41-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
     <lastmod>2022-03-14T07:30:41-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/business/</loc>
@@ -109,12 +118,6 @@
   </url><url>
     <loc>https://kevinjmurphy.com/posts/ruby-weekly-554/</loc>
     <lastmod>2021-05-28T07:50:04-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/conference/</loc>
-    <lastmod>2021-05-19T10:50:20-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/railsconf/</loc>
-    <lastmod>2021-05-19T10:50:20-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/railsconf-roundup-2021/</loc>
     <lastmod>2021-05-19T10:50:20-04:00</lastmod>

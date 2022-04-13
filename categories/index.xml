@@ -11,6 +11,15 @@
    
    
      <item>
+       <title>Browser History Confessional: Searching My Recent Searches</title>
+       <link>https://kevinjmurphy.com/posts/browser-history/</link>
+       <pubDate>Wed, 13 Apr 2022 08:55:10 -0400</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/browser-history/</guid>
+       <description>&lt;p&gt;I&amp;rsquo;m honored to be part of the RailsConf 2022 &lt;a href=&#34;https://railsconf.com/program/sessions#session-1262&#34;&gt;program&lt;/a&gt;. We&amp;rsquo;ll be talking about how and why we search for help in our day-to-day lives as software developers.&lt;/p&gt;&lt;h2 id=&#34;abstract&#34;&gt;Abstract &lt;a href=&#34;#abstract&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;We all only have so much working memory available in our brains. Developers may joke about spending their day composing search engine queries. The reason it&amp;rsquo;s a joke is because of the truth behind it. Search-driven development is a reality.&lt;/p&gt;&lt;p&gt;Join me, and my actual search history, on a journey to solve recent challenges I faced. I&amp;rsquo;ll categorize the different types of information I often search for. You&amp;rsquo;ll leave with tips on retrieving the knowledge you need for your next bug, feature, or pull request.&lt;/p&gt;</description>
+     </item>
+   
+     <item>
        <title>Available For Hire</title>
        <link>https://kevinjmurphy.com/posts/available-for-hire-2022/</link>
        <pubDate>Mon, 28 Mar 2022 12:16:47 -0400</pubDate>

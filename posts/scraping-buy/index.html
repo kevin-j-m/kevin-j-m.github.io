@@ -1,0 +1,245 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Scraping Buy: Scripting for a Purchase - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="I wrote a small script to scrape a website to tell me when guitars were in stock." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/scraping-buy/">
+<meta property="og:title" content="Scraping Buy: Scripting for a Purchase" />
+<meta property="og:description" content="I wrote a small script to scrape a website to tell me when guitars were in stock." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/scraping-buy/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-11T16:53:59-04:00" />
+<meta property="article:modified_time" content="2022-05-11T16:53:59-04:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Scraping Buy: Scripting for a Purchase"/>
+<meta name="twitter:description" content="I wrote a small script to scrape a website to tell me when guitars were in stock."/>
+
+<meta name="generator" content="Hugo 0.88.1" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RVD6VLNE04', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Scraping Buy: Scripting for a Purchase</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2022-05-11T16:53:59-04:00">May 11, 2022</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+            </em>
+        </li>
+        
+
+        <li>4 minute read | 844 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="an-opening-tune">An Opening Tune <a href="#an-opening-tune">🔗</a></h2>
+<p>The piece of code I&rsquo;ve written in the last two months most interesting to me isn&rsquo;t anything I&rsquo;ve done for work. It isn&rsquo;t anything I wrote to <a href="https://kevinjmurphy.com/posts/available-for-hire-2022/">find</a> a new job. It doesn&rsquo;t have tests. It doesn&rsquo;t even have a class. It&rsquo;s dirty, not up to my standards, and doesn&rsquo;t handle edge cases. But it does what I need it to.</p>
+<h2 id="sad-song">Sad Song <a href="#sad-song">🔗</a></h2>
+<p>I don&rsquo;t (and likely will never) consider myself a guitarist, but I like the guitar. I&rsquo;d like to have a Les Paul to go along with my Stratocaster, but I also like having money for things like food and shelter. I can&rsquo;t justify in the budget, and that&rsquo;s fine. But maybe I could find something close enough for less money.</p>
+<p>I zeroed in on a copy, and I decided on a Firefly. There was only one problem - I couldn&rsquo;t buy one. At least, not from them. Keeping them in stock was problematic. Not only because of supply chain issues, but because of their business model. They batch up a small number of guitars a few times a year for sale. I wasn&rsquo;t the only person with the same plan to buy one. They sell out quickly most of the time.</p>
+<p>You can find them on the <a href="https://reverb.com/marketplace?query=Firefly%20FFLPS">secondhand market</a>. Typically, they&rsquo;re priced higher than their new price direct from the manufacturer. The demand is there. They don&rsquo;t make them often enough. And if you want one, you&rsquo;ve got to be fast.</p>
+<h2 id="composing-a-number">Composing A Number <a href="#composing-a-number">🔗</a></h2>
+<p>This is about the furthest thing from an important use of my time. Still, I became a bit&hellip;overtaken by the prospect of ordering one. I&rsquo;d refresh the site many times a day, just to check in. Once, I happened to refresh the site when they were uploading their fresh inventory. I was in! But, I did not get to the model I wanted in time. It sold out before I could find it.</p>
+<p>Finally, I remembered that computers can do repetitive work for you, and that I knew how to request them to do so. I resolved to stop refreshing their product listing page. At least, I&rsquo;d stop refreshing it myself. I wrote a small script to do it for me.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;nokogiri&#39;</span>
+require <span style="color:#e6db74">&#39;open-uri&#39;</span>
+
+doc <span style="color:#f92672">=</span> <span style="color:#66d9ef">Nokogiri</span><span style="color:#f92672">::</span><span style="color:#66d9ef">HTML</span>(<span style="color:#66d9ef">URI</span><span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>root_url<span style="color:#e6db74">}</span><span style="color:#e6db74">/collections/fflp-electric-guitars&#34;</span>))
+
+guitars <span style="color:#f92672">=</span> doc<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#34;a&#34;</span>)<span style="color:#f92672">.</span>
+  map { <span style="color:#f92672">|</span>a<span style="color:#f92672">|</span> a<span style="color:#f92672">[</span><span style="color:#e6db74">:href</span><span style="color:#f92672">]</span> }<span style="color:#f92672">.</span>
+  compact<span style="color:#f92672">.</span>
+  select { <span style="color:#f92672">|</span>a<span style="color:#f92672">|</span> a<span style="color:#f92672">.</span>include?(<span style="color:#e6db74">&#34;/collections/fflp-electric-guitars/products&#34;</span>) }<span style="color:#f92672">.</span>
+  uniq<span style="color:#f92672">.</span>
+  map{ <span style="color:#f92672">|</span>a<span style="color:#f92672">|</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>root_url<span style="color:#e6db74">}#{</span>a<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> }<span style="color:#f92672">.</span>
+  sort
+
+puts guitars
+</code></pre></div><p>I wouldn&rsquo;t put this in production at work. It doesn&rsquo;t have consistent formatting! It&rsquo;s not clear exactly what this is doing! It&rsquo;s not tested. Literally. I don&rsquo;t mean it doesn&rsquo;t have automated tests. I mean I had no idea if this would work. When I wrote it, I couldn&rsquo;t test it against a page that had any products. I found one of their other products that did have inventory in stock, and built it against that. I hoped that the page for this product line would work the same, and that I didn&rsquo;t have a typo.</p>
+<p>This doesn&rsquo;t keep track of their full inventory. It has no awareness of if there are pages of results. But, it&rsquo;s good enough to tell me that there <em>are</em> guitars for sale. That&rsquo;s a start. Hopefully. I tired of seeing the &ldquo;sold out&rdquo; page. And I wouldn&rsquo;t even know if it would work until that &ldquo;sold out&rdquo; page went away.</p>
+<h2 id="automated-playback">Automated Playback <a href="#automated-playback">🔗</a></h2>
+<p>Having the script is great, but if I have to run it myself, I might as well refresh the page in my browser. Once again, I needed to remind myself what I do for a living, and how I can ask computers to do things for me. Of course, that only happened when I came across <a href="https://simonwillison.net/2020/Oct/9/git-scraping/">this post</a>. In it, the author uses GitHub Actions to automate diff checks of websites. Now sure, their example was for trivial things like forest fires in California. But I could take the same approach for important things like guitars being in stock.</p>
+<p>I modified my script to dump its output to a file, set up the GitHub Action, and subscribed to the repository. When the action pushed a commit because the page changed, I would get an email with a link to the commit. I could use that to then see the list of guitars for sale.</p>
+<p>In theory. I still needed to see it happen. Ever.</p>
+<h2 id="outro">Outro <a href="#outro">🔗</a></h2>
+<p>It finally happened. And it just arrived.</p>
+<figure class="mid"><img src="https://kevinjmurphy.com/img/firefly_goldtop.jpg"
+         alt="A Firefly FFLPS Goldtop"/>
+</figure>
+
+<p>Code doesn&rsquo;t have to be perfect. It doesn&rsquo;t always need to adhere to your normal standards. Sometimes, it can be good enough to solve a problem you have - especially if it&rsquo;s temporary. Even better if you <em>know</em> it&rsquo;ll be temporary. I&rsquo;ve written lots of &ldquo;temporary&rdquo; code that I&rsquo;m sure is still in production, years later. Writing code like this is a gamble.</p>
+<p>But the stakes were incredibly low here. I wouldn&rsquo;t put this in my portfolio if I were looking for a job. It served its purpose though. I&rsquo;m happy to retire this code. Thanks to it, I have other things to play with rather than maintain this.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/coding-coders-podcast-2022/"><i class="fa fa-chevron-circle-left"></i> Code and the Coding Coders who Code it Podcast Appearance</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2021 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+</body>
+
+</html>
+

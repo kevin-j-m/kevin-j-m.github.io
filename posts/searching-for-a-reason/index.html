@@ -3,24 +3,24 @@
 <html lang="en">
 
 <head>
-  <title>Browser History Confessional: Searching My Recent Searches - Kevin Murphy</title>
+  <title>Searching for a Reason - Kevin Murphy</title>
   <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="Presentation resources for a talk about why we search for help in our day-to-day lives as software developers." />
+<meta name="description" content="Why do we search for information? I consider the four main reasons I do: solving direct problems, recalling details, revisiting assumptions, and sharing communal knowledge." />
 <meta name="author" content="Kevin Murphy" />
 
-<link rel="canonical" href="https://kevinjmurphy.com/posts/browser-history/">
-<meta property="og:title" content="Browser History Confessional: Searching My Recent Searches" />
-<meta property="og:description" content="Presentation resources for a talk about why we search for help in our day-to-day lives as software developers." />
+<link rel="canonical" href="https://kevinjmurphy.com/posts/searching-for-a-reason/">
+<meta property="og:title" content="Searching for a Reason" />
+<meta property="og:description" content="Why do we search for information? I consider the four main reasons I do: solving direct problems, recalling details, revisiting assumptions, and sharing communal knowledge." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://kevinjmurphy.com/posts/browser-history/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-04-13T08:55:10-04:00" />
-<meta property="article:modified_time" content="2022-04-13T08:55:10-04:00" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/searching-for-a-reason/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-15T07:00:00-04:00" />
+<meta property="article:modified_time" content="2022-05-15T07:00:00-04:00" />
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Browser History Confessional: Searching My Recent Searches"/>
-<meta name="twitter:description" content="Presentation resources for a talk about why we search for help in our day-to-day lives as software developers."/>
+<meta name="twitter:title" content="Searching for a Reason"/>
+<meta name="twitter:description" content="Why do we search for information? I consider the four main reasons I do: solving direct problems, recalling details, revisiting assumptions, and sharing communal knowledge."/>
 
 <meta name="generator" content="Hugo 0.88.1" />
     
@@ -124,13 +124,13 @@ if (!doNotTrack) {
 
 <article>
 
-    <h1>Browser History Confessional: Searching My Recent Searches</h1>
+    <h1>Searching for a Reason</h1>
 
     
       <aside>
     <ul>
         <li>
-            <time class="post-date" datetime="2022-04-13T08:55:10-04:00">Apr 13, 2022</time>
+            <time class="post-date" datetime="2022-05-15T07:00:00-04:00">May 15, 2022</time>
         </li>
         
         
@@ -143,16 +143,16 @@ if (!doNotTrack) {
                     <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
                 
                     , 
-                    <a href="https://kevinjmurphy.com/tags/conference">#conference</a>
+                    <a href="https://kevinjmurphy.com/tags/career">#career</a>
                 
                     , 
-                    <a href="https://kevinjmurphy.com/tags/railsconf">#railsconf</a>
+                    <a href="https://kevinjmurphy.com/tags/productivity">#productivity</a>
                 
             </em>
         </li>
         
 
-        <li>6 minute read | 1124 words</li>
+        <li>6 minute read | 1072 words</li>
     </ul>
 </aside>
 
@@ -161,21 +161,13 @@ if (!doNotTrack) {
     
 
 
-    <h2 id="abstract">Abstract <a href="#abstract">🔗</a></h2>
+    <h2 id="search-driven-development">Search-Driven Development <a href="#search-driven-development">🔗</a></h2>
 <p>We all only have so much working memory available in our brains. Developers may joke about spending their day composing search engine queries. The reason it&rsquo;s a joke is because of the truth behind it. Search-driven development is a reality.</p>
-<p>Join me, and my actual search history, on a journey to solve recent challenges I faced. I&rsquo;ll categorize the different types of information I often search for. You&rsquo;ll leave with tips on retrieving the knowledge you need for your next bug, feature, or pull request.</p>
-<h2 id="presentation-resources">Presentation Resources <a href="#presentation-resources">🔗</a></h2>
-<ul>
-<li><a href="https://speakerdeck.com/kevinmurphy/browser-history-confessional-searching-my-recent-searches">Slides</a></li>
-<li><a href="https://github.com/kevin-j-m/browser-history">Code Examples</a></li>
-<li><a href="https://kevinjmurphy.com/posts/searching-for-a-reason/">Blog Post</a></li>
-</ul>
-<h2 id="search-driven-development">Search-Driven Development <a href="#search-driven-development">🔗</a></h2>
-<p>I find it&rsquo;s important to consider <em>why</em> I&rsquo;m searching for something. It helps guide the path I&rsquo;ll take to resolve my query and helps frame the problem in a familiar context. In my own work, I&rsquo;ve found there are four main categories of reasons why I search. They all relate to how much experience I have with the problem I&rsquo;m working on.</p>
+<p>Embracing that truth, I find it&rsquo;s important to consider <em>why</em> I&rsquo;m searching for something. It helps guide the path I&rsquo;ll take to resolve my query and helps frame the problem in a familiar context. In my own work, I&rsquo;ve found there are four main categories of reasons why I search. They all relate to how much experience I have with the problem I&rsquo;m working on.</p>
 <h3 id="solve-direct-problems">Solve Direct Problems <a href="#solve-direct-problems">🔗</a></h3>
 <p>When I&rsquo;m trying to do something for the first time, I may lack any context and perspective to have a starting point. I may get stuck mid-way through. And, being a novice at this task, I need to seek outside perspectives. I&rsquo;ll often build that up by searching for how others have accomplished the same task.</p>
 <p>With a specific error that I&rsquo;m looking to fix, there&rsquo;s one thing I almost always do first. I <strong>copy and paste the error</strong> into a search engine. This is a high-leverage, low-effort move. It&rsquo;s unlikely you&rsquo;re the only person to have encountered this issue before. It requires validating that what you find are people experiencing the same problem. You must also determine for yourself if their solution works for you. However, it is still a go-to first step for me.</p>
-<p>That may not be a great approach if the error is fairly generic. It may not yield results if a lot of the error message is about code specific to your application. In that case, I review the error message, and consider the context where it arived. Search the README of the framework, dependency, or tool you&rsquo;re working with. Visit open and closed issues. Search their documentation. Find their forums. Use log messages to add to your search criteria.</p>
+<p>That may not be a great approach if the error is fairly generic. It may not yield results if a lot of the error message is about code specific to your application. In that case, I review the error message, and consider the context where it arrived. Search the README of the framework, dependency, or tool you&rsquo;re working with. Visit open and closed issues. Search their documentation. Find their forums. Use log messages to add to your search criteria.</p>
 <p>You may conduct a thorough search using all these avenues and still not have an answer. You might start feeling frustrated, or angry. You might be doubting your abilities. When that creeps in, the most important thing I can recommend is that you stop.</p>
 <p><strong>Stop.</strong></p>
 <p>Move away and do something else for a few minutes, even if it&rsquo;s get a new glass of water. Give your brain some time to wander. Ponder what you&rsquo;re experiencing in a different physical location. Do something else to take your mind off of it.</p>
@@ -203,13 +195,9 @@ if (!doNotTrack) {
     <ul>
         
         <li>
-            <a href="https://kevinjmurphy.com/posts/available-for-hire-2022/"><i class="fa fa-chevron-circle-left"></i> Available For Hire</a>
+            <a href="https://kevinjmurphy.com/posts/scraping-buy/"><i class="fa fa-chevron-circle-left"></i> Scraping Buy: Scripting for a Purchase</a>
         </li>
         
-        
-        <li>
-            <a href="https://kevinjmurphy.com/posts/bookbub-start/">Joining BookBub <i class="fa fa-chevron-circle-right"></i> </a>
-        </li>
         
     </ul>
 </section>

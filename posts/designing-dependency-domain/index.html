@@ -1,0 +1,378 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Designing A Dependency&#39;s Domain - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="This article decomposes an interaction with an external dependency into its component parts." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/designing-dependency-domain/">
+<meta property="og:title" content="Designing A Dependency&#39;s Domain" />
+<meta property="og:description" content="This article decomposes an interaction with an external dependency into its component parts." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/designing-dependency-domain/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-19T20:00:00-04:00" />
+<meta property="article:modified_time" content="2022-06-19T20:00:00-04:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Designing A Dependency&#39;s Domain"/>
+<meta name="twitter:description" content="This article decomposes an interaction with an external dependency into its component parts."/>
+
+<meta name="generator" content="Hugo 0.88.1" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RVD6VLNE04', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Designing A Dependency&#39;s Domain</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2022-06-19T20:00:00-04:00">Jun 19, 2022</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/software-design">#software-design</a>
+                
+            </em>
+        </li>
+        
+
+        <li>8 minute read | 1623 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="sweathr">Sweathr <a href="#sweathr">🔗</a></h2>
+<p>In our <a href="https://kevinjmurphy.com/posts/testing-dependencies/">last post</a> I introduced you to Sweathr. We&rsquo;ve revolutionized the sweater weather prediction landscape forever. We evaluated many ways to test the core business logic, which called out to a HTTP weather API.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Location</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sweater_weather?</span>
+    uri <span style="color:#f92672">=</span> <span style="color:#66d9ef">URI</span>(conditions_url_for_zip_code)
+    result <span style="color:#f92672">=</span> <span style="color:#66d9ef">Net</span><span style="color:#f92672">::</span><span style="color:#66d9ef">HTTP</span><span style="color:#f92672">.</span>get(uri)
+    response <span style="color:#f92672">=</span> <span style="color:#66d9ef">JSON</span><span style="color:#f92672">.</span>parse(result)
+
+    feels_like <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>dig(<span style="color:#e6db74">&#34;current_observation&#34;</span>, <span style="color:#e6db74">&#34;feelslike_f&#34;</span>)
+    feels_like<span style="color:#f92672">.</span>to_f<span style="color:#f92672">.</span>between?(<span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">65</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Testing this code involved a fair amount of work. Any of the options had significant trade-offs we needed to weigh. Part of the reason testing this method was so much work is because it involves a dependency, the weather API. Part of the reason is, even though it&rsquo;s a small method, it&rsquo;s doing a lot of things.</p>
+<p>In this post, we&rsquo;re going to decompose this method into three different units. Along the way, we&rsquo;ll talk about <em>why</em> we&rsquo;re doing this.</p>
+<h3 id="api-client">API Client <a href="#api-client">🔗</a></h3>
+<p>Let&rsquo;s start at the top. We&rsquo;re going to have a separate class that will handle HTTP communication with the weather API. We know we&rsquo;re going to have other code related to this API, so we&rsquo;ll put it in its own module.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> Sweathr
+  <span style="color:#66d9ef">module</span> Weather
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Api</span>
+      <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_conditions</span>(<span style="color:#e6db74">zip</span>:)
+        uri <span style="color:#f92672">=</span> <span style="color:#66d9ef">URI</span>(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>auth_uri<span style="color:#e6db74">}</span><span style="color:#e6db74">/conditions/q/</span><span style="color:#e6db74">#{</span>zip<span style="color:#e6db74">}</span><span style="color:#e6db74">.json&#34;</span>)
+
+        <span style="color:#66d9ef">JSON</span><span style="color:#f92672">.</span>parse(<span style="color:#66d9ef">Net</span><span style="color:#f92672">::</span><span style="color:#66d9ef">HTTP</span><span style="color:#f92672">.</span>get(uri))
+      <span style="color:#66d9ef">end</span>
+
+      <span style="color:#66d9ef">private</span>
+
+      <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">auth_uri</span>
+        <span style="color:#e6db74">&#34;https://real-weather-api.gov&#34;</span>
+      <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>This class is solely focused on communicating with the dependency. There&rsquo;s subtle complexity here though. This class needs to determine how it&rsquo;s going to return the response. Right now, this is converting the response body JSON and returning the hash. This means that it&rsquo;s choosing to swallow the status code, headers, or other data the API is telling us. That&rsquo;s a choice, and it&rsquo;s isolated in this class. If we need access to other information, we know where we need to go to get it. Documenting, or iterating on, these types of decisions has a well-defined home.</p>
+<h4 id="api-client-testing">API Client Testing <a href="#api-client-testing">🔗</a></h4>
+<p>To test this, we can use any of the methods from our <a href="https://kevinjmurphy.com/posts/testing-dependencies/">last post</a>. However, I would advocate for one that, at least at some point, issues a real request to the API. That is the focus of this class, and as such, we want to make sure it&rsquo;s performing as expected. Using a fake or a stub here wouldn&rsquo;t give us a lot of confidence in testing our implementation.</p>
+<p>Making a direct API call or using a fixture that&rsquo;s updated has an issue: determinism. Remember, this is a weather API - and the weather changes. We can&rsquo;t assert that it&rsquo;s sunny and 70 degrees and have it pass all the time.</p>
+<p>Luckily, we don&rsquo;t have to. Instead, what we can focus on is the <em>structure</em> of the data, rather than the <em>contents</em>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">it <span style="color:#e6db74">&#34;retrieves the current conditions&#34;</span> <span style="color:#66d9ef">do</span>
+  result <span style="color:#f92672">=</span> api<span style="color:#f92672">.</span>current_conditions(<span style="color:#e6db74">zip</span>: <span style="color:#e6db74">&#34;02108&#34;</span>)
+
+  expect(result)<span style="color:#f92672">.</span>to <span style="color:#66d9ef">include</span>(
+    <span style="color:#e6db74">&#34;current_observation&#34;</span> <span style="color:#f92672">=&gt;</span> a_hash_including(
+      <span style="color:#e6db74">&#34;feelslike_f&#34;</span> <span style="color:#f92672">=&gt;</span> a_kind_of(String)
+    )
+  )
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>It feels weird asserting we get a String in a language like Ruby sometimes, I&rsquo;ll grant you that. But, it doesn&rsquo;t matter to us what the temperature is. We want to validate that we can get back a temperature. We can do that by making sure it&rsquo;s nested inside the current observation with the key we expect.</p>
+<p>This test is flexible where it can be - what the temperature is. It&rsquo;s also rigid where it has to be - we get a response and the data is in a format we expect.</p>
+<p>This can serve as an early-warning system for upcoming components in our design. If this test fails, we&rsquo;ll need to change other areas of our domain.</p>
+<p>Running this test as written <a href="https://kevinjmurphy.com/posts/testing-dependencies/#direct-interaction">directly interacts</a> with the dependency. This test will fail without an internet connection, or when the API is down. We could instead use a <a href="https://kevinjmurphy.com/posts/testing-dependencies/#fixture">fixture</a> that&rsquo;s regularly updated to mitigate that concern.</p>
+<h3 id="data-representation">Data Representation <a href="#data-representation">🔗</a></h3>
+<p>The next piece we&rsquo;re going to build will take in that response body and expose the data of interest to us. First things first, we need to give it a name. This data is telling us what the weather is in a place. We&rsquo;ll call it the current weather conditions.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> Sweathr
+  <span style="color:#66d9ef">module</span> Weather
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CurrentConditions</span>
+      <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(results)
+        @results <span style="color:#f92672">=</span> results
+      <span style="color:#66d9ef">end</span>
+
+      <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">feels_like_f</span>
+        @results<span style="color:#f92672">.</span>dig(<span style="color:#e6db74">&#34;current_observation&#34;</span>, <span style="color:#e6db74">&#34;feelslike_f&#34;</span>)<span style="color:#f92672">.</span>to_f
+      <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>All we care about is knowing how hot or cold it feels outside. So, that&rsquo;s the one public method we&rsquo;ll expose. The API provides the number as a string, and we&rsquo;ll use this method to convert it to a float, so it&rsquo;s in a format we expect. This class provides us a location to expose more data that comes back should we need it in the future.</p>
+<h4 id="data-representation-testing">Data Representation Testing <a href="#data-representation-testing">🔗</a></h4>
+<p>We can unit test this using conventional and familiar means. There&rsquo;s no need to interface with the API at all.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">describe <span style="color:#e6db74">&#34;#feels_like_f&#34;</span> <span style="color:#66d9ef">do</span>
+  it <span style="color:#e6db74">&#34;gives the feels like temp in Fahrenheit&#34;</span> <span style="color:#66d9ef">do</span>
+    conditions <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Weather</span><span style="color:#f92672">::</span><span style="color:#66d9ef">CurrentConditions</span><span style="color:#f92672">.</span>new(json)
+
+    expect(conditions<span style="color:#f92672">.</span>feels_like_f)<span style="color:#f92672">.</span>to eq <span style="color:#ae81ff">55</span><span style="color:#f92672">.</span><span style="color:#ae81ff">5</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Because this is so targeted, we can also dig into very specific edge cases. We can explore how we handle data we might receive from the API without needing to interact with the API. How will this respond to receiving a string that can&rsquo;t convert to a float? What if there is no current observation key in the hash? We can provide a hash that meets those criteria and test that with minimal overhead.</p>
+<h3 id="domain-module">Domain Module <a href="#domain-module">🔗</a></h3>
+<p>We&rsquo;re going to tie these two components together in a module. This module will be our external API by which we consume this work.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> Sweathr
+  <span style="color:#66d9ef">module</span> Weather
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">client</span>
+      @client <span style="color:#f92672">||=</span> <span style="color:#66d9ef">Api</span><span style="color:#f92672">.</span>new
+    <span style="color:#66d9ef">end</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">current_conditions</span>(<span style="color:#e6db74">zip_code</span>:)
+      <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Weather</span><span style="color:#f92672">::</span><span style="color:#66d9ef">CurrentConditions</span><span style="color:#f92672">.</span>new(
+        client<span style="color:#f92672">.</span>current_conditions(<span style="color:#e6db74">zip</span>: zip_code)
+      )
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>As a consumer of this, I don&rsquo;t need to worry about knowing all the underlying classes involved. Let&rsquo;s see how we can use this in our existing <code>Location</code> class.</p>
+<h2 id="usage">Usage <a href="#usage">🔗</a></h2>
+<p>Interfacing with our weather API is now abstracted into a separate module. We can re-write our <code>Location#sweater_weather?</code> method to use it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Location</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sweater_weather?</span>
+    current <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Weather</span><span style="color:#f92672">.</span>current_conditions(<span style="color:#e6db74">zip_code</span>: @zip_code)
+
+    current<span style="color:#f92672">.</span>feels_like_f<span style="color:#f92672">.</span>between?(<span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">65</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>More of the focus in this method is now on the business logic. This method retrieves the current weather conditions, and determines if it feels like sweater weather. Accessing that information from the weather API is still important. But we don&rsquo;t need to understand that complexity when we&rsquo;re reading this method.</p>
+<p>This separation gives us a new option for testing our interactions with the weather API. We&rsquo;ll explore that next.</p>
+<h2 id="test-mode">Test Mode <a href="#test-mode">🔗</a></h2>
+<h3 id="fake-client">Fake Client <a href="#fake-client">🔗</a></h3>
+<p>Let&rsquo;s borrow a strategy from our prior post. We&rsquo;re going to build a <a href="https://kevinjmurphy.com/posts/testing-dependencies/#fake">fake</a>. But, we don&rsquo;t need to fake out the HTTP traffic. We&rsquo;re going to build a class that responds to the same methods as <code>Sweathr::Weather::Api</code>, but doesn&rsquo;t make a HTTP call.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FakeWeatherClient</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_conditions</span>(<span style="color:#e6db74">zip</span>:)
+    {
+      <span style="color:#e6db74">&#34;current_observation&#34;</span> <span style="color:#f92672">=&gt;</span> {
+        <span style="color:#e6db74">&#34;feelslike_f&#34;</span> <span style="color:#f92672">=&gt;</span> @results<span style="color:#f92672">[</span>zip_code<span style="color:#f92672">]</span>
+      }
+    }
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>This client needs to responds to the same methods as the real client, so it can stand in for the original. Helpfully, it can also have extra behavior. We&rsquo;re going to add a method that allows us to specify the weather in a location.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FakeWeatherClient</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_condition</span>(<span style="color:#e6db74">zip_code</span>:, <span style="color:#e6db74">temp_f</span>:)
+    @results<span style="color:#f92672">[</span>zip_code<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> temp_f
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Now, we can control the weather anywhere in the world!</p>
+<h3 id="test-mode-1">Test Mode <a href="#test-mode-1">🔗</a></h3>
+<p>We need a way to specify that we want to use this fake client. We&rsquo;ll do so by making one change to our domain. We&rsquo;re going to add the ability to set the client we want to use to consume the weather API.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> Sweathr
+  <span style="color:#66d9ef">module</span> Weather
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">client</span>
+      @client <span style="color:#f92672">||=</span> <span style="color:#66d9ef">Api</span><span style="color:#f92672">.</span>new
+    <span style="color:#66d9ef">end</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">client</span><span style="color:#f92672">=</span>(client)
+      @client <span style="color:#f92672">=</span> client
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>We don&rsquo;t want to have to set this client in all our tests - and we certainly don&rsquo;t want to forget to set it back. We&rsquo;ll instead build a module that will take care of this for us.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> Sweathr
+  <span style="color:#66d9ef">module</span> Weather
+    <span style="color:#66d9ef">module</span> Testing
+      <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">enable!</span>
+        <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Weather</span><span style="color:#f92672">.</span>client <span style="color:#f92672">=</span> <span style="color:#66d9ef">FakeWeatherClient</span><span style="color:#f92672">.</span>new
+        <span style="color:#66d9ef">yield</span>
+        <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Weather</span><span style="color:#f92672">.</span>client <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Weather</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Api</span><span style="color:#f92672">.</span>new
+      <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>This method expects a block, and for the <a href="https://kevinjmurphy.com/posts/temporary-state-in-tests/">duration of the block</a>, our fake client is the client it uses. At the conclusion of the block, it returns the client to one that will execute API requests.</p>
+<p>Now in testing our <code>Location</code> class, we can define the state of the world (or at least the weather) in the setup of our test.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">it <span style="color:#e6db74">&#34;is time to break out the sweater&#34;</span> <span style="color:#66d9ef">do</span>
+  <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Weather</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Testing</span><span style="color:#f92672">.</span>enable! <span style="color:#66d9ef">do</span>
+    <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Weather</span><span style="color:#f92672">.</span>client<span style="color:#f92672">.</span>add_condition(
+      <span style="color:#e6db74">zip_code</span>: <span style="color:#e6db74">&#34;02108&#34;</span>,
+      <span style="color:#e6db74">temp_f</span>: <span style="color:#e6db74">&#34;56.0&#34;</span>
+    )
+
+    location <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Location</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">zip_code</span>: <span style="color:#e6db74">&#34;02108&#34;</span>)
+
+    expect(location<span style="color:#f92672">.</span>sweater_weather?)<span style="color:#f92672">.</span>to be <span style="color:#66d9ef">true</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>We&rsquo;re able to succinctly state that the temperature in zip code 02108 is 56 degrees at the top of the block. Then we exercise how our method under test responds to that scenario.</p>
+<h2 id="domain-development">Domain Development <a href="#domain-development">🔗</a></h2>
+<p>We needed to undertake a lot of work to allow for that test to exist. We decomposed a five line method into two classes and a module. We added in <em>another</em> module to test our weather API. And we drive those tests by a fake version of one of the new classes we wrote.</p>
+<p>In doing so, we gained the ability to test our interaction with the dependency in greater detail. We have logical extension points for building in new functionality. We know where to add a method to consume new API endpoints. Or where to expose more data from the current weather conditions. We removed the need to handle HTTP traffic to test our application&rsquo;s business logic.</p>
+<p>Was it worth it? For this contrived example, maybe not. As your usage of a dependency expands, having this separation has more merit. Defining a separate domain for the dependency clears up where the responsibility of the dependency ends and your usage of it begins. It makes it easier to reuse common interactions with the dependency. It provides clear seams to add in future functionality. It may be worth considering as you organize your next interaction with a new dependency.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/testing-dependencies/"><i class="fa fa-chevron-circle-left"></i> Testing Dependencies: Fake It While You Make It</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2022 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+</body>
+
+</html>
+

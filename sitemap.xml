@@ -2,26 +2,32 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://kevinjmurphy.com/posts/designing-dependency-domain/</loc>
-    <lastmod>2022-06-19T20:00:00-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2022-06-19T20:00:00-04:00</lastmod>
+    <lastmod>2022-07-17T07:33:10-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2022-06-19T20:00:00-04:00</lastmod>
+    <lastmod>2022-07-17T07:33:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/request-spec-realistic-error-response/</loc>
+    <lastmod>2022-07-17T07:33:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/rspec/</loc>
+    <lastmod>2022-07-17T07:33:10-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2022-07-17T07:33:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2022-07-17T07:33:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/testing/</loc>
+    <lastmod>2022-07-17T07:33:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/designing-dependency-domain/</loc>
     <lastmod>2022-06-19T20:00:00-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/software-design/</loc>
     <lastmod>2022-06-19T20:00:00-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
-    <lastmod>2022-06-19T20:00:00-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/testing/</loc>
-    <lastmod>2022-06-05T21:15:06-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/testing-dependencies/</loc>
     <lastmod>2022-06-05T21:15:06-04:00</lastmod>

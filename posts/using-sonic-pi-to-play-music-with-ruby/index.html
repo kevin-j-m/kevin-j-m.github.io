@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Using Sonic Pi to Play Music With Ruby"/>
 <meta name="twitter:description" content="Sonic Pi is a fun and approachable way to make music with code. For a slight twist on using it, you can read about how I incorporated it into an existing ruby code base."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -217,27 +217,27 @@ it has since changed to run on a <a href="https://github.com/sonic-pi-net/sonic-
 <p>The CLI already implemented the functionality to <a href="https://github.com/Widdershin/sonic-pi-cli/blob/20a18f91b4aa24de9f4b187aa20c69334ddf0329/bin/sonic_pi#L13-L33">find the port</a>
 to send to the <code>SonicPi</code> class, so for demonstration purposes, I copied that in
 my constructor.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Amplifier</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
-    @port <span style="color:#f92672">=</span> find_port
-    @speaker <span style="color:#f92672">=</span> <span style="color:#66d9ef">SonicPi</span><span style="color:#f92672">.</span>new(@port)
-  <span style="color:#66d9ef">end</span>
-
-  <span style="color:#66d9ef">private</span>
-
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_port</span>
-    <span style="color:#75715e"># Code from sonic-pi-cli</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Needing to find the port is now something that the <code>SonicPi</code> class can do <a href="https://github.com/Widdershin/sonic-pi-cli/pull/23">by itself</a>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Amplifier</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
+</span></span><span style="display:flex;"><span>    @port <span style="color:#f92672">=</span> find_port
+</span></span><span style="display:flex;"><span>    @speaker <span style="color:#f92672">=</span> <span style="color:#66d9ef">SonicPi</span><span style="color:#f92672">.</span>new(@port)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_port</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Code from sonic-pi-cli</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Needing to find the port is now something that the <code>SonicPi</code> class can do <a href="https://github.com/Widdershin/sonic-pi-cli/pull/23">by itself</a>
 as of version v0.2.0; however, this work preceded that.</p>
 <p>The rest of the functionality in the <code>Amplifier</code> class is now to <a href="https://kevinjmurphy.com/posts/synthesizing-composition-with-delegation/">delegate</a> commands to the <code>@speaker</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Amplifier</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>(sound)
-    @speaker<span style="color:#f92672">.</span>run(sound)
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><h2 id="rock-on">Rock On <a href="#rock-on">🔗</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Amplifier</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>(sound)
+</span></span><span style="display:flex;"><span>    @speaker<span style="color:#f92672">.</span>run(sound)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="rock-on">Rock On <a href="#rock-on">🔗</a></h2>
 <p>Using this amplifier still requires knowing all the correct
 <a href="https://sonic-pi.net/tutorial.html#section-2-1">commands</a> to send to Sonic Pi,
 and Sonic Pi must be running; however, we can now trigger it to execute these

@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Inheritance: Derivative Songwriting"/>
 <meta name="twitter:description" content="Inheritance sets up a relationship or a taxonomy between classes to allow for code reuse. It is both a commonly reached for and commonly derided tool which has its place, but must be wielded with care. Here we&#39;ll use inheritance to write new songs for our concert setlist."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -187,70 +187,70 @@ talk about Ruby&rsquo;s
 series of notes. The notes may change over time, and the title may be refined,
 but for our purposes, we&rsquo;re not calling it a song until there&rsquo;s a bit more than
 an empty page.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Song</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(<span style="color:#e6db74">notes</span>: <span style="color:#f92672">[]</span>, name:)
-    @notes <span style="color:#f92672">=</span> notes
-    @name <span style="color:#f92672">=</span> name
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>When you&rsquo;re writing songs for a band or yourself, you need to be able to play the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Song</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(<span style="color:#e6db74">notes</span>: <span style="color:#f92672">[]</span>, name:)
+</span></span><span style="display:flex;"><span>    @notes <span style="color:#f92672">=</span> notes
+</span></span><span style="display:flex;"><span>    @name <span style="color:#f92672">=</span> name
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>When you&rsquo;re writing songs for a band or yourself, you need to be able to play the
 song. In this example, our song is written for a band that has a known number of
 instruments.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Song</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>
-    @notes<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>note<span style="color:#f92672">|</span>
-      composition <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
-
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @guitar<span style="color:#f92672">.</span>play(note) }
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @vocal<span style="color:#f92672">.</span>sing(note) }
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @drum<span style="color:#f92672">.</span>hit(note) }
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @keyboardist<span style="color:#f92672">.</span>program(note) }
-
-      composition<span style="color:#f92672">.</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:value</span>)
-    <span style="color:#66d9ef">end</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>For every note (representing a beat or measure of the song) each member of the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Song</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>
+</span></span><span style="display:flex;"><span>    @notes<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>note<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @guitar<span style="color:#f92672">.</span>play(note) }
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @vocal<span style="color:#f92672">.</span>sing(note) }
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @drum<span style="color:#f92672">.</span>hit(note) }
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @keyboardist<span style="color:#f92672">.</span>program(note) }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      composition<span style="color:#f92672">.</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:value</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>For every note (representing a beat or measure of the song) each member of the
 band needs to play their part simultaneously. All of these instruments playing
 together note for note comprise the song.</p>
 <h2 id="on-repeat">On Repeat <a href="#on-repeat">🔗</a></h2>
 <p>A touring band is going to play the same song <strong>many</strong> times night after night.
 For each concert on the tour, the band needs to construct a setlist of all the
 songs that they&rsquo;ll play that night, and in what order.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Setlist</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_song</span>(song)
-    @songs <span style="color:#f92672">&lt;&lt;</span> song
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Transcribing all the notes for each song over and over again for every concert
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Setlist</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_song</span>(song)
+</span></span><span style="display:flex;"><span>    @songs <span style="color:#f92672">&lt;&lt;</span> song
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Transcribing all the notes for each song over and over again for every concert
 would be tedious and unnecessary. To save all that work, each song that could
 appear in the band&rsquo;s setlist is catalogued as a separate class.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TheLineBeginsToBlur</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
-    @name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;The Line Begins To Blur&#34;</span>
-    @notes <span style="color:#f92672">=</span> verse_1 <span style="color:#f92672">+</span> chorus <span style="color:#f92672">+</span> verse_2 <span style="color:#f92672">+</span> chorus <span style="color:#f92672">+</span> solo <span style="color:#f92672">+</span> outro
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>We don&rsquo;t need to accept any arguments for the name of the song or the notes
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TheLineBeginsToBlur</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
+</span></span><span style="display:flex;"><span>    @name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;The Line Begins To Blur&#34;</span>
+</span></span><span style="display:flex;"><span>    @notes <span style="color:#f92672">=</span> verse_1 <span style="color:#f92672">+</span> chorus <span style="color:#f92672">+</span> verse_2 <span style="color:#f92672">+</span> chorus <span style="color:#f92672">+</span> solo <span style="color:#f92672">+</span> outro
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We don&rsquo;t need to accept any arguments for the name of the song or the notes
 because it&rsquo;s already a fully-formed song. We&rsquo;re not going to change the
 arrangement in the middle of the tour. However, we <strong>do</strong> need to be able to
 play the song. As such, let&rsquo;s copy and paste the <code>play</code> method as something we
 can do for our specific song here.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TheLineBeginsToBlur</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>
-    @notes<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>note<span style="color:#f92672">|</span>
-      composition <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
-
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @guitar<span style="color:#f92672">.</span>play(note) }
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @vocal<span style="color:#f92672">.</span>sing(note) }
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @drum<span style="color:#f92672">.</span>hit(note) }
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @keyboardist<span style="color:#f92672">.</span>program(note) }
-
-      composition<span style="color:#f92672">.</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:value</span>)
-    <span style="color:#66d9ef">end</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>This is great because we now have a stable of songs we can pull from every night
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TheLineBeginsToBlur</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>
+</span></span><span style="display:flex;"><span>    @notes<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>note<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @guitar<span style="color:#f92672">.</span>play(note) }
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @vocal<span style="color:#f92672">.</span>sing(note) }
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @drum<span style="color:#f92672">.</span>hit(note) }
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @keyboardist<span style="color:#f92672">.</span>program(note) }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      composition<span style="color:#f92672">.</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:value</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This is great because we now have a stable of songs we can pull from every night
 when creating our setlist; however, rewriting the <code>play</code> method in each song is
 not great. If the implementation of <code>play</code> needs to change, we need to
 propagate that change across every song. If we forget to add a <code>play</code> method to
@@ -260,32 +260,32 @@ blankly at each other, unsure of what to do.</p>
 <p>Taking a note from our earlier post on
 <a href="https://kevinjmurphy.com/posts/synthesizing-composition-with-delegation/">composition and delegation</a>, we can
 build a class that&rsquo;s solely responsible for playing the song.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SongPerformer</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(notes)
-    @notes <span style="color:#f92672">=</span> notes
-  <span style="color:#66d9ef">end</span>
-
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>
-    @notes<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>note<span style="color:#f92672">|</span>
-      composition <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
-
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @guitar<span style="color:#f92672">.</span>play(note) }
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @vocal<span style="color:#f92672">.</span>sing(note) }
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @drum<span style="color:#f92672">.</span>hit(note) }
-      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @keyboardist<span style="color:#f92672">.</span>program(note) }
-
-      composition<span style="color:#f92672">.</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:value</span>)
-    <span style="color:#66d9ef">end</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>All of our songs can then use that performer and delegate the responsibility of
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SongPerformer</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(notes)
+</span></span><span style="display:flex;"><span>    @notes <span style="color:#f92672">=</span> notes
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>
+</span></span><span style="display:flex;"><span>    @notes<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>note<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @guitar<span style="color:#f92672">.</span>play(note) }
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @vocal<span style="color:#f92672">.</span>sing(note) }
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @drum<span style="color:#f92672">.</span>hit(note) }
+</span></span><span style="display:flex;"><span>      composition <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Thread</span><span style="color:#f92672">.</span>new { @keyboardist<span style="color:#f92672">.</span>program(note) }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      composition<span style="color:#f92672">.</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:value</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>All of our songs can then use that performer and delegate the responsibility of
 playing to it.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TheLineBeginsToBlur</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>
-    <span style="color:#66d9ef">SongPerformer</span><span style="color:#f92672">.</span>new(@notes)<span style="color:#f92672">.</span>play
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>We have now isolated the responsibility of playing the song to one place. If we
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TheLineBeginsToBlur</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">SongPerformer</span><span style="color:#f92672">.</span>new(@notes)<span style="color:#f92672">.</span>play
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We have now isolated the responsibility of playing the song to one place. If we
 need to change the way in which songs are played in totality, we can do so in
 the <code>SongPerformer</code> and that change will be reflected in all of our songs. We
 can even <a href="https://kevinjmurphy.com/posts/dependency-injection-plug-in/">dependency inject</a> the performer class
@@ -298,15 +298,15 @@ method that calls our <code>SongPerformer</code>.</p>
 about specific songs <em>inherit</em> the behavior of the <code>Song</code> class.</p>
 <p>By doing this, our different songs don&rsquo;t need to implement the <code>play</code> method.
 They&rsquo;ll get this behavior from <code>Song</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TheLineBeginsToBlur</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Song</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
-    <span style="color:#66d9ef">super</span>(
-      name: <span style="color:#e6db74">&#34;The Line Begins To Blur&#34;</span>,
-      <span style="color:#e6db74">notes</span>: verse_1 <span style="color:#f92672">+</span> chorus <span style="color:#f92672">+</span> verse_2 <span style="color:#f92672">+</span> chorus <span style="color:#f92672">+</span> solo <span style="color:#f92672">+</span> outro,
-    )
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>We denote that we&rsquo;re inheriting from the <code>Song</code> class with <code>&lt; Song</code>. <code>Song</code> is
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TheLineBeginsToBlur</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Song</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">super</span>(
+</span></span><span style="display:flex;"><span>      name: <span style="color:#e6db74">&#34;The Line Begins To Blur&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">notes</span>: verse_1 <span style="color:#f92672">+</span> chorus <span style="color:#f92672">+</span> verse_2 <span style="color:#f92672">+</span> chorus <span style="color:#f92672">+</span> solo <span style="color:#f92672">+</span> outro,
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We denote that we&rsquo;re inheriting from the <code>Song</code> class with <code>&lt; Song</code>. <code>Song</code> is
 our &ldquo;base class&rdquo;. In our constructor, we then call <code>Song</code>&rsquo;s constructor with
 <code>super</code>, passing in the title of the song and the notes that should be played
 with the song. <code>TheLineBeginsToBlur</code> has no reference to <code>play</code> in its class

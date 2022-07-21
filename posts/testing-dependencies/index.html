@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Testing Dependencies: Fake It While You Make It"/>
 <meta name="twitter:description" content="There are many ways to test usage of third-party dependencies. This article explores four approaches: direct interaction, stubbing, faking, and fixtures."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -167,17 +167,17 @@ if (!doNotTrack) {
 <p>Is it feeling chilly outside where you live? Should you put a sweater on before you head outside? These questions used to be hard to answer. No more! Today we&rsquo;re going to be talking about Sweathr. This new, totally not fake, website exists to tell you if it&rsquo;s sweater weather where you live.</p>
 <p>I debuted this revolutionary product at <a href="https://youtu.be/iEfpAp2sqiw">RailsConf 2020</a>. It communicates with a weather HTTP API to receive temperature information.</p>
 <p>Here is the core business logic of our application. We define sweater weather to be from 55-65 degrees Fahrenheit.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Location</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sweater_weather?</span>
-    uri <span style="color:#f92672">=</span> <span style="color:#66d9ef">URI</span>(conditions_url_for_zip_code)
-    result <span style="color:#f92672">=</span> <span style="color:#66d9ef">Net</span><span style="color:#f92672">::</span><span style="color:#66d9ef">HTTP</span><span style="color:#f92672">.</span>get(uri)
-    response <span style="color:#f92672">=</span> <span style="color:#66d9ef">JSON</span><span style="color:#f92672">.</span>parse(result)
-
-    feels_like <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>dig(<span style="color:#e6db74">&#34;current_observation&#34;</span>, <span style="color:#e6db74">&#34;feelslike_f&#34;</span>)
-    feels_like<span style="color:#f92672">.</span>to_f<span style="color:#f92672">.</span>between?(<span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">65</span>)
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>We&rsquo;d like to test the <code>Location#sweater_weather?</code> method. Today, we&rsquo;re going to investigate four options to do so with the API call in the method.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Location</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sweater_weather?</span>
+</span></span><span style="display:flex;"><span>    uri <span style="color:#f92672">=</span> <span style="color:#66d9ef">URI</span>(conditions_url_for_zip_code)
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#66d9ef">Net</span><span style="color:#f92672">::</span><span style="color:#66d9ef">HTTP</span><span style="color:#f92672">.</span>get(uri)
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> <span style="color:#66d9ef">JSON</span><span style="color:#f92672">.</span>parse(result)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    feels_like <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>dig(<span style="color:#e6db74">&#34;current_observation&#34;</span>, <span style="color:#e6db74">&#34;feelslike_f&#34;</span>)
+</span></span><span style="display:flex;"><span>    feels_like<span style="color:#f92672">.</span>to_f<span style="color:#f92672">.</span>between?(<span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">65</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We&rsquo;d like to test the <code>Location#sweater_weather?</code> method. Today, we&rsquo;re going to investigate four options to do so with the API call in the method.</p>
 <ul>
 <li><a href="#direct-interaction">Direct Interaction</a></li>
 <li><a href="#stub">Stub</a></li>
@@ -186,68 +186,68 @@ if (!doNotTrack) {
 </ul>
 <h3 id="direct-interaction">Direct Interaction <a href="#direct-interaction">🔗</a></h3>
 <p>As a starting point, we can write some tests that use the API directly.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">it <span style="color:#e6db74">&#34;is time to break out the sweater&#34;</span> <span style="color:#66d9ef">do</span>
-  location <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Location</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">zip_code</span>: <span style="color:#e6db74">&#34;02108&#34;</span>)
-
-  expect(location<span style="color:#f92672">.</span>sweater_weather?)<span style="color:#f92672">.</span>to be <span style="color:#66d9ef">true</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>This will give us confidence that we are using the dependency correctly. Our test has full production parity. It will work the same in our test suite as it will deployed for our end users.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;is time to break out the sweater&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  location <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Location</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">zip_code</span>: <span style="color:#e6db74">&#34;02108&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(location<span style="color:#f92672">.</span>sweater_weather?)<span style="color:#f92672">.</span>to be <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This will give us confidence that we are using the dependency correctly. Our test has full production parity. It will work the same in our test suite as it will deployed for our end users.</p>
 <p>It comes with significant downsides though. The most glaring is that it&rsquo;s non-deterministic. This test succeeding <strong>literally depends</strong> on the weather in that location. It&rsquo;s likely to fail often - and not for actionable reasons. It will fail because it happens to be too hot or too cold outside at the given moment this test runs.</p>
 <p>Tying this test to our dependency may be slow. We need to wait for the HTTP request and response to resolve before our test passes. We&rsquo;re also subject to the constraints of our dependency. With a HTTP API, we may have rate limits. That can become problematic when this test runs over and over again, locally and on CI. Our massive development team at Sweathr need to run the test suite often, and we may get rate limited.</p>
 <p>You may think that this is a foolish approach. I&rsquo;ll agree, it&rsquo;s unlikely
 the best choice in this example. Don&rsquo;t dismiss this strategy entirely though. You&rsquo;re probably using it in your own test suite! I&rsquo;m yet to see a test suite for a Rails app with persistence that doesn&rsquo;t interact with the backing store. We even write things we call <em>unit</em> tests which call out to the database (gasp). This is directly interacting with our dependency. And we&rsquo;ve largely decided, as a community, that we accept this. We are directly interacting with our dependency in our test.</p>
 <h3 id="stub">Stub <a href="#stub">🔗</a></h3>
 <p>We can avoid managing HTTP communication with our dependency. Instead, we&rsquo;ll stub out how we expect it to respond. In this case, we&rsquo;ll use <a href="https://github.com/bblimke/webmock">webmock</a> to stub out a response at the HTTP layer.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">it <span style="color:#e6db74">&#34;is time to break out the sweater&#34;</span> <span style="color:#66d9ef">do</span>
-  api_response <span style="color:#f92672">=</span> {
-    <span style="color:#e6db74">current_observation</span>: {
-      <span style="color:#e6db74">feelslike_f</span>: <span style="color:#e6db74">&#34;55.0&#34;</span>
-    }
-  }<span style="color:#f92672">.</span>to_json
-
-  stub_request(<span style="color:#e6db74">:get</span>, url)<span style="color:#f92672">.</span>to_return(<span style="color:#e6db74">status</span>: <span style="color:#ae81ff">200</span>, <span style="color:#e6db74">body</span>: api_response)
-
-  location <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Location</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">zip_code</span>: <span style="color:#e6db74">&#34;02108&#34;</span>)
-
-  expect(location<span style="color:#f92672">.</span>sweater_weather?)<span style="color:#f92672">.</span>to be <span style="color:#66d9ef">true</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>This solves our determinism problem as well. In the world of this test, the weather is always 55 degrees at this location. It&rsquo;s faster than communicating over HTTP - it doesn&rsquo;t need HTTP at all. We can run this test in the middle of the woods with no internet connection and it&rsquo;ll pass without a problem.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;is time to break out the sweater&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  api_response <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">current_observation</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">feelslike_f</span>: <span style="color:#e6db74">&#34;55.0&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }<span style="color:#f92672">.</span>to_json
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  stub_request(<span style="color:#e6db74">:get</span>, url)<span style="color:#f92672">.</span>to_return(<span style="color:#e6db74">status</span>: <span style="color:#ae81ff">200</span>, <span style="color:#e6db74">body</span>: api_response)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  location <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Location</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">zip_code</span>: <span style="color:#e6db74">&#34;02108&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(location<span style="color:#f92672">.</span>sweater_weather?)<span style="color:#f92672">.</span>to be <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This solves our determinism problem as well. In the world of this test, the weather is always 55 degrees at this location. It&rsquo;s faster than communicating over HTTP - it doesn&rsquo;t need HTTP at all. We can run this test in the middle of the woods with no internet connection and it&rsquo;ll pass without a problem.</p>
 <p>There are still trade-offs we&rsquo;re making with this approach. First of all, we must know the response structure. We may need to <a href="#direct-interaction">directly interact</a> with the dependency first to confirm the structure.</p>
 <p>Just as important, we need to keep that structure up to date. If the weather API starts sending data in a different format, this test is going to continue to pass. We&rsquo;ll only find out there&rsquo;s an issue on production. That&rsquo;s less than great - I want my test to tell me there&rsquo;s a problem.</p>
 <p>Stubbing out a response from your dependency in tests can be a great choice if you have a stable interface. You&rsquo;re avoiding using the dependency entirely. As such, you&rsquo;re taking on the responsibility to make sure it still reflects reality. That&rsquo;s easier to manage if the interface and data structure doesn&rsquo;t change.</p>
 <h3 id="fake">Fake <a href="#fake">🔗</a></h3>
 <p>Stubbing out the response may be too magical for you. A more tangible approach may be to build our own weather API. For test purposes we&rsquo;ll communicate with that API, rather than the real one.</p>
 <p>Let&rsquo;s build our own weather API quick:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FakeWeather</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Sinatra</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Base</span>
-  get <span style="color:#e6db74">&#34;/api/:key/conditions/q/:zip_code.json&#34;</span> <span style="color:#66d9ef">do</span>
-    json <span style="color:#e6db74">current_observation</span>: { <span style="color:#e6db74">feelslike_f</span>: <span style="color:#e6db74">&#34;56.0&#34;</span> }
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>We can use the <code>FakeWeather</code> API rather than the real one using a tool like <a href="https://github.com/thoughtbot/capybara_discoball">capybara_discoball</a>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">it <span style="color:#e6db74">&#34;is time to break out the sweater&#34;</span> <span style="color:#66d9ef">do</span>
-  location <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Location</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">zip_code</span>: <span style="color:#e6db74">&#34;02108&#34;</span>)
-
-  <span style="color:#66d9ef">Capybara</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Discoball</span><span style="color:#f92672">.</span>spin(<span style="color:#66d9ef">FakeWeather</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>s<span style="color:#f92672">|</span>
-    location<span style="color:#f92672">.</span>endpoint_url <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>url
-
-    expect(location<span style="color:#f92672">.</span>sweater_weather?)<span style="color:#f92672">.</span>to be <span style="color:#66d9ef">true</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Within the <code>Capybara::Discoball.spin</code> block, we&rsquo;re communicating with <code>FakeWeather</code>. We&rsquo;re not issuing a request to the actual weather API. Because that fake always says it&rsquo;s 56 degrees, we still have a deterministic test. We can control how much flexibility we have in our fake. We can update it so that different locations get different temperatures if we&rsquo;d like. That complexity lives in the <code>FakeWeather</code> class. It&rsquo;s not contained within our individual tests that communicate with it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FakeWeather</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Sinatra</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Base</span>
+</span></span><span style="display:flex;"><span>  get <span style="color:#e6db74">&#34;/api/:key/conditions/q/:zip_code.json&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    json <span style="color:#e6db74">current_observation</span>: { <span style="color:#e6db74">feelslike_f</span>: <span style="color:#e6db74">&#34;56.0&#34;</span> }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We can use the <code>FakeWeather</code> API rather than the real one using a tool like <a href="https://github.com/thoughtbot/capybara_discoball">capybara_discoball</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;is time to break out the sweater&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  location <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Location</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">zip_code</span>: <span style="color:#e6db74">&#34;02108&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">Capybara</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Discoball</span><span style="color:#f92672">.</span>spin(<span style="color:#66d9ef">FakeWeather</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>s<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>    location<span style="color:#f92672">.</span>endpoint_url <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>url
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    expect(location<span style="color:#f92672">.</span>sweater_weather?)<span style="color:#f92672">.</span>to be <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Within the <code>Capybara::Discoball.spin</code> block, we&rsquo;re communicating with <code>FakeWeather</code>. We&rsquo;re not issuing a request to the actual weather API. Because that fake always says it&rsquo;s 56 degrees, we still have a deterministic test. We can control how much flexibility we have in our fake. We can update it so that different locations get different temperatures if we&rsquo;d like. That complexity lives in the <code>FakeWeather</code> class. It&rsquo;s not contained within our individual tests that communicate with it.</p>
 <p>Using the fake puts us back to communicating over HTTP. It happens to be communicating with a local HTTP server, but it&rsquo;s still using the protocol.</p>
 <p>We still have the same consistency issues we had with stubbing. We need to make sure the responses our fake is providing mimic the responses of the real API and keep that up to date.</p>
 <p>Using a fake may be beneficial when we need to test the communication mechanism, or protocol. It can also be useful when testing a multi-step interaction, like an OAuth flow. Rather than stubbing out each API call in that flow in a test, we can build a fake that has endpoints to respond to each of those requests.</p>
 <h3 id="fixture">Fixture <a href="#fixture">🔗</a></h3>
 <p>We have another option to capture a real interaction with the dependency. We won&rsquo;t need to build out a fake version of our dependency. We won&rsquo;t stub out a made-up response. We can store that interplay and reload it from that file for future runs. We call that file a fixture.</p>
 <p>We&rsquo;ll use a tool called <a href="https://github.com/vcr/vcr">vcr</a> to capture real HTTP requests and responses, storing and using them from then on. VCR&rsquo;s language and terminology leans heavily into its real-world analogue. If you don&rsquo;t know what a VCR is, it&rsquo;s a box we used to hook up to TVs to watch movies before DVD players. If you don&rsquo;t know what a DVD player is, it&rsquo;s a box we used to hook up to TVs to watch movies before streaming.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">it <span style="color:#e6db74">&#34;is time to break out the sweater&#34;</span> <span style="color:#66d9ef">do</span>
-  location <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Location</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">zip_code</span>: <span style="color:#e6db74">&#34;02108&#34;</span>)
-
-  <span style="color:#66d9ef">VCR</span><span style="color:#f92672">.</span>use_cassette(<span style="color:#e6db74">&#34;temp_needs_sweater&#34;</span>) <span style="color:#66d9ef">do</span>
-    expect(location<span style="color:#f92672">.</span>sweater_weather?)<span style="color:#f92672">.</span>to be <span style="color:#66d9ef">true</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>The first time this test runs, it makes an actual HTTP request to the weather API. VCR saves the request and response information in a file called &ldquo;temp_needs_sweater.yml&rdquo;.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;is time to break out the sweater&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  location <span style="color:#f92672">=</span> <span style="color:#66d9ef">Sweathr</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Location</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">zip_code</span>: <span style="color:#e6db74">&#34;02108&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">VCR</span><span style="color:#f92672">.</span>use_cassette(<span style="color:#e6db74">&#34;temp_needs_sweater&#34;</span>) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    expect(location<span style="color:#f92672">.</span>sweater_weather?)<span style="color:#f92672">.</span>to be <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The first time this test runs, it makes an actual HTTP request to the weather API. VCR saves the request and response information in a file called &ldquo;temp_needs_sweater.yml&rdquo;.</p>
 <p>The next time this test runs, VCR uses the request and response from that YAML file. No HTTP requests.</p>
 <p>This fixture is an absolutely true representation of an interaction with the dependency. It&rsquo;s true as of the moment in time it generates the fixture. Generating the fixture in a test and running the code in production should react the same.</p>
 <p>Unfortunately, the time we generated that fixture quickly turns into the past. To ensure that correctness, we must update the fixture. Recording new fixtures lets us validate the continued correctness of our test. This is in contrast with the stub or the fake. Even though we <em>can</em> update them, we still need to take the action to refresh these fixtures.</p>

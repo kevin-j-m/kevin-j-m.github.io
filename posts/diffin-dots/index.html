@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Diffin&#39; Dots"/>
 <meta name="twitter:description" content="A comparison of ways to, well, compare, different objects in git."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -171,34 +171,34 @@ functional changes and were expecting to use this comparison as proof that we
 didn&rsquo;t accidentally drop a commit or do something terrible on accident.</p>
 <p>We then looked to compare the branches locally. When we did that, we saw no
 diff.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">⇒ diff-test|reorder git diff master
-
-<span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
-</code></pre></div><p>Did we find a bug in Github? Did our re-ordering work? At this point, we had no
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>⇒ diff-test|reorder git diff master
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>Did we find a bug in Github? Did our re-ordering work? At this point, we had no
 idea.</p>
 <h2 id="read-the-recipe">Read The Recipe <a href="#read-the-recipe">🔗</a></h2>
 <p>We dug into the documentation for <code>diff</code>, a tool I use frequently,
 but don&rsquo;t spend much time considering how it works.</p>
 <p>Let&rsquo;s read some of the help on how to use the diff tool:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">⇒ git diff --help
-GIT-DIFF<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>                                      Git Manual                                      GIT-DIFF<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>
-...
-       git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
-           This form is to view the changes you have in your working tree relative to the named &lt;commit&gt;.
-           You can use HEAD to compare it with the latest commit, or a branch name to compare with the tip
-           of a different branch.
-
-       git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt; &lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
-           This is to view the changes between two arbitrary &lt;commit&gt;.
-
-       git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt;..&lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
-           This is synonymous to the previous form. If &lt;commit&gt; on one side is omitted, it will have the
-           same effect as using HEAD instead.
-
-       git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt;...&lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
-           This form is to view the changes on the branch containing and up to the second &lt;commit&gt;, starting
-           at a common ancestor of both &lt;commit&gt;.
-</code></pre></div><p>Almost exclusively I&rsquo;ve used diff in the form of <code>git diff other-ref</code>. And
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>⇒ git diff --help
+</span></span><span style="display:flex;"><span>GIT-DIFF<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>                                      Git Manual                                      GIT-DIFF<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>       git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>           This form is to view the changes you have in your working tree relative to the named &lt;commit&gt;.
+</span></span><span style="display:flex;"><span>           You can use HEAD to compare it with the latest commit, or a branch name to compare with the tip
+</span></span><span style="display:flex;"><span>           of a different branch.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt; &lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>           This is to view the changes between two arbitrary &lt;commit&gt;.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt;..&lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>           This is synonymous to the previous form. If &lt;commit&gt; on one side is omitted, it will have the
+</span></span><span style="display:flex;"><span>           same effect as using HEAD instead.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt;...&lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>           This form is to view the changes on the branch containing and up to the second &lt;commit&gt;, starting
+</span></span><span style="display:flex;"><span>           at a common ancestor of both &lt;commit&gt;.
+</span></span></code></pre></div><p>Almost exclusively I&rsquo;ve used diff in the form of <code>git diff other-ref</code>. And
 with that, I would see what, if any, file changes occurred between those two
 branches or commits. This is the two-dot comparison. However, Github uses the
 <a href="https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-comparing-branches-in-pull-requests#three-dot-and-two-dot-git-diff-comparisons">three-dot comparison</a>
@@ -213,86 +213,86 @@ themselves.</p>
 <p>Let&rsquo;s look at demonstrating this behavior entirely locally.</p>
 <h3 id="setup">Setup <a href="#setup">🔗</a></h3>
 <p>First, let&rsquo;s create a new repository:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">⇒ mkdir diff-test
-⇒ cd diff-test
-diff-test|⇒ git init .
-Initialized empty Git repository
-</code></pre></div><p>We&rsquo;ll start by adding a few new files, and making the first commit:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|master ⇒ echo <span style="color:#e6db74">&#34;Creamy Vanilla Ice Cream done Dippin’ Dots style&#34;</span> &gt; vanilla.txt
-diff-test|master⚡ ⇒ echo <span style="color:#e6db74">&#34;Creamy Milk Chocolate Ice Cream.  Someone pass the spoon&#34;</span> &gt; chocolate.txt
-diff-test|master⚡ ⇒ git add --all
-diff-test|master⚡ ⇒ git commit -m <span style="color:#e6db74">&#34;IFO: initial flavor offering&#34;</span>
-</code></pre></div><p>We will then add two more commits with some additional changes:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|master ⇒ echo <span style="color:#e6db74">&#34;Dippin&#39; Dots Strawberry Ice Cream is as sweet as a summer&#39;s day and so berry, berry good&#34;</span> &gt; strawberry.txt
-diff-test|master⚡ ⇒ git add --all
-diff-test|master⚡ ⇒ git commit -m <span style="color:#e6db74">&#34;Introducing strawberry&#34;</span>
-
-diff-test|master ⇒ echo <span style="color:#e6db74">&#34;Orange Flavored Ice&#34;</span> &gt; orange.txt
-diff-test|master⚡ ⇒ git add --all
-diff-test|master⚡ ⇒ git commit -m <span style="color:#e6db74">&#34;Introducing orange&#34;</span>
-</code></pre></div><h3 id="introduce-a-change">Introduce a change <a href="#introduce-a-change">🔗</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>⇒ mkdir diff-test
+</span></span><span style="display:flex;"><span>⇒ cd diff-test
+</span></span><span style="display:flex;"><span>diff-test|⇒ git init .
+</span></span><span style="display:flex;"><span>Initialized empty Git repository
+</span></span></code></pre></div><p>We&rsquo;ll start by adding a few new files, and making the first commit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>diff-test|master ⇒ echo <span style="color:#e6db74">&#34;Creamy Vanilla Ice Cream done Dippin’ Dots style&#34;</span> &gt; vanilla.txt
+</span></span><span style="display:flex;"><span>diff-test|master⚡ ⇒ echo <span style="color:#e6db74">&#34;Creamy Milk Chocolate Ice Cream.  Someone pass the spoon&#34;</span> &gt; chocolate.txt
+</span></span><span style="display:flex;"><span>diff-test|master⚡ ⇒ git add --all
+</span></span><span style="display:flex;"><span>diff-test|master⚡ ⇒ git commit -m <span style="color:#e6db74">&#34;IFO: initial flavor offering&#34;</span>
+</span></span></code></pre></div><p>We will then add two more commits with some additional changes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>diff-test|master ⇒ echo <span style="color:#e6db74">&#34;Dippin&#39; Dots Strawberry Ice Cream is as sweet as a summer&#39;s day and so berry, berry good&#34;</span> &gt; strawberry.txt
+</span></span><span style="display:flex;"><span>diff-test|master⚡ ⇒ git add --all
+</span></span><span style="display:flex;"><span>diff-test|master⚡ ⇒ git commit -m <span style="color:#e6db74">&#34;Introducing strawberry&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>diff-test|master ⇒ echo <span style="color:#e6db74">&#34;Orange Flavored Ice&#34;</span> &gt; orange.txt
+</span></span><span style="display:flex;"><span>diff-test|master⚡ ⇒ git add --all
+</span></span><span style="display:flex;"><span>diff-test|master⚡ ⇒ git commit -m <span style="color:#e6db74">&#34;Introducing orange&#34;</span>
+</span></span></code></pre></div><h3 id="introduce-a-change">Introduce a change <a href="#introduce-a-change">🔗</a></h3>
 <p>At this point, we realize that it&rsquo;s important to us that orange be introduced in
 our history before strawberry.</p>
 <p>Let&rsquo;s create a new branch to address this, and look at the current order of the
 commits:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|master ⇒ git checkout -b reorder
-Switched to a new branch <span style="color:#e6db74">&#39;reorder&#39;</span>
-diff-test|reorder ⇒ git log --oneline
-
-e378256 <span style="color:#f92672">(</span>HEAD -&gt; reorder, master<span style="color:#f92672">)</span> Introducing orange
-f455e5b Introducing strawberry
-e42566b IFO: initial flavor offering
-</code></pre></div><p>We will then perform an interactive rebase, going back two commits in history.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>diff-test|master ⇒ git checkout -b reorder
+</span></span><span style="display:flex;"><span>Switched to a new branch <span style="color:#e6db74">&#39;reorder&#39;</span>
+</span></span><span style="display:flex;"><span>diff-test|reorder ⇒ git log --oneline
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>e378256 <span style="color:#f92672">(</span>HEAD -&gt; reorder, master<span style="color:#f92672">)</span> Introducing orange
+</span></span><span style="display:flex;"><span>f455e5b Introducing strawberry
+</span></span><span style="display:flex;"><span>e42566b IFO: initial flavor offering
+</span></span></code></pre></div><p>We will then perform an interactive rebase, going back two commits in history.
 During that rebase, we will switch the order of orange and strawberry, so orange
 is first, as we need it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git rebase -i HEAD~2
-
-pick e378256 Introducing orange
-pick f455e5b Introducing strawberry
-</code></pre></div><p>After performing the rebase, here is the order of our commits:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git log --oneline
-
-5fa36f4 <span style="color:#f92672">(</span>HEAD -&gt; reorder<span style="color:#f92672">)</span> Introducing strawberry
-7a1d500 Introducing orange
-e42566b IFO: initial flavor offering
-</code></pre></div><p>Congratulations! We&rsquo;ve done what we set out to do, performing a rebase to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>diff-test|reorder ⇒ git rebase -i HEAD~2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pick e378256 Introducing orange
+</span></span><span style="display:flex;"><span>pick f455e5b Introducing strawberry
+</span></span></code></pre></div><p>After performing the rebase, here is the order of our commits:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>diff-test|reorder ⇒ git log --oneline
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>5fa36f4 <span style="color:#f92672">(</span>HEAD -&gt; reorder<span style="color:#f92672">)</span> Introducing strawberry
+</span></span><span style="display:flex;"><span>7a1d500 Introducing orange
+</span></span><span style="display:flex;"><span>e42566b IFO: initial flavor offering
+</span></span></code></pre></div><p>Congratulations! We&rsquo;ve done what we set out to do, performing a rebase to
 reorder our commits. Now let&rsquo;s compare that to our original branch to make sure
 everything looks to be as we&rsquo;d expect.</p>
 <h3 id="differences"><code>diff</code>erences <a href="#differences">🔗</a></h3>
 <p>We start by comparing this branch to the original branch:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git diff master
-
-<span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
-</code></pre></div><p>We see that there&rsquo;s no difference, which we&rsquo;re expecting and hoping for. No
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>diff-test|reorder ⇒ git diff master
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>We see that there&rsquo;s no difference, which we&rsquo;re expecting and hoping for. No
 files changed, no functionality is different; only the history has changed.</p>
 <p>If we diff using the two-dot version, we see the same result:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git diff master..reorder
-
-<span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
-</code></pre></div><p>That sounds right, because according to the documentation, the two-dot usage is
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>diff-test|reorder ⇒ git diff master..reorder
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>That sounds right, because according to the documentation, the two-dot usage is
 the same as not providing dots:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt;..&lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
-          This is synonymous to the previous form. If &lt;commit&gt; on one side is omitted, it will have the
-          same effect as using HEAD instead.
-</code></pre></div><p>Lastly, let&rsquo;s perform a three-dot diff:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff-test|reorder ⇒ git diff master...reorder
-
-diff --git a/orange.txt b/orange.txt
-new file mode <span style="color:#ae81ff">100644</span>
-index 0000000..09d8732
---- /dev/null
-+++ b/orange.txt
-@@ -0,0 +1 @@
-+Orange Flavored Ice
-diff --git a/strawberry.txt b/strawberry.txt
-new file mode <span style="color:#ae81ff">100644</span>
-index 0000000..6ab358d
---- /dev/null
-+++ b/strawberry.txt
-@@ -0,0 +1 @@
-+Dippin<span style="color:#e6db74">&#39; Dots Strawberry Ice Cream is as sweet as a summer&#39;</span>s day and so berry, berry good
-<span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
-</code></pre></div><p>Here is where we see that it looks like each of those files have been changed as
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> git diff <span style="color:#f92672">[</span>&lt;options&gt;<span style="color:#f92672">]</span> &lt;commit&gt;..&lt;commit&gt; <span style="color:#f92672">[</span>--<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>&lt;path&gt;...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>          This is synonymous to the previous form. If &lt;commit&gt; on one side is omitted, it will have the
+</span></span><span style="display:flex;"><span>          same effect as using HEAD instead.
+</span></span></code></pre></div><p>Lastly, let&rsquo;s perform a three-dot diff:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>diff-test|reorder ⇒ git diff master...reorder
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>diff --git a/orange.txt b/orange.txt
+</span></span><span style="display:flex;"><span>new file mode <span style="color:#ae81ff">100644</span>
+</span></span><span style="display:flex;"><span>index 0000000..09d8732
+</span></span><span style="display:flex;"><span>--- /dev/null
+</span></span><span style="display:flex;"><span>+++ b/orange.txt
+</span></span><span style="display:flex;"><span>@@ -0,0 +1 @@
+</span></span><span style="display:flex;"><span>+Orange Flavored Ice
+</span></span><span style="display:flex;"><span>diff --git a/strawberry.txt b/strawberry.txt
+</span></span><span style="display:flex;"><span>new file mode <span style="color:#ae81ff">100644</span>
+</span></span><span style="display:flex;"><span>index 0000000..6ab358d
+</span></span><span style="display:flex;"><span>--- /dev/null
+</span></span><span style="display:flex;"><span>+++ b/strawberry.txt
+</span></span><span style="display:flex;"><span>@@ -0,0 +1 @@
+</span></span><span style="display:flex;"><span>+Dippin<span style="color:#e6db74">&#39; Dots Strawberry Ice Cream is as sweet as a summer&#39;</span>s day and so berry, berry good
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>END<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>Here is where we see that it looks like each of those files have been changed as
 a result of this rebase. However, the files themselves <strong>haven&rsquo;t</strong> changed. What
 has is the commits themselves. Their common ancestor is the initial commit of
 the repository, so everything that happened since then shows as a difference.</p>

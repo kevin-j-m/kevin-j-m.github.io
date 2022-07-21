@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Finding an Initially Confusing Result in Rails"/>
 <meta name="twitter:description" content="Rails&#39; find_or_initialize_by method accepts an optional block, but that block is only executed when an existing record is not found by the provided attributes."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -165,35 +165,35 @@ if (!doNotTrack) {
 
     <h2 id="initial-impressions">Initial Impressions <a href="#initial-impressions">🔗</a></h2>
 <p>We run into an old friend Bob and a new friend Carol on the street. Bob recently got married and changed their last name. We&rsquo;re meeting Carol for the first time. We update our mental Rolodex of friends during this meeting.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>create(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Smith&#34;</span>)
-<span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>where(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Carol&#34;</span>)<span style="color:#f92672">.</span>count
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
-
-<span style="color:#75715e"># Chance encounter on the street</span>
-
-bob <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>friend<span style="color:#f92672">|</span>
-  friend<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jones&#34;</span>
-<span style="color:#66d9ef">end</span>
-
-carol <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Carol&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>friend<span style="color:#f92672">|</span>
-  friend<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Thompson&#34;</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>What are the values of Carol&rsquo;s and Bob&rsquo;s last names in our working memory right now during this encounter?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>create(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Smith&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>where(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Carol&#34;</span>)<span style="color:#f92672">.</span>count
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Chance encounter on the street</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bob <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>friend<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>  friend<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jones&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>carol <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Carol&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>friend<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>  friend<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Thompson&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>What are the values of Carol&rsquo;s and Bob&rsquo;s last names in our working memory right now during this encounter?</p>
 <h3 id="carols-last-name">Carol&rsquo;s Last Name <a href="#carols-last-name">🔗</a></h3>
 <p>Carol&rsquo;s last name is Thompson. We have no other friends named Carol, so we create a new object and in the block, set their last name to Thompson.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">carol<span style="color:#f92672">.</span>last_name
-<span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;Thompson&#34;</span>
-</code></pre></div><h3 id="bobs-last-name">Bob&rsquo;s Last Name <a href="#bobs-last-name">🔗</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>carol<span style="color:#f92672">.</span>last_name
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;Thompson&#34;</span>
+</span></span></code></pre></div><h3 id="bobs-last-name">Bob&rsquo;s Last Name <a href="#bobs-last-name">🔗</a></h3>
 <p>Bob&rsquo;s last name is <em>still</em> &ldquo;Smith&rdquo;, the value it&rsquo;s persisted in our database as.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">bob<span style="color:#f92672">.</span>last_name
-<span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;Smith&#34;</span>
-</code></pre></div><p>Even though in our block, we set their last name to Jones, it didn&rsquo;t take affect. It seems we forgot our friend&rsquo;s new last name! This could lead to an embarrassing situation later on in the conversation. What happened?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>bob<span style="color:#f92672">.</span>last_name
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;Smith&#34;</span>
+</span></span></code></pre></div><p>Even though in our block, we set their last name to Jones, it didn&rsquo;t take affect. It seems we forgot our friend&rsquo;s new last name! This could lead to an embarrassing situation later on in the conversation. What happened?</p>
 <h2 id="finding-the-source-of-the-confusion">Finding The Source of the Confusion <a href="#finding-the-source-of-the-confusion">🔗</a></h2>
-<p>Thanks to Rails' <a href="https://api.rubyonrails.org/v7.0.2/classes/ActiveRecord/Relation.html#method-i-find_or_initialize_by">documentation</a>, we discover the <code>find_or_initialize_by</code> method is in <code>ActiveRecord::Relation</code>. From there, we can look at the <a href="https://github.com/rails/rails/blob/de53ba56cab69fb9707785a397a59ac4aaee9d6f/activerecord/lib/active_record/relation.rb#L226">source code</a> of the method:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_or_initialize_by</span>(attributes, <span style="color:#f92672">&amp;</span>block)
-  find_by(attributes) <span style="color:#f92672">||</span> <span style="color:#66d9ef">new</span>(attributes, <span style="color:#f92672">&amp;</span>block)
-<span style="color:#66d9ef">end</span>
-</code></pre></div><h2 id="attributing-the-difference">Attributing The Difference <a href="#attributing-the-difference">🔗</a></h2>
+<p>Thanks to Rails&rsquo; <a href="https://api.rubyonrails.org/v7.0.2/classes/ActiveRecord/Relation.html#method-i-find_or_initialize_by">documentation</a>, we discover the <code>find_or_initialize_by</code> method is in <code>ActiveRecord::Relation</code>. From there, we can look at the <a href="https://github.com/rails/rails/blob/de53ba56cab69fb9707785a397a59ac4aaee9d6f/activerecord/lib/active_record/relation.rb#L226">source code</a> of the method:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_or_initialize_by</span>(attributes, <span style="color:#f92672">&amp;</span>block)
+</span></span><span style="display:flex;"><span>  find_by(attributes) <span style="color:#f92672">||</span> <span style="color:#66d9ef">new</span>(attributes, <span style="color:#f92672">&amp;</span>block)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="attributing-the-difference">Attributing The Difference <a href="#attributing-the-difference">🔗</a></h2>
 <p>If we find an existing record by the attributes provided, then we return that record. If not, <code>find_by</code> returns <code>nil</code> and we visit the right-hand side of the expression. That will create a new record with the attributes and <a href="https://kevinjmurphy.com/posts/activerecord-new-block/">pass the block</a> to <code>new</code>. Notice that the block is not executed at all when <code>find_by</code> returns a record.</p>
 <h2 id="mistakenly-blocking-out-our-friends-new-name">Mistakenly Blocking Out Our Friend&rsquo;s New Name <a href="#mistakenly-blocking-out-our-friends-new-name">🔗</a></h2>
 <p>That explains why Bob&rsquo;s last name isn&rsquo;t updated in our memory. We documented the change, but it never took effect. <code>find_or_initialize_by</code> didn&rsquo;t use the block. The saved representation for Bob returned from the method without executing the block.</p>
@@ -202,27 +202,27 @@ carol <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</s
 <p>With this information, let&rsquo;s consider when and how we want to evaluate the code in the block.</p>
 <h3 id="update-neither-found-nor-new-records">Update Neither Found Nor New Records <a href="#update-neither-found-nor-new-records">🔗</a></h3>
 <p>Passing a block to <code>find_or_initialize_by</code> is <em>optional</em>. When the criteria we&rsquo;re using to find a record is all we want our new record to have, there&rsquo;s no need to supply the block.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">bob <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>)
-</code></pre></div><p>Our goal right now is to change Bob&rsquo;s last name. This alone does not get us there.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>bob <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>)
+</span></span></code></pre></div><p>Our goal right now is to change Bob&rsquo;s last name. This alone does not get us there.</p>
 <h3 id="only-update-new-records">Only Update New Records <a href="#only-update-new-records">🔗</a></h3>
 <p>This is what our initial implementation is doing. As a reminder, we have:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">bob <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>friend<span style="color:#f92672">|</span>
-  friend<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jones&#34;</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>We’re searching for our friend named “Bob”. When we find one, we get our friend back from the database. When we don&rsquo;t, we instantiate a new friend and also set their last name as “Jones”.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>bob <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>friend<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>  friend<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jones&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We’re searching for our friend named “Bob”. When we find one, we get our friend back from the database. When we don&rsquo;t, we instantiate a new friend and also set their last name as “Jones”.</p>
 <p>That may be confusing to yourself and others reading this code in the future. It may not be clear when the block executes. As an alternative, we could choose to explicitly call that out. A friend that’s not persisted will respond to <code>new_record?</code> with <code>true</code>, and we can use that to only update their last name when they’re new.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">bob <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>)
-
-<span style="color:#66d9ef">if</span> bob<span style="color:#f92672">.</span>new_record?
-  bob<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jones&#34;</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>The block allows us to interact with new records beyond setting the attributes to identify the record. Block or not though, this isn’t the end result we want <strong>here</strong> in this example.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>bob <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> bob<span style="color:#f92672">.</span>new_record?
+</span></span><span style="display:flex;"><span>  bob<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jones&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The block allows us to interact with new records beyond setting the attributes to identify the record. Block or not though, this isn’t the end result we want <strong>here</strong> in this example.</p>
 <h2 id="update-both-found-and-new-records">Update Both Found and New Records <a href="#update-both-found-and-new-records">🔗</a></h2>
 <p>This is the functionality we desire in this particular case. We don&rsquo;t want to find a friend named &ldquo;Bob Jones&rdquo;. We won&rsquo;t find one. We know Bob&rsquo;s last name changed. But if we do have a friend Bob stored in our database, we want to update their last name.</p>
 <p>We can use <code>find_or_initialize_by</code> so that we have a friend instance, whether we have one stored or not. From there, we can use what we&rsquo;ve learned in the prior sections. We&rsquo;ll avoid passing the method a block - and we&rsquo;ll unconditionally change the returned value to set the last name.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">bob <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>)
-bob<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jones&#34;</span>
-</code></pre></div><p>With this change, we make sure to commit our friend’s new last name to memory. Whether they existed in our system before or not, their last name is now &ldquo;Jones&rdquo;.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>bob <span style="color:#f92672">=</span> <span style="color:#66d9ef">Friend</span><span style="color:#f92672">.</span>find_or_initialize_by(<span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>)
+</span></span><span style="display:flex;"><span>bob<span style="color:#f92672">.</span>last_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Jones&#34;</span>
+</span></span></code></pre></div><p>With this change, we make sure to commit our friend’s new last name to memory. Whether they existed in our system before or not, their last name is now &ldquo;Jones&rdquo;.</p>
 <h2 id="finding-the-initial-inspiration">Finding The Initial Inspiration <a href="#finding-the-initial-inspiration">🔗</a></h2>
 <p>Thanks to Ben Drozdoff for the conversation that led to this post.</p>
 <p>Thanks to Matthew Draper for the suggestion to augment this with a solutions-based conclusion, depending on when you expect the code in the block to execute.</p>

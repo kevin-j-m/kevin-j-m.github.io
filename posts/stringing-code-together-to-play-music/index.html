@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Stringing Code Together to Play Music"/>
 <meta name="twitter:description" content="In a previous post, we built an amplifier. Now, we&#39;ll learn to play the guitar with ruby code."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -188,23 +188,23 @@ that strings can break, and attempting to play broken strings won&rsquo;t work. 
 can look at the <a href="https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/instruments/guitar/string.rb#L20-L28">full implementation</a>
 to see how that works.</p>
 <p>Plucking an individual string creates a new sound.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">String</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pluck</span>(<span style="color:#e6db74">fret</span>:)
-    <span style="color:#f92672">...</span>
-    play_note(fret)
-  <span style="color:#66d9ef">end</span>
-
-  <span style="color:#66d9ef">private</span>
-
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play_note</span>(fret)
-    <span style="color:#66d9ef">StringSound</span><span style="color:#f92672">.</span>new(
-      <span style="color:#e6db74">string_number</span>: @number,
-      <span style="color:#e6db74">tuning_note</span>: tuning_note,
-      <span style="color:#e6db74">fret_number</span>: fret,
-    )
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>The <code>@number</code> variable is which string on the guitar it is, with index 0 being
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">String</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pluck</span>(<span style="color:#e6db74">fret</span>:)
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>    play_note(fret)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">play_note</span>(fret)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">StringSound</span><span style="color:#f92672">.</span>new(
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">string_number</span>: @number,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">tuning_note</span>: tuning_note,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">fret_number</span>: fret,
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The <code>@number</code> variable is which string on the guitar it is, with index 0 being
 the low E, and index 5 being the high E, in standard tuning. The <code>tuning_note</code>
 is what note that string is tuned to, because any string <strong>can</strong> be tuned to any
 note. Again, for simplicity here, we&rsquo;ll assume standard tuning (EADGBE).</p>
@@ -213,35 +213,35 @@ Sonic Pi. All notes in Sonic Pi are represented with a <a href="https://sonic-pi
 and we can also use &ldquo;traditional&rdquo; note names, passed to it as a symbol. We can
 use that to figure out the note our string would play if you plucked it without
 pressing down on a fret.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StringSound</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">playable_note_root</span>
-    playable_note_key<span style="color:#f92672">.</span>dig(@string_number, @tuning_note)
-  <span style="color:#66d9ef">end</span>
-
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">playable_note_key</span>
-    {
-      <span style="color:#ae81ff">0</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">e</span>: <span style="color:#e6db74">:e2</span> },
-      <span style="color:#ae81ff">1</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">a</span>: <span style="color:#e6db74">:a2</span> },
-      <span style="color:#ae81ff">2</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">d</span>: <span style="color:#e6db74">:d3</span> },
-      <span style="color:#ae81ff">3</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">g</span>: <span style="color:#e6db74">:g3</span> },
-      <span style="color:#ae81ff">4</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">b</span>: <span style="color:#e6db74">:b3</span> },
-      <span style="color:#ae81ff">5</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">e</span>: <span style="color:#e6db74">:e4</span> },
-    }
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>The number next to the note (the <code>2</code> in <code>:e2</code> for the low E string) represents
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StringSound</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">playable_note_root</span>
+</span></span><span style="display:flex;"><span>    playable_note_key<span style="color:#f92672">.</span>dig(@string_number, @tuning_note)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">playable_note_key</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">0</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">e</span>: <span style="color:#e6db74">:e2</span> },
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">1</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">a</span>: <span style="color:#e6db74">:a2</span> },
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">2</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">d</span>: <span style="color:#e6db74">:d3</span> },
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">3</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">g</span>: <span style="color:#e6db74">:g3</span> },
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">4</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">b</span>: <span style="color:#e6db74">:b3</span> },
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">5</span> <span style="color:#f92672">=&gt;</span> { <span style="color:#e6db74">e</span>: <span style="color:#e6db74">:e4</span> },
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The number next to the note (the <code>2</code> in <code>:e2</code> for the low E string) represents
 the octave.</p>
 <p>A helpful thing here is that the note is still a number to Sonic Pi. We can add
 the fret number pressed on the string to the root note of the string and Sonic
 Pi will know what note that is.
 We&rsquo;ll construct a Sonic Pi command to send to our <a href="https://kevinjmurphy.com/posts/using-sonic-pi-to-play-music-with-ruby/">amplifier</a>
 to play that note.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StringSound</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">amp_value</span>
-    <span style="color:#e6db74">&#34;(note(:</span><span style="color:#e6db74">#{</span>playable_note_root<span style="color:#e6db74">}</span><span style="color:#e6db74">) + </span><span style="color:#e6db74">#{</span>@fret_number<span style="color:#e6db74">}</span><span style="color:#e6db74">)&#34;</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>This is all in a string (the data type, not the part of the instrument),
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StringSound</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">amp_value</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;(note(:</span><span style="color:#e6db74">#{</span>playable_note_root<span style="color:#e6db74">}</span><span style="color:#e6db74">) + </span><span style="color:#e6db74">#{</span>@fret_number<span style="color:#e6db74">}</span><span style="color:#e6db74">)&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This is all in a string (the data type, not the part of the instrument),
 because we&rsquo;re going to pass it to Sonic Pi via the
 <a href="https://github.com/Widdershin/sonic-pi-cli/">sonic-pi-cli gem</a>.
 This is going to execute the <code>note</code> method in Sonic Pi to play that single
@@ -249,38 +249,38 @@ tone.</p>
 <h2 id="plucking-a-single-string">Plucking a Single String <a href="#plucking-a-single-string">🔗</a></h2>
 <p>Our guitarist is interfacing with the guitar as a whole, which is <a href="https://kevinjmurphy.com/posts/synthesizing-composition-with-delegation/">composed</a> of
 many strings. They&rsquo;ll first place their fingers on the neck of the guitar.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FingerPlacement</span>
-  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:fret</span>
-  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:string_number</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>And pluck an individual string with that placement.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pick</span>(finger_placement, <span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">1</span>)
-    result <span style="color:#f92672">=</span> strings<span style="color:#f92672">[</span>finger_placement<span style="color:#f92672">.</span>string_number<span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: finger_placement<span style="color:#f92672">.</span>fret)
-    @amplifier<span style="color:#f92672">.</span>play(sound_output(<span style="color:#e6db74">&#34;play </span><span style="color:#e6db74">#{</span>result<span style="color:#f92672">.</span>amp_value<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">duration</span>: duration))
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Here our guitar is adding details to the command that we&rsquo;ll send to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FingerPlacement</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:fret</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:string_number</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>And pluck an individual string with that placement.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pick</span>(finger_placement, <span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> strings<span style="color:#f92672">[</span>finger_placement<span style="color:#f92672">.</span>string_number<span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: finger_placement<span style="color:#f92672">.</span>fret)
+</span></span><span style="display:flex;"><span>    @amplifier<span style="color:#f92672">.</span>play(sound_output(<span style="color:#e6db74">&#34;play </span><span style="color:#e6db74">#{</span>result<span style="color:#f92672">.</span>amp_value<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">duration</span>: duration))
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Here our guitar is adding details to the command that we&rsquo;ll send to
 Sonic Pi. We have the information about the note to play from the string, but
 now we want it to sound like a note from a guitar, and we&rsquo;ll rely on the
 guitarist to say how long to play the note for (the duration).</p>
 <p>We can do this in Sonic Pi by specifying the synthesizer to use when playing the
 note, and we&rsquo;ll choose one that sounds like a guitar.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sound_output</span>(play_operation, <span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">1</span>)
-    <span style="color:#f92672">[</span>
-      <span style="color:#e6db74">&#34;with_synth :pluck do&#34;</span>,
-      <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>play_operation<span style="color:#e6db74">}</span><span style="color:#e6db74">, release: </span><span style="color:#e6db74">#{</span>duration<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
-      <span style="color:#e6db74">&#34;end&#34;</span>,
-    <span style="color:#f92672">].</span>join(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>strip
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>If you wanted to play this directly in Sonic Pi&rsquo;s IDE, it would look more
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sound_output</span>(play_operation, <span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;with_synth :pluck do&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>play_operation<span style="color:#e6db74">}</span><span style="color:#e6db74">, release: </span><span style="color:#e6db74">#{</span>duration<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;end&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">].</span>join(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>strip
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>If you wanted to play this directly in Sonic Pi&rsquo;s IDE, it would look more
 familiar:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">with_synth <span style="color:#e6db74">:pluck</span> <span style="color:#66d9ef">do</span>
-  play note(<span style="color:#e6db74">:e2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>), <span style="color:#e6db74">release</span>: <span style="color:#ae81ff">1</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>However, we need to package this all up in a string to then send that command
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>with_synth <span style="color:#e6db74">:pluck</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  play note(<span style="color:#e6db74">:e2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>), <span style="color:#e6db74">release</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>However, we need to package this all up in a string to then send that command
 over to Sonic Pi via the sonic-pi-cli gem.</p>
 <p>Our amplifier, passed in via <a href="https://kevinjmurphy.com/posts/dependency-injection-plug-in/">dependency injection</a>,
 then takes that command and sends it to Sonic Pi, producing a sound!</p>
@@ -297,36 +297,36 @@ that case in this explanation. You can view the <a href="https://github.com/kevi
 implementation</a>
 to see how that&rsquo;s handled.</p>
 <p>We first need to know which notes we should play:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">strum</span>(chord, <span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">1</span>)
-    notes <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
-      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>first_fret),
-      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>second_fret),
-      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">2</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>third_fret),
-      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">3</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>fourth_fret),
-      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">4</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>fifth_fret),
-      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>sixth_fret),
-    <span style="color:#f92672">].</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:amp_value</span>)
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>We&rsquo;ll then take all of those notes and pass them to our amplifier, using Sonic
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">strum</span>(chord, <span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    notes <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>first_fret),
+</span></span><span style="display:flex;"><span>      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>second_fret),
+</span></span><span style="display:flex;"><span>      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">2</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>third_fret),
+</span></span><span style="display:flex;"><span>      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">3</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>fourth_fret),
+</span></span><span style="display:flex;"><span>      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">4</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>fifth_fret),
+</span></span><span style="display:flex;"><span>      strings<span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: chord<span style="color:#f92672">.</span>sixth_fret),
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">].</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:amp_value</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We&rsquo;ll then take all of those notes and pass them to our amplifier, using Sonic
 Pi&rsquo;s <code>play_pattern_timed</code> <a href="https://github.com/hashbangstudio/Sonic-Pi-Examples/blob/master/10-play-pattern-timed.rb">method</a>.
 This also allows us to define a time between each note, so we can place a small
 amount of time in between each to simulate the time it would take your hand to
 complete a downstroke across all the strings.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">strum</span>(chord, <span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">1</span>)
-    notes <span style="color:#f92672">=</span> <span style="color:#f92672">[...].</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:amp_value</span>)
-
-    @amplifier<span style="color:#f92672">.</span>play(
-      sound_output(
-        <span style="color:#e6db74">&#34;play_pattern_timed [</span><span style="color:#e6db74">#{</span>pattern_notes<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#34;, &#34;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">], 0.05&#34;</span>,
-        <span style="color:#e6db74">duration</span>: duration,
-      )
-    )
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>The 0.05 is our amount of time it&rsquo;ll take to pluck from one string to the next
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">strum</span>(chord, <span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    notes <span style="color:#f92672">=</span> <span style="color:#f92672">[...].</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:amp_value</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @amplifier<span style="color:#f92672">.</span>play(
+</span></span><span style="display:flex;"><span>      sound_output(
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;play_pattern_timed [</span><span style="color:#e6db74">#{</span>pattern_notes<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#34;, &#34;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">], 0.05&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">duration</span>: duration,
+</span></span><span style="display:flex;"><span>      )
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The 0.05 is our amount of time it&rsquo;ll take to pluck from one string to the next
 when playing a chord.</p>
 <h2 id="rock-on">Rock On <a href="#rock-on">🔗</a></h2>
 <p>Combining a few key software design principles, we were able to create a

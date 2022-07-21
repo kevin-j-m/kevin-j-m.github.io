@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Temporary State in Tests: Bloc(k) Party"/>
 <meta name="twitter:description" content="Tests will sometimes require us to bend the truth and modify the state of the world in order to have repeatable, consistent results and feedback. Learn how to build your own method using a block to temporarily change what&#39;s true in an application with this article."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -174,10 +174,10 @@ with that is I don&rsquo;t really like working on Sundays.</p>
 notifications. Rather than waiting until Sunday to run my tests, I can trick my
 test into thinking it&rsquo;s Sunday. Rails has built-in <a href="https://api.rubyonrails.org/v5.2.6/classes/ActiveSupport/Testing/TimeHelpers.html">helpers</a>
 we can use to simulate that.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">travel_to <span style="color:#66d9ef">Time</span><span style="color:#f92672">.</span>zone<span style="color:#f92672">.</span>local(<span style="color:#ae81ff">2021</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">34</span>)
-notifier <span style="color:#f92672">=</span> <span style="color:#66d9ef">Notifier</span><span style="color:#f92672">.</span>new
-expect(notifier<span style="color:#f92672">.</span>send_notification?)<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">true</span>
-</code></pre></div><p>When we do this, we want to ensure that the results are <em>temporary</em>. Other
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>travel_to <span style="color:#66d9ef">Time</span><span style="color:#f92672">.</span>zone<span style="color:#f92672">.</span>local(<span style="color:#ae81ff">2021</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">34</span>)
+</span></span><span style="display:flex;"><span>notifier <span style="color:#f92672">=</span> <span style="color:#66d9ef">Notifier</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>expect(notifier<span style="color:#f92672">.</span>send_notification?)<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><p>When we do this, we want to ensure that the results are <em>temporary</em>. Other
 tests, or even areas within a given test, shouldn&rsquo;t be affected by this state
 change. It should still be whatever day the tests are <strong>really</strong> run otherwise.</p>
 <p>Now, in the case of these helpers from Rails, according to the documentation:</p>
@@ -188,15 +188,15 @@ change. It should still be whatever day the tests are <strong>really</strong> ru
 documentation (nor have encyclopedic knowledge of it). Additionally, we may only
 want part of the test to think it&rsquo;s Sunday. In order to isolate this change, we
 can limit its impact to be within a block.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">notifier <span style="color:#f92672">=</span> <span style="color:#66d9ef">Notifier</span><span style="color:#f92672">.</span>new
-travel_to <span style="color:#66d9ef">Time</span><span style="color:#f92672">.</span>zone<span style="color:#f92672">.</span>local(<span style="color:#ae81ff">2021</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">34</span>) <span style="color:#66d9ef">do</span>
-  expect(notifier<span style="color:#f92672">.</span>send_notification?)<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">true</span>
-<span style="color:#66d9ef">end</span>
-
-travel_to <span style="color:#66d9ef">Time</span><span style="color:#f92672">.</span>zone<span style="color:#f92672">.</span>local(<span style="color:#ae81ff">2021</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">34</span>) <span style="color:#66d9ef">do</span>
-  expect(notifier<span style="color:#f92672">.</span>send_notification?)<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">false</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><h2 id="benefits-of-the-block-little-thoughtshttpsyoutubeq6cs26oex64">Benefits of the Block (<a href="https://youtu.be/q6cS26oEX64">Little Thoughts</a>) <a href="#benefits-of-the-block-little-thoughtshttpsyoutubeq6cs26oex64">🔗</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>notifier <span style="color:#f92672">=</span> <span style="color:#66d9ef">Notifier</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>travel_to <span style="color:#66d9ef">Time</span><span style="color:#f92672">.</span>zone<span style="color:#f92672">.</span>local(<span style="color:#ae81ff">2021</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">34</span>) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  expect(notifier<span style="color:#f92672">.</span>send_notification?)<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>travel_to <span style="color:#66d9ef">Time</span><span style="color:#f92672">.</span>zone<span style="color:#f92672">.</span>local(<span style="color:#ae81ff">2021</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">34</span>) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  expect(notifier<span style="color:#f92672">.</span>send_notification?)<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="benefits-of-the-block-little-thoughtshttpsyoutubeq6cs26oex64">Benefits of the Block (<a href="https://youtu.be/q6cS26oEX64">Little Thoughts</a>) <a href="#benefits-of-the-block-little-thoughtshttpsyoutubeq6cs26oex64">🔗</a></h2>
 <p>The block helps visually distinguish the scope of the change, in addition to
 ensuring that the change is limited to the code within the block. I
 find it to be more readable and clear using a block. We have temporarily
@@ -227,27 +227,27 @@ for an entire test, file, or context. It&rsquo;s a clever and succinct approach.
 <p>We&rsquo;ve discussed how to <strong>use</strong> a method that takes a block to temporarily
 change state in our application, specifically tests. Let&rsquo;s start by writing the
 code we want:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">it <span style="color:#e6db74">&#34;doesn&#39;t complain about Bullet warnings&#34;</span> <span style="color:#66d9ef">do</span>
-  disable_bullet <span style="color:#66d9ef">do</span>
-    expect(<span style="color:#66d9ef">Notification</span><span style="color:#f92672">.</span>method_that_eager_loads_associations<span style="color:#f92672">.</span>size)<span style="color:#f92672">.</span>to eq <span style="color:#ae81ff">1</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Let&rsquo;s write an implementation of <code>disable_bullet</code>. We can use <code>yield</code> to wrap
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;doesn&#39;t complain about Bullet warnings&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  disable_bullet <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    expect(<span style="color:#66d9ef">Notification</span><span style="color:#f92672">.</span>method_that_eager_loads_associations<span style="color:#f92672">.</span>size)<span style="color:#f92672">.</span>to eq <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Let&rsquo;s write an implementation of <code>disable_bullet</code>. We can use <code>yield</code> to wrap
 turning Bullet off and on again inside of <code>disable_bullet</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">disable_bullet</span>
-  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>
-  <span style="color:#66d9ef">yield</span>
-  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Calling this method turns Bullet off, runs whatever code is in the block passed
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">disable_bullet</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">yield</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Calling this method turns Bullet off, runs whatever code is in the block passed
 to it, and then turns Bullet back on after the block completes. We can make the
 block optional by calling the <code>block_given?</code> method:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">disable_bullet</span>
-  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>
-  <span style="color:#66d9ef">yield</span> <span style="color:#66d9ef">if</span> block_given?
-  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>However, we&rsquo;re going to remove that in this case because there&rsquo;s no use case for
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">disable_bullet</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">yield</span> <span style="color:#66d9ef">if</span> block_given?
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>However, we&rsquo;re going to remove that in this case because there&rsquo;s no use case for
 calling this method otherwise. We&rsquo;ll get an error without passing a block to
 <code>disable_bullet</code>, and that&rsquo;s ok.</p>
 <h2 id="why-did-i-do-this-again-i-still-rememberhttpsyoutube5r-9igwd36a">Why Did I Do This Again? (<a href="https://youtu.be/5R-9IgWD36A">I Still Remember</a>) <a href="#why-did-i-do-this-again-i-still-rememberhttpsyoutube5r-9igwd36a">🔗</a></h2>
@@ -256,20 +256,20 @@ the context of why Bullet needed to be turned off. However, when you&rsquo;re re
 it later, you may forget. And maybe someone else wrote this test and you
 don&rsquo;t know to begin with. Is it <em>reasonable</em> to have turned Bullet off? We can
 force this to be documented in the test by making an addition to our method.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">disable_bullet</span>(<span style="color:#e6db74">reason</span>:)
-  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>
-  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Callers are now required to pass in a <strong>reason</strong> why Bullet has been
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">disable_bullet</span>(<span style="color:#e6db74">reason</span>:)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">Bullet</span><span style="color:#f92672">.</span>enable <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Callers are now required to pass in a <strong>reason</strong> why Bullet has been
 turned off. It&rsquo;s not used in the method, but it helps enforce a thoughtful
 understanding of why this tool is being turned off when the method is
 called.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">it <span style="color:#e6db74">&#34;doesn&#39;t complain about Bullet warnings&#34;</span> <span style="color:#66d9ef">do</span>
-  disable_bullet(<span style="color:#e6db74">reason</span>: <span style="color:#e6db74">&#34;Trust me. But seriously, here&#39;s why...&#34;</span>) <span style="color:#66d9ef">do</span>
-    expect(<span style="color:#66d9ef">Notification</span><span style="color:#f92672">.</span>method_that_eager_loads_associations<span style="color:#f92672">.</span>size)<span style="color:#f92672">.</span>to eq <span style="color:#ae81ff">1</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>By using a block here, we have provided a way to <em>temporarily</em> change the state
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;doesn&#39;t complain about Bullet warnings&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  disable_bullet(<span style="color:#e6db74">reason</span>: <span style="color:#e6db74">&#34;Trust me. But seriously, here&#39;s why...&#34;</span>) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    expect(<span style="color:#66d9ef">Notification</span><span style="color:#f92672">.</span>method_that_eager_loads_associations<span style="color:#f92672">.</span>size)<span style="color:#f92672">.</span>to eq <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>By using a block here, we have provided a way to <em>temporarily</em> change the state
 of the world with an aesthetic that clearly denotes the scope of the change, and
 we also added a way to force users to justify their use of the method to
 themselves and others.</p>

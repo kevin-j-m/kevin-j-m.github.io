@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Buffered IO Streams In Ruby"/>
 <meta name="twitter:description" content="Ruby IO may not immediately write where you are asking it to. Here we explore where writing to a stream goes and when it may or may not be committed where you would expect it to."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -162,27 +162,27 @@ if (!doNotTrack) {
 
     <h2 id="object-permanence">Object Permanence <a href="#object-permanence">🔗</a></h2>
 <p>We have some really important information in our console.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;some really important information&#34;</span>
-<span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;some really important information&#34;</span>
-</code></pre></div><p>We want to store that information to disk, but only temporarily. We&rsquo;ll do so
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;some really important information&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;some really important information&#34;</span>
+</span></span></code></pre></div><p>We want to store that information to disk, but only temporarily. We&rsquo;ll do so
 using a <code>Tempfile</code>, which is built in to Ruby, but must be required to be used.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> require <span style="color:#e6db74">&#34;tempfile&#34;</span>
-<span style="color:#f92672">&gt;</span> file <span style="color:#f92672">=</span> <span style="color:#66d9ef">Tempfile</span><span style="color:#f92672">.</span>new
-</code></pre></div><p>This creates a new temporary file on disk, and as it&rsquo;s new, it is currently
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> require <span style="color:#e6db74">&#34;tempfile&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> file <span style="color:#f92672">=</span> <span style="color:#66d9ef">Tempfile</span><span style="color:#f92672">.</span>new
+</span></span></code></pre></div><p>This creates a new temporary file on disk, and as it&rsquo;s new, it is currently
 empty, which we&rsquo;ll check two different ways.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
-<span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>size
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
-</code></pre></div><p><strong>Finally</strong> we can write some really important information to disk, after which
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>size
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p><strong>Finally</strong> we can write some really important information to disk, after which
 we&rsquo;ll check the size again.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>write(data)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
-<span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>size
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
-</code></pre></div><p>When we <a href="https://ruby-doc.org/core-3.0.1/IO.html#method-i-write">write</a> to the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>write(data)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>size
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
+</span></span></code></pre></div><p>When we <a href="https://ruby-doc.org/core-3.0.1/IO.html#method-i-write">write</a> to the
 IO stream (in this case a file), we get the number of bytes written, 33,
 returned. After writing to the file, we asked for the size of the file with
 <code>File.size</code> and got 0. Then, we asked the file for its size and got 33. What
@@ -190,23 +190,23 @@ happened?</p>
 <h2 id="wheres-that-string">Where&rsquo;s that string? <a href="#wheres-that-string">🔗</a></h2>
 <p>Maybe the string was written to the file instance in memory before being
 committed to disk. Let&rsquo;s look at the <a href="https://ruby-doc.org/stdlib-3.0.1/libdoc/objspace/rdoc/ObjectSpace.html#method-c-memsize_of">size</a> of our objects.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> require <span style="color:#e6db74">&#34;objspace&#34;</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">ObjectSpace</span><span style="color:#f92672">.</span>memsize_of(data)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">40</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">ObjectSpace</span><span style="color:#f92672">.</span>memsize_of(file)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">80</span>
-</code></pre></div><p>Now, <code>memsize_of</code> is a hint/guess - and the docs are clear about that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> require <span style="color:#e6db74">&#34;objspace&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">ObjectSpace</span><span style="color:#f92672">.</span>memsize_of(data)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">40</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">ObjectSpace</span><span style="color:#f92672">.</span>memsize_of(file)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">80</span>
+</span></span></code></pre></div><p>Now, <code>memsize_of</code> is a hint/guess - and the docs are clear about that:</p>
 <blockquote>
 <p>Note that the return size is incomplete. You need to deal with this information as only a HINT.</p>
 </blockquote>
 <p>That&rsquo;ll work for us; we&rsquo;ll just use it to see if it changed at all.</p>
 <p>Let&rsquo;s try to write again, now that we&rsquo;ve seen the file is currently 80 bytes in
 memory.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>write(data)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">ObjectSpace</span><span style="color:#f92672">.</span>memsize_of(file)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">80</span>
-</code></pre></div><p>The size of the <code>file</code> object itself didn&rsquo;t change, so I guess it&rsquo;s not hiding
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>write(data)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">ObjectSpace</span><span style="color:#f92672">.</span>memsize_of(file)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">80</span>
+</span></span></code></pre></div><p>The size of the <code>file</code> object itself didn&rsquo;t change, so I guess it&rsquo;s not hiding
 in there.</p>
 <p>As we saw previously, passing the path to <code>File.size</code> doesn&rsquo;t show the
 newly-written bytes being written to the file, but asking the <code>file</code> instance
@@ -214,13 +214,13 @@ itself for its <code>size</code> does.</p>
 <p>Also, after asking for <code>file.size</code>, <code>File.size(file.path)</code> <strong>does</strong> have the
 size including the newly-written bytes. So they do <em>eventually</em> agree on the
 file&rsquo;s size.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
-<span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>size
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">66</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">66</span>
-</code></pre></div><h2 id="sizing-up-the-difference">Sizing Up The Difference <a href="#sizing-up-the-difference">🔗</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>size
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">66</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">66</span>
+</span></span></code></pre></div><h2 id="sizing-up-the-difference">Sizing Up The Difference <a href="#sizing-up-the-difference">🔗</a></h2>
 <p>Calling <code>size</code> on the file instance has a <a href="https://ruby-doc.org/stdlib-3.0.1/libdoc/tempfile/rdoc/Tempfile.html#method-i-size">documented</a> side effect.</p>
 <blockquote>
 <p>As a side effect, the IO buffer is flushed before determining the size.</p>
@@ -232,43 +232,43 @@ its contents to the operating system.</p>
 checking the size of the file doesn&rsquo;t change, and explicitly flushing the buffer.</p>
 <p>After flushing the buffer, the size of the file <em>does</em> change by the number of
 bytes written.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">66</span>
-<span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>write(data)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">66</span>
-<span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>flush
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">99</span>
-</code></pre></div><p><a href="https://ruby-doc.org/core-3.0.1/IO.html#method-i-rewind">Rewinding</a> the file
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">66</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>write(data)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">66</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>flush
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">99</span>
+</span></span></code></pre></div><p><a href="https://ruby-doc.org/core-3.0.1/IO.html#method-i-rewind">Rewinding</a> the file
 after writing it also appears to flush the buffer.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">99</span>
-<span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>write(data)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">99</span>
-<span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>rewind
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">132</span>
-</code></pre></div><h2 id="no-buffering">No Buffering <a href="#no-buffering">🔗</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">99</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>write(data)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">33</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">99</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> file<span style="color:#f92672">.</span>rewind
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">132</span>
+</span></span></code></pre></div><h2 id="no-buffering">No Buffering <a href="#no-buffering">🔗</a></h2>
 <p>We can bypass Ruby&rsquo;s IO buffer by setting the stream&rsquo;s <a href="https://ruby-doc.org/core-3.0.1/IO.html#method-i-sync">sync mode</a>.
 By default, this is set to buffer; however, setting it to true will immediately
 flush the stream contents to the operating system.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> new_file <span style="color:#f92672">=</span> <span style="color:#66d9ef">Tempfile</span><span style="color:#f92672">.</span>new
-<span style="color:#f92672">&gt;</span> new_file<span style="color:#f92672">.</span>sync
-<span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">false</span>
-<span style="color:#f92672">&gt;</span> new_file<span style="color:#f92672">.</span>sync <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
-<span style="color:#f92672">&gt;</span> streaming <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;no buffering&#34;</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(new_file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
-<span style="color:#f92672">&gt;</span> new_file<span style="color:#f92672">.</span>write(streaming)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">12</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(new_file<span style="color:#f92672">.</span>path)
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">12</span>
-</code></pre></div><p><code>File.size</code> is recognizing the bytes in the file without needing to flush the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> new_file <span style="color:#f92672">=</span> <span style="color:#66d9ef">Tempfile</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> new_file<span style="color:#f92672">.</span>sync
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> new_file<span style="color:#f92672">.</span>sync <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> streaming <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;no buffering&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(new_file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> new_file<span style="color:#f92672">.</span>write(streaming)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">12</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>size(new_file<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">12</span>
+</span></span></code></pre></div><p><code>File.size</code> is recognizing the bytes in the file without needing to flush the
 buffer, either directly or via a method that does so as a side effect. The sync
 mode is pushing whatever we write directly to disk (at least, through the
 operating system).</p>

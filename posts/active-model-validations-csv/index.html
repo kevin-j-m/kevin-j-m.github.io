@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Validate CSV Input With ActiveModel::Validations"/>
 <meta name="twitter:description" content="Data input processes may be subject to different business rules than the data it ultimately correlates to in your system. You can still use familiar tools to apply those constraints and validations that only apply in this one case. Learn how to improve the robustness of CSV file ingestion using ActiveModel::Validations in this article."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -174,16 +174,16 @@ dates.</p>
 <p>We want a repeatable process, so rather than updating these by hand, let&rsquo;s use
 Ruby&rsquo;s <a href="https://ruby-doc.org/stdlib-3.0.1/libdoc/csv/rdoc/CSV.html">CSV class</a>
 to parse this data.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">CSV</span><span style="color:#f92672">.</span>parse(csv_text, <span style="color:#e6db74">headers</span>: <span style="color:#66d9ef">true</span>)<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>row<span style="color:#f92672">|</span>
-  book <span style="color:#f92672">=</span> <span style="color:#66d9ef">Book</span><span style="color:#f92672">.</span>find_by(<span style="color:#e6db74">isbn</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;ISBN&#34;</span><span style="color:#f92672">]</span>)
-  book<span style="color:#f92672">.</span>update(<span style="color:#e6db74">publication_date</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Pub Date&#34;</span><span style="color:#f92672">]</span>)
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Four lines and we have a functionally complete parser that updates our system
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">CSV</span><span style="color:#f92672">.</span>parse(csv_text, <span style="color:#e6db74">headers</span>: <span style="color:#66d9ef">true</span>)<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>row<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>  book <span style="color:#f92672">=</span> <span style="color:#66d9ef">Book</span><span style="color:#f92672">.</span>find_by(<span style="color:#e6db74">isbn</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;ISBN&#34;</span><span style="color:#f92672">]</span>)
+</span></span><span style="display:flex;"><span>  book<span style="color:#f92672">.</span>update(<span style="color:#e6db74">publication_date</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Pub Date&#34;</span><span style="color:#f92672">]</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Four lines and we have a functionally complete parser that updates our system
 how we expect. That all seems great. Until, that is, we actually run it.</p>
 <h2 id="book-checked-out">Book Checked Out <a href="#book-checked-out">🔗</a></h2>
 <p>We execute our parser on the first data file we receive, and it quickly stops
 with the following error:</p>
-<pre tabindex="0"><code>NoMethodError: undefined method `update' for nil:NilClass
+<pre tabindex="0"><code>NoMethodError: undefined method `update&#39; for nil:NilClass
 </code></pre><p>On inspecting the state of our database, we see that the first three books in
 the CSV file had their publication dates updated, but the rest didn&rsquo;t. Looking
 at the fourth row in the CSV, we discover that the ISBN for that row isn&rsquo;t in
@@ -192,17 +192,17 @@ our database. In that case <code>find_by</code> returns <code>nil</code>, and ca
 CSV aren&rsquo;t parsed.</p>
 <p>We can fix that! If we don&rsquo;t find the book, let&rsquo;s log the error and move on to
 the next row, without calling <code>update</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">CSV</span><span style="color:#f92672">.</span>parse(csv_text, <span style="color:#e6db74">headers</span>: <span style="color:#66d9ef">true</span>)<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>row<span style="color:#f92672">|</span>
-  book <span style="color:#f92672">=</span> <span style="color:#66d9ef">Book</span><span style="color:#f92672">.</span>find_by(<span style="color:#e6db74">isbn</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;ISBN&#34;</span><span style="color:#f92672">]</span>)
-
-  <span style="color:#66d9ef">if</span> book<span style="color:#f92672">.</span>blank?
-    <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>logger<span style="color:#f92672">.</span>error(<span style="color:#e6db74">&#34;Could not find book&#34;</span>)
-    <span style="color:#66d9ef">next</span>
-  <span style="color:#66d9ef">end</span>
-
-  book<span style="color:#f92672">.</span>update(<span style="color:#e6db74">publication_date</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Pub Date&#34;</span><span style="color:#f92672">]</span>)
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Now the entire CSV processes, our books are updated, and everyone&rsquo;s happy.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">CSV</span><span style="color:#f92672">.</span>parse(csv_text, <span style="color:#e6db74">headers</span>: <span style="color:#66d9ef">true</span>)<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>row<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>  book <span style="color:#f92672">=</span> <span style="color:#66d9ef">Book</span><span style="color:#f92672">.</span>find_by(<span style="color:#e6db74">isbn</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;ISBN&#34;</span><span style="color:#f92672">]</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> book<span style="color:#f92672">.</span>blank?
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>logger<span style="color:#f92672">.</span>error(<span style="color:#e6db74">&#34;Could not find book&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">next</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  book<span style="color:#f92672">.</span>update(<span style="color:#e6db74">publication_date</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Pub Date&#34;</span><span style="color:#f92672">]</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Now the entire CSV processes, our books are updated, and everyone&rsquo;s happy.
 Right?</p>
 <h2 id="blank-pages">Blank Pages <a href="#blank-pages">🔗</a></h2>
 <p>Days later, we discover that a book which previously had a publication date
@@ -215,22 +215,22 @@ the CSV. Any book in that file should always have a publication date - the
 purpose of this process is to provide publication dates.</p>
 <p>We can prevent this from happening in the future by ensuring that a row has a
 publication date before attempting to process it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">CSV</span><span style="color:#f92672">.</span>parse(csv_text, <span style="color:#e6db74">headers</span>: <span style="color:#66d9ef">true</span>)<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>row<span style="color:#f92672">|</span>
-  <span style="color:#66d9ef">if</span> row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Pub Date&#34;</span><span style="color:#f92672">].</span>blank?
-    <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>logger<span style="color:#f92672">.</span>error(<span style="color:#e6db74">&#34;Skipped updating book with no publication date&#34;</span>)
-    <span style="color:#66d9ef">next</span>
-  <span style="color:#66d9ef">end</span>
-
-  book <span style="color:#f92672">=</span> <span style="color:#66d9ef">Book</span><span style="color:#f92672">.</span>find_by(<span style="color:#e6db74">isbn</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;ISBN&#34;</span><span style="color:#f92672">]</span>)
-
-  <span style="color:#66d9ef">if</span> book<span style="color:#f92672">.</span>blank?
-    <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>logger<span style="color:#f92672">.</span>error(<span style="color:#e6db74">&#34;Could not find book&#34;</span>)
-    <span style="color:#66d9ef">next</span>
-  <span style="color:#66d9ef">end</span>
-
-  book<span style="color:#f92672">.</span>update(<span style="color:#e6db74">publication_date</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Pub Date&#34;</span><span style="color:#f92672">]</span>)
-<span style="color:#66d9ef">end</span>
-</code></pre></div><h2 id="losing-the-plot">Losing The Plot <a href="#losing-the-plot">🔗</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">CSV</span><span style="color:#f92672">.</span>parse(csv_text, <span style="color:#e6db74">headers</span>: <span style="color:#66d9ef">true</span>)<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>row<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Pub Date&#34;</span><span style="color:#f92672">].</span>blank?
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>logger<span style="color:#f92672">.</span>error(<span style="color:#e6db74">&#34;Skipped updating book with no publication date&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">next</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  book <span style="color:#f92672">=</span> <span style="color:#66d9ef">Book</span><span style="color:#f92672">.</span>find_by(<span style="color:#e6db74">isbn</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;ISBN&#34;</span><span style="color:#f92672">]</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> book<span style="color:#f92672">.</span>blank?
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>logger<span style="color:#f92672">.</span>error(<span style="color:#e6db74">&#34;Could not find book&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">next</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  book<span style="color:#f92672">.</span>update(<span style="color:#e6db74">publication_date</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Pub Date&#34;</span><span style="color:#f92672">]</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="losing-the-plot">Losing The Plot <a href="#losing-the-plot">🔗</a></h2>
 <p>Our &ldquo;simple&rdquo; parser is now a lot more complicated. Business rules about the
 shape, structure, and expectations of the data are now littered along
 with actions consuming the data to do things like find the book and update it
@@ -242,20 +242,20 @@ an individual row of the CSV.</p>
 <h3 id="first-act-establishing-a-new-character-class">First Act: Establishing A New Character (Class) <a href="#first-act-establishing-a-new-character-class">🔗</a></h3>
 <p>We&rsquo;ll start by making a class that takes in the needed data from the CSV row and
 finds the book associated with the ISBN.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookPublicationDateImportRow</span>
-  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:isbn</span>,
-    <span style="color:#e6db74">:publication_date</span>
-
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(<span style="color:#e6db74">isbn</span>:, <span style="color:#e6db74">publication_date</span>:)
-    @isbn <span style="color:#f92672">=</span> isbn
-    @publication_date <span style="color:#f92672">=</span> publication_date
-  <span style="color:#66d9ef">end</span>
-
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">book</span>
-    @book <span style="color:#f92672">||=</span> <span style="color:#66d9ef">Book</span><span style="color:#f92672">.</span>find_by(<span style="color:#e6db74">isbn</span>: isbn)
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Perhaps you&rsquo;ve heard of a <a href="https://thoughtbot.com/blog/activemodel-form-objects">form object</a>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookPublicationDateImportRow</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:isbn</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">:publication_date</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(<span style="color:#e6db74">isbn</span>:, <span style="color:#e6db74">publication_date</span>:)
+</span></span><span style="display:flex;"><span>    @isbn <span style="color:#f92672">=</span> isbn
+</span></span><span style="display:flex;"><span>    @publication_date <span style="color:#f92672">=</span> publication_date
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">book</span>
+</span></span><span style="display:flex;"><span>    @book <span style="color:#f92672">||=</span> <span style="color:#66d9ef">Book</span><span style="color:#f92672">.</span>find_by(<span style="color:#e6db74">isbn</span>: isbn)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Perhaps you&rsquo;ve heard of a <a href="https://thoughtbot.com/blog/activemodel-form-objects">form object</a>
 to represent data associated with a particular form on your web application. You
 can consider that&rsquo;s what we&rsquo;re doing here, except our input isn&rsquo;t from a form on
 a web page - it&rsquo;s a row from a CSV file.</p>
@@ -264,14 +264,14 @@ a web page - it&rsquo;s a row from a CSV file.</p>
 initially, we can use ActiveModel&rsquo;s <a href="https://api.rubyonrails.org/v6.1.3.1/classes/ActiveModel/Validations.html">Validations</a>
 module. That&rsquo;ll allow us access to the validation <a href="https://guides.rubyonrails.org/active_record_validations.html#validation-helpers">helpers</a>
 we&rsquo;re used to using with other Rails ActiveRecord models.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookPublicationDateImportRow</span>
-  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">ActiveModel</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Validations</span>
-
-  validates <span style="color:#e6db74">:book</span>, <span style="color:#e6db74">presence</span>: <span style="color:#66d9ef">true</span>
-  validates <span style="color:#e6db74">:publication_date</span>, <span style="color:#e6db74">presence</span>: <span style="color:#66d9ef">true</span>
-  <span style="color:#f92672">...</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>We would have caught our last problem of losing publication dates if that
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookPublicationDateImportRow</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">ActiveModel</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Validations</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  validates <span style="color:#e6db74">:book</span>, <span style="color:#e6db74">presence</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  validates <span style="color:#e6db74">:publication_date</span>, <span style="color:#e6db74">presence</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We would have caught our last problem of losing publication dates if that
 validation were on the Book model itself - and we may be tempted to look to add
 it now. However, remember - having a book with no publication date is totally
 normal for our application. It&rsquo;s only in <strong>this</strong> instance of receiving a
@@ -280,29 +280,29 @@ unacceptable to have a value for that attribute.</p>
 <h3 id="third-act-update-resolution">Third Act: Update Resolution <a href="#third-act-update-resolution">🔗</a></h3>
 <p>We&rsquo;ll also mirror ActiveRecord&rsquo;s API by adding in a <code>save</code> method that makes
 sure our instance is passing its own validations before updating the book:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookPublicationDateImportRow</span>
-  <span style="color:#f92672">...</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">save</span>
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span> <span style="color:#66d9ef">unless</span> valid?
-
-    book<span style="color:#f92672">.</span>update(<span style="color:#e6db74">publication_date</span>: @publication_date)
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><h2 id="rewriting-the-intro">Rewriting The Intro <a href="#rewriting-the-intro">🔗</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookPublicationDateImportRow</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">save</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span> <span style="color:#66d9ef">unless</span> valid?
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    book<span style="color:#f92672">.</span>update(<span style="color:#e6db74">publication_date</span>: @publication_date)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="rewriting-the-intro">Rewriting The Intro <a href="#rewriting-the-intro">🔗</a></h2>
 <p>Now that we have something that&rsquo;s responsible for managing an individual row, we
 can update our parsing code to be responsible for iterating through that CSV and
 pass off the details of how to manage that data to our new class.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">CSV</span><span style="color:#f92672">.</span>parse(csv_text, <span style="color:#e6db74">headers</span>: <span style="color:#66d9ef">true</span>)<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>row<span style="color:#f92672">|</span>
-  book_import <span style="color:#f92672">=</span> <span style="color:#66d9ef">BookPublicationDateImportRow</span><span style="color:#f92672">.</span>new(
-    <span style="color:#e6db74">isbn</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;ISBN&#34;</span><span style="color:#f92672">]</span>,
-    <span style="color:#e6db74">publication_date</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Pub Date&#34;</span><span style="color:#f92672">]</span>,
-  )
-
-  <span style="color:#66d9ef">if</span> <span style="color:#f92672">!</span>book_import<span style="color:#f92672">.</span>save
-    <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>logger<span style="color:#f92672">.</span>error(book_import<span style="color:#f92672">.</span>errors<span style="color:#f92672">.</span>full_messages<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#34;, &#34;</span>))
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><h2 id="epilogue">Epilogue <a href="#epilogue">🔗</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">CSV</span><span style="color:#f92672">.</span>parse(csv_text, <span style="color:#e6db74">headers</span>: <span style="color:#66d9ef">true</span>)<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>row<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>  book_import <span style="color:#f92672">=</span> <span style="color:#66d9ef">BookPublicationDateImportRow</span><span style="color:#f92672">.</span>new(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">isbn</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;ISBN&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">publication_date</span>: row<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Pub Date&#34;</span><span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#f92672">!</span>book_import<span style="color:#f92672">.</span>save
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>logger<span style="color:#f92672">.</span>error(book_import<span style="color:#f92672">.</span>errors<span style="color:#f92672">.</span>full_messages<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#34;, &#34;</span>))
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="epilogue">Epilogue <a href="#epilogue">🔗</a></h2>
 <p>By adding this new class, we&rsquo;ve given ourselves an extension point for
 additional logic on the row. Any data transformation, like converting the
 publication date string to a date object, can be handled here (however, for CSV

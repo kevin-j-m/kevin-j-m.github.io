@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Consistency Conundrum"/>
 <meta name="twitter:description" content="How can we approach being consistent within a codebase while also continuing to evolve?"/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -171,10 +171,10 @@ if (!doNotTrack) {
 <h2 id="consistent-starting-point">Consistent Starting Point <a href="#consistent-starting-point">🔗</a></h2>
 <p>In our <a href="https://kevinjmurphy.com/posts/to-change-or-not-to-change/">previous</a> post, we wrote the following
 code:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(base_price, promo_code)
-  <span style="color:#75715e"># calculation</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>We received this suggestion in code review:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(base_price, promo_code)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># calculation</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We received this suggestion in code review:</p>
 <blockquote>
 <p>You could consider using keyword arguments for this method.</p>
 </blockquote>
@@ -210,10 +210,10 @@ easily identified.</p>
 <p>Even then, I&rsquo;d think twice about it. Any change has a risk, and changing the
 working code purely in the name of consistency is a risk with limited upside.</p>
 <p>However, consider this change:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">desired_widgets</span>
-  <span style="color:#66d9ef">Widget</span><span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;status IN </span><span style="color:#e6db74">#{</span>user_input<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>With the following code review suggestion:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">desired_widgets</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">Widget</span><span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;status IN </span><span style="color:#e6db74">#{</span>user_input<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>With the following code review suggestion:</p>
 <blockquote>
 <p>We should modify this method to sanitize user input before sending it as part
 of a database query.</p>
@@ -226,7 +226,7 @@ our application&rsquo;s health and safety.</p>
 <p>As a side note, consider a static security analysis tool like
 <a href="https://brakemanscanner.org/">Brakeman</a> to <a href="https://github.com/TheGnarCo/gnarails/blob/fe72e5fe74455400088d89f7af2a2d9bf1899d26/templates/bin/brakeman">run automatically</a>
 as part of your <a href="https://github.com/TheGnarCo/gnarails/blob/fe72e5fe74455400088d89f7af2a2d9bf1899d26/templates/.circleci/config.yml#L49-L51">build process</a>
-so that your application is not solely relying on reviewers' eyes to catch
+so that your application is not solely relying on reviewers&rsquo; eyes to catch
 critical security implications.</p>
 <h3 id="make-the-change-here-and-going-forward">Make The Change Here, And Going Forward <a href="#make-the-change-here-and-going-forward">🔗</a></h3>
 <p>For our keyword arguments example, I suggested not to make the change

@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Dependency Injection: Plug In"/>
 <meta name="twitter:description" content="Dependency injection is a fancy term. It sounds intimidating. The purpose of this post is to explain what dependency injection is, how to use it, and why it can be beneficial."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -183,21 +183,21 @@ concert, which comes from my <a href="https://youtu.be/EyLO0EEm3BQ">RubyConf 202
 talk about Ruby&rsquo;s <a href="https://docs.ruby-lang.org/en/master/Coverage.html">Coverage</a> module.</p>
 <h2 id="sound-check">Sound Check <a href="#sound-check">🔗</a></h2>
 <p>A guitarist in a band uses an amplifier when playing a live concert.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
-    @amplifier <span style="color:#f92672">=</span> <span style="color:#66d9ef">Amplifier</span><span style="color:#f92672">.</span>new
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>When the guitar is played the sound travels through the amplifier, so the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
+</span></span><span style="display:flex;"><span>    @amplifier <span style="color:#f92672">=</span> <span style="color:#66d9ef">Amplifier</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>When the guitar is played the sound travels through the amplifier, so the
 audience can hear the notes being played.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">strum</span>(chord)
-    chord<span style="color:#f92672">.</span>phrasing<span style="color:#f92672">.</span>each <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>string_sound<span style="color:#f92672">|</span>
-      @amplifier<span style="color:#f92672">.</span>play(string_sound<span style="color:#f92672">.</span>amp_value)
-    <span style="color:#66d9ef">end</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>You can play a great show with this setup! Your guitar uses the amplifier it
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">strum</span>(chord)
+</span></span><span style="display:flex;"><span>    chord<span style="color:#f92672">.</span>phrasing<span style="color:#f92672">.</span>each <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>string_sound<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>      @amplifier<span style="color:#f92672">.</span>play(string_sound<span style="color:#f92672">.</span>amp_value)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>You can play a great show with this setup! Your guitar uses the amplifier it
 defines, and all is well. Until&hellip;</p>
 <h2 id="wall-of-sound">Wall of Sound <a href="#wall-of-sound">🔗</a></h2>
 <p>Some guitarists experiment with gear - a lot. Different amplifiers are going to
@@ -212,12 +212,12 @@ our <code>Guitar</code> class.</p>
 <h2 id="plug-and-play">Plug and Play <a href="#plug-and-play">🔗</a></h2>
 <p>We can resolve this limitation by instead passing in the amplifier that&rsquo;ll be
 used with the guitar when we make a new guitar.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(amplifier)
-    @amplifier <span style="color:#f92672">=</span> amplifier
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>With this small change, our <code>Guitar</code> can work with any amplifier that responds
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(amplifier)
+</span></span><span style="display:flex;"><span>    @amplifier <span style="color:#f92672">=</span> amplifier
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>With this small change, our <code>Guitar</code> can work with any amplifier that responds
 to the <code>play</code> method. Rather than being coupled to the <code>Amplifier</code> class, we
 require that any users of the <code>Guitar</code> class instead explicitly pass in this
 collaborating class. This is a form of dependency injection, specifically

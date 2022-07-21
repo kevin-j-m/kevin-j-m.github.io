@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Scraping Buy: Scripting for a Purchase"/>
 <meta name="twitter:description" content="I wrote a small script to scrape a website to tell me when guitars were in stock."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -169,21 +169,21 @@ if (!doNotTrack) {
 <h2 id="composing-a-number">Composing A Number <a href="#composing-a-number">🔗</a></h2>
 <p>This is about the furthest thing from an important use of my time. Still, I became a bit&hellip;overtaken by the prospect of ordering one. I&rsquo;d refresh the site many times a day, just to check in. Once, I happened to refresh the site when they were uploading their fresh inventory. I was in! But, I did not get to the model I wanted in time. It sold out before I could find it.</p>
 <p>Finally, I remembered that computers can do repetitive work for you, and that I knew how to request them to do so. I resolved to stop refreshing their product listing page. At least, I&rsquo;d stop refreshing it myself. I wrote a small script to do it for me.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;nokogiri&#39;</span>
-require <span style="color:#e6db74">&#39;open-uri&#39;</span>
-
-doc <span style="color:#f92672">=</span> <span style="color:#66d9ef">Nokogiri</span><span style="color:#f92672">::</span><span style="color:#66d9ef">HTML</span>(<span style="color:#66d9ef">URI</span><span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>root_url<span style="color:#e6db74">}</span><span style="color:#e6db74">/collections/fflp-electric-guitars&#34;</span>))
-
-guitars <span style="color:#f92672">=</span> doc<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#34;a&#34;</span>)<span style="color:#f92672">.</span>
-  map { <span style="color:#f92672">|</span>a<span style="color:#f92672">|</span> a<span style="color:#f92672">[</span><span style="color:#e6db74">:href</span><span style="color:#f92672">]</span> }<span style="color:#f92672">.</span>
-  compact<span style="color:#f92672">.</span>
-  select { <span style="color:#f92672">|</span>a<span style="color:#f92672">|</span> a<span style="color:#f92672">.</span>include?(<span style="color:#e6db74">&#34;/collections/fflp-electric-guitars/products&#34;</span>) }<span style="color:#f92672">.</span>
-  uniq<span style="color:#f92672">.</span>
-  map{ <span style="color:#f92672">|</span>a<span style="color:#f92672">|</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>root_url<span style="color:#e6db74">}#{</span>a<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> }<span style="color:#f92672">.</span>
-  sort
-
-puts guitars
-</code></pre></div><p>I wouldn&rsquo;t put this in production at work. It doesn&rsquo;t have consistent formatting! It&rsquo;s not clear exactly what this is doing! It&rsquo;s not tested. Literally. I don&rsquo;t mean it doesn&rsquo;t have automated tests. I mean I had no idea if this would work. When I wrote it, I couldn&rsquo;t test it against a page that had any products. I found one of their other products that did have inventory in stock, and built it against that. I hoped that the page for this product line would work the same, and that I didn&rsquo;t have a typo.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>require <span style="color:#e6db74">&#39;nokogiri&#39;</span>
+</span></span><span style="display:flex;"><span>require <span style="color:#e6db74">&#39;open-uri&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>doc <span style="color:#f92672">=</span> <span style="color:#66d9ef">Nokogiri</span><span style="color:#f92672">::</span><span style="color:#66d9ef">HTML</span>(<span style="color:#66d9ef">URI</span><span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>root_url<span style="color:#e6db74">}</span><span style="color:#e6db74">/collections/fflp-electric-guitars&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>guitars <span style="color:#f92672">=</span> doc<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#34;a&#34;</span>)<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  map { <span style="color:#f92672">|</span>a<span style="color:#f92672">|</span> a<span style="color:#f92672">[</span><span style="color:#e6db74">:href</span><span style="color:#f92672">]</span> }<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  compact<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  select { <span style="color:#f92672">|</span>a<span style="color:#f92672">|</span> a<span style="color:#f92672">.</span>include?(<span style="color:#e6db74">&#34;/collections/fflp-electric-guitars/products&#34;</span>) }<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  uniq<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  map{ <span style="color:#f92672">|</span>a<span style="color:#f92672">|</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>root_url<span style="color:#e6db74">}#{</span>a<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> }<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  sort
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>puts guitars
+</span></span></code></pre></div><p>I wouldn&rsquo;t put this in production at work. It doesn&rsquo;t have consistent formatting! It&rsquo;s not clear exactly what this is doing! It&rsquo;s not tested. Literally. I don&rsquo;t mean it doesn&rsquo;t have automated tests. I mean I had no idea if this would work. When I wrote it, I couldn&rsquo;t test it against a page that had any products. I found one of their other products that did have inventory in stock, and built it against that. I hoped that the page for this product line would work the same, and that I didn&rsquo;t have a typo.</p>
 <p>This doesn&rsquo;t keep track of their full inventory. It has no awareness of if there are pages of results. But, it&rsquo;s good enough to tell me that there <em>are</em> guitars for sale. That&rsquo;s a start. Hopefully. I tired of seeing the &ldquo;sold out&rdquo; page. And I wouldn&rsquo;t even know if it would work until that &ldquo;sold out&rdquo; page went away.</p>
 <h2 id="automated-playback">Automated Playback <a href="#automated-playback">🔗</a></h2>
 <p>Having the script is great, but if I have to run it myself, I might as well refresh the page in my browser. Once again, I needed to remind myself what I do for a living, and how I can ask computers to do things for me. Of course, that only happened when I came across <a href="https://simonwillison.net/2020/Oct/9/git-scraping/">this post</a>. In it, the author uses GitHub Actions to automate diff checks of websites. Now sure, their example was for trivial things like forest fires in California. But I could take the same approach for important things like guitars being in stock.</p>

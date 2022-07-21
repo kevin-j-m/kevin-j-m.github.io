@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Ruby&#39;s Got You Covered"/>
 <meta name="twitter:description" content="Ruby&#39;s coverage module includes many options that can answer different questions about your code. This article explores the modes that the module provides."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -184,21 +184,21 @@ assessed on to be <code>require</code>d or <code>load</code>ed. Finally, you can
 by calling <code>result</code>.</p>
 <p>For example, let&rsquo;s say we&rsquo;re all in a band and we&rsquo;re practicing a new
 <a href="https://youtu.be/_7Qk9MdyiOM">cover song</a>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># rehearsal.rb</span>
-our_band <span style="color:#f92672">=</span> <span style="color:#66d9ef">Band</span><span style="color:#f92672">.</span>new(name: <span style="color:#e6db74">&#34;Blogger Band&#34;</span>)
-
-song <span style="color:#f92672">=</span> <span style="color:#66d9ef">CoverMe</span><span style="color:#f92672">.</span>new
-song<span style="color:#f92672">.</span>original_artist <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Bruce Springsteen&#34;</span>
-song<span style="color:#f92672">.</span>band <span style="color:#f92672">=</span> our_band
-
-song<span style="color:#f92672">.</span>play
-</code></pre></div><p>In order to run coverage on this file, we can do the following:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#34;coverage&#34;</span>
-
-<span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start
-load <span style="color:#e6db74">&#34;rehearsal.rb&#34;</span>
-<span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>result
-</code></pre></div><h2 id="coverage-modes">Coverage Modes <a href="#coverage-modes">🔗</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#75715e"># rehearsal.rb</span>
+</span></span><span style="display:flex;"><span>our_band <span style="color:#f92672">=</span> <span style="color:#66d9ef">Band</span><span style="color:#f92672">.</span>new(name: <span style="color:#e6db74">&#34;Blogger Band&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>song <span style="color:#f92672">=</span> <span style="color:#66d9ef">CoverMe</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>song<span style="color:#f92672">.</span>original_artist <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Bruce Springsteen&#34;</span>
+</span></span><span style="display:flex;"><span>song<span style="color:#f92672">.</span>band <span style="color:#f92672">=</span> our_band
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>song<span style="color:#f92672">.</span>play
+</span></span></code></pre></div><p>In order to run coverage on this file, we can do the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>require <span style="color:#e6db74">&#34;coverage&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start
+</span></span><span style="display:flex;"><span>load <span style="color:#e6db74">&#34;rehearsal.rb&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>result
+</span></span></code></pre></div><h2 id="coverage-modes">Coverage Modes <a href="#coverage-modes">🔗</a></h2>
 <p>Ruby&rsquo;s coverage module has many modes, or different ways of assessing coverage.
 Each mode answers a different question about the code that was run under coverage:</p>
 <ul>
@@ -209,217 +209,217 @@ Each mode answers a different question about the code that was run under coverag
 </ul>
 <p>You can specify which modes to run by passing an argument to <code>Coverage.start</code>.</p>
 <h3 id="lines-coverage">Lines Coverage <a href="#lines-coverage">🔗</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(<span style="color:#e6db74">lines</span>: <span style="color:#66d9ef">true</span>)
-</code></pre></div><p>This is the mode that runs if you do not pass any arguments to <code>Coverage.start</code>.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(<span style="color:#e6db74">lines</span>: <span style="color:#66d9ef">true</span>)
+</span></span></code></pre></div><p>This is the mode that runs if you do not pass any arguments to <code>Coverage.start</code>.
 Each relevant line has a counter that is incremented each time the line is
 visited in code execution while coverage is running. Irrelevant lines, those
 that are things like empty lines or <code>end</code> statements, are ignored. At the
 conclusion, you will see how many times each line is executed.</p>
 <p>Our guitarist wants to track how often they break a string during rehearsal. A
 string is broken when the <code>@broken</code> instance variable is set.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">String</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">break_string</span>
-    @broken <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
-    <span style="color:#66d9ef">BrokenStringSound</span><span style="color:#f92672">.</span>new
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Coverage&rsquo;s result provides a hash, where the keys are all the files that were
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">String</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">break_string</span>
+</span></span><span style="display:flex;"><span>    @broken <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">BrokenStringSound</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Coverage&rsquo;s result provides a hash, where the keys are all the files that were
 run while coverage was running. Each value is a hash that has a key for the
 mode(s) of coverage run.</p>
 <p>For lines coverage, the value of that inner hash is an array showing how many
 times each line was executed. The integer at index 0 of this array shows how
 many times line 1 was run.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">{
-  <span style="color:#f92672">...</span>
-  <span style="color:#e6db74">&#34;string.rb&#34;</span> <span style="color:#f92672">=&gt;</span> {<span style="color:#e6db74">:lines</span> <span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">4</span>, <span style="color:#66d9ef">nil</span>,<span style="color:#f92672">...]</span>},
-  <span style="color:#f92672">...</span>
-}
-</code></pre></div><p>The <code>nil</code> represents an irrelevant line, in this case, an <code>end</code> statement. To
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;string.rb&#34;</span> <span style="color:#f92672">=&gt;</span> {<span style="color:#e6db74">:lines</span> <span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">4</span>, <span style="color:#66d9ef">nil</span>,<span style="color:#f92672">...]</span>},
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The <code>nil</code> represents an irrelevant line, in this case, an <code>end</code> statement. To
 answer our question, we need to see how many times line 3 of the string file was
 run, which is index 2 in the array - and we see our guitarist broke 4 strings in
 one rehearsal.</p>
 <h3 id="oneshot-lines-coverage">Oneshot Lines Coverage <a href="#oneshot-lines-coverage">🔗</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(<span style="color:#e6db74">oneshot_lines</span>: <span style="color:#66d9ef">true</span>)
-</code></pre></div><p>Similar to lines coverage, this also documents that a relevant line was executed while coverage was running. However, it’s a binary report of whether it was executed or not. It will not tell you how often. This may be sufficient in many cases, and comes with the benefit of being more performant every subsequent time a particular line of code is executed under coverage.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(<span style="color:#e6db74">oneshot_lines</span>: <span style="color:#66d9ef">true</span>)
+</span></span></code></pre></div><p>Similar to lines coverage, this also documents that a relevant line was executed while coverage was running. However, it’s a binary report of whether it was executed or not. It will not tell you how often. This may be sufficient in many cases, and comes with the benefit of being more performant every subsequent time a particular line of code is executed under coverage.</p>
 <p>The drummer has a break in the song where they play a small fill.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Drum</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">small_fill</span>
-    bang_tom
-    roll_snare(<span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">2</span>)
-
-    <span style="color:#66d9ef">if</span> extend_fill?
-      hit_crash_cymbal
-    <span style="color:#66d9ef">end</span>
-
-    strike_ride_cymbal
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>The band isn&rsquo;t sure if the drummer is hitting the crash cymbal during the fill.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Drum</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">small_fill</span>
+</span></span><span style="display:flex;"><span>    bang_tom
+</span></span><span style="display:flex;"><span>    roll_snare(<span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> extend_fill?
+</span></span><span style="display:flex;"><span>      hit_crash_cymbal
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    strike_ride_cymbal
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The band isn&rsquo;t sure if the drummer is hitting the crash cymbal during the fill.
 To find out, they can use oneshot lines coverage, which will tell if the line of
 code is executed. They don&rsquo;t care how many times; only if it ever happened.</p>
 <p>The result looks similar to lines coverage:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">{
-  <span style="color:#f92672">...</span>
-  <span style="color:#e6db74">&#34;drum.rb&#34;</span><span style="color:#f92672">=&gt;</span>{<span style="color:#e6db74">:oneshot_lines</span><span style="color:#f92672">=&gt;[</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">3</span>, <span style="color:#f92672">...]</span>},
-  <span style="color:#f92672">...</span>
-}
-</code></pre></div><p>The values in the array are different from lines coverage though. Here, each
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;drum.rb&#34;</span><span style="color:#f92672">=&gt;</span>{<span style="color:#e6db74">:oneshot_lines</span><span style="color:#f92672">=&gt;[</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">3</span>, <span style="color:#f92672">...]</span>},
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The values in the array are different from lines coverage though. Here, each
 integer in the array is a line number that was executed. Remember, oneshot lines
 won&rsquo;t tell you how many times a line was run. The order of elements does not
 matter, unlike lines coverage.</p>
 <p>In the case of our drum fill, 7 is in the array, which is the line number to hit
 the crash cymbal, so the drummer is extending the fill.</p>
 <h3 id="methods-coverage">Methods Coverage <a href="#methods-coverage">🔗</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(methods: <span style="color:#66d9ef">true</span>)
-</code></pre></div><p>Methods coverage brings the granularity of lines coverage up to a coarser grain. Rather than tracking individual lines, it’s concerned with whether a particular method is executed. It can be a 10 line method where the first line is the only line ever executed. Methods coverage will still consider that as executed the same as a 20 line method where each line is executed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(methods: <span style="color:#66d9ef">true</span>)
+</span></span></code></pre></div><p>Methods coverage brings the granularity of lines coverage up to a coarser grain. Rather than tracking individual lines, it’s concerned with whether a particular method is executed. It can be a 10 line method where the first line is the only line ever executed. Methods coverage will still consider that as executed the same as a 20 line method where each line is executed.</p>
 <p>Now that our guitarist knows they break a lot of strings, they need to thin out
 the gear they bring to gigs so they have more room in their bag for strings.
 They&rsquo;re wondering which effects pedals they&rsquo;re even using on their pedal board.
 They have a lot, and each of them responds to <code>trigger</code>, which turns them off
 or on when you press them.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ReverbPedal</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">trigger</span>
-    <span style="color:#f92672">...</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OverdrivePedal</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">trigger</span>
-    <span style="color:#f92672">...</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DelayPedal</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">trigger</span>
-    <span style="color:#f92672">...</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>We can use methods coverage to see which of those pedals are being triggered
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ReverbPedal</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">trigger</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OverdrivePedal</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">trigger</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DelayPedal</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">trigger</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We can use methods coverage to see which of those pedals are being triggered
 during rehearsal.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">{
-  <span style="color:#f92672">...</span>
-  <span style="color:#e6db74">&#34;reverb_pedal.rb&#34;</span><span style="color:#f92672">=&gt;</span>
-    {<span style="color:#e6db74">:methods</span><span style="color:#f92672">=&gt;</span>{<span style="color:#f92672">[</span><span style="color:#66d9ef">ReverbPedal</span>, <span style="color:#e6db74">:trigger</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">]=&gt;</span><span style="color:#ae81ff">2</span>}},
-  <span style="color:#e6db74">&#34;overdrive_pedal.rb&#34;</span><span style="color:#f92672">=&gt;</span>
-    {<span style="color:#e6db74">:methods</span><span style="color:#f92672">=&gt;</span>{<span style="color:#f92672">[</span><span style="color:#66d9ef">OverdrivePedal</span>, <span style="color:#e6db74">:trigger</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">]=&gt;</span><span style="color:#ae81ff">0</span>}},
-  <span style="color:#e6db74">&#34;delay_pedal.rb&#34;</span><span style="color:#f92672">=&gt;</span>
-    {<span style="color:#e6db74">:methods</span><span style="color:#f92672">=&gt;</span>{<span style="color:#f92672">[</span><span style="color:#66d9ef">DelayPedal</span>, <span style="color:#e6db74">:trigger</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">]=&gt;</span><span style="color:#ae81ff">3</span>}},
-  <span style="color:#f92672">...</span>
-}
-</code></pre></div><p>Unlike the results we&rsquo;ve seen thus far, this isn&rsquo;t only returning an array in
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;reverb_pedal.rb&#34;</span><span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">:methods</span><span style="color:#f92672">=&gt;</span>{<span style="color:#f92672">[</span><span style="color:#66d9ef">ReverbPedal</span>, <span style="color:#e6db74">:trigger</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">]=&gt;</span><span style="color:#ae81ff">2</span>}},
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;overdrive_pedal.rb&#34;</span><span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">:methods</span><span style="color:#f92672">=&gt;</span>{<span style="color:#f92672">[</span><span style="color:#66d9ef">OverdrivePedal</span>, <span style="color:#e6db74">:trigger</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">]=&gt;</span><span style="color:#ae81ff">0</span>}},
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;delay_pedal.rb&#34;</span><span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">:methods</span><span style="color:#f92672">=&gt;</span>{<span style="color:#f92672">[</span><span style="color:#66d9ef">DelayPedal</span>, <span style="color:#e6db74">:trigger</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">]=&gt;</span><span style="color:#ae81ff">3</span>}},
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Unlike the results we&rsquo;ve seen thus far, this isn&rsquo;t only returning an array in
 the value of the mode hash. Instead, there&rsquo;s another hash where the key
 identifies the method, and the value is the number of times the method is
 executed. Let&rsquo;s dig into what each of the elements identifying a method are.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">[</span><span style="color:#66d9ef">OverdrivePedal</span>, <span style="color:#e6db74">:trigger</span>,  <span style="color:#ae81ff">2</span>,  <span style="color:#ae81ff">2</span>,  <span style="color:#ae81ff">4</span>,  <span style="color:#ae81ff">5</span><span style="color:#f92672">]</span>
-<span style="color:#75715e">#       ^            ^      ^   ^   ^   ^</span>
-<span style="color:#75715e">#       |            |      |   |   |   |</span>
-<span style="color:#75715e">#     Class          |      |   |   |   |</span>
-<span style="color:#75715e">#     Name           |      |   |   |   |</span>
-<span style="color:#75715e">#                  Method   |   |   |   |</span>
-<span style="color:#75715e">#                  Name     |   |   |   |</span>
-<span style="color:#75715e">#                           |   |   |   |</span>
-<span style="color:#75715e">#                         Start |   |   |</span>
-<span style="color:#75715e">#                         Line  |   |   |</span>
-<span style="color:#75715e">#                               |   |   |</span>
-<span style="color:#75715e">#                               |   |   |</span>
-<span style="color:#75715e">#                             Start |   |</span>
-<span style="color:#75715e">#                             Column|   |</span>
-<span style="color:#75715e">#                                   |   |</span>
-<span style="color:#75715e">#                                   |   |</span>
-<span style="color:#75715e">#                                  End  |</span>
-<span style="color:#75715e">#                                  Line |</span>
-<span style="color:#75715e">#                                       |</span>
-<span style="color:#75715e">#                                       |</span>
-<span style="color:#75715e">#                                      End</span>
-<span style="color:#75715e">#                                      Column</span>
-</code></pre></div><p>To help our guitarist clean up their pedal board, we can see that the overdrive
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">[</span><span style="color:#66d9ef">OverdrivePedal</span>, <span style="color:#e6db74">:trigger</span>,  <span style="color:#ae81ff">2</span>,  <span style="color:#ae81ff">2</span>,  <span style="color:#ae81ff">4</span>,  <span style="color:#ae81ff">5</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#       ^            ^      ^   ^   ^   ^</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#       |            |      |   |   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#     Class          |      |   |   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#     Name           |      |   |   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                  Method   |   |   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                  Name     |   |   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                           |   |   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                         Start |   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                         Line  |   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                               |   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                               |   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                             Start |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                             Column|   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                                   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                                   |   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                                  End  |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                                  Line |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                                       |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                                       |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                                      End</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                                      Column</span>
+</span></span></code></pre></div><p>To help our guitarist clean up their pedal board, we can see that the overdrive
 pedal isn&rsquo;t used at all, and can be left at home next time.</p>
 <h3 id="branches-coverage">Branches Coverage <a href="#branches-coverage">🔗</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(<span style="color:#e6db74">branches</span>: <span style="color:#66d9ef">true</span>)
-</code></pre></div><p>Branches Coverage tracks execution of different conditional paths and documents how often those different paths are run. The unique benefit that this provides over lines coverage is in conditionals that execute multiple code paths in a single line, such as ternary statements. You may have a part of that conditional that’s never run or tested, but you would not know that if you’re relying on lines coverage alone.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(<span style="color:#e6db74">branches</span>: <span style="color:#66d9ef">true</span>)
+</span></span></code></pre></div><p>Branches Coverage tracks execution of different conditional paths and documents how often those different paths are run. The unique benefit that this provides over lines coverage is in conditionals that execute multiple code paths in a single line, such as ternary statements. You may have a part of that conditional that’s never run or tested, but you would not know that if you’re relying on lines coverage alone.</p>
 <p>Our singer wants to use an echo effect during the song, and has a friend setting
 the intensity as they practice.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CoverMe</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">chorus</span>(number)
-    echo_intensity <span style="color:#f92672">=</span> number<span style="color:#f92672">.</span>positive? <span style="color:#f92672">&amp;&amp;</span> number<span style="color:#f92672">.</span>even? ? <span style="color:#ae81ff">10</span> : <span style="color:#ae81ff">30</span>
-
-    <span style="color:#66d9ef">Lyric</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">line</span>: line, <span style="color:#e6db74">effect</span>: <span style="color:#e6db74">:echo</span>, <span style="color:#e6db74">effect_level</span>: echo_intensity)
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>During one run-through of the song, they&rsquo;re happy with the effect and want to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CoverMe</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">chorus</span>(number)
+</span></span><span style="display:flex;"><span>    echo_intensity <span style="color:#f92672">=</span> number<span style="color:#f92672">.</span>positive? <span style="color:#f92672">&amp;&amp;</span> number<span style="color:#f92672">.</span>even? ? <span style="color:#ae81ff">10</span> : <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Lyric</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">line</span>: line, <span style="color:#e6db74">effect</span>: <span style="color:#e6db74">:echo</span>, <span style="color:#e6db74">effect_level</span>: echo_intensity)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>During one run-through of the song, they&rsquo;re happy with the effect and want to
 check how often they used each intensity. Because this is expressed as a
 ternary, we <strong>can&rsquo;t</strong> use lines coverage. We could use it if the method were
 structured like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">chorus</span>(number)
-  echo_intensity <span style="color:#f92672">=</span> <span style="color:#66d9ef">if</span> number<span style="color:#f92672">.</span>positive? <span style="color:#f92672">&amp;&amp;</span> number<span style="color:#f92672">.</span>even?
-    <span style="color:#ae81ff">10</span>
-  <span style="color:#66d9ef">else</span>
-    <span style="color:#ae81ff">30</span>
-  <span style="color:#66d9ef">end</span>
-  <span style="color:#f92672">...</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>However, in either case, we <em>can</em> use branches coverage to see which of the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">chorus</span>(number)
+</span></span><span style="display:flex;"><span>  echo_intensity <span style="color:#f92672">=</span> <span style="color:#66d9ef">if</span> number<span style="color:#f92672">.</span>positive? <span style="color:#f92672">&amp;&amp;</span> number<span style="color:#f92672">.</span>even?
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>However, in either case, we <em>can</em> use branches coverage to see which of the
 different branches were followed.</p>
 <p>The output of branches coverage looks similar to that of methods coverage.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">{
-  <span style="color:#e6db74">&#34;cover_me.rb&#34;</span> <span style="color:#f92672">=&gt;</span> {
-    <span style="color:#e6db74">:branches</span> <span style="color:#f92672">=&gt;</span> {
-      {
-        <span style="color:#f92672">[</span><span style="color:#e6db74">:if</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">67</span><span style="color:#f92672">]</span> <span style="color:#f92672">=&gt;</span> {
-          <span style="color:#f92672">[</span><span style="color:#e6db74">:then</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">60</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">62</span><span style="color:#f92672">]</span> <span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>,
-          <span style="color:#f92672">[</span><span style="color:#e6db74">:else</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">65</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">67</span><span style="color:#f92672">]</span> <span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">2</span>,
-        }
-      }
-    }
-  }
-}
-</code></pre></div><p>The differences from methods coverage are:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;cover_me.rb&#34;</span> <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">:branches</span> <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">[</span><span style="color:#e6db74">:if</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">67</span><span style="color:#f92672">]</span> <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">[</span><span style="color:#e6db74">:then</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">60</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">62</span><span style="color:#f92672">]</span> <span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">[</span><span style="color:#e6db74">:else</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">65</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">67</span><span style="color:#f92672">]</span> <span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The differences from methods coverage are:</p>
 <ol>
 <li>Branches coverage nests each branch within its conditional, so the data
 structure is nested one level deeper than methods coverage.</li>
 <li>Branches coverage assigns a unique identifier to each conditional or branch.</li>
 </ol>
 <p>Let&rsquo;s look at what each of the elements identifying a branch are.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">
-<span style="color:#f92672">[</span><span style="color:#e6db74">:then</span>,  <span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">34</span>,  <span style="color:#ae81ff">60</span>,  <span style="color:#ae81ff">34</span>,  <span style="color:#ae81ff">62</span><span style="color:#f92672">]</span>
-<span style="color:#75715e">#   ^    ^   ^    ^    ^    ^</span>
-<span style="color:#75715e">#   |    |   |    |    |    |</span>
-<span style="color:#75715e"># Branch |   |    |    |    |</span>
-<span style="color:#75715e">#        |   |    |    |    |</span>
-<span style="color:#75715e">#        Id  |    |    |    |</span>
-<span style="color:#75715e">#            |    |    |    |</span>
-<span style="color:#75715e">#            |    |    |    |</span>
-<span style="color:#75715e">#          Start  |    |    |</span>
-<span style="color:#75715e">#          Line   |    |    |</span>
-<span style="color:#75715e">#                 |    |    |</span>
-<span style="color:#75715e">#                 |    |    |</span>
-<span style="color:#75715e">#               Start  |    |</span>
-<span style="color:#75715e">#               Column |    |</span>
-<span style="color:#75715e">#                      |    |</span>
-<span style="color:#75715e">#                      |    |</span>
-<span style="color:#75715e">#                     End   |</span>
-<span style="color:#75715e">#                     Line  |</span>
-<span style="color:#75715e">#                           |</span>
-<span style="color:#75715e">#                           |</span>
-<span style="color:#75715e">#                          End</span>
-<span style="color:#75715e">#                          Column</span>
-</code></pre></div><p>Looking at the results, the satisfactory performance had the echo intensity
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span><span style="color:#e6db74">:then</span>,  <span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">34</span>,  <span style="color:#ae81ff">60</span>,  <span style="color:#ae81ff">34</span>,  <span style="color:#ae81ff">62</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   ^    ^   ^    ^    ^    ^</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   |    |   |    |    |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Branch |   |    |    |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#        |   |    |    |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#        Id  |    |    |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#            |    |    |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#            |    |    |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#          Start  |    |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#          Line   |    |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                 |    |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                 |    |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#               Start  |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#               Column |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                      |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                      |    |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                     End   |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                     Line  |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                           |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                           |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                          End</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                          Column</span>
+</span></span></code></pre></div><p>Looking at the results, the satisfactory performance had the echo intensity
 cranked up the 30 the entire time. The <code>else</code> condition of the ternary was the
 only branch executed. Now the band knows how to set the effect for their next
 performance.</p>
 <h3 id="all-coverage-modes">All Coverage Modes <a href="#all-coverage-modes">🔗</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(<span style="color:#e6db74">:all</span>)
-</code></pre></div><p>Passing the <code>:all</code> symbol to <code>Coverage.start</code> will ask it to run every coverage
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(<span style="color:#e6db74">:all</span>)
+</span></span></code></pre></div><p>Passing the <code>:all</code> symbol to <code>Coverage.start</code> will ask it to run every coverage
 mode; however, if you inspect the output, you&rsquo;ll notice that one is missing.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#34;coverage&#34;</span>
-
-<span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(<span style="color:#e6db74">:all</span>)
-load <span style="color:#e6db74">&#34;rehearsal.rb&#34;</span>
-result <span style="color:#f92672">=</span> <span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>result
-
-result<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;guitar.rb&#34;</span><span style="color:#f92672">].</span>keys
-<span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span><span style="color:#e6db74">:lines</span>, <span style="color:#e6db74">:methods</span>, <span style="color:#e6db74">:branches</span><span style="color:#f92672">]</span>
-</code></pre></div><p>Oneshot lines is missing!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>require <span style="color:#e6db74">&#34;coverage&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>start(<span style="color:#e6db74">:all</span>)
+</span></span><span style="display:flex;"><span>load <span style="color:#e6db74">&#34;rehearsal.rb&#34;</span>
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> <span style="color:#66d9ef">Coverage</span><span style="color:#f92672">.</span>result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;guitar.rb&#34;</span><span style="color:#f92672">].</span>keys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span><span style="color:#e6db74">:lines</span>, <span style="color:#e6db74">:methods</span>, <span style="color:#e6db74">:branches</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Oneshot lines is missing!</p>
 <p>Oneshot lines and lines modes <a href="https://github.com/ruby/ruby/blob/d92f09a5eea009fa28cd046e9d0eb698e3d94c5c/ext/coverage/coverage.c#L53">cannot be run at the same time</a>,
 so lines coverage
 is run, as you can still use it to answer if a line was executed at all.</p>

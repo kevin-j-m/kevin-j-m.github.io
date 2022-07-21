@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Setter Method Return Values In Ruby"/>
 <meta name="twitter:description" content="Ruby setter methods may not return the result you expect them to. Find out what they return, and why, in this article."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -163,24 +163,24 @@ if (!doNotTrack) {
     <h2 id="can-i-take-your-order">Can I Take Your Order? <a href="#can-i-take-your-order">🔗</a></h2>
 <p>We&rsquo;re opening a brand new diner, and each customer can have their current order
 set, which will add to their list of orders.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Customer</span>
-  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:orders</span>
-
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
-    @orders <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
-  <span style="color:#66d9ef">end</span>
-
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_order</span>
-    @orders<span style="color:#f92672">.</span>last
-  <span style="color:#66d9ef">end</span>
-
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_order</span><span style="color:#f92672">=</span>(new_order)
-    @orders <span style="color:#f92672">&lt;&lt;</span> new_order
-
-    <span style="color:#e6db74">&#34;thank you for being our valued customer&#34;</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Because customer service is our top priority, we provide a message whenever
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Customer</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:orders</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
+</span></span><span style="display:flex;"><span>    @orders <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_order</span>
+</span></span><span style="display:flex;"><span>    @orders<span style="color:#f92672">.</span>last
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_order</span><span style="color:#f92672">=</span>(new_order)
+</span></span><span style="display:flex;"><span>    @orders <span style="color:#f92672">&lt;&lt;</span> new_order
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;thank you for being our valued customer&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Because customer service is our top priority, we provide a message whenever
 they place an order reminding them how lucky we feel to be serving them
 their meal.</p>
 <h2 id="negative-reviews">Negative Reviews <a href="#negative-reviews">🔗</a></h2>
@@ -192,20 +192,20 @@ message; what&rsquo;s wrong?</p>
 <h2 id="mystery-shopper">Mystery Shopper <a href="#mystery-shopper">🔗</a></h2>
 <p>In order to get to the bottom of this, we put on our fake mustache and glasses
 to go undercover at our own restaurant. What we find <strong>shocks us</strong>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> definitely_not_the_owner <span style="color:#f92672">=</span> <span style="color:#66d9ef">Customer</span><span style="color:#f92672">.</span>new
-irb(main):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> definitely_not_the_owner<span style="color:#f92672">.</span>current_order <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;pancakes&#34;</span>
-<span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;pancakes&#34;</span>
-</code></pre></div><p>That&rsquo;s not the welcoming experience we explicitly developed! We shouldn&rsquo;t be
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> definitely_not_the_owner <span style="color:#f92672">=</span> <span style="color:#66d9ef">Customer</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> definitely_not_the_owner<span style="color:#f92672">.</span>current_order <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;pancakes&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;pancakes&#34;</span>
+</span></span></code></pre></div><p>That&rsquo;s not the welcoming experience we explicitly developed! We shouldn&rsquo;t be
 barking back their order in a matter of fact way; we should be thanking them.
 Something surprising is happening here; now we need to find what it is.</p>
 <h2 id="training-manual">Training Manual <a href="#training-manual">🔗</a></h2>
 <p>Our method is explicit about what the return value should be.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_order</span><span style="color:#f92672">=</span>(new_order)
-  @orders <span style="color:#f92672">&lt;&lt;</span> new_order
-
-  <span style="color:#e6db74">&#34;thank you for being our valued customer&#34;</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>We expect the last thing evaluated in the method to be what&rsquo;s returned to the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_order</span><span style="color:#f92672">=</span>(new_order)
+</span></span><span style="display:flex;"><span>  @orders <span style="color:#f92672">&lt;&lt;</span> new_order
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;thank you for being our valued customer&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We expect the last thing evaluated in the method to be what&rsquo;s returned to the
 caller. And that&rsquo;s the case&hellip;most of the time. After consulting Ruby&rsquo;s
 <a href="https://ruby-doc.org/core-3.0.1/doc/syntax/methods_rdoc.html#label-Return+Values">documentation</a>, we find an exception:</p>
 <blockquote>
@@ -222,12 +222,12 @@ though:</p>
 </blockquote>
 <p>So, while we cannot enforce it, if callers know the right way to ask, we&rsquo;ll
 thank them.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> customer <span style="color:#f92672">=</span> <span style="color:#66d9ef">Customer</span><span style="color:#f92672">.</span>new
-irb(main):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> customer<span style="color:#f92672">.</span>current_order <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;pancakes&#34;</span>
-<span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;pancakes&#34;</span>
-irb(main):<span style="color:#ae81ff">003</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> customer<span style="color:#f92672">.</span>public_send(<span style="color:#e6db74">:current_order</span><span style="color:#f92672">=</span>, <span style="color:#e6db74">&#34;french toast&#34;</span>)
-<span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;thank you for being our valued customer&#34;</span>
-</code></pre></div><h2 id="setting-the-table-for-next-time">Setting The Table For Next Time <a href="#setting-the-table-for-next-time">🔗</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> customer <span style="color:#f92672">=</span> <span style="color:#66d9ef">Customer</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> customer<span style="color:#f92672">.</span>current_order <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;pancakes&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;pancakes&#34;</span>
+</span></span><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">003</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> customer<span style="color:#f92672">.</span>public_send(<span style="color:#e6db74">:current_order</span><span style="color:#f92672">=</span>, <span style="color:#e6db74">&#34;french toast&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;thank you for being our valued customer&#34;</span>
+</span></span></code></pre></div><h2 id="setting-the-table-for-next-time">Setting The Table For Next Time <a href="#setting-the-table-for-next-time">🔗</a></h2>
 <p>Ruby setter, or assignment, methods have a special understanding and
 expectation for what they&rsquo;ll return. This helps enforce a consistent API, but
 can lead to surprising results when writing your own setter method.</p>

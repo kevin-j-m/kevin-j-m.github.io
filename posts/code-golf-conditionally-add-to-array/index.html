@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Code Golf: Conditionally Add To An Array"/>
 <meta name="twitter:description" content="Ruby&#39;s expressiveness and vast API provides a myriad of ways to solve the same problem. This post proposes different ways to add elements to an array only if a certain condition applies."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -170,78 +170,78 @@ to settle for one that works, we&rsquo;ll dig into a variety of options.</p>
 <h2 id="teeing-up-an-option">Teeing Up An Option <a href="#teeing-up-an-option">🔗</a></h2>
 <p>We can start with an empty array, and explicitly add in any of the statuses that
 the golfer meets the conditions for.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
-  statuses <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
-
-  <span style="color:#66d9ef">if</span> under_par?
-    statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;in_contention&#34;</span>
-  <span style="color:#66d9ef">end</span>
-
-  <span style="color:#66d9ef">if</span> back_nine?
-    statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;past_the_turn&#34;</span>
-  <span style="color:#66d9ef">end</span>
-
-  statuses
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>There&rsquo;s nothing tremendously exciting here, and that&rsquo;s not a bad thing! It&rsquo;s
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
+</span></span><span style="display:flex;"><span>  statuses <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> under_par?
+</span></span><span style="display:flex;"><span>    statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;in_contention&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> back_nine?
+</span></span><span style="display:flex;"><span>    statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;past_the_turn&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  statuses
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>There&rsquo;s nothing tremendously exciting here, and that&rsquo;s not a bad thing! It&rsquo;s
 reasonably clear what this is doing.</p>
 <h2 id="tapping-it-in">Tapping It In <a href="#tapping-it-in">🔗</a></h2>
 <p>We can make the prior suggestion a little more terse by using <a href="https://docs.ruby-lang.org/en/master/Kernel.html#method-i-tap">tap</a>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
-  <span style="color:#f92672">[].</span>tap <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>statuses<span style="color:#f92672">|</span>
-    <span style="color:#66d9ef">if</span> under_par?
-      statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;in_contention&#34;</span>
-    <span style="color:#66d9ef">end</span>
-
-    <span style="color:#66d9ef">if</span> back_nine?
-      statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;past_the_turn&#34;</span>
-    <span style="color:#66d9ef">end</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>This eliminates the need for the <code>statuses</code> temporary array from the prior
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[].</span>tap <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>statuses<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> under_par?
+</span></span><span style="display:flex;"><span>      statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;in_contention&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> back_nine?
+</span></span><span style="display:flex;"><span>      statuses <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;past_the_turn&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This eliminates the need for the <code>statuses</code> temporary array from the prior
 section.</p>
 <h2 id="taking-a-compact-swing">Taking a Compact Swing <a href="#taking-a-compact-swing">🔗</a></h2>
 <p>We can also build our array to have an entry for each of the conditionals we
 have, and removing the ones that aren&rsquo;t relevant.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
-  <span style="color:#f92672">[</span>
-    under_par? ? <span style="color:#e6db74">&#34;in_contention&#34;</span> : <span style="color:#66d9ef">nil</span>,
-    back_nine? ? <span style="color:#e6db74">&#34;past_the_turn&#34;</span> : <span style="color:#66d9ef">nil</span>,
-  <span style="color:#f92672">].</span>compact
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>By using <a href="https://ruby-doc.org/core-3.0.1/Array.html#method-i-compact">compact</a>,
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>    under_par? ? <span style="color:#e6db74">&#34;in_contention&#34;</span> : <span style="color:#66d9ef">nil</span>,
+</span></span><span style="display:flex;"><span>    back_nine? ? <span style="color:#e6db74">&#34;past_the_turn&#34;</span> : <span style="color:#66d9ef">nil</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">].</span>compact
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>By using <a href="https://ruby-doc.org/core-3.0.1/Array.html#method-i-compact">compact</a>,
 we&rsquo;ll remove any <code>nil</code> values - and we&rsquo;ll take advantage of that functionality
 by explicitly adding <code>nil</code> if the golfer doesn&rsquo;t meet that condition.</p>
 <h2 id="working-on-your-backswing-takeaway">Working On Your Backswing Takeaway <a href="#working-on-your-backswing-takeaway">🔗</a></h2>
 <p>Speaking of taking things away, we can also do the opposite of the first
 approach. We&rsquo;ll start by having each status, and then <em>removing</em> the ones that
 do <strong>not</strong> meet the necessary condition.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
-  statuses <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;in_contention&#34;</span>, <span style="color:#e6db74">&#34;past_the_turn&#34;</span><span style="color:#f92672">]</span>
-
-  <span style="color:#66d9ef">unless</span> under_par?
-    statuses <span style="color:#f92672">-=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;in_contention&#34;</span><span style="color:#f92672">]</span>
-  <span style="color:#66d9ef">end</span>
-
-  <span style="color:#66d9ef">unless</span> back_nine?
-    statuses <span style="color:#f92672">-=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;past_the_turn&#34;</span><span style="color:#f92672">]</span>
-  <span style="color:#66d9ef">end</span>
-
-  statuses
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>This may be more helpful in situations where there are a lot more statuses, and
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
+</span></span><span style="display:flex;"><span>  statuses <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;in_contention&#34;</span>, <span style="color:#e6db74">&#34;past_the_turn&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">unless</span> under_par?
+</span></span><span style="display:flex;"><span>    statuses <span style="color:#f92672">-=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;in_contention&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">unless</span> back_nine?
+</span></span><span style="display:flex;"><span>    statuses <span style="color:#f92672">-=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;past_the_turn&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  statuses
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This may be more helpful in situations where there are a lot more statuses, and
 only a few of them may need to be removed for certain reasons. It may also help
 when the full list of statuses persists on its own elsewhere, but then you also
 need a subset of them in a particular case.</p>
 <h2 id="selecting-the-right-club">Selecting The Right Club <a href="#selecting-the-right-club">🔗</a></h2>
 <p>Lastly, we&rsquo;ll put together a hash keyed on the statuses where the value is the result of the conditions. We can then flex some familiarity with Ruby&rsquo;s <a href="https://ruby-doc.org/core-3.0.1/Enumerable.html">Enumerable module</a> to pick out the applicable sections of the hash, returning only the statuses.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
-  {
-    <span style="color:#e6db74">&#34;in_contention&#34;</span> <span style="color:#f92672">=&gt;</span> under_par?,
-    <span style="color:#e6db74">&#34;past_the_turn&#34;</span> <span style="color:#f92672">=&gt;</span> back_nine?,
-  }<span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>_status, condition<span style="color:#f92672">|</span> condition }<span style="color:#f92672">.</span>keys
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Similar to the prior suggestion, this may be helpful when you want to have the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">current_statuses</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;in_contention&#34;</span> <span style="color:#f92672">=&gt;</span> under_par?,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;past_the_turn&#34;</span> <span style="color:#f92672">=&gt;</span> back_nine?,
+</span></span><span style="display:flex;"><span>  }<span style="color:#f92672">.</span>select { <span style="color:#f92672">|</span>_status, condition<span style="color:#f92672">|</span> condition }<span style="color:#f92672">.</span>keys
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Similar to the prior suggestion, this may be helpful when you want to have the
 full list of statuses and their associated conditions all compiled in one place,
 but then want to peel off which are relevant for a particular golfer at this
 time.</p>

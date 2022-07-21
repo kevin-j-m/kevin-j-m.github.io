@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Synthesizing Composition With Delegation"/>
 <meta name="twitter:description" content="Explore the benefits of delegating work to collaborators in object-oriented languages."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -191,32 +191,32 @@ talk about Ruby&rsquo;s
 <h2 id="noise-reduction">Noise Reduction <a href="#noise-reduction">🔗</a></h2>
 <p>The <a href="https://en.wikipedia.org/wiki/Synthesizer">synthesizer</a> is an instrument
 capable of producing a wide array of sounds. A collection of sounds and effects are known as a patch.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Patch</span>
-  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:sound</span>
-  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:effect</span>
-  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:filter</span>
-  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:oscillator</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>You can save these patches on the synthesizer&rsquo;s memory and recall them later for
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Patch</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:sound</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:effect</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:filter</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:oscillator</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>You can save these patches on the synthesizer&rsquo;s memory and recall them later for
 easy access.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">patch <span style="color:#f92672">=</span> <span style="color:#66d9ef">Patch</span><span style="color:#f92672">.</span>new
-synth <span style="color:#f92672">=</span> <span style="color:#66d9ef">Synthesizer</span><span style="color:#f92672">.</span>new
-
-synth<span style="color:#f92672">.</span>save_patch(<span style="color:#e6db74">location</span>: <span style="color:#e6db74">:b1</span>, <span style="color:#e6db74">patch</span>: patch)
-synth<span style="color:#f92672">.</span>set_patch(patch)
-synth<span style="color:#f92672">.</span>play_key(<span style="color:#e6db74">note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">1</span>)
-</code></pre></div><h2 id="save-you-the-trouble">Save You the Trouble <a href="#save-you-the-trouble">🔗</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>patch <span style="color:#f92672">=</span> <span style="color:#66d9ef">Patch</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>synth <span style="color:#f92672">=</span> <span style="color:#66d9ef">Synthesizer</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>synth<span style="color:#f92672">.</span>save_patch(<span style="color:#e6db74">location</span>: <span style="color:#e6db74">:b1</span>, <span style="color:#e6db74">patch</span>: patch)
+</span></span><span style="display:flex;"><span>synth<span style="color:#f92672">.</span>set_patch(patch)
+</span></span><span style="display:flex;"><span>synth<span style="color:#f92672">.</span>play_key(<span style="color:#e6db74">note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">duration</span>: <span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><h2 id="save-you-the-trouble">Save You the Trouble <a href="#save-you-the-trouble">🔗</a></h2>
 <p>Much like the actual instrument is comprised of various subcomponents, our
 <code>Synthesizer</code> is made up of various classes that specialize in its area of
 expertise.</p>
 <p>For example, our synthesizer above doesn&rsquo;t know how to save a patch to its
 onboard memory. It relies on its patch memory to handle that.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Synthesizer</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">save_patch</span>(<span style="color:#e6db74">location</span>:, <span style="color:#e6db74">patch</span>:)
-    @patch_memory<span style="color:#f92672">.</span>write(<span style="color:#e6db74">location</span>: location, <span style="color:#e6db74">patch</span>: patch)
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>All the synthesizer itself knows is what <em>message</em> to send to the memory to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Synthesizer</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">save_patch</span>(<span style="color:#e6db74">location</span>:, <span style="color:#e6db74">patch</span>:)
+</span></span><span style="display:flex;"><span>    @patch_memory<span style="color:#f92672">.</span>write(<span style="color:#e6db74">location</span>: location, <span style="color:#e6db74">patch</span>: patch)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>All the synthesizer itself knows is what <em>message</em> to send to the memory to
 have it do that. The synthesizer is <strong>delegating</strong> the responsibility of storing
 these patches to the patch memory instance.</p>
 <p>Anyone playing the synthesizer does not need to be concerned with how it&rsquo;s
@@ -260,14 +260,14 @@ rest of its functionality, without needing to duplicate it across different
 classes.</p>
 <p>In this <a href="https://github.com/kevin-j-m/ruby_cover_band/blob/09e7b72b38dac09d4968afe1468eda53caaf294c/lib/ruby_cover_band/instruments/synthesizer.rb#L41-L47">example</a>,
 our synthesizer changes its memory capabilities based on the brand that it is.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize_memory</span>
-  <span style="color:#66d9ef">if</span> @brand <span style="color:#f92672">==</span> <span style="color:#e6db74">:moog</span>
-    @patch_memory <span style="color:#f92672">=</span> <span style="color:#66d9ef">MoogPatchMemory</span><span style="color:#f92672">.</span>new
-  <span style="color:#66d9ef">elsif</span> @brand <span style="color:#f92672">==</span> <span style="color:#e6db74">:nord</span>
-    @patch_memory <span style="color:#f92672">=</span> <span style="color:#66d9ef">NordPatchMemory</span><span style="color:#f92672">.</span>new
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Thanks to <a href="https://kevinjmurphy.com/posts/shedding-light-on-duck-typing/">duck typing</a>, as long as these patch
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize_memory</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> @brand <span style="color:#f92672">==</span> <span style="color:#e6db74">:moog</span>
+</span></span><span style="display:flex;"><span>    @patch_memory <span style="color:#f92672">=</span> <span style="color:#66d9ef">MoogPatchMemory</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">elsif</span> @brand <span style="color:#f92672">==</span> <span style="color:#e6db74">:nord</span>
+</span></span><span style="display:flex;"><span>    @patch_memory <span style="color:#f92672">=</span> <span style="color:#66d9ef">NordPatchMemory</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Thanks to <a href="https://kevinjmurphy.com/posts/shedding-light-on-duck-typing/">duck typing</a>, as long as these patch
 memory classes respond to the same messages, our <code>Synthesizer</code> class can use
 either of them interchangeably.</p>
 <h2 id="rock-on">Rock On <a href="#rock-on">🔗</a></h2>

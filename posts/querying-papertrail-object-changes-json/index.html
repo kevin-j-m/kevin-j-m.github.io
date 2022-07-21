@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Querying PaperTrail Object Changes in JSON"/>
 <meta name="twitter:description" content="How to use Postgres&#39; JSON functions to retrieve data out of PaperTrail"/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -173,10 +173,10 @@ capsule, storing each change made to instances of your models that you have
 PaperTrail turned on for.</p>
 <p>Let&rsquo;s create a user. Unfortunately, we can&rsquo;t make up our mind about which
 email to use, so we change that a few times.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>create(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Kevin&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Murphy&#34;</span>)
-<span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>update(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;km@example.com&#34;</span>)
-<span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>update(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span>)
-</code></pre></div><p>We have PaperTrail set to <a href="https://github.com/paper-trail-gem/paper_trail#only">track changes</a>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> user <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>create(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">first_name</span>: <span style="color:#e6db74">&#34;Kevin&#34;</span>, <span style="color:#e6db74">last_name</span>: <span style="color:#e6db74">&#34;Murphy&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>update(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;km@example.com&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>update(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span>)
+</span></span></code></pre></div><p>We have PaperTrail set to <a href="https://github.com/paper-trail-gem/paper_trail#only">track changes</a>
 made to a user&rsquo;s email. Later on, we may need to do some archaeology to figure
 out why this user&rsquo;s email address isn&rsquo;t &ldquo;km@example.com&rdquo;. Let&rsquo;s investigate how
 PaperTrail can help with that.</p>
@@ -187,18 +187,18 @@ changes made over the history of our object. We&rsquo;re going to use
 <code>where_object_changes</code> will find any time the provided attributes changed to
 <strong>or</strong> from the values provided.</p>
 <p>Let&rsquo;s first find out if this user&rsquo;s email ever was &ldquo;km@example.com&rdquo;.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where_object_changes(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;km@example.com&#34;</span>)<span style="color:#f92672">.</span>count
-<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">2</span>
-</code></pre></div><p>Now we know that at some point in time, this user&rsquo;s email was stored as
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where_object_changes(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;km@example.com&#34;</span>)<span style="color:#f92672">.</span>count
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>Now we know that at some point in time, this user&rsquo;s email was stored as
 &ldquo;km@example.com&rdquo;. We can hone in on the changes, and specifically only look at
 the email address changes.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions
-    <span style="color:#f92672">.</span>where_object_changes(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;km@example.com&#34;</span>)
-    <span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)
-    <span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
-<span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">&#34;km@example.com&#34;</span><span style="color:#f92672">]</span>},
-   {<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;km@example.com&#34;</span>, <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
-</code></pre></div><p>Any PaperTrail Version has an <code>object_changes</code> attribute. The value of that
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">.</span>where_object_changes(<span style="color:#e6db74">email</span>: <span style="color:#e6db74">&#34;km@example.com&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">&#34;km@example.com&#34;</span><span style="color:#f92672">]</span>},
+</span></span><span style="display:flex;"><span>   {<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;km@example.com&#34;</span>, <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Any PaperTrail Version has an <code>object_changes</code> attribute. The value of that
 attribute is a hash. The keys of that hash are the attributes that changed, and
 the value is a tuple (as an array) that shows first the value that attribute
 changed from, and the value it changed to.</p>
@@ -210,16 +210,16 @@ changing from &ldquo;km@example.com&rdquo; to &ldquo;kevinfinal@example.com&rdqu
 <h2 id="enhanced-json-querying">Enhanced JSON Querying <a href="#enhanced-json-querying">🔗</a></h2>
 <p>If <a href="https://github.com/paper-trail-gem/paper_trail#postgresql-json-column-type-support">PaperTrail versions</a>
 are stored as JSON or JSONB in Postgres, we have some more detailed queries we
-can write by digging into Postgres' <a href="https://www.postgresql.org/docs/9.4/functions-json.html">JSON functions</a>.</p>
+can write by digging into Postgres&rsquo; <a href="https://www.postgresql.org/docs/9.4/functions-json.html">JSON functions</a>.</p>
 <h3 id="changed">Changed <a href="#changed">🔗</a></h3>
 <p>Sometimes we may not have an attribute value that we want to search for. We may
 need to first know when an attribute changed to anything at all. Let&rsquo;s look for
 any time that this user&rsquo;s email attribute changed.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;object_changes -&gt; &#39;email&#39; IS NOT NULL&#34;</span>)<span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
-<span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;kevin@example.com&#34;</span><span style="color:#f92672">]</span>},
- {<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">&#34;km@example.com&#34;</span><span style="color:#f92672">]</span>},
- {<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;km@example.com&#34;</span>, <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
-</code></pre></div><p>The first version is logged when you initially create the row in your database,
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;object_changes -&gt; &#39;email&#39; IS NOT NULL&#34;</span>)<span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;kevin@example.com&#34;</span><span style="color:#f92672">]</span>},
+</span></span><span style="display:flex;"><span> {<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">&#34;km@example.com&#34;</span><span style="color:#f92672">]</span>},
+</span></span><span style="display:flex;"><span> {<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;km@example.com&#34;</span>, <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>The first version is logged when you initially create the row in your database,
 which is why it changes from the empty string to &ldquo;kevin@example.com&rdquo;. From
 there, we see the additional updates to email, as all versions have changed the
 email address.</p>
@@ -233,9 +233,9 @@ changing the value from &ldquo;km@example.com&rdquo;, we&rsquo;ll need to scan t
 ourselves or in memory, rather than relying on the database.</p>
 <p>However, we can construct a query ourselves to tell us only when an attribute
 changed from a value.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;object_changes -&gt;&gt;&#39;email&#39; ILIKE &#39;[</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">km@example.com</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">,%&#39;&#34;</span>)<span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
-<span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;km@example.com&#34;</span>, <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
-</code></pre></div><p>Remember that the object changes of an attribute are stored as a tuple in an
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;object_changes -&gt;&gt;&#39;email&#39; ILIKE &#39;[</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">km@example.com</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">,%&#39;&#34;</span>)<span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;km@example.com&#34;</span>, <span style="color:#e6db74">&#34;kevinfinal@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Remember that the object changes of an attribute are stored as a tuple in an
 array. The first value in the array is the value the attribute changed from, and
 the second value is the value the attribute changed to.</p>
 <p>This query looks within the <code>object_changes</code> attribute, and checks to see if the
@@ -246,14 +246,14 @@ email address in escaped quotes is the start of the array/tuple.</p>
 <p>We can also construct a query to look for versions on the other side of the
 equation. We can find all instances where the attribute changed <em>to</em> a
 particular value.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;object_changes -&gt;&gt;&#39;email&#39; ILIKE &#39;[%,</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">km@example.com</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">]&#39;&#34;</span>)<span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
-<span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">&#34;km@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
-</code></pre></div><p>When looking for what the value changed to, we want to look in our tuple to find
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> user<span style="color:#f92672">.</span>versions<span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;object_changes -&gt;&gt;&#39;email&#39; ILIKE &#39;[%,</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">km@example.com</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">]&#39;&#34;</span>)<span style="color:#f92672">.</span>pluck(<span style="color:#e6db74">:object_changes</span>)<span style="color:#f92672">.</span>map { <span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> c<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">&#34;email&#34;</span>) }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span>{<span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">=&gt;[</span><span style="color:#e6db74">&#34;kevin@example.com&#34;</span>, <span style="color:#e6db74">&#34;km@example.com&#34;</span><span style="color:#f92672">]</span>}<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>When looking for what the value changed to, we want to look in our tuple to find
 the email address in question as the last element, which will be preceded by a
 comma and have an ending bracket after it.</p>
 <h2 id="trailing-off">Trailing Off <a href="#trailing-off">🔗</a></h2>
 <p>Thanks to storing our PaperTrail versions in a JSON format, we were able to
-sneak in an applied lesson on Postgres' powerful JSON functions and
+sneak in an applied lesson on Postgres&rsquo; powerful JSON functions and
 operators while also reviewing the structure of data that&rsquo;s used by PaperTrail
 to track any versions of our database records.</p>
 <blockquote>

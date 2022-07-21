@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="To Change or Not to Change"/>
 <meta name="twitter:description" content="Here is a set of criteria to apply when determining between different options."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -171,18 +171,18 @@ if (!doNotTrack) {
 <h2 id="optional-feedback">Optional Feedback <a href="#optional-feedback">🔗</a></h2>
 <p>Imagine you&rsquo;ve just wrapped up a new feature and submitted it for code review,
 which includes the following method:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(base_price, promo_code)
-  <span style="color:#75715e"># calculation</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>One of your team members reviews the change, and leaves a suggestion.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(base_price, promo_code)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># calculation</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>One of your team members reviews the change, and leaves a suggestion.</p>
 <blockquote>
 <p>You could consider using keyword arguments for this method.</p>
 </blockquote>
 <p>That would change the method to look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(<span style="color:#e6db74">base_price</span>:, <span style="color:#e6db74">promo_code</span>:)
-  <span style="color:#75715e"># calculation</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>Do you make this change? How do you decide?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">complex_calculation</span>(<span style="color:#e6db74">base_price</span>:, <span style="color:#e6db74">promo_code</span>:)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># calculation</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Do you make this change? How do you decide?</p>
 <h2 id="evaluating-this-suggestion">Evaluating This Suggestion <a href="#evaluating-this-suggestion">🔗</a></h2>
 <p>At <a href="https://railsconf.com/2019/program/sessions#session-759">RailsConf 2019</a>, I
 asked the question, &ldquo;<a href="https://www.youtube.com/watch?v=2NiePLJVjNI">I know I can, but should I?</a>&rdquo;
@@ -218,31 +218,31 @@ to.</p>
 flexibility.</p>
 <p>I&rsquo;m going to intentionally obscure variable names to make a point here, but
 calling our method before looked like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_calculation_results</span>
-  calculator <span style="color:#f92672">=</span> <span style="color:#66d9ef">Calculator</span><span style="color:#f92672">.</span>new
-<span style="display:block;width:100%;background-color:#3c3d38">  result <span style="color:#f92672">=</span> calculator<span style="color:#f92672">.</span>complex_calculation(@x, @y)
-</span>
-  puts result
-<span style="color:#66d9ef">end</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_calculation_results</span>
+</span></span><span style="display:flex;"><span>  calculator <span style="color:#f92672">=</span> <span style="color:#66d9ef">Calculator</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex; background-color:#3c3d38"><span>  result <span style="color:#f92672">=</span> calculator<span style="color:#f92672">.</span>complex_calculation(@x, @y)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  puts result
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span></span></span></code></pre></div>
 <p>Compare this to the keyword args approach:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_calculation_results</span>
-  calculator <span style="color:#f92672">=</span> <span style="color:#66d9ef">Calculator</span><span style="color:#f92672">.</span>new
-<span style="display:block;width:100%;background-color:#3c3d38">  result <span style="color:#f92672">=</span> complex_calculation(
-</span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#e6db74">base_price</span>: @x,
-</span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#e6db74">promo_code</span>: @y,
-</span><span style="display:block;width:100%;background-color:#3c3d38">  )
-</span>
-  puts result
-<span style="color:#66d9ef">end</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_calculation_results</span>
+</span></span><span style="display:flex;"><span>  calculator <span style="color:#f92672">=</span> <span style="color:#66d9ef">Calculator</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex; background-color:#3c3d38"><span>  result <span style="color:#f92672">=</span> complex_calculation(
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#e6db74">base_price</span>: @x,
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#e6db74">promo_code</span>: @y,
+</span></span><span style="display:flex; background-color:#3c3d38"><span>  )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  puts result
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span></span></span></code></pre></div>
 <p>It&rsquo;s more verbose, but subjectively, I think it&rsquo;s also more readable and
 understandable.</p>
 <p>It also frees us from caring about the position or order of the arguments.
 Calling the method this way works as well:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  result <span style="color:#f92672">=</span> complex_calculation(
-    <span style="color:#e6db74">promo_code</span>: @y,
-    <span style="color:#e6db74">base_price</span>: @x,
-  )
-</code></pre></div><p>I would tend to believe that the clarity and flexibility gained from the keyword
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  result <span style="color:#f92672">=</span> complex_calculation(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">promo_code</span>: @y,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">base_price</span>: @x,
+</span></span><span style="display:flex;"><span>  )
+</span></span></code></pre></div><p>I would tend to believe that the clarity and flexibility gained from the keyword
 arguments would make it easier to maintain code that used this method. It can
 also prevent against subtle bugs, where you accidentally meant to pass <code>@x</code> as the
 base price, but instead you passed <code>@y</code> first, because you forgot which argument

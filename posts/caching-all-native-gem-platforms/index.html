@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Caching All Native Ruby Gem Platforms"/>
 <meta name="twitter:description" content="Some dependencies, like nokogiri, ship with multiple libraries for different architectures. If you cache your gems, you may need to cache multiple platforms, because your development team is spread across various platforms or you deploy to a different platform. We discuss how to do that in this post."/>
 
-<meta name="generator" content="Hugo 0.88.1" />
+<meta name="generator" content="Hugo 0.101.0" />
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -165,12 +165,12 @@ if (!doNotTrack) {
 architectures. If you cache your gems, you may need to cache multiple platforms,
 because your development team is spread across various platforms or you deploy
 to a different platform. To do this, you can use:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle cache <span style="color:#75715e"># cache gems in vendor/cache </span>
-bundle lock --add-platform x86_64-linux <span style="color:#75715e"># add additional platforms </span>
-bundle package --all-platforms <span style="color:#75715e"># cache multiple platforms </span>
-</code></pre></div><p>On bundler version 1.x, add:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle config specific_platform true 
-</code></pre></div><h2 id="native-nokogiri">Native Nokogiri <a href="#native-nokogiri">🔗</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>bundle cache <span style="color:#75715e"># cache gems in vendor/cache </span>
+</span></span><span style="display:flex;"><span>bundle lock --add-platform x86_64-linux <span style="color:#75715e"># add additional platforms </span>
+</span></span><span style="display:flex;"><span>bundle package --all-platforms <span style="color:#75715e"># cache multiple platforms </span>
+</span></span></code></pre></div><p>On bundler version 1.x, add:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>bundle config specific_platform true 
+</span></span></code></pre></div><h2 id="native-nokogiri">Native Nokogiri <a href="#native-nokogiri">🔗</a></h2>
 <p>Nokogiri 1.11.0 has been released, and one of the exciting <a href="https://github.com/sparklemotion/nokogiri/blob/007662fc216902a5ae186cb78b0d46f7f48b8d92/CHANGELOG.md#v1110--2021-01-03">updates</a>
 is the inclusion of pre-compiled native gems for various platforms! If you&rsquo;re
 using a supported platform, your days of installing nokogiri with native
@@ -190,8 +190,8 @@ most important one that requires all gems to be vendored is that some
 applications are deployed to, and the deployments are created in, environments
 where they <strong>cannot</strong> access <a href="https://rubygems.org/">RubyGems</a> directly.</p>
 <p>We need to tell bundler to cache our gems.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle cache 
-</code></pre></div><p>Running that on an existing application will add <code>.gem</code> files into the <code>vendor/cache</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>bundle cache 
+</span></span></code></pre></div><p>Running that on an existing application will add <code>.gem</code> files into the <code>vendor/cache</code>
 <a href="https://github.com/kevin-j-m/bundler_2_cache_all_platforms/commit/75c7ddb8f569e33cdd09e0ee1c4a377885318416">directory</a>.</p>
 <h2 id="platform-dependence">Platform Dependence <a href="#platform-dependence">🔗</a></h2>
 <p>You need to tell bundler that you require multiple platforms. In the case of
@@ -201,21 +201,21 @@ the pre-compiled gem for that architecture. That&rsquo;s great, but I also need 
 linux native gem for my deployment environments.</p>
 <p>First, I need to tell <a href="https://bundler.io/v2.0/bundle_lock.html">bundler</a> to
 add the platform.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle lock --add-platform x86_64-linux
-</code></pre></div><p>After doing that, the <code>Gemfile.lock</code> file is <a href="https://github.com/kevin-j-m/bundler_2_cache_all_platforms/commit/d36495a715c26fb1f674021ffc19dc61c1787e4f">updated</a>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>bundle lock --add-platform x86_64-linux
+</span></span></code></pre></div><p>After doing that, the <code>Gemfile.lock</code> file is <a href="https://github.com/kevin-j-m/bundler_2_cache_all_platforms/commit/d36495a715c26fb1f674021ffc19dc61c1787e4f">updated</a>
 to list that platform.</p>
 <h2 id="platform-independence">Platform Independence <a href="#platform-independence">🔗</a></h2>
 <p>However, even if you add the platform <em>before</em> installing the dependency, adding
 the platform will still not retrieve and cache both platform&rsquo;s <code>.gem</code> files.
 We also need to tell bundler to cache those
 <a href="https://bundler.io/man/bundle-cache.1.html#SUPPORT-FOR-MULTIPLE-PLATFORMS">other platforms</a>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle package --all-platforms
-</code></pre></div><p>Now our other platform is <a href="https://github.com/kevin-j-m/bundler_2_cache_all_platforms/commit/a9ef611df04114921e71b4d8e4100894d00e2925">cached</a>,
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>bundle package --all-platforms
+</span></span></code></pre></div><p>Now our other platform is <a href="https://github.com/kevin-j-m/bundler_2_cache_all_platforms/commit/a9ef611df04114921e71b4d8e4100894d00e2925">cached</a>,
 along with the existing platforms.</p>
 <p>If you are using Bundler version 1.x, you may also need to set the
 <code>specific_platform</code> configuration <a href="https://github.com/rubygems/bundler/issues/5863#issuecomment-315800951">setting</a>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle config specific_platform true
-</code></pre></div><p>Now you should have all your gem dependencies cached across all platforms
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>bundle config specific_platform true
+</span></span></code></pre></div><p>Now you should have all your gem dependencies cached across all platforms
 specified in your <code>Gemfile.lock</code>. You no longer need to compile nokogiri!</p>
 <blockquote>
 <p>This post originally published on <a href="https://blog.thegnar.co/caching-all-native-gem-platforms">The Gnar Company blog</a>.</p>

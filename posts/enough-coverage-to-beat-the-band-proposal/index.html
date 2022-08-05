@@ -1,0 +1,286 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Enough Coverage To Beat The Band - The Proposal - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="The proposal for a talk I gave at RubyConf 2020." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/enough-coverage-to-beat-the-band-proposal/">
+<meta property="og:title" content="Enough Coverage To Beat The Band - The Proposal" />
+<meta property="og:description" content="The proposal for a talk I gave at RubyConf 2020." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/enough-coverage-to-beat-the-band-proposal/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-03T21:26:22-04:00" />
+<meta property="article:modified_time" content="2022-08-03T21:26:22-04:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Enough Coverage To Beat The Band - The Proposal"/>
+<meta name="twitter:description" content="The proposal for a talk I gave at RubyConf 2020."/>
+
+<meta name="generator" content="Hugo 0.101.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RVD6VLNE04', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Enough Coverage To Beat The Band - The Proposal</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2022-08-03T21:26:22-04:00">Aug 3, 2022</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/conference-proposal">#conference-proposal</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/conference">#conference</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/rubyconf">#rubyconf</a>
+                
+            </em>
+        </li>
+        
+
+        <li>8 minute read | 1584 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="abstract">Abstract <a href="#abstract">🔗</a></h2>
+<p>The lights cut out. The crowd roars. It’s time. The band takes the stage. They’ve practiced the songs, particularly the <em>covers</em>. They’ve sound checked the <em>coverage</em> of the speakers. They know the lighting rig has the proper colored gels <em>covering</em> the lamps. They’re nervous, but they’ve got it all <strong>covered</strong>.</p>
+<p>Similarly, code coverage can give you confidence before your app performs on production and also tell you how live code is used (or not used). We’ll cover how to leverage ruby’s different coverage measurement techniques in concert to assist your crew and delight your audience.</p>
+<h2 id="details">Details <a href="#details">🔗</a></h2>
+<p>This talk will be an explanation of the different modes ruby’s <a href="https://ruby-doc.org/stdlib-3.0.0/libdoc/coverage/rdoc/Coverage.html">Coverage</a> module provides. It will use the theme of staging a concert as the through line. We’ll progress through the band’s setlist, where each song is one of the modes you can pass to <code>Coverage.start</code>.</p>
+<p>For each mode, we will examine how it works and what it tells you. We’ll examine the coverage results of code that models performing a concert as example scenarios where that code coverage mode yields actionable insights. While code coverage is frequently talked about in regards to an application’s test suite, this talk will also explore how coverage can be used for instrumenting a running application in production.</p>
+<h3 id="code-coverage-modes">Code Coverage Modes <a href="#code-coverage-modes">🔗</a></h3>
+<p>Each mode answers a different question about the code that was run under coverage:</p>
+<ul>
+<li>Lines - how many times was each line executed?</li>
+<li>Oneshot Lines - which lines were executed?</li>
+<li>Branches - was this code path of a conditional executed?</li>
+<li>Methods - was this method executed?</li>
+</ul>
+<h4 id="lines">Lines <a href="#lines">🔗</a></h4>
+<p>This is the “classic” implementation of providing coverage. Each relevant line, that is those that aren’t things like empty lines or “end” statements, has a counter that is incremented each time the line is visited in code execution while coverage is running. At the conclusion, you will see how many times each line is executed.</p>
+<h5 id="benefits">Benefits <a href="#benefits">🔗</a></h5>
+<ul>
+<li>This is the default mode for coverage.</li>
+<li>Most of the time, this option will provide you with the information you want.</li>
+</ul>
+<h5 id="instructive-example">Instructive Example <a href="#instructive-example">🔗</a></h5>
+<p>The band’s guitar technician needs to place an order for guitar strings but needs to know how many to buy. Each guitar is restrung before each show; however, strings can break during the performance. Knowing the correct buffer to purchase is the unknown. We can’t run out of strings, but we also can’t be loading and unloading unnecessary equipment every night.</p>
+<p>We already have one big box of strings that should last a while. We’ll track how many strings break throughout the first 10 shows of the tour and use that number to place an order for the rest of the tour. In our code that powers this concert, there is a line in the method to pluck a guitar string that will break the string. We will run coverage over the first 10 shows in production to see how often that line is executed, and know how big of an order to place.</p>
+<h4 id="oneshot-lines">Oneshot Lines <a href="#oneshot-lines">🔗</a></h4>
+<p>Similar to Lines Coverage, this also documents that a relevant line was executed while coverage was running. However, it’s a binary report of whether it was executed or not. It will not tell you how often. This may be sufficient in many cases, and comes with the benefit of being more performant every subsequent time a particular line of code is executed under coverage.</p>
+<h5 id="benefits-1">Benefits <a href="#benefits-1">🔗</a></h5>
+<ul>
+<li>Oneshot provides you with nothing more than if a line of application code is executed in a test suite.</li>
+<li>As long as being constrained to knowing if something ran or not, and not knowing how often, is sufficient, Oneshot Lines Coverage provides the same feedback as Lines Coverage with better performance.</li>
+</ul>
+<h5 id="instructive-example-1">Instructive Example <a href="#instructive-example-1">🔗</a></h5>
+<p>This band uses a lot of synthesizers and keyboards in their music, and the different sounds that they can make are stored as “patches”. These are stored in memory on these instruments, and the memory storage is finite. The band has been booked to play a festival, which will be great for exposure to a larger audience. However, because of the number of other acts performing and the shortened time to set up their equipment, they can’t load in and set up all of their synthesizers.</p>
+<p>No single synthesizer they have contains enough memory to store all their patches. However, they can’t play these songs without the right patches. It will very obviously sound wrong, both to them and the audience. Whether the sound or effect is used once or a million times, it’s equally vital to have it available for the live show.</p>
+<p>To find out what patches they need for this one show, they run through the entire festival setlist beforehand, keeping track of whether a patch was used. After all the songs have been played, any patches that are used will be loaded on the fewest number of synthesizers possible. The other patches can be safely left off the instruments used for the festival.</p>
+<h4 id="branches">Branches <a href="#branches">🔗</a></h4>
+<p>Branches Coverage tracks execution of different conditional paths and documents how often those different paths are run. The unique benefit that this provides over Line Coverage is in conditionals that execute multiple code paths in a single line, such as ternary statements. You may have a part of that conditional that’s never run or tested, but you wouldn’t know that if you’re relying on Lines Coverage alone.</p>
+<h5 id="benefits-2">Benefits <a href="#benefits-2">🔗</a></h5>
+<ul>
+<li>It provides a different frame of reference than Lines Coverage, which ends up being either coarser or more granular than Lines coverage in different situations.</li>
+<li>For conditionals that lay out multiple code paths on a single line, this provides feedback on their individual execution where Lines Coverage only considers whether any part of the line was run.</li>
+<li>When interested in conditionals, and only conditionals, it has less noise than Lines Coverage.</li>
+</ul>
+<h5 id="instructive-example-2">Instructive Example <a href="#instructive-example-2">🔗</a></h5>
+<p>The band is rehearsing a new cover song to add to the setlist; however, something isn’t right. They can’t pinpoint what it is, so they haven’t played the song live for an audience yet, but they keep working at it. Finally, taking a very analytical approach to one of their rehearsals, they find it - one of the vocal effects they use isn&rsquo;t being applied correctly.</p>
+<p>This effect is set in a ternary statement in the method that runs the music for each of the choruses for this song. Using Lines Coverage alone, it appears in tests (their rehearsal) that they are getting to that part of the code, or song; however, when tracking Branches Coverage they realize they’re never setting the effect to be the value it should through all the choruses.</p>
+<h4 id="methods">Methods <a href="#methods">🔗</a></h4>
+<p>Methods Coverage brings the granularity of Lines Coverage up to a coarser grain. Rather than tracking individual lines, it’s concerned with whether a particular method is executed. It can be a 10 line method where the first line is the only line ever executed. Methods Coverage will still consider that as executed the same as a 20 line method where each line is executed.</p>
+<h5 id="benefits-3">Benefits <a href="#benefits-3">🔗</a></h5>
+<ul>
+<li>This has a targeted focus to be able to answer a more specific question - is this method executed? - with easier to process feedback.</li>
+</ul>
+<h5 id="instructive-example-3">Instructive Example <a href="#instructive-example-3">🔗</a></h5>
+<p>The lead singer’s main spotlight is cutting out at times during the set, which makes for a less than optimal experience for everyone involved. The engineer’s belief is that many of the venues don’t have the power capacity to handle the needs of the show, and unfortunately, the most obvious spotlight is what’s losing power.</p>
+<p>This tour features an extensive stage production with many screens, lighting rigs, and smoke machines. Unfortunately, as the setlist has progressed throughout the tour, the crew isn’t certain how much of it is being used on a night-to-night basis. However, each of those mechanisms are plugged in for every show, drawing power that could be going towards the primary spotlight.</p>
+<p>Each lighting rig is triggered by calling a different method in our code that powers our concert. Given that the band has found their groove with a relatively stable setlist from night to night, the crew will instrument the code for an entire show to see which methods are triggered and which aren’t. Those that aren’t can be deleted - which means they can be unplugged, meaning more power for the spotlight.</p>
+<h2 id="pitch">Pitch <a href="#pitch">🔗</a></h2>
+<p>Code coverage is a topic that often seems to be applied in a narrow sense. In discussions I’m involved in, code coverage tends to mean whether there are tests that execute a given line of application code. This is used as a proxy for code quality, or as a heuristic that can be used to measure the health of a project.</p>
+<p>However, I see less discussion on using coverage in production for instrumentation, or using these different modes in any context. Moreover, speaking to my own experience, I didn’t even know there was a Coverage module for a long time as a rubyist, never mind knowing that it provides these multiple modes of tracking and reporting coverage.</p>
+<p>My goal with this talk is to expand upon potential use cases of coverage that go beyond measuring how many lines of application code a test suite runs while introducing and explaining the different mechanisms ruby provides to track code coverage.</p>
+<h2 id="bio">Bio <a href="#bio">🔗</a></h2>
+<p>Kevin lives near Boston, where he is a Software Developer at The Gnar Company. He’s doing the best he can to cope with a year of concerts that could have been.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/fake-it-while-you-make-it-proposal/"><i class="fa fa-chevron-circle-left"></i> Fake It While You Make It - The Proposal</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/engineering-mba-proposal/">Engineering MBA - The Proposal <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2022 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+
+</body>
+
+</html>
+

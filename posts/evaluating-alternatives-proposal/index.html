@@ -1,0 +1,318 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>I know I can, but should I? Evaluating Alternatives - The Proposal - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="The proposal for a talk I gave at RailsConf 2019." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/evaluating-alternatives-proposal/">
+<meta property="og:title" content="I know I can, but should I? Evaluating Alternatives - The Proposal" />
+<meta property="og:description" content="The proposal for a talk I gave at RailsConf 2019." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/evaluating-alternatives-proposal/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-03T21:23:22-04:00" />
+<meta property="article:modified_time" content="2022-08-03T21:23:22-04:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="I know I can, but should I? Evaluating Alternatives - The Proposal"/>
+<meta name="twitter:description" content="The proposal for a talk I gave at RailsConf 2019."/>
+
+<meta name="generator" content="Hugo 0.101.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RVD6VLNE04', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>I know I can, but should I? Evaluating Alternatives - The Proposal</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2022-08-03T21:23:22-04:00">Aug 3, 2022</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/conference-proposal">#conference-proposal</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/conference">#conference</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/railsconf">#railsconf</a>
+                
+            </em>
+        </li>
+        
+
+        <li>5 minute read | 971 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="abstract">Abstract <a href="#abstract">🔗</a></h2>
+<p>You <strong>can</strong> use a hammer to drive a screw into wood, but I’d recommend a screwdriver. Why? And when is a hammer the better option? This talk will propose a framework to use when comparing alternative technical choices. I won’t decide for you, but will leave you with a structure to apply in your decision-making process.</p>
+<p>The ruby toolbox is vast. While Rails provides a default experience, it leaves plenty of room for alternatives. In learning how to do something, you may uncover different ways to accomplish the same goal. Determine which tool fits best in your situation with these lessons.</p>
+<h2 id="details">Details <a href="#details">🔗</a></h2>
+<p>The Rails Doctrine frequently speaks to the breadth of options available at your disposal within the framework. There are many <a href="https://rubyonrails.org/doctrine/#provide-sharp-knives">sharp knives</a> in ruby that, when used judiciously, can facilitate a great result for your product, your team, and your code. However, knowing in which situations to reach for one tool, technology, or architecture when the framework supports <a href="https://rubyonrails.org/doctrine/#no-one-paradigm">many paradigms</a> is difficult. Having the option to <a href="https://rubyonrails.org/doctrine/#omakase">make substitutions</a> is liberating, but imposing.</p>
+<p>Some groups or situations may demand rigorous up-front <a href="https://en.wikipedia.org/wiki/Analysis_of_Alternatives">evaluations</a> prior to determining a solution. While those exercises can inform our choices, a lighter-weight approach is more appropriate in most decisions we make on a daily basis as developers. When presented with multiple options that will solve a problem, the following criteria are helpful to consider:</p>
+<ul>
+<li>What impact does this have on the code, the product, and the team?</li>
+<li>Has the team encountered this before? What was the result?</li>
+<li>What cost and risk will be incurred by introducing this solution?</li>
+<li>How will this be maintained over time?</li>
+</ul>
+<p>Not all of these questions may be applicable in all situations, and the relative weight of one over the others will also vary, depending on the context of the team or the problem. These questions will be exercised in this talk to reinforce their value and applicability in making practical decisions about daily programming choices such as:</p>
+<ul>
+<li>Should I use an ActiveRecord callback, or wrap this logic in another method?</li>
+<li>How, if at all, should this change be tested?</li>
+<li>Can I write this myself, or use an external library?</li>
+<li>Do I expose default timestamp values to users or add a new attribute?</li>
+</ul>
+<h3 id="outline">Outline <a href="#outline">🔗</a></h3>
+<ol>
+<li>Introduction</li>
+<li>“Traditional” Project Management Approach</li>
+</ol>
+<ul>
+<li>Methodology
+<ul>
+<li>Present a detailed, analytical approach before work is done.</li>
+<li>Identify all criteria and factors applicable to the project (cost, effectiveness, risk, etc.), with relative weights of importance.</li>
+<li>Score all identified alternatives on criteria, multiply by weight, compute final score.</li>
+<li>Implement highest-scoring option.</li>
+</ul>
+</li>
+<li>Limitations
+<ul>
+<li>Significant upfront investment in time.</li>
+<li>Assumes perfect knowledge prior to execution.</li>
+<li>Inflexible to new information or constraints as the project evolves.</li>
+</ul>
+</li>
+<li>Merits
+<ul>
+<li>Requires thoughtful and thorough consideration of all options.</li>
+<li>Provides cover and justification for decisions made.</li>
+<li>Rallies all stakeholders around a consensus determination.</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>Evolving Traditional Approach for Daily/Common Decisions</li>
+</ol>
+<ul>
+<li>What impact will this have on the project?
+<ul>
+<li>Research, prototype, or spike out how well this resolves the issue at hand.</li>
+<li>Identify how your supporting team may react to the change. Consider their past experience, strongly-held beliefs, and ability to build on or maintain this.</li>
+<li>Contemplate what, if any, standard this sets for future similar problems. Communicate, if necessary, not only for the current team but future contributors, the lens through which this should be evaluated for upcoming features.</li>
+<li><em>Example</em>: Should I use an ActiveRecord callback, or wrap this logic in another method?</li>
+</ul>
+</li>
+<li>Has the team encountered this before?
+<ul>
+<li>Determine what institutional knowledge can be brought to bear to short-circuit the decision-making process.</li>
+<li>Evaluate the relevance and applicability of any past decisions or solutions to similar problems.</li>
+<li>Identify what, if any, conventions or standards should be adhered to within this codebase or organization.</li>
+<li><em>Example</em>: How, if at all, should this change be tested?</li>
+</ul>
+</li>
+<li>What cost and risk will be incurred by introducing this solution?
+<ul>
+<li>Recognize that “correctness” is not the only consideration in delivering features.</li>
+<li>Take into account contextual pressures. Keep in mind what amount of time or money is available to address this problem.</li>
+<li>Expand the evaluation of cost and risk beyond the initial implementation and through the entire lifecycle of the product.</li>
+<li><em>Example</em>: Can I write this myself, or use an external library?</li>
+</ul>
+</li>
+<li>How will this be maintained over time?
+<ul>
+<li>Speculate on how extensible or malleable this implementation is to future requirements or features.</li>
+<li>Identify who will need to be involved in the long-term viability of this solution and solicit their input.</li>
+<li>Determine your own appetite to continue the use of this work as a proxy, if nothing else is available.</li>
+<li><em>Example</em>: Do I expose default timestamp values to users or add a new attribute?</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>Conclusion</li>
+</ol>
+<h2 id="pitch">Pitch <a href="#pitch">🔗</a></h2>
+<p>For many, the initial excitement of learning to program is in creating something. Having a computer perform a task can feel like magic. That rush can get you far, resulting in successful projects, companies, and careers.</p>
+<p>At some point, understanding different ways to solve the same problem becomes compelling, either due to intellectual curiosity, organizational need, or other circumstances. However, ingesting all of the alternatives that exist can be exhausting, leading to analysis paralysis. Having a structure in place to help implement these decisions is crucial with the current number of options available to us as developers.</p>
+<p>As a consultant, I’m exposed to a number of organizations looking to solve difficult problems. Each of them has different constraints that influence one choice over another. Much of my job involves understanding the pressures facing the team and proposing solutions that will not only solve the problem, but do so in a way that best meets the needs and addresses the goals of the group.</p>
+<h2 id="bio">Bio <a href="#bio">🔗</a></h2>
+<p>Kevin lives near Boston, where he is a Software Developer at The Gnar Company. As a consultant, evaluating technical alternatives and proposing solutions is an important part of his job.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/request-spec-realistic-error-response/"><i class="fa fa-chevron-circle-left"></i> Request Spec Realistic Error Response</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/dont-hang-me-out-to-dry-proposal/">Don’t Hang Me Out To DRY - The Proposal <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2022 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+
+</body>
+
+</html>
+

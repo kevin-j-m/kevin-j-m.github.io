@@ -2,22 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2022-09-17T08:53:21-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2022-09-17T08:53:21-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/rspec/</loc>
+    <lastmod>2022-09-17T08:53:21-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2022-09-17T08:53:21-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/symmetric-spies/</loc>
+    <lastmod>2022-09-17T08:53:21-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2022-09-17T08:53:21-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/testing/</loc>
+    <lastmod>2022-09-17T08:53:21-04:00</lastmod>
+  </url><url>
     <loc>https://kevinjmurphy.com/tags/conference/</loc>
     <lastmod>2022-08-04T21:00:22-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/conference-proposal/</loc>
     <lastmod>2022-08-04T21:00:22-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2022-08-04T21:00:22-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2022-08-04T21:00:22-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/posts/sharing-past-conference-proposals/</loc>
-    <lastmod>2022-08-04T21:00:22-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
     <lastmod>2022-08-04T21:00:22-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/browser-history-confessional-proposal/</loc>
@@ -45,15 +57,6 @@
     <lastmod>2022-08-03T21:23:22-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/request-spec-realistic-error-response/</loc>
-    <lastmod>2022-07-17T07:33:10-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/rspec/</loc>
-    <lastmod>2022-07-17T07:33:10-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
-    <lastmod>2022-07-17T07:33:10-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/testing/</loc>
     <lastmod>2022-07-17T07:33:10-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/designing-dependency-domain/</loc>

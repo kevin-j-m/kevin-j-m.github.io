@@ -1,0 +1,301 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Symmetric Spies: RSpec Test Organization - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="There are many options to arrange test doubles with RSpec. This article proposes doing so in a way that provides a consistent test organization." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/symmetric-spies/">
+<meta property="og:title" content="Symmetric Spies: RSpec Test Organization" />
+<meta property="og:description" content="There are many options to arrange test doubles with RSpec. This article proposes doing so in a way that provides a consistent test organization." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/symmetric-spies/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-17T08:53:21-04:00" />
+<meta property="article:modified_time" content="2022-09-17T08:53:21-04:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Symmetric Spies: RSpec Test Organization"/>
+<meta name="twitter:description" content="There are many options to arrange test doubles with RSpec. This article proposes doing so in a way that provides a consistent test organization."/>
+
+<meta name="generator" content="Hugo 0.101.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RVD6VLNE04', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Symmetric Spies: RSpec Test Organization</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2022-09-17T08:53:21-04:00">Sep 17, 2022</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/testing">#testing</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/rspec">#rspec</a>
+                
+            </em>
+        </li>
+        
+
+        <li>5 minute read | 957 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="special-operation-briefing">Special Operation Briefing <a href="#special-operation-briefing">🔗</a></h2>
+<p>We&rsquo;re managing a network of secret agents. We need to send sensitive information to our <a href="https://en.wikipedia.org/wiki/Mole_(espionage)">mole</a> who has infiltrated their target.</p>
+<p>To do so, our agents will only send a scrambled version of the message. The mole will have to convert that into meaningful text.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Agent</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pass_secret</span>(message, <span style="color:#e6db74">to</span>:)
+</span></span><span style="display:flex;"><span>    to<span style="color:#f92672">.</span>accept_secret(<span style="color:#66d9ef">Cipher</span><span style="color:#f92672">.</span>encode(message))
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Our mole can receive this random-seeming string of characters. After deciphering the real meaning, they hold on to it for later.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Mole</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">accept_secret</span>(message)
+</span></span><span style="display:flex;"><span>    messages <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">Cipher</span><span style="color:#f92672">.</span>decode(message)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We want to make sure our message-passing scheme works. But we don&rsquo;t want to go through the laborious process of encoding and decoding these messages. It&rsquo;s computationally intensive and not the focus of our test. The <code>Cipher</code> is a collaborator in our class, but it&rsquo;s not the star of the show. We can test that implementation, and bear those costs, in the unit tests of the <code>Cipher</code> class. We&rsquo;re testing the <code>Agent</code> class today, not <code>Cipher</code>.</p>
+<h2 id="efficient-espionage-expectations">Efficient Espionage Expectations <a href="#efficient-espionage-expectations">🔗</a></h2>
+<p>We&rsquo;ll avoid encoding the message, but make sure it happens, by asking RSpec to <a href="https://relishapp.com/rspec/rspec-mocks/docs/basics/expecting-messages">expect the message</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;encodes the message&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  agent <span style="color:#f92672">=</span> <span style="color:#66d9ef">Agent</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>  mole <span style="color:#f92672">=</span> <span style="color:#66d9ef">Mole</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(<span style="color:#66d9ef">Cipher</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:encode</span>)<span style="color:#f92672">.</span>with(<span style="color:#e6db74">&#34;hello&#34;</span>)
+</span></span><span style="display:flex;"><span>  agent<span style="color:#f92672">.</span>pass_secret(<span style="color:#e6db74">&#34;hello&#34;</span>, <span style="color:#e6db74">to</span>: mole)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Our test passes. We&rsquo;ve verified <code>pass_secret</code> encodes the message provided to it. We can move on; however, I&rsquo;d prefer a different test construction.</p>
+<h2 id="organization-infiltration">Organization Infiltration <a href="#organization-infiltration">🔗</a></h2>
+<p>The domain we&rsquo;re testing is about obfuscation, but I want as few surprises as possible in my tests. I like to follow a familiar pattern of how to construct my tests, so they read from top to bottom in a consistent way.</p>
+<p>Some people refer to this as <a href="http://xunitpatterns.com/Four%20Phase%20Test.html">four-phase tests</a> (setup, exercise, verify, teardown). Others call it the <a href="https://wiki.c2.com/?ArrangeActAssert">AAA pattern</a> (arrange, act, assert).</p>
+<p>Name aside, we want a convention that we can rely on. That makes it easier to scan a test and understand where we are in the process as a reader. The difficulty with our existing test is it breaks that convention. We state what we want to verify, or assert, before exercising, or acting on, the unit under test.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;encodes the message&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># setup</span>
+</span></span><span style="display:flex;"><span>  agent <span style="color:#f92672">=</span> <span style="color:#66d9ef">Agent</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>  mole <span style="color:#f92672">=</span> <span style="color:#66d9ef">Mole</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># verification</span>
+</span></span><span style="display:flex;"><span>  expect(<span style="color:#66d9ef">Cipher</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:encode</span>)<span style="color:#f92672">.</span>with(<span style="color:#e6db74">&#34;hello&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># exercise</span>
+</span></span><span style="display:flex;"><span>  agent<span style="color:#f92672">.</span>pass_secret(<span style="color:#e6db74">&#34;hello&#34;</span>, <span style="color:#e6db74">to</span>: mole)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="double-agent">Double Agent <a href="#double-agent">🔗</a></h2>
+<p>We can change our test to follow this pattern by using <a href="https://relishapp.com/rspec/rspec-mocks/docs/basics/spies">spies</a>. Our <code>Cipher</code> will be a <a href="https://relishapp.com/rspec/rspec-mocks/docs/basics/partial-test-doubles">partial double</a>, and we&rsquo;ll assert we call the <a href="https://relishapp.com/rspec/rspec-mocks/docs/basics/spies#spy-on-a-method-on-a-partial-double">method we&rsquo;re spying on</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;encodes the message&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># arrange</span>
+</span></span><span style="display:flex;"><span>  allow(<span style="color:#66d9ef">Cipher</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:encode</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  agent <span style="color:#f92672">=</span> <span style="color:#66d9ef">Agent</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>  mole <span style="color:#f92672">=</span> <span style="color:#66d9ef">Mole</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># act</span>
+</span></span><span style="display:flex;"><span>  agent<span style="color:#f92672">.</span>pass_secret(<span style="color:#e6db74">&#34;hello&#34;</span>, <span style="color:#e6db74">to</span>: mole)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># assert</span>
+</span></span><span style="display:flex;"><span>  expect(<span style="color:#66d9ef">Cipher</span>)<span style="color:#f92672">.</span>to have_received(<span style="color:#e6db74">:encode</span>)<span style="color:#f92672">.</span>with(<span style="color:#e6db74">&#34;hello&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>In our <code>allow</code> statement, we have no constraints on what we pass to <code>encode</code>. That&rsquo;s fine in this case - we tighten up that restriction in the assertion. There we make sure not only that we call the <code>encode</code> method on <code>Cipher</code>, but also with the right input (&ldquo;hello&rdquo;).</p>
+<p>I call this symmetry, or symmetric spies. We start our test by <code>allow</code>ing the message to be received. We end our test by resolving to <code>expect</code> that the message has been received.</p>
+<h2 id="phase-2-of-the-operation">Phase 2 of the Operation <a href="#phase-2-of-the-operation">🔗</a></h2>
+<p>As of now, we&rsquo;ve verified that our agent encodes the message. We also want to make sure the mole receives the message. The <strong>encoded</strong> message. And we want to verify that without actually running our message through the encoder.</p>
+<p>Luckily, RSpec can help us out here too. We can use <code>with</code> and <code>and_return</code> on our test double. With those two methods, the double will provide the specified output, given that input.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>allow(<span style="color:#66d9ef">Cipher</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:encode</span>)<span style="color:#f92672">.</span>with(<span style="color:#e6db74">&#34;hello&#34;</span>)<span style="color:#f92672">.</span>and_return(<span style="color:#e6db74">&#34;mystery&#34;</span>)
+</span></span></code></pre></div><p><code>Ciper.encode</code> will only return <code>&quot;mystery&quot;</code> if we call it with <code>&quot;hello&quot;</code> as an argument.</p>
+<p>Let&rsquo;s use this to write a test that makes sure the mole gets our encoded message.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;sends the encoded message to the receiver&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  agent <span style="color:#f92672">=</span> <span style="color:#66d9ef">Agent</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>  mole <span style="color:#f92672">=</span> <span style="color:#66d9ef">Mole</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  allow(<span style="color:#66d9ef">Cipher</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:encode</span>)<span style="color:#f92672">.</span>with(<span style="color:#e6db74">&#34;hello&#34;</span>)<span style="color:#f92672">.</span>and_return(<span style="color:#e6db74">&#34;mystery&#34;</span>)
+</span></span><span style="display:flex;"><span>  allow(mole)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:accept_secret</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  agent<span style="color:#f92672">.</span>pass_secret(<span style="color:#e6db74">&#34;hello&#34;</span>, <span style="color:#e6db74">to</span>: mole)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(mole)<span style="color:#f92672">.</span>to have_received(<span style="color:#e6db74">:accept_secret</span>)<span style="color:#f92672">.</span>with(<span style="color:#e6db74">&#34;mystery&#34;</span>)
+</span></span></code></pre></div><h2 id="breaking-the-code-or-symmetry">Breaking the Code, or Symmetry <a href="#breaking-the-code-or-symmetry">🔗</a></h2>
+<p>You may have noticed something in that last test that feels like it betrays the intent of symmetry. We are spying (with partial doubles) on two methods. We only expect to receive one. That&rsquo;s not symmetrical at all!</p>
+<p>We already tested that <code>pass_secret</code> will call <code>encode</code>. We have existing coverage verifying that. The focus of <strong>this test</strong> is ensuring the encoded message gets to the mole. We&rsquo;re using our partial double on <code>Cipher</code> to avoid a method call that takes a long time. Another use case may be to avoid a side-effect that we don&rsquo;t want to incur in our test. We&rsquo;re not using it to verify system behavior.</p>
+<p>We <em>are</em> setting up the mole as a partial double to verify behavior. We want to make sure the agent interacts with the mole as expected. Because of that, we verify that we call the right method, with the right input, to the mole. We don&rsquo;t verify how we encode the message.</p>
+<p>There would be nothing <em>wrong</em> with asserting that we call <code>encode</code> on <code>Cipher</code>. It&rsquo;s at best duplicative, given our prior test. Yet, it does take away focus on the intent of our test, which is verifying communication with the mole.</p>
+<p>The goals of the test drive what expectations we make in that test. The goal of this test isn&rsquo;t about encoding; it&rsquo;s about communicating with the mole. Seeking symmetry isn&rsquo;t having the same number of doubles or spies and expectations. It&rsquo;s organizing the test in a manner consistent with the four-phase test or AAA pattern.</p>
+<h2 id="debriefing">Debriefing <a href="#debriefing">🔗</a></h2>
+<p>We may not <em>need</em> the symmetry within an individual test. Keeping it, and our test organization scheme, in mind helps us write readable, predictable tests. The element of surprise may be critical to a spy, agent, or mole in the field. It&rsquo;s less of an asset in your test suite.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/sharing-past-conference-proposals/"><i class="fa fa-chevron-circle-left"></i> Sharing Past Conference Proposals</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2022 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+
+</body>
+
+</html>
+

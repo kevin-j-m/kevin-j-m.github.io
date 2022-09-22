@@ -6,10 +6,19 @@
    <description>Recent content in ruby on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2022 - Kevin Murphy</copyright>
-   <lastBuildDate>Sat, 17 Sep 2022 08:53:21 -0400</lastBuildDate>
+   <lastBuildDate>Thu, 22 Sep 2022 17:00:10 -0400</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Anyone Can Play Guitar (With Ruby)</title>
+       <link>https://kevinjmurphy.com/posts/play-guitar/</link>
+       <pubDate>Thu, 22 Sep 2022 17:00:10 -0400</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/play-guitar/</guid>
+       <description>&lt;p&gt;I&amp;rsquo;m delighted to be &lt;a href=&#34;https://twitter.com/RubyConfMini/status/1573031880022032385&#34;&gt;speaking&lt;/a&gt; at &lt;a href=&#34;https://www.rubyconfmini.com/&#34;&gt;RubyConf Mini&lt;/a&gt; this November in Providence, RI. I hope you&amp;rsquo;ll consider joining us.&lt;/p&gt;&lt;h2 id=&#34;abstract&#34;&gt;Abstract &lt;a href=&#34;#abstract&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I&amp;rsquo;ve got the blues. I&amp;rsquo;ve been looking for the perfect guitar tone, but haven&amp;rsquo;t found it. To amp up my mood, let&amp;rsquo;s teach a computer to play the guitar through an amplifier.&lt;/p&gt;&lt;p&gt;Let&amp;rsquo;s string together object-oriented principles to orchestrate a blues shuffle. We&amp;rsquo;ll model our domain with the help of inheritance, composition, and dependency injection. This talk will strike a chord with you, whether you&amp;rsquo;ve strummed a guitar before or not.&lt;/p&gt;</description>
+     </item>
    
      <item>
        <title>Symmetric Spies: RSpec Test Organization</title>

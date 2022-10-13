@@ -1,0 +1,371 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Enumerating Musical Notes - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="This post utilizes a score of Array and Enumerable methods to model music notes." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/enumerating-musical-notes/">
+<meta property="og:title" content="Enumerating Musical Notes" />
+<meta property="og:description" content="This post utilizes a score of Array and Enumerable methods to model music notes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/enumerating-musical-notes/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-13T17:00:10-04:00" />
+<meta property="article:modified_time" content="2022-10-13T17:00:10-04:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Enumerating Musical Notes"/>
+<meta name="twitter:description" content="This post utilizes a score of Array and Enumerable methods to model music notes."/>
+
+<meta name="generator" content="Hugo 0.104.2" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RVD6VLNE04', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Enumerating Musical Notes</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2022-10-13T17:00:10-04:00">Oct 13, 2022</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/conference">#conference</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/rubyconf">#rubyconf</a>
+                
+            </em>
+        </li>
+        
+
+        <li>6 minute read | 1233 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>I&rsquo;m teaching a computer how to play the guitar for <a href="https://kevinjmurphy.com/posts/play-guitar/">RubyConf Mini 2022</a>. Let&rsquo;s understand some basics before focusing on the guitar. Guitars can play many musical notes - actually, all of them! In this post, we&rsquo;ll output which note we play with the help of Ruby&rsquo;s <a href="https://ruby-doc.org/core-3.1.2/Array.html">Array</a> class and <a href="https://ruby-doc.org/core-3.1.2/Enumerable.html">Enumerable</a> module.</p>
+<h2 id="note-notation">Note Notation <a href="#note-notation">🔗</a></h2>
+<p>There are only so many notes in music. 12 in fact. This is not going to be a lesson in music theory, so I&rsquo;ll spare you the details. We&rsquo;ll store each of the notes in an array.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>notes <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:a_flat</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:a</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:b_flat</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:b</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:c</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:d_flat</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:d</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:e_flat</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:e</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:f</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:g_flat</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">:g</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><h2 id="chromatic-scale">Chromatic Scale <a href="#chromatic-scale">🔗</a></h2>
+<p>Putting all these notes together forms the <a href="https://en.wikipedia.org/wiki/Chromatic_scale">Chromatic scale</a>. Most often, you&rsquo;ll see the scale start with the &ldquo;C&rdquo; note.</p>
+<p>Our collection of notes doesn&rsquo;t start with &ldquo;C&rdquo; though.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>notes<span style="color:#f92672">.</span>first
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:a_flat</span>
+</span></span></code></pre></div><p>We can search for where &ldquo;C&rdquo; is in our array using the <a href="https://ruby-doc.org/core-3.1.2/Array.html#method-i-index">index</a> method.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>notes<span style="color:#f92672">.</span>index(<span style="color:#e6db74">:c</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">4</span>
+</span></span></code></pre></div><p>The scale starts at the fifth note in our collection. Ruby arrays are zero-indexed; the first element is at position, or index, zero. Index four, where our &ldquo;C&rdquo; is, is the fifth element. We&rsquo;d like it to be the <a href="https://ruby-doc.org/core-3.1.2/Array.html#method-i-first">first</a>, and have all the other notes follow in the expected order. We can use <a href="https://ruby-doc.org/core-3.1.2/Array.html#method-i-rotate">rotate</a> with our index to accomplish this.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>chromatic <span style="color:#f92672">=</span> notes<span style="color:#f92672">.</span>rotate(<span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span><span style="color:#e6db74">:c</span>, <span style="color:#e6db74">:d_flat</span>, <span style="color:#e6db74">:d</span>, <span style="color:#e6db74">:e_flat</span>, <span style="color:#e6db74">:e</span>, <span style="color:#e6db74">:f</span>, <span style="color:#e6db74">:g_flat</span>, <span style="color:#e6db74">:g</span>, <span style="color:#e6db74">:a_flat</span>, <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">:b_flat</span>, <span style="color:#e6db74">:b</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>To make it a little more clear where that 4 came from, we can use the return from our call to <code>index</code> as the argument to <code>rotate</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>chromatic <span style="color:#f92672">=</span> notes<span style="color:#f92672">.</span>rotate(notes<span style="color:#f92672">.</span>index(<span style="color:#e6db74">:c</span>))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span><span style="color:#e6db74">:c</span>, <span style="color:#e6db74">:d_flat</span>, <span style="color:#e6db74">:d</span>, <span style="color:#e6db74">:e_flat</span>, <span style="color:#e6db74">:e</span>, <span style="color:#e6db74">:f</span>, <span style="color:#e6db74">:g_flat</span>, <span style="color:#e6db74">:g</span>, <span style="color:#e6db74">:a_flat</span>, <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">:b_flat</span>, <span style="color:#e6db74">:b</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><h2 id="octaves">Octaves <a href="#octaves">🔗</a></h2>
+<p>Aren&rsquo;t there are more than 12 <a href="https://en.wikipedia.org/wiki/Musical_note">sounds</a> that comprise the entirety of possible music? Yes! These notes repeat themselves at a higher frequency. The same note with double the frequency is an octave.</p>
+<p>Our collection of notes has a definitive <a href="https://ruby-doc.org/core-3.1.2/Array.html#method-i-last">end</a> though.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>chromatic<span style="color:#f92672">.</span>last
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:b</span>
+</span></span></code></pre></div><p>We&rsquo;d like to repeat the collection to play the next octave. We&rsquo;ll treat our notes as a series that we can <a href="https://ruby-doc.org/core-3.1.2/Enumerable.html#method-i-cycle">cycle</a> through again and again.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>note_cycle <span style="color:#f92672">=</span> chromatic<span style="color:#f92672">.</span>cycle
+</span></span></code></pre></div><p>Calling <code>cycle</code> with no block <em>and</em> not providing a value for the number of times to cycle returns an <a href="https://ruby-doc.org/core-3.1.2/Enumerator.html">Enumerator</a> that cycles forever.</p>
+<p>To demonstrate, let&rsquo;s ask for 40 elements from our cycle.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>result <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">40</span><span style="color:#f92672">.</span>times { result <span style="color:#f92672">&lt;&lt;</span> note_cycle<span style="color:#f92672">.</span>next }
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>count(<span style="color:#e6db74">:c</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">3</span>
+</span></span></code></pre></div><p>Our <code>notes</code> array only has 12 elements. By calling <code>cycle</code> on it this way, we infinitely repeat this progression. &ldquo;C&rdquo; shows up many times in our result, as we progress from one octave to the next.</p>
+<h2 id="classical-music">Classical Music <a href="#classical-music">🔗</a></h2>
+<p>Let&rsquo;s build a Note class to encapsulate this behavior. We&rsquo;ll accept a starting point that we&rsquo;ll call the starting note. We&rsquo;ll find the starting note in our notes collection, and start our infinite cycle with that note.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Note</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(<span style="color:#e6db74">starting_note</span>:)
+</span></span><span style="display:flex;"><span>    @note_cycle <span style="color:#f92672">=</span> notes<span style="color:#f92672">.</span>rotate(notes<span style="color:#f92672">.</span>index(starting_note))<span style="color:#f92672">.</span>cycle
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Our Note class will also accept an offset - a number representing how far from our starting note we&rsquo;ll stray. This is how far into our cycle we should reach to determine which note value we&rsquo;re representing.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Note</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(<span style="color:#e6db74">starting_note</span>:, <span style="color:#e6db74">offset</span>:)
+</span></span><span style="display:flex;"><span>    @note_cycle <span style="color:#f92672">=</span> notes<span style="color:#f92672">.</span>rotate(notes<span style="color:#f92672">.</span>index(starting_note))<span style="color:#f92672">.</span>cycle
+</span></span><span style="display:flex;"><span>    @offset <span style="color:#f92672">=</span> offset
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We need to find our final note. We&rsquo;ll <a href="https://ruby-doc.org/core-3.1.2/Array.html#method-i-take">take</a> the collection of the cycle we traverse to move from the starting note to our offset. We&rsquo;ll return the <a href="https://ruby-doc.org/core-3.1.2/Array.html#method-i-last">last</a> element of that progression as the value of our note.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Note</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">note_progression</span>
+</span></span><span style="display:flex;"><span>    @note_cycle<span style="color:#f92672">.</span>take(@offset <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>
+</span></span><span style="display:flex;"><span>    note_progression<span style="color:#f92672">.</span>last
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>While we don&rsquo;t need the full progression now, it&rsquo;ll come in handy soon.</p>
+<h2 id="stringing-together-notes">Stringing Together Notes <a href="#stringing-together-notes">🔗</a></h2>
+<p>Let&rsquo;s bring this back to our goal - playing a note on a guitar. We tune each string on a guitar to a particular note. Plucking the string and letting it ring out will play the note it&rsquo;s tuned to - its starting note.</p>
+<p>We&rsquo;ll get that value by setting the starting note of our Note class to be the note the guitar string is tuned to with an offset of 0.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">starting_note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">offset</span>: <span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>value
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:a</span>
+</span></span></code></pre></div><figure class="mid"><img src="https://kevinjmurphy.com/img/a_note.png"
+         alt="Letting the A string ring out on a guitar plays an A note."/>
+</figure>
+
+<p>You can play more notes on a guitar string than that. A guitar&rsquo;s neck has many sections, called frets. Pressing down on the string on a fret and plucking the string produces a higher frequency sound. That&rsquo;s the next note in our cycle.</p>
+<p>Each fret will be a different offset from the same starting note. We can determine which note we play on a string tuned to &ldquo;A&rdquo;, pressing down on the third fret, with our Note class.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">starting_note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">offset</span>: <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>value
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:c</span>
+</span></span></code></pre></div><figure class="mid"><img src="https://kevinjmurphy.com/img/c_note.png"
+         alt="Playing the A string on a guitar with your finger on the third fret plays a C note."/>
+</figure>
+
+<h2 id="fretting-about-octaves">Fretting About Octaves <a href="#fretting-about-octaves">🔗</a></h2>
+<p>The number of frets on a guitar varies. A typical guitar may have between 18-24. That means that a string will be able to play the same note over again.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">starting_note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">offset</span>: <span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>value
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:a</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">starting_note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">offset</span>: <span style="color:#ae81ff">12</span>)<span style="color:#f92672">.</span>value
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:a</span>
+</span></span></code></pre></div><p>These are both &ldquo;A&rdquo; notes, but at different octaves. We want our Note class to keep track of the octave so these don&rsquo;t seem to be playing exactly the same frequency.</p>
+<p>To do this, we first need to know the octave number of our starting note. We&rsquo;ll change our constructor again.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Note</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(<span style="color:#e6db74">starting_note</span>:, <span style="color:#e6db74">starting_octave</span>:, <span style="color:#e6db74">offset</span>:)
+</span></span><span style="display:flex;"><span>    @note_cycle <span style="color:#f92672">=</span> notes<span style="color:#f92672">.</span>rotate(notes<span style="color:#f92672">.</span>index(starting_note))<span style="color:#f92672">.</span>cycle
+</span></span><span style="display:flex;"><span>    @starting_octave <span style="color:#f92672">=</span> starting_octave
+</span></span><span style="display:flex;"><span>    @offset <span style="color:#f92672">=</span> offset
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We progress to the next octave when we repeat the Chromatic scale - starting at a &ldquo;C&rdquo; note. This is where the full progression of notes from the starting note to our resulting value will help. We&rsquo;ll <a href="https://ruby-doc.org/core-3.1.2/Enumerable.html#method-i-count">count</a> the number of &ldquo;C&rdquo; notes we encounter in our progression. That&rsquo;s how many octaves we traversed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Note</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">octave</span>
+</span></span><span style="display:flex;"><span>    @starting_octave <span style="color:#f92672">+</span> note_progression<span style="color:#f92672">.</span>count(<span style="color:#e6db74">:c</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Playing the starting note will have the same octave as is passed in. Playing the same note 12 frets up is the next octave.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">starting_note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">starting_octave</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">offset</span>: <span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>octave
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">starting_note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">starting_octave</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">offset</span>: <span style="color:#ae81ff">12</span>)<span style="color:#f92672">.</span>octave
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><h2 id="can-you-c-an-error">Can you &ldquo;C&rdquo; an error? <a href="#can-you-c-an-error">🔗</a></h2>
+<p>Our implementation is a bit naive. If we have a string tuned to &ldquo;C&rdquo;, and we play the starting note, we expect it to return the same octave passed in. However, it does not.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">starting_note</span>: <span style="color:#e6db74">:c</span>, <span style="color:#e6db74">starting_octave</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">offset</span>: <span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>octave
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>We&rsquo;re counting the number of &ldquo;C&rdquo; notes we encounter in our progression. When we start with &ldquo;C&rdquo;, we&rsquo;re guaranteed to get one, but we haven&rsquo;t changed octaves.</p>
+<p>We need to handle this special case. We&rsquo;ll check if our starting note is &ldquo;C&rdquo; and exclude the starting note from our octave count if that&rsquo;s the case.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Note</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">c_start?</span>
+</span></span><span style="display:flex;"><span>    @note_cycle<span style="color:#f92672">.</span>first <span style="color:#f92672">==</span> <span style="color:#e6db74">:c</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">octaves_progressed</span>
+</span></span><span style="display:flex;"><span>    cs_passed <span style="color:#f92672">=</span> note_progression<span style="color:#f92672">.</span>count(<span style="color:#e6db74">:c</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> c_start?
+</span></span><span style="display:flex;"><span>      cs_passed <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cs_passed
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">octave</span>
+</span></span><span style="display:flex;"><span>    @starting_octave <span style="color:#f92672">+</span> octaves_progressed
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Now we account for this edge case, while still working for other starting notes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">starting_note</span>: <span style="color:#e6db74">:c</span>, <span style="color:#e6db74">starting_octave</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">offset</span>: <span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>octave
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">starting_note</span>: <span style="color:#e6db74">:c</span>, <span style="color:#e6db74">starting_octave</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">offset</span>: <span style="color:#ae81ff">12</span>)<span style="color:#f92672">.</span>octave
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">starting_note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">starting_octave</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">offset</span>: <span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>octave
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">starting_note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">starting_octave</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">offset</span>: <span style="color:#ae81ff">12</span>)<span style="color:#f92672">.</span>octave
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><h2 id="closing-notes">Closing Notes <a href="#closing-notes">🔗</a></h2>
+<p>We now have a class that can tell us which note we play on any string of our guitar. We leveraged Ruby&rsquo;s standard library to handle most of our logic. The <a href="https://ruby-doc.org/core-3.1.2/Array.html">Array</a> class and <a href="https://ruby-doc.org/core-3.1.2/Enumerable.html">Enumerable</a> module worked in concert with our domain knowledge. We didn&rsquo;t need to write any algorithms or complex transformations ourselves. And now our computer knows how to play musical notes.</p>
+<p>That sounds great to me.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/play-guitar/"><i class="fa fa-chevron-circle-left"></i> Anyone Can Play Guitar (With Ruby)</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2022 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+
+</body>
+
+</html>
+

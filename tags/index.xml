@@ -6,10 +6,19 @@
    <description>Recent content in Tags on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2022 - Kevin Murphy</copyright>
-   <lastBuildDate>Thu, 13 Oct 2022 17:00:10 -0400</lastBuildDate>
+   <lastBuildDate>Sat, 05 Nov 2022 18:23:22 -0400</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/tags/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Available on Mastodon</title>
+       <link>https://kevinjmurphy.com/posts/joining-mastodon/</link>
+       <pubDate>Sat, 05 Nov 2022 18:23:22 -0400</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/joining-mastodon/</guid>
+       <description>&lt;p&gt;I&amp;rsquo;ve created an account on Mastodon, specifically on the ruby.socialinstance. You can follow along and connect with me &lt;a href=&#34;https://ruby.social/@kevin_j_m&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+     </item>
    
      <item>
        <title>Enumerating Musical Notes</title>

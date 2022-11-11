@@ -2,31 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://kevinjmurphy.com/posts/joining-mastodon/</loc>
-    <lastmod>2022-11-05T18:23:22-04:00</lastmod>
+    <loc>https://kevinjmurphy.com/tags/anyone-can-play-guitar/</loc>
+    <lastmod>2022-11-11T07:00:24-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2022-11-11T07:00:24-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2022-11-11T07:00:24-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/revisiting-calling-sonic-pi-from-ruby/</loc>
+    <lastmod>2022-11-11T07:00:24-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2022-11-11T07:00:24-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/software-design-concert-series/</loc>
+    <lastmod>2022-11-11T07:00:24-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2022-11-11T07:00:24-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/anyone-can-play-guitar-proposal/</loc>
+    <lastmod>2022-11-10T20:26:22-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/conference/</loc>
+    <lastmod>2022-11-10T20:26:22-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/conference-proposal/</loc>
+    <lastmod>2022-11-10T20:26:22-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/rubyconf/</loc>
+    <lastmod>2022-11-10T20:26:22-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/joining-mastodon/</loc>
     <lastmod>2022-11-05T18:23:22-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/personal/</loc>
     <lastmod>2022-11-05T18:23:22-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2022-11-05T18:23:22-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
-    <lastmod>2022-11-05T18:23:22-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/conference/</loc>
-    <lastmod>2022-10-13T17:00:10-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/posts/enumerating-musical-notes/</loc>
-    <lastmod>2022-10-13T17:00:10-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
-    <lastmod>2022-10-13T17:00:10-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/rubyconf/</loc>
     <lastmod>2022-10-13T17:00:10-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/play-guitar/</loc>
@@ -40,9 +55,6 @@
   </url><url>
     <loc>https://kevinjmurphy.com/tags/testing/</loc>
     <lastmod>2022-09-17T08:53:21-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/conference-proposal/</loc>
-    <lastmod>2022-08-04T21:00:22-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/sharing-past-conference-proposals/</loc>
     <lastmod>2022-08-04T21:00:22-04:00</lastmod>
@@ -247,9 +259,6 @@
   </url><url>
     <loc>https://kevinjmurphy.com/speaking/</loc>
     <lastmod>2020-12-19T17:37:33-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/software-design-concert-series/</loc>
-    <lastmod>2020-12-15T07:03:46-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/stringing-code-together-to-play-music/</loc>
     <lastmod>2020-12-15T07:03:46-05:00</lastmod>

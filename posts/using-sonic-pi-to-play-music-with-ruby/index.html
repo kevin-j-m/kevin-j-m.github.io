@@ -161,7 +161,7 @@ if (!doNotTrack) {
         </li>
         
 
-        <li>3 minute read | 603 words</li>
+        <li>3 minute read | 626 words</li>
     </ul>
 </aside>
 
@@ -187,7 +187,9 @@ delivering a live performance of some music during the presentation. This ended
 up getting cut for a variety of reasons (time, concern about the audio working
 on the streaming platform, the reality of ambition turning into actual work to
 do), but I built out the structure to support this for one instrument, the
-guitar. This is the first of two posts that&rsquo;ll describe the work that I did to
+guitar. I integrated this into my <a href="https://kevinjmurphy.com/posts/play-guitar/">RubyConf Mini 2022</a>
+talk, though with some <a href="https://kevinjmurphy.com/posts/revisiting-calling-sonic-pi-from-ruby/">modifications</a>.</p>
+<p>This is the first of two posts that&rsquo;ll describe the work that I did to
 support this.</p>
 <p>First, I had to figure out if it was possible to make this happen. I wanted to
 hook into my existing code samples and trigger musical notes from them somehow.
@@ -207,7 +209,7 @@ track of time for a night or two (or more). However, I was envisioning
 controlling my audio from the code examples directly. I didn&rsquo;t want to have to
 work within the IDE.</p>
 <p>To get around using the IDE directly, I found the <a href="https://github.com/Widdershin/sonic-pi-cli">sonic-pi-cli</a>
-gem. Its principal use case is to be used directly in the
+gem. This gem works with Sonic Pi versions 2.7 - 3.2. Its principal use case is to be used directly in the
 <a href="https://github.com/Widdershin/sonic-pi-cli/blob/c4280f98edcec4de99801d013ec946cc47787932/bin/sonic_pi">terminal</a>.
 However, it&rsquo;s a gem, and written in ruby, and the core functionality is
 available in a <a href="https://github.com/Widdershin/sonic-pi-cli/blob/c4280f98edcec4de99801d013ec946cc47787932/lib/sonic_pi.rb">class</a>

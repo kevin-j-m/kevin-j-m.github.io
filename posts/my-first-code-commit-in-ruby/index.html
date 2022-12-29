@@ -1,0 +1,273 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>My First Code Commit in Ruby - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="I had my first commit with a code change introduced into the Ruby programming language." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/my-first-code-commit-in-ruby/">
+<meta property="og:title" content="My First Code Commit in Ruby" />
+<meta property="og:description" content="I had my first commit with a code change introduced into the Ruby programming language." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/my-first-code-commit-in-ruby/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-29T12:04:22-05:00" />
+<meta property="article:modified_time" content="2022-12-29T12:04:22-05:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="My First Code Commit in Ruby"/>
+<meta name="twitter:description" content="I had my first commit with a code change introduced into the Ruby programming language."/>
+
+<meta name="generator" content="Hugo 0.104.2" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RVD6VLNE04', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+        <li>
+          <a rel="me" href="https://ruby.social/@kevin_j_m">
+          </a>
+        </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>My First Code Commit in Ruby</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2022-12-29T12:04:22-05:00">Dec 29, 2022</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/personal">#personal</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+            </em>
+        </li>
+        
+
+        <li>6 minute read | 1174 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="kevin-murphy-ruby-committer">Kevin Murphy: Ruby Committer <a href="#kevin-murphy-ruby-committer">🔗</a></h2>
+<p>I recently had my first <a href="https://github.com/ruby/ruby/commit/b3d330c39ebbf27cefc2d83109dad9e0b3b0e94f">code change</a> accepted to the Ruby programming language! Ruby&rsquo;s <code>Coverage</code> module now responds that it supports oneshot_lines mode.</p>
+<p>Though it may be a small change, I&rsquo;m more excited at the symbolism of having committed to the Ruby code base. As a celebration, I figured I&rsquo;d share what led to this.</p>
+<h2 id="covering-new-changes">Covering New Changes <a href="#covering-new-changes">🔗</a></h2>
+<p>As I write this, we&rsquo;re in that period between Christmas and New Year&rsquo;s Day. In the past few years, I&rsquo;ve taken that off of work. That also lines up with the release day for a new version of Ruby. This year, <a href="https://www.ruby-lang.org/en/news/2022/12/25/ruby-3-2-0-released/">3.2.0</a> came out on Christmas day.</p>
+<p>Having some time where I&rsquo;m not working, I set some very healthy boundaries. Instead of working, I would instead <em>read</em> about work-related things. While I was catching up on the changes in 3.2.0, something caught my eye - there were some changes to Ruby&rsquo;s Coverage module.</p>
+<p>Coverage can <a href="https://github.com/ruby/ruby/pull/6396">now support</a> measuring code coverage of code in <code>eval</code>. I may write more about that in a later post. As a follow-up to conversation in the <a href="https://bugs.ruby-lang.org/issues/19008">initial issue</a>, <a href="https://github.com/ruby/ruby/pull/6462">another PR</a> adds controls for whether <code>eval</code> coverage is running.</p>
+<p>Part of that change adds a <a href="https://bugs.ruby-lang.org/issues/19026">new method</a> to the <code>Coverage</code> API. <code>Coverage.supported?</code> is a method that accepts a symbol as an argument. It tells you if the Coverage module supports the mode or type of coverage asked about.</p>
+<p>I pulled up the <a href="https://ruby-doc.org/3.2.0/exts/coverage/Coverage.html#method-c-supported-3F">documentation</a> for the method, and noticed this sentence:</p>
+<blockquote>
+<p>The mode should be one of the following symbols: :lines, :branches, :methods, :eval.</p>
+</blockquote>
+<p>I also happen to know another mode of coverage: <a href="https://ruby-doc.org/3.2.0/exts/coverage/Coverage.html#module-Coverage-label-Oneshot+Lines+Coverage">oneshot lines</a>. More on why I know about that later. Wondering if there was an opportunity to update the documentation, I checked the <a href="https://github.com/ruby/ruby/blob/a7d467a792c644a7260d6560ea2002fdb8ff6de3/ext/coverage/coverage.c#L40">source code</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> VALUE
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rb_coverage_supported</span>(VALUE self, VALUE _mode)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ID mode <span style="color:#f92672">=</span> RB_SYM2ID(_mode);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> RBOOL(
+</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> rb_intern(<span style="color:#e6db74">&#34;lines&#34;</span>) <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> rb_intern(<span style="color:#e6db74">&#34;branches&#34;</span>) <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> rb_intern(<span style="color:#e6db74">&#34;methods&#34;</span>) <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> rb_intern(<span style="color:#e6db74">&#34;eval&#34;</span>)
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It turns out, the source doesn&rsquo;t mention oneshot lines either. I asked Samuel, who made these contributions, on <a href="https://ruby.social/@kevin_j_m/109591612453458271">Mastodon</a> about it. After that, I wrote my <a href="https://bugs.ruby-lang.org/issues/19279">first issue</a> on Ruby&rsquo;s issue tracker, and had <a href="https://github.com/ruby/ruby/pull/7040">my PR</a> merged in.</p>
+<p>So how do I know about oneshot lines coverage? Or Ruby&rsquo;s Coverage module at all? To answer that, we need to go back much further in time.</p>
+<h2 id="covering-my-history-with-coverage">Covering My History With Coverage <a href="#covering-my-history-with-coverage">🔗</a></h2>
+<h3 id="rubyconf-2019">RubyConf 2019 <a href="#rubyconf-2019">🔗</a></h3>
+<p>The year is 2019. I&rsquo;m speaking at RubyConf for the first time. I&rsquo;m very excited about this. It&rsquo;ll be my second time speaking at a conference. Earlier that year I also spoke at RailsConf.</p>
+<p>My talk is about different <a href="https://kevinjmurphy.com/posts/rubyconf-2019/">best practices</a> - specifically when adhering to them breaks down. One of those best practices is high <a href="https://kevinjmurphy.com/posts/rubyconf-2019/#code-coverage">test coverage</a>. I start to work on the content for my presentation by building the code samples that I want to use in the slides. For the code coverage section, I&rsquo;m writing some code with some tests. I&rsquo;m using <a href="https://github.com/simplecov-ruby/simplecov">SimpleCov</a> to generate code coverage results.</p>
+<p>As I&rsquo;m doing this, I find a perfect opportunity for a distraction: how does SimpleCov work? I do some quick investigation. The second sentence of the <a href="https://github.com/simplecov-ruby/simplecov/blob/216b2d530bee7c4b8a8fe2898684924bfccfa79a/README.md">README</a> states:</p>
+<blockquote>
+<p>It uses Ruby&rsquo;s built-in Coverage library to gather code coverage data&hellip;</p>
+</blockquote>
+<p>That gave me a new distraction - what is this Coverage library that&rsquo;s built in to Ruby? I started with the documentation, that at the time looked something like <a href="https://ruby-doc.org/stdlib-2.6.5/libdoc/coverage/rdoc/Coverage.html">this</a>. Wanting to learn more, I pulled up Ruby&rsquo;s source code, and pretended I knew how to read C well. In reviewing the <code>coverage.c</code> file, which looked something like <a href="https://github.com/ruby/ruby/blob/ruby_2_6/ext/coverage/coverage.c">this</a>, I learned that it supports <a href="https://github.com/ruby/ruby/blob/ruby_2_6/ext/coverage/coverage.c#L42-L48">different modes</a> of coverage.</p>
+<p>I spent an afternoon playing with the different modes. I built different examples that I could use in my presentation. None of it actually made the talk though - I didn&rsquo;t have enough time, and it wasn&rsquo;t the primary focus.</p>
+<p>That doesn&rsquo;t mean I wasted all that effort though.</p>
+<h3 id="rubyconf-2020">RubyConf 2020 <a href="#rubyconf-2020">🔗</a></h3>
+<p>At least with the people I knew, there wasn&rsquo;t a lot of awareness of the Coverage module. People were very familiar with the concept of code coverage. No one I spoke with knew that Ruby has a built-in facility to measure it or how it worked.</p>
+<p>Because of that, I submitted a <a href="https://kevinjmurphy.com/posts/enough-coverage-to-beat-the-band-proposal/">proposal</a> to talk about Coverage at RubyConf 2020. I already had some code samples documenting how to use it. I thought it would be a unique proposal. I had a ready-made theme to tie everything together. I had a lot of time in my house to work on it. If you&rsquo;re wondering why, consult some resource about what was going on in the world then.</p>
+<p>The result is, as of this writing, my <a href="https://kevinjmurphy.com/posts/coverage/">favorite talk</a> I&rsquo;ve put together. I had so much fun with it, that I brought it back out in 2021, still at home, for a &ldquo;Ruby&rsquo;s Got You Covered&rdquo; <a href="https://kevinjmurphy.com/speaking/#enough-coverage-to-beat-the-band">world tour</a>. I&rsquo;m very thankful to all those groups for accepting a virtual, not local, speaker at their event.</p>
+<h3 id="documentation">Documentation <a href="#documentation">🔗</a></h3>
+<p>At the beginning of this post, I was very specific in my wording to say this is my first &ldquo;code change&rdquo; accepted to Ruby. That&rsquo;s because it&rsquo;s not my first <strong>commit</strong> to Ruby.</p>
+<p>At RubyConf 2020, <a href="https://github.com/mame">mame</a> was in the audience for my talk. Another benefit of a virtual conference: I couldn&rsquo;t see that, so I had no idea. As a result, I couldn&rsquo;t be nervous about it. They just so happen to have been the person that wrote most of the Coverage module&rsquo;s code.</p>
+<p>We talked afterwards in the conference&rsquo;s chat platform, and that led to my <a href="https://github.com/ruby/ruby/commit/0026f644d739efed0d69911b434a1012ad55c393">first commit</a> into Ruby. I added what I learned in preparing that talk into the documentation of the module. Now people don&rsquo;t have to look into the source code to discover the different modes.</p>
+<p>In preparation for that 2021 world tour, I also created a <a href="https://kevinjmurphy.com/posts/rubys-got-you-covered/">blog post</a> explaining coverage.</p>
+<h2 id="covering-why-this-matters">Covering Why This Matters <a href="#covering-why-this-matters">🔗</a></h2>
+<p>And <em>that</em> is the very long explanation about how I&rsquo;m interested in the Ruby 3.2.0 Coverage changes. And more specifically, how I noticed oneshot lines was missing as a supported mode.</p>
+<p>Beyond my excitement about having a change (admittedly small) accepted into Ruby, I hope this inspires you to think about what you have to share. That may sound daunting. I know I never expected to commit anything to Ruby.</p>
+<p>It started with me reading a lot of code and playing around in my terminal. Telling some friends turned into a talk. The talk led to an encounter with a Ruby committer that resulted in a documentation commit. Turning that into a blog post got me thinking about how much fun that talk was. That became a whole tour (where I stayed in my office the whole time). Now, I have a small modification to that area of the code in Ruby itself.</p>
+<p>What&rsquo;s something neat you&rsquo;ve been playing with? What&rsquo;s the smallest step in your mind you could take to comfortably share that - even with one person? Years later, who knows what that might lead to.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/2022-review/"><i class="fa fa-chevron-circle-left"></i> 2022 Year-End Review</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2022 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+
+</body>
+
+</html>
+

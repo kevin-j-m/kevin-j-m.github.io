@@ -17,12 +17,11 @@
 <meta property="article:published_time" content="2022-12-29T12:04:22-05:00" />
 <meta property="article:modified_time" content="2022-12-29T12:04:22-05:00" />
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="My First Code Commit in Ruby"/>
 <meta name="twitter:description" content="I had my first commit with a code change introduced into the Ruby programming language."/>
 
-<meta name="generator" content="Hugo 0.104.2" />
+<meta name="generator" content="Hugo 0.109.0">
     
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -188,13 +187,13 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> VALUE
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">rb_coverage_supported</span>(VALUE self, VALUE _mode)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    ID mode <span style="color:#f92672">=</span> RB_SYM2ID(_mode);
+</span></span><span style="display:flex;"><span>    ID mode <span style="color:#f92672">=</span> <span style="color:#a6e22e">RB_SYM2ID</span>(_mode);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> RBOOL(
-</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> rb_intern(<span style="color:#e6db74">&#34;lines&#34;</span>) <span style="color:#f92672">||</span>
-</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> rb_intern(<span style="color:#e6db74">&#34;branches&#34;</span>) <span style="color:#f92672">||</span>
-</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> rb_intern(<span style="color:#e6db74">&#34;methods&#34;</span>) <span style="color:#f92672">||</span>
-</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> rb_intern(<span style="color:#e6db74">&#34;eval&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">RBOOL</span>(
+</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> <span style="color:#a6e22e">rb_intern</span>(<span style="color:#e6db74">&#34;lines&#34;</span>) <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> <span style="color:#a6e22e">rb_intern</span>(<span style="color:#e6db74">&#34;branches&#34;</span>) <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> <span style="color:#a6e22e">rb_intern</span>(<span style="color:#e6db74">&#34;methods&#34;</span>) <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>        mode <span style="color:#f92672">==</span> <span style="color:#a6e22e">rb_intern</span>(<span style="color:#e6db74">&#34;eval&#34;</span>)
 </span></span><span style="display:flex;"><span>    );
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>It turns out, the source doesn&rsquo;t mention oneshot lines either. I asked Samuel, who made these contributions, on <a href="https://ruby.social/@kevin_j_m/109591612453458271">Mastodon</a> about it. After that, I wrote my <a href="https://bugs.ruby-lang.org/issues/19279">first issue</a> on Ruby&rsquo;s issue tracker, and had <a href="https://github.com/ruby/ruby/pull/7040">my PR</a> merged in.</p>

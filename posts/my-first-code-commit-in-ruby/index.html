@@ -162,7 +162,7 @@ if (!doNotTrack) {
         </li>
         
 
-        <li>6 minute read | 1174 words</li>
+        <li>6 minute read | 1173 words</li>
     </ul>
 </aside>
 
@@ -177,7 +177,7 @@ if (!doNotTrack) {
 <h2 id="covering-new-changes">Covering New Changes <a href="#covering-new-changes">🔗</a></h2>
 <p>As I write this, we&rsquo;re in that period between Christmas and New Year&rsquo;s Day. In the past few years, I&rsquo;ve taken that off of work. That also lines up with the release day for a new version of Ruby. This year, <a href="https://www.ruby-lang.org/en/news/2022/12/25/ruby-3-2-0-released/">3.2.0</a> came out on Christmas day.</p>
 <p>Having some time where I&rsquo;m not working, I set some very healthy boundaries. Instead of working, I would instead <em>read</em> about work-related things. While I was catching up on the changes in 3.2.0, something caught my eye - there were some changes to Ruby&rsquo;s Coverage module.</p>
-<p>Coverage can <a href="https://github.com/ruby/ruby/pull/6396">now support</a> measuring code coverage of code in <code>eval</code>. I may write more about that in a later post. As a follow-up to conversation in the <a href="https://bugs.ruby-lang.org/issues/19008">initial issue</a>, <a href="https://github.com/ruby/ruby/pull/6462">another PR</a> adds controls for whether <code>eval</code> coverage is running.</p>
+<p>Coverage can <a href="https://github.com/ruby/ruby/pull/6396">now support</a> measuring code coverage of code in <code>eval</code>. I&rsquo;ve written more about that in a <a href="https://kevinjmurphy.com/posts/evaluating-more-coverage-in-ruby-3-2/">later post</a>. As a follow-up to conversation in the <a href="https://bugs.ruby-lang.org/issues/19008">initial issue</a>, <a href="https://github.com/ruby/ruby/pull/6462">another PR</a> adds controls for whether <code>eval</code> coverage is running.</p>
 <p>Part of that change adds a <a href="https://bugs.ruby-lang.org/issues/19026">new method</a> to the <code>Coverage</code> API. <code>Coverage.supported?</code> is a method that accepts a symbol as an argument. It tells you if the Coverage module supports the mode or type of coverage asked about.</p>
 <p>I pulled up the <a href="https://ruby-doc.org/3.2.0/exts/coverage/Coverage.html#method-c-supported-3F">documentation</a> for the method, and noticed this sentence:</p>
 <blockquote>
@@ -235,6 +235,10 @@ if (!doNotTrack) {
             <a href="https://kevinjmurphy.com/posts/2022-review/"><i class="fa fa-chevron-circle-left"></i> 2022 Year-End Review</a>
         </li>
         
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/evaluating-more-coverage-in-ruby-3-2/">Evaluating More Coverage in Ruby 3.2 <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
         
     </ul>
 </section>

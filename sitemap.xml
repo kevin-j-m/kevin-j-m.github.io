@@ -2,22 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2023-02-08T18:04:22-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2023-02-08T18:04:22-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/rails/</loc>
+    <lastmod>2023-02-08T18:04:22-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2023-02-08T18:04:22-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/ruby-on-rails-podcast-appearance/</loc>
+    <lastmod>2023-02-08T18:04:22-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2023-02-08T18:04:22-05:00</lastmod>
+  </url><url>
     <loc>https://kevinjmurphy.com/posts/rubyconf-mini-2022-video-released/</loc>
     <lastmod>2023-02-06T18:04:22-05:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2023-02-06T18:04:22-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2023-02-06T18:04:22-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
-    <lastmod>2023-02-06T18:04:22-05:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/tags/rubyconf/</loc>
-    <lastmod>2023-02-06T18:04:22-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
     <lastmod>2023-02-06T18:04:22-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/evaluating-more-coverage-in-ruby-3-2/</loc>
@@ -138,9 +144,6 @@
     <lastmod>2022-03-28T12:16:47-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/find-or-initialize-by-block/</loc>
-    <lastmod>2022-03-14T07:30:41-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/rails/</loc>
     <lastmod>2022-03-14T07:30:41-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/business/</loc>

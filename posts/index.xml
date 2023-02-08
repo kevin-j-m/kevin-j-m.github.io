@@ -6,10 +6,19 @@
    <description>Recent content in Posts on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2023 - Kevin Murphy</copyright>
-   <lastBuildDate>Mon, 06 Feb 2023 18:04:22 -0500</lastBuildDate>
+   <lastBuildDate>Wed, 08 Feb 2023 18:04:22 -0500</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/posts/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Ruby on Rails Podcast Appearance</title>
+       <link>https://kevinjmurphy.com/posts/ruby-on-rails-podcast-appearance/</link>
+       <pubDate>Wed, 08 Feb 2023 18:04:22 -0500</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/ruby-on-rails-podcast-appearance/</guid>
+       <description>&lt;h2 id=&#34;the-ruby-on-rails-podcast&#34;&gt;The Ruby on Rails Podcast &lt;a href=&#34;#the-ruby-on-rails-podcast&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I was a guest on &lt;a href=&#34;https://www.therubyonrailspodcast.com/456&#34;&gt;episode 456&lt;/a&gt; of The Ruby on Rails Podcast. We talked about BookBub, coverage, contributing to Ruby, and conference speaking.&lt;/p&gt;&lt;p&gt;I&amp;rsquo;m really thankful Brittany Martin asked me to come on. It&amp;rsquo;s a big honor for me to have appeared on the show.&lt;/p&gt;&lt;iframe src=&#34;https://player.fireside.fm/v2/3OC19MC9+n3dxA1IW?theme=dark&#34; width=&#34;740&#34; height=&#34;200&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34;&gt;&lt;/iframe&gt;</description>
+     </item>
    
      <item>
        <title>Anyone Can Play Guitar (With Ruby) Video Released</title>

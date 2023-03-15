@@ -6,10 +6,19 @@
    <description>Recent content on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2023 - Kevin Murphy</copyright>
-   <lastBuildDate>Fri, 17 Feb 2023 19:00:00 -0400</lastBuildDate>
+   <lastBuildDate>Wed, 15 Mar 2023 17:23:22 -0400</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Speaking at Blue Ridge Ruby</title>
+       <link>https://kevinjmurphy.com/posts/blue-ridge-ruby-2023/</link>
+       <pubDate>Wed, 15 Mar 2023 17:23:22 -0400</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/blue-ridge-ruby-2023/</guid>
+       <description>&lt;p&gt;I&amp;rsquo;m thrilled to be part of the &lt;a href=&#34;https://blueridgeruby.com/#program&#34;&gt;program&lt;/a&gt; for Blue Ridge Ruby 2023 in Asheville, North Carolina.&lt;/p&gt;&lt;p&gt;I&amp;rsquo;ll be &lt;a href=&#34;https://blueridgeruby.com/speakers/kevin-murphy/&#34;&gt;speaking&lt;/a&gt; about Ruby&amp;rsquo;s Coverage module. I hope you can join us!&lt;/p&gt;</description>
+     </item>
    
      <item>
        <title>Duped into modifying a frozen hash</title>

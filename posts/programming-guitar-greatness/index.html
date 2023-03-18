@@ -1,0 +1,353 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Programming Guitar Greatness - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="This post explores different domain modeling tools and object-oriented development to teach a computer how to play the guitar like Stevie Ray Vaughan." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/programming-guitar-greatness/">
+<meta property="og:title" content="Programming Guitar Greatness" />
+<meta property="og:description" content="This post explores different domain modeling tools and object-oriented development to teach a computer how to play the guitar like Stevie Ray Vaughan." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/programming-guitar-greatness/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-18T07:00:10-04:00" />
+<meta property="article:modified_time" content="2023-03-18T07:00:10-04:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Programming Guitar Greatness"/>
+<meta name="twitter:description" content="This post explores different domain modeling tools and object-oriented development to teach a computer how to play the guitar like Stevie Ray Vaughan."/>
+
+<meta name="generator" content="Hugo 0.109.0">
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RVD6VLNE04', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://ruby.social/@kevin_j_m" title="Mastodon">
+               <i class="fab fa-mastodon fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+        <li>
+          <a rel="me" href="https://ruby.social/@kevin_j_m">
+          </a>
+        </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Programming Guitar Greatness</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2023-03-18T07:00:10-04:00">Mar 18, 2023</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/software-design">#software-design</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/anyone-can-play-guitar">#anyone-can-play-guitar</a>
+                
+            </em>
+        </li>
+        
+
+        <li>8 minute read | 1512 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="anyone-can-play-guitar-series">Anyone Can Play Guitar Series <a href="#anyone-can-play-guitar-series">🔗</a></h2>
+<ol>
+<li><a href="https://kevinjmurphy.com/posts/enumerating-musical-notes/">Enumerating Musical Notes</a></li>
+<li><a href="https://kevinjmurphy.com/posts/revisiting-calling-sonic-pi-from-ruby/">Revisiting Calling Sonic Pi From Ruby</a></li>
+<li><strong>Programming Guitar Greatness</strong></li>
+</ol>
+<blockquote>
+<p>I use heavy strings, tune low, play hard, and floor it. Floor it. That&rsquo;s technical talk.
+&ndash; <a href="https://twitter.com/srvofficial/status/836589348489424896?lang=en">Stevie Ray Vaughan</a></p>
+</blockquote>
+<p>Stevie Ray Vaughan is one of my favorite guitarists. Unfortunately, I can&rsquo;t play anything like he can. To make up for it, let&rsquo;s teach a computer to play guitar like him and see what we can learn.</p>
+<p>Hit play for some background music or inspiration, and let&rsquo;s get started.</p>
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KC5H9P4F5Uk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+<h2 id="use-heavy-strings">Use Heavy Strings <a href="#use-heavy-strings">🔗</a></h2>
+<p>Guitars have many strings (typically six) that you manipulate to make different sounds. To build a system to play guitar, it needs to know about strings. To avoid any <a href="https://ruby-doc.org/3.1.2/String.html">potential confusion</a>, we&rsquo;ll build a <code>GuitarString</code> class.</p>
+<p>Different strings on a guitar are different thicknesses. Thicker strings play notes at a lower frequency than thinner strings. We measure this string thickness in thousands of an inch.</p>
+<p>A set of standard strings is a set of nines. The thinnest string in the set is 0.009 inches thick. Stevie Ray Vaughan played a set of 13s that were even thicker on the low end than a stock set of 13s.</p>
+<p>These strings are hard to bend, hard to move, and hard to play with. Stevie called them &ldquo;heavy&rdquo;. We&rsquo;ll know if a string is heavy by comparing it to a standard set.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GuitarString</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">heavy?</span>
+</span></span><span style="display:flex;"><span>    gauge_number <span style="color:#f92672">&gt;</span> common_gauge_number
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h3 id="use-domain-terms">Use Domain Terms <a href="#use-domain-terms">🔗</a></h3>
+<p>We taught our computer about guitar strings using the language of a guitarist. I would typically refer to a wire as having a particular thickness. Stevie referred to his strings as being &ldquo;heavy&rdquo;. To represent his description, we&rsquo;ll use words that resonate in the world our system models. Our guitar strings are &ldquo;heavy&rdquo;, not &ldquo;thick&rdquo;.</p>
+<h2 id="tune-low">Tune Low <a href="#tune-low">🔗</a></h2>
+<p>We tune each string on a guitar to a note. The most common combination of string tunings is standard tuning. Stevie didn&rsquo;t play in standard tuning. He tuned down a half step. Each string is tuned to a slightly lower pitch than you&rsquo;d regularly expect.</p>
+<p>To support this, we need to be able to to tune the guitar. We need to be able to tune the guitar to standard tuning, and down a half step. We&rsquo;ll accept which tuning to use for our guitar as an argument to a <code>tune</code> method. We&rsquo;ll switch on that argument to implement that tuning.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tune</span>(tuning <span style="color:#f92672">=</span> <span style="color:#e6db74">:standard</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> tuning
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">when</span> <span style="color:#e6db74">:standard</span>
+</span></span><span style="display:flex;"><span>      standard_tuning
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">when</span> <span style="color:#e6db74">:down_half_step</span>
+</span></span><span style="display:flex;"><span>      down_half_step_tuning
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>These aren&rsquo;t the only tunings possible for a guitar. There are a <strong>lot</strong> of them. Supporting more will mean this method gets more complex. Our guitar class gets more complex.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tune</span>(tuning <span style="color:#f92672">=</span> <span style="color:#e6db74">:standard</span>); <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">standard_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">down_half_step_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">drop_d_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">open_a_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">modal_c_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>As we handle more and more tunings, our guitar grows in complexity. It starts to look like an instrument primarily responsible for tuning itself. The number of methods that have to do with tuning takes away from the more exciting things you can do with a guitar.</p>
+<p>To focus on a guitar&rsquo;s other responsibilities, let&rsquo;s extract this logic. A <code>Tuner</code> class will take a guitar as a dependency and know how to tune it to a variety of tunings. That changes the implementation in our <code>Guitar</code> class to look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tune</span>(tuning <span style="color:#f92672">=</span> <span style="color:#e6db74">:standard</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Tuner</span><span style="color:#f92672">.</span>new(self)<span style="color:#f92672">.</span>tune(tuning)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>All the complexity of different guitar tunings is still in our system. It&rsquo;s in the <code>Tuner</code> class now, not <code>Guitar</code>.</p>
+<h3 id="extract-related-behavior">Extract Related Behavior <a href="#extract-related-behavior">🔗</a></h3>
+<p>In a system responsible for playing the guitar, that class attracts a lot of behavior. That can make understanding all the responsibilities that the class has difficult. When we can identify a set of related behaviors, we should explore moving it into a separate class.</p>
+<p>An early indicator of this can be when related methods are physically grouped together in a class. Especially when those methods don&rsquo;t have anything to do with other parts of a class. Our guitar had a lot of different methods for each of the different tunings. We moved those out of the class and into another that&rsquo;s responsible for all possible tunings.</p>
+<p>Even if this class isn&rsquo;t reused or composed in other classes, there&rsquo;s value here. We&rsquo;ve freed up complexity inside the <code>Guitar</code> class, while not taking away any of its ability. We can still tune the guitar to any number of tunings. We don&rsquo;t need to worry ourselves with the implementation details of <em>how</em> most of the time. And when we do need to dig into how a guitar gets tuned, we know where to look. We don&rsquo;t need to dig into the depths of various private methods in <code>Guitar</code>. We can start with our aptly-named <code>Tuner</code> class.</p>
+<h2 id="play-hard">Play Hard <a href="#play-hard">🔗</a></h2>
+<p>We make sounds on our guitar by plucking the strings with one hand. The other hand presses down on the strings on the neck of the guitar. The neck has many sections called frets. Pressing down on each of these plays a higher frequency as you move up the neck towards your other hand.</p>
+<p>Our <code>GuitarString</code> knows which note we play, based on what note it&rsquo;s tuned to and which fret our hand is on. But we don&rsquo;t say we play the guitar strings - we play the guitar.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pick</span>(<span style="color:#e6db74">string</span>:, <span style="color:#e6db74">fret</span>:)
+</span></span><span style="display:flex;"><span>    @strings<span style="color:#f92672">[</span>string <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">].</span>pluck(<span style="color:#e6db74">fret</span>: fret)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>With this implementation, we get back the note of the sound the guitar makes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>guitar <span style="color:#f92672">=</span> <span style="color:#66d9ef">Guitar</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>guitar<span style="color:#f92672">.</span>tune
+</span></span><span style="display:flex;"><span>guitar<span style="color:#f92672">.</span>pick(<span style="color:#e6db74">string</span>: <span style="color:#ae81ff">6</span>, <span style="color:#e6db74">fret</span>: <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:f</span>
+</span></span></code></pre></div><h3 id="compose-collaborators">Compose Collaborators <a href="#compose-collaborators">🔗</a></h3>
+<p>Much like with our tuning, our public interface is through the guitar. Again, the majority of our work isn&rsquo;t done by the <code>Guitar</code> class. Its responsibility is taking the input and passing it off to a collaborating class. Here, it figures out which of the strings is being played, and sends it the <code>pluck</code> method.</p>
+<p>The <code>GuitarString</code> handles the hard work of which musical note comes out of the guitar. The <code>Guitar</code> knows how to work with its strings to achieve the result that the caller asked for.</p>
+<h2 id="floor-it">Floor It <a href="#floor-it">🔗</a></h2>
+<p>It&rsquo;s not enough to know which note we&rsquo;re playing. It&rsquo;s a start, but doesn&rsquo;t tell the full story about how what we play sounds. We also need to know which <em>octave</em> of the note we&rsquo;re playing.</p>
+<p>We&rsquo;ll change our <code>GuitarString</code> class to return not only the note, but also the octave. We return both elements in an <a href="https://ruby-doc.org/3.1.2/Array.html">array</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GuitarString</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pluck</span>(<span style="color:#e6db74">fret</span>:)
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>note, octave<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Now let&rsquo;s display all this data.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>note <span style="color:#f92672">=</span> guitar<span style="color:#f92672">.</span>pick(hand_position)
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>note<span style="color:#f92672">.</span>first<span style="color:#e6db74">}#{</span>note<span style="color:#f92672">.</span>last<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>We know that the first element is the note, and the last element is the octave. We know that because we just wrote it, and it&rsquo;s sitting right above our use of it. However, it&rsquo;s not obvious in other cases what each of these elements refers to.</p>
+<p>We&rsquo;ll address that by building a <a href="https://kevinjmurphy.com/posts/enumerating-musical-notes/">custom Note class</a> and returning it in <code>GuitarString#pluck</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GuitarString</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pluck</span>(<span style="color:#e6db74">fret</span>:)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Note</span><span style="color:#f92672">.</span>new(
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">starting_note</span>: @tuning_note,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">starting_octave</span>: @tuning_octave,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">offset</span>: fret,
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>That will change our display logic.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>note <span style="color:#f92672">=</span> guitar<span style="color:#f92672">.</span>pick(hand_position)
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>note<span style="color:#f92672">.</span>value<span style="color:#e6db74">}#{</span>note<span style="color:#f92672">.</span>octave<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>Now it&rsquo;s clear what the data is that we&rsquo;re displaying. It&rsquo;s not the first element, it&rsquo;s the note value. It&rsquo;s not the last element, it&rsquo;s the note octave.</p>
+<p>We could achieve a similar result by using a <a href="https://ruby-doc.org/3.1.2/Hash.html">Hash</a>. That will allow us to name the data elements we refer to in our display logic.</p>
+<p>By moving to a separate class, we can also associate behavior with this data.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Note</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">octave</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">to_s</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>value<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">].</span>upcase<span style="color:#e6db74">}#{</span><span style="color:#e6db74">&#39;b&#39;</span> <span style="color:#66d9ef">if</span> flat?<span style="color:#e6db74">}#{</span>octave<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Now our display logic doesn&rsquo;t even need to know about the internals of the <code>Note</code> class. Instead, it just needs to ask it to display itself.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>guitar<span style="color:#f92672">.</span>pick(hand_position)<span style="color:#f92672">.</span>to_s
+</span></span></code></pre></div><h3 id="elevate-primitives-to-objects">Elevate Primitives to Objects <a href="#elevate-primitives-to-objects">🔗</a></h3>
+<p>We needed to return a collection of information out of our <code>GuitarString#pluck</code> method. Callers need both the note and octave to know what our output sounds like. We started with a primitive data structure from Ruby, an Array.</p>
+<p>That worked, but wasn&rsquo;t very clear what all the data elements represented. We can bring clarity to that with another primitive, a Hash. Later on, we wanted to exercise custom behavior on top of this collection of data. To do that, we made a separate class that encapsulates this data <strong>and</strong> related behavior.</p>
+<h2 id="thats-technical-talk">That&rsquo;s Technical Talk <a href="#thats-technical-talk">🔗</a></h2>
+<p>We now have a system that knows how to play guitar <em>just like</em> Stevie Ray Vaughan did. Except for all the talent, the feeling, the creativity, and the humanity that went into his playing.</p>
+<p>Along the way, we reinforced concepts by using domain terminology. We identified related behavior within a class and extracted it to a separate class. We collaborated with those extractions to build up our system. Our public interfaces (like the <code>Guitar#pick</code> method) don&rsquo;t need to house the complexity. And we built more classes to replace primitive data structures. When we identified behavior related to that data, we had a natural landing place for it.</p>
+<p>I hope this Texas-sized flood of information helps in your next domain modeling exercise.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/blue-ridge-ruby-2023/"><i class="fa fa-chevron-circle-left"></i> Speaking at Blue Ridge Ruby</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2023 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+
+</body>
+
+</html>
+

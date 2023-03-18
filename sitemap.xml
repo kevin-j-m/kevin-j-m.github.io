@@ -2,22 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://kevinjmurphy.com/tags/anyone-can-play-guitar/</loc>
+    <lastmod>2023-03-18T07:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2023-03-18T07:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2023-03-18T07:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/programming-guitar-greatness/</loc>
+    <lastmod>2023-03-18T07:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2023-03-18T07:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/software-design/</loc>
+    <lastmod>2023-03-18T07:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2023-03-18T07:00:10-04:00</lastmod>
+  </url><url>
     <loc>https://kevinjmurphy.com/tags/conference/</loc>
     <lastmod>2023-03-15T17:23:22-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2023-03-15T17:23:22-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2023-03-15T17:23:22-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
-    <lastmod>2023-03-15T17:23:22-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/posts/blue-ridge-ruby-2023/</loc>
-    <lastmod>2023-03-15T17:23:22-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
     <lastmod>2023-03-15T17:23:22-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/modify-frozen-hash/</loc>
@@ -49,9 +58,6 @@
   </url><url>
     <loc>https://kevinjmurphy.com/posts/rubyconf-mini-2022-recap/</loc>
     <lastmod>2022-11-20T20:00:24-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/anyone-can-play-guitar/</loc>
-    <lastmod>2022-11-11T07:00:24-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/revisiting-calling-sonic-pi-from-ruby/</loc>
     <lastmod>2022-11-11T07:00:24-05:00</lastmod>
@@ -111,9 +117,6 @@
     <lastmod>2022-07-17T07:33:10-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/designing-dependency-domain/</loc>
-    <lastmod>2022-06-19T20:00:00-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/software-design/</loc>
     <lastmod>2022-06-19T20:00:00-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/testing-dependencies/</loc>

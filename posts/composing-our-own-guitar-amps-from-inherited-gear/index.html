@@ -1,0 +1,355 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Composing Our Own Guitar Amps From Inherited Gear - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="This post explores inheritance and composition as a way to build and share behavior in a system to model guitar amplifiers." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/composing-our-own-guitar-amps-from-inherited-gear/">
+<meta property="og:title" content="Composing Our Own Guitar Amps From Inherited Gear" />
+<meta property="og:description" content="This post explores inheritance and composition as a way to build and share behavior in a system to model guitar amplifiers." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/composing-our-own-guitar-amps-from-inherited-gear/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-15T15:00:10-04:00" />
+<meta property="article:modified_time" content="2023-04-15T15:00:10-04:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Composing Our Own Guitar Amps From Inherited Gear"/>
+<meta name="twitter:description" content="This post explores inheritance and composition as a way to build and share behavior in a system to model guitar amplifiers."/>
+
+<meta name="generator" content="Hugo 0.109.0">
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RVD6VLNE04', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://ruby.social/@kevin_j_m" title="Mastodon">
+               <i class="fab fa-mastodon fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+        <li>
+          <a rel="me" href="https://ruby.social/@kevin_j_m">
+          </a>
+        </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Composing Our Own Guitar Amps From Inherited Gear</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2023-04-15T15:00:10-04:00">Apr 15, 2023</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/software-design">#software-design</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/anyone-can-play-guitar">#anyone-can-play-guitar</a>
+                
+            </em>
+        </li>
+        
+
+        <li>6 minute read | 1101 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="anyone-can-play-guitar-series">Anyone Can Play Guitar Series <a href="#anyone-can-play-guitar-series">🔗</a></h2>
+<ol>
+<li><a href="https://kevinjmurphy.com/posts/enumerating-musical-notes/">Enumerating Musical Notes</a></li>
+<li><a href="https://kevinjmurphy.com/posts/revisiting-calling-sonic-pi-from-ruby/">Revisiting Calling Sonic Pi From Ruby</a></li>
+<li><a href="https://kevinjmurphy.com/posts/programming-guitar-greatness/">Programming Guitar Greatness</a></li>
+<li><strong>Composing Our Own Guitar Amps From Inherited Gear</strong></li>
+</ol>
+<h2 id="getting-amped-up">Getting Amped Up <a href="#getting-amped-up">🔗</a></h2>
+<p>I <a href="https://kevinjmurphy.com/posts/revisiting-calling-sonic-pi-from-ruby/#power-amp">previously proposed</a> a simplified description of an amplifier. They amplify sounds with the help of two components: a pre amp and a power amp. The sound changes as it progresses through the pre amp and power amp. Finally, it projects through the speaker.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Amplifier</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">amplify</span>(sound)
+</span></span><span style="display:flex;"><span>    pre_amp_stage(sound)
+</span></span><span style="display:flex;"><span>    power_amp_stage(sound)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>With this in place, our system can output sound. That&rsquo;d make a pretty short blog post - but we&rsquo;re not done. Guitarists like fiddling with gear. There are many different kinds of amplifiers they may use.</p>
+<h2 id="tube-amp">Tube Amp <a href="#tube-amp">🔗</a></h2>
+<p>A tube amp uses <a href="https://en.wikipedia.org/wiki/Vacuum_tube">vacuum tubes</a> to output sound, which is how it gets its name. Guitarists love these amps because of the way they modify the sound of a guitar. The tone that comes out of a tube amp is often described as warm. And as you push the amp to higher volumes, it sounds even warmer.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TubeAmp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pre_amp_tone</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> low_volume? <span style="color:#f92672">||</span> mid_volume?
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;💡&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elsif</span> high_volume?
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;🔥&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Unfortunately, these vacuum tubes are relatively <strong>heavy</strong> electrical components. It&rsquo;s a good thing they sound so good. So good that a guitarist is willing to risk the health of their back lugging them on and off stage.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp <span style="color:#f92672">=</span> <span style="color:#66d9ef">TubeAmp</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp<span style="color:#f92672">.</span>weight
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:heavy</span>
+</span></span></code></pre></div><p>Right now, our amp can change the sound to provide its signature warmth. It can also put you at risk of months of physical therapy. One thing it can&rsquo;t do yet is output that sound. We already built that functionality with our <code>Amplifier</code> class. We&rsquo;ll add it into our tube amp by inheriting from the amplifier we&rsquo;ve already built.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TubeAmp</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Amplifier</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp <span style="color:#f92672">=</span> <span style="color:#66d9ef">TubeAmp</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp<span style="color:#f92672">.</span>respond_to?(<span style="color:#e6db74">:amplify</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><h2 id="solid-state-amp">Solid State Amp <a href="#solid-state-amp">🔗</a></h2>
+<p>Solid state amps have a different tone profile than tube amps. They&rsquo;re described as having a clean sound - as clear as glass. That tone persists no matter how much you push the amp past breakup. It maintains its relative clarity, as opposed to tube amps that get even warmer.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SolidStateAmp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pre_amp_tone</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;🫙&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>A solid state amp uses <a href="https://en.wikipedia.org/wiki/Transistor">transistors</a> to send signals to the speaker. These are much lighter than vacuum tubes, and easier on your back.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp <span style="color:#f92672">=</span> <span style="color:#66d9ef">SolidStateAmp</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp<span style="color:#f92672">.</span>weight
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:light</span>
+</span></span></code></pre></div><p>A solid state amp also needs to amplify sound like a tube amp. Let&rsquo;s do the same thing and inherit from the <code>Amplifier</code> class to gain that behavior.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SolidStateAmp</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Amplifier</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp <span style="color:#f92672">=</span> <span style="color:#66d9ef">SolidStateAmp</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp<span style="color:#f92672">.</span>respond_to?(<span style="color:#e6db74">:amplify</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><h2 id="inheritance">Inheritance <a href="#inheritance">🔗</a></h2>
+<p>With both our tube amp and solid state amp, we inherited from an amplifier class. The <code>Amplifier</code> has all the behavior that&rsquo;s consistent between different types of amps. By inheriting from it, the amps gain that behavior and structure without having to rewrite it. Those amps then apply their specialization on top of it. Both amps produce a different tone. The different electrical components they use result in different weights.</p>
+<p>Inheritance works well here because each of these amplifiers <strong>are</strong> still an amplifier. They share the same basic data and behavior, and should continue to have that in common. They have pieces that make their interaction with, or use of, that data or behavior special.</p>
+<p>We encode that specialization in that class, and still use the original behavior. <code>Amplifier#amplify</code> pushes our sound through its <code>pre_amp_stage</code> method. That stage modifies the sound with the amp&rsquo;s <code>pre_amp_tone</code>. That allows a tube amp to have its characteristic warmth and a solid state amp to apply its clarity.</p>
+<h2 id="hybrid-amp">Hybrid Amp <a href="#hybrid-amp">🔗</a></h2>
+<p>Let&rsquo;s build one more type of amp - one that aims to be the best of both worlds. A hybrid amp takes parts of a tube amp and other parts from a solid state amp and combines them.</p>
+<p>We want both tube and solid state behavior. Let&rsquo;s attempt the same inheritance approach we&rsquo;ve used so far.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HybridAmp</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">TubeAmp</span>, <span style="color:#66d9ef">SolidStateAmp</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>When we load up our console we&rsquo;ll see an error about our class.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>(irb):<span style="color:#ae81ff">1</span>: syntax error, unexpected <span style="color:#e6db74">&#39;,&#39;</span>, expecting <span style="color:#e6db74">&#39;;&#39;</span> <span style="color:#f92672">or</span> <span style="color:#e6db74">&#39;\n&#39;</span> (<span style="color:#66d9ef">SyntaxError</span>)
+</span></span></code></pre></div><p>Ruby doesn&rsquo;t support <a href="https://en.wikipedia.org/wiki/Multiple_inheritance">multiple inheritance</a>. We can only have a single class that we inherit from. But we know our <code>HybridAmp</code> needs behavior that&rsquo;s the same as each of these other classes. To consider a different approach, let&rsquo;s revisit our definition of an amplifier.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Amplifier</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">amplify</span>(sound)
+</span></span><span style="display:flex;"><span>    pre_amp_stage(sound)
+</span></span><span style="display:flex;"><span>    power_amp_stage(sound)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Each amplifier has a pre amp and a power amp. Let&rsquo;s build separate modules for each of these components&rsquo; behavior.</p>
+<p>A hybrid amp has a tube amp pre amp to replicate its warmth.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">module</span> TubePreAmp
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pre_amp_tone</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> low_volume? <span style="color:#f92672">||</span> mid_volume?
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;💡&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elsif</span> high_volume?
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;🔥&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>By including this module in our amp, any <code>HybridAmp</code> instances will gain all the behavior in the module.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HybridAmp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">TubePreAmp</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp <span style="color:#f92672">=</span> <span style="color:#66d9ef">HybridAmp</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">volume</span>: <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp<span style="color:#f92672">.</span>pre_amp_tone
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;🔥&#34;</span>
+</span></span></code></pre></div><p>A hybrid amp uses the same power amp as solid state amps to save some weight.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">module</span> SolidStatePowerAmp
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">power_amp_weight</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">:light</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Unlike inheritance, we can include as many modules as we&rsquo;d like. Let&rsquo;s also include the <code>SolidStatePowerAmp</code> behavior in our <code>HybridAmp</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HybridAmp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">TubePreAmp</span>, <span style="color:#66d9ef">SolidStatePowerAmp</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp <span style="color:#f92672">=</span> <span style="color:#66d9ef">HybridAmp</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">volume</span>: <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp<span style="color:#f92672">.</span>power_amp_weight
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:light</span>
+</span></span></code></pre></div><p>A hybrid amp is still a kind of amplifier, and it still needs the ability to amplify sound. As such, we are <em>also</em> going to use inheritance here. Our hybrid amp is a specialization of <code>Amplifier</code>, just like a tube or solid state amp. Its specializations come from the modules it includes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HybridAmp</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Amplifier</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">TubePreAmp</span>, <span style="color:#66d9ef">SolidStatePowerAmp</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp <span style="color:#f92672">=</span> <span style="color:#66d9ef">HybridAmp</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">volume</span>: <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> amp<span style="color:#f92672">.</span>respond_to?(<span style="color:#e6db74">:amplify</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><h2 id="composition">Composition <a href="#composition">🔗</a></h2>
+<p>We are unable to pull behavior from multiple places with inheritance. We couldn&rsquo;t apply our initial strategy to build our hybrid amp. We didn&rsquo;t want to duplicate the behavior. They are <strong>intentionally</strong> the same. We needed a different approach.</p>
+<p>We can combine sets of related behavior in modules, and share them between classes. We compose those modules together in our classes to use the behavior they provide.</p>
+<p>With this composition approach, our tube and solid state amps become pretty small.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TubeAmp</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Amplifier</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">TubePreAmp</span>, <span style="color:#66d9ef">TubePowerAmp</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SolidStateAmp</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Amplifier</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">SolidStatePreAmp</span>, <span style="color:#66d9ef">SolidStatePowerAmp</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The special behavior for each of the amps lives in the modules so that different amp types can use them. We use modules to share that behavior across classes. That allows our hybrid amp to operate the same way as parts of our other amps.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/programming-guitar-greatness/"><i class="fa fa-chevron-circle-left"></i> Programming Guitar Greatness</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2023 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+
+</body>
+
+</html>
+

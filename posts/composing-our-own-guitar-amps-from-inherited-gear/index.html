@@ -165,7 +165,7 @@ if (!doNotTrack) {
         </li>
         
 
-        <li>6 minute read | 1101 words</li>
+        <li>6 minute read | 1127 words</li>
     </ul>
 </aside>
 
@@ -180,6 +180,7 @@ if (!doNotTrack) {
 <li><a href="https://kevinjmurphy.com/posts/revisiting-calling-sonic-pi-from-ruby/">Revisiting Calling Sonic Pi From Ruby</a></li>
 <li><a href="https://kevinjmurphy.com/posts/programming-guitar-greatness/">Programming Guitar Greatness</a></li>
 <li><strong>Composing Our Own Guitar Amps From Inherited Gear</strong></li>
+<li><a href="https://kevinjmurphy.com/posts/flog-driven-development/">Flog-Driven Development</a></li>
 </ol>
 <h2 id="getting-amped-up">Getting Amped Up <a href="#getting-amped-up">🔗</a></h2>
 <p>I <a href="https://kevinjmurphy.com/posts/revisiting-calling-sonic-pi-from-ruby/#power-amp">previously proposed</a> a simplified description of an amplifier. They amplify sounds with the help of two components: a pre amp and a power amp. The sound changes as it progresses through the pre amp and power amp. Finally, it projects through the speaker.</p>
@@ -301,6 +302,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">SolidStatePreAmp</span>, <span style="color:#66d9ef">SolidStatePowerAmp</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
 </span></span></code></pre></div><p>The special behavior for each of the amps lives in the modules so that different amp types can use them. We use modules to share that behavior across classes. That allows our hybrid amp to operate the same way as parts of our other amps.</p>
+<p>Next let&rsquo;s dig into a <a href="https://kevinjmurphy.com/posts/flog-driven-development/">tool</a> that can help guide some of the code organization decisions we&rsquo;ve made while building our guitar and amps.</p>
 
 
 </article>
@@ -313,6 +315,10 @@ if (!doNotTrack) {
             <a href="https://kevinjmurphy.com/posts/programming-guitar-greatness/"><i class="fa fa-chevron-circle-left"></i> Programming Guitar Greatness</a>
         </li>
         
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/flog-driven-development/">Flog-Driven Development <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
         
     </ul>
 </section>

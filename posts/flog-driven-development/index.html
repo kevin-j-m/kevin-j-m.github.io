@@ -1,0 +1,401 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Flog-Driven Development - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="This post explores how flog, a tool that analyzes the complexity of your code, can identify areas to refactor." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/flog-driven-development/">
+<meta property="og:title" content="Flog-Driven Development" />
+<meta property="og:description" content="This post explores how flog, a tool that analyzes the complexity of your code, can identify areas to refactor." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/flog-driven-development/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-13T07:20:24-04:00" />
+<meta property="article:modified_time" content="2023-05-13T07:20:24-04:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Flog-Driven Development"/>
+<meta name="twitter:description" content="This post explores how flog, a tool that analyzes the complexity of your code, can identify areas to refactor."/>
+
+<meta name="generator" content="Hugo 0.109.0">
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RVD6VLNE04', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://ruby.social/@kevin_j_m" title="Mastodon">
+               <i class="fab fa-mastodon fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+        <li>
+          <a rel="me" href="https://ruby.social/@kevin_j_m">
+          </a>
+        </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Flog-Driven Development</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2023-05-13T07:20:24-04:00">May 13, 2023</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/software-design-concert-series">#software-design-concert-series</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/anyone-can-play-guitar">#anyone-can-play-guitar</a>
+                
+            </em>
+        </li>
+        
+
+        <li>7 minute read | 1302 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="anyone-can-play-guitar-series">Anyone Can Play Guitar Series <a href="#anyone-can-play-guitar-series">🔗</a></h2>
+<ol>
+<li><a href="https://kevinjmurphy.com/posts/enumerating-musical-notes/">Enumerating Musical Notes</a></li>
+<li><a href="https://kevinjmurphy.com/posts/revisiting-calling-sonic-pi-from-ruby/">Revisiting Calling Sonic Pi From Ruby</a></li>
+<li><a href="https://kevinjmurphy.com/posts/programming-guitar-greatness/">Programming Guitar Greatness</a></li>
+<li><a href="https://kevinjmurphy.com/posts/composing-our-own-guitar-amps-from-inherited-gear/">Composing Our Own Guitar Amps From Inherited Gear</a></li>
+<li><strong>Flog-Driven Development</strong></li>
+</ol>
+<h2 id="remembering-refactoring">Remembering Refactoring <a href="#remembering-refactoring">🔗</a></h2>
+<p>In a <a href="https://kevinjmurphy.com/posts/programming-guitar-greatness/">prior post</a>, we extracted the details of how to tune a guitar out of the <code>Guitar</code> class. We <a href="https://kevinjmurphy.com/posts/programming-guitar-greatness/#tune-low">moved it</a> to a separate <code>Tuner</code> class. In that telling, we did so because it spoke to our sensibilities. It afforded us more space in the <code>Guitar</code> class to focus on other responsibilities. It gave a central location to focus on tuning.</p>
+<p>What if those justifications weren&rsquo;t enough? What if we needed metrics to give an explanation for our refactoring? Let&rsquo;s use the guidance from a tool called <a href="https://github.com/seattlerb/flog">flog</a> to guide our changes.</p>
+<h2 id="flog">Flog <a href="#flog">🔗</a></h2>
+<p>Flog <a href="https://github.com/seattlerb/flog#label-DESCRIPTION-3A">describes itself</a> as a tool that:</p>
+<blockquote>
+<p>reports the most tortured code in an easy to read pain report. The higher the score, the more pain the code is in.</p>
+</blockquote>
+<p>You point flog to a file, or directory, and it provides you with a score. The higher the score, the more attention you might want to pay to it. As for how flog calculates the number, I&rsquo;ll let flog <a href="https://ruby.sadi.st/Flog.html">summarize itself</a> again:</p>
+<blockquote>
+<p>Flog essentially scores an ABC metric: Assignments, Branches, Calls, with particular attention placed on calls.</p>
+</blockquote>
+<p>Let&rsquo;s look at the flog score of our <code>Guitar</code> class with all the tuning details inside the class:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>⇒ flog guitar_with_tuning.rb -a
+</span></span><span style="display:flex;"><span>65.6: flog total
+</span></span><span style="display:flex;"><span>9.4: flog/method average
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>16.8: Guitar#standard_tuning
+</span></span><span style="display:flex;"><span>16.8: Guitar#down_half_step_tuning
+</span></span><span style="display:flex;"><span>13.0: Guitar#tune
+</span></span><span style="display:flex;"><span>6.6: Guitar#pick
+</span></span><span style="display:flex;"><span>5.2: Guitar#initialize
+</span></span><span style="display:flex;"><span>4.3: Guitar#restring
+</span></span><span style="display:flex;"><span>3.0: Guitar#none
+</span></span></code></pre></div><p>Let&rsquo;s investigate the method with the biggest flog score.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">standard_tuning</span>
+</span></span><span style="display:flex;"><span>  @strings<span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">].</span>tune(<span style="color:#e6db74">note</span>: <span style="color:#e6db74">:e</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>  @strings<span style="color:#f92672">[</span><span style="color:#ae81ff">4</span><span style="color:#f92672">].</span>tune(<span style="color:#e6db74">note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>  @strings<span style="color:#f92672">[</span><span style="color:#ae81ff">3</span><span style="color:#f92672">].</span>tune(<span style="color:#e6db74">note</span>: <span style="color:#e6db74">:d</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>  @strings<span style="color:#f92672">[</span><span style="color:#ae81ff">2</span><span style="color:#f92672">].</span>tune(<span style="color:#e6db74">note</span>: <span style="color:#e6db74">:g</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>  @strings<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">].</span>tune(<span style="color:#e6db74">note</span>: <span style="color:#e6db74">:b</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>  @strings<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">].</span>tune(<span style="color:#e6db74">note</span>: <span style="color:#e6db74">:e</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We know that flog is particularly attuned to looking for calls. Each line in this method has a call to access an element in an array, and then another call to the <code>tune</code> method. That&rsquo;s two calls per line, with six lines in the method.</p>
+<h2 id="what-do-we-do-with-the-number">What do we do with the number? <a href="#what-do-we-do-with-the-number">🔗</a></h2>
+<p>So, bigger is worse, but how big is bad? At what number should you take action? Thoughtbot&rsquo;s <a href="https://github.com/thoughtbot/ruby-science">Ruby Science</a> book suggests a method is long or complex with a flog score above 10. It also posits that a class is long or complex with a flog score above 50.</p>
+<p>With those heuristics in mind, our <code>Guitar</code> class is long, and all the methods related to tuning are long as well. Let&rsquo;s start by looking at the public method in that class, the method to tune the guitar:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tune</span>(tuning <span style="color:#f92672">=</span> <span style="color:#e6db74">:standard</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> tuning
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">when</span> <span style="color:#e6db74">:standard</span>
+</span></span><span style="display:flex;"><span>    standard_tuning
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">when</span> <span style="color:#e6db74">:down_half_step</span>
+</span></span><span style="display:flex;"><span>    down_half_step_tuning
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">when</span> <span style="color:#e6db74">:drop_d</span>
+</span></span><span style="display:flex;"><span>    drop_d_tuning
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">raise</span> <span style="color:#e6db74">&#34;unknown tuning&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  @tuning <span style="color:#f92672">=</span> tuning
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The technique I&rsquo;d start with to simplify a complex method is to extract smaller methods from it. However, there doesn&rsquo;t seem to be much gained from that here. This happens to be a really long case statement, each branch of which calls another method.</p>
+<p>In an attempt to achieve a lower flog score, I&rsquo;m going to rely on the similar naming of each of these tuning methods. I&rsquo;ll reach for a different tool: metaprogramming.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tune</span>(tuning <span style="color:#f92672">=</span> <span style="color:#e6db74">:standard</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">raise</span> <span style="color:#e6db74">&#34;unknown tuning&#34;</span> <span style="color:#66d9ef">unless</span> <span style="color:#66d9ef">VALID_TUNINGS</span><span style="color:#f92672">.</span>include?(tuning)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  send(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>tuning<span style="color:#e6db74">}</span><span style="color:#e6db74">_tuning&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  @tuning <span style="color:#f92672">=</span> tuning
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>What does flog think about this change?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>⇒ flog guitar_tuning_metaprogramming.rb
+</span></span><span style="display:flex;"><span>58.1: flog total
+</span></span><span style="display:flex;"><span>8.3: flog/method average
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>5.6: Guitar#tune
+</span></span></code></pre></div><p>The flog score decreased from 13 to 5.6. A clear improvement - in the eyes of the metric. Is it better though? I&rsquo;d argue that&rsquo;s still a matter of taste. How do you feel about the metaprogramming? How comfortable will you and your team be maintaining this? What pressure does the required naming scheme for any of the tuning methods place on your system? Consider these questions to decide whether to make this change, regardless of the flog score.</p>
+<h2 id="extract-class">Extract Class <a href="#extract-class">🔗</a></h2>
+<p>Even with this change, we still have a class that has a flog score over 50. That puts it in the &ldquo;too long&rdquo; category, according to Ruby Science. So, let&rsquo;s do what we did in the prior post and move everything related to tuning into a <code>Tuner</code> class.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tuner</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(guitar)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tune</span>(tuning <span style="color:#f92672">=</span> <span style="color:#e6db74">:standard</span>); <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">standard_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">down_half_step_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">drop_d_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">open_a_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">modal_c_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">all_fourths_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">all_fifths_tuning</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We still need to tune our guitar. We achieve that by delegating this responsibility to our <code>Tuner</code> class.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Guitar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tune</span>(tuning <span style="color:#f92672">=</span> <span style="color:#e6db74">:standard</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Tuner</span><span style="color:#f92672">.</span>new(self)<span style="color:#f92672">.</span>tune(tuning)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>What does that mean for our flog score?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>⇒ flog guitar_separate_tuner.rb
+</span></span><span style="display:flex;"><span>18.9: flog total
+</span></span><span style="display:flex;"><span>3.8: flog/method average
+</span></span></code></pre></div><p>Unsurprisingly, deleting most of the code in a class reduces the complexity of that class. We didn&rsquo;t get rid of the complexity though. We just moved it somewhere else. Let&rsquo;s check the flog score of our new <code>Tuner</code> class.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>⇒ flog tuner.rb
+</span></span><span style="display:flex;"><span>58.6: flog total
+</span></span><span style="display:flex;"><span>11.7: flog/method average
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>25.2: Tuner#standard_tuning
+</span></span><span style="display:flex;"><span>25.2: Tuner#down_half_step_tuning
+</span></span><span style="display:flex;"><span>5.3: Tuner#tune
+</span></span></code></pre></div><p>The complexity of our tuning methods actually got <em>worse</em>, increasing from 16.8 to 25.2. That&rsquo;s because we added another call on each of our lines.</p>
+<p>Tuning one string used to look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>@strings<span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">].</span>tune(<span style="color:#e6db74">note</span>: <span style="color:#e6db74">:e</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">2</span>)
+</span></span></code></pre></div><p>But now we need to find the string from the guitar that&rsquo;s passed into the tuner.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>@guitar<span style="color:#f92672">.</span>strings<span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">].</span>tune(<span style="color:#e6db74">note</span>: <span style="color:#e6db74">:e</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">2</span>)
+</span></span></code></pre></div><h2 id="extracting-new-concepts">Extracting new concepts <a href="#extracting-new-concepts">🔗</a></h2>
+<p>To handle the complexity, we&rsquo;re going to reshuffle the responsibility of these ideas. Right now the methods for the different tunings tune each string of the guitar. Instead, let&rsquo;s have the tunings only know what notes to tune the strings to.</p>
+<p>We&rsquo;ll also extract each of these tunings out to a separate module.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">module</span> StandardTuning
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">pitches</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>      { <span style="color:#e6db74">note</span>: <span style="color:#e6db74">:e</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">4</span> },
+</span></span><span style="display:flex;"><span>      { <span style="color:#e6db74">note</span>: <span style="color:#e6db74">:b</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">3</span> },
+</span></span><span style="display:flex;"><span>      { <span style="color:#e6db74">note</span>: <span style="color:#e6db74">:g</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">3</span> },
+</span></span><span style="display:flex;"><span>      { <span style="color:#e6db74">note</span>: <span style="color:#e6db74">:d</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">3</span> },
+</span></span><span style="display:flex;"><span>      { <span style="color:#e6db74">note</span>: <span style="color:#e6db74">:a</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">2</span> },
+</span></span><span style="display:flex;"><span>      { <span style="color:#e6db74">note</span>: <span style="color:#e6db74">:e</span>, <span style="color:#e6db74">octave</span>: <span style="color:#ae81ff">2</span> },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Now when we want to add a new tuning, we add a new module, rather than another method on the <code>Tuner</code> class.</p>
+<p>The act of tuning is now isolated into the <code>Tuner#tune</code> method.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tuner</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tune</span>(tuning <span style="color:#f92672">=</span> <span style="color:#e6db74">:standard</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">raise</span> <span style="color:#e6db74">&#34;unknown tuning&#34;</span> <span style="color:#66d9ef">unless</span> <span style="color:#66d9ef">VALID_TUNINGS</span><span style="color:#f92672">.</span>include?(tuning)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    pitches_for(tuning)<span style="color:#f92672">.</span>each_with_index <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>pitch, index<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>      @guitar<span style="color:#f92672">.</span>strings<span style="color:#f92672">[</span>index<span style="color:#f92672">].</span>tune(<span style="color:#f92672">**</span>pitch)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pitches_for</span>(tuning)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Object</span><span style="color:#f92672">.</span>const_get(tuning_class_name(tuning))<span style="color:#f92672">.</span>pitches
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tuning_class_name</span>(tuning)
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>tuning<span style="color:#e6db74">}</span><span style="color:#e6db74">_tuning&#34;</span><span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;_&#34;</span>)<span style="color:#f92672">.</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:capitalize</span>)<span style="color:#f92672">.</span>join
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Keeping with our original refactor, this still uses metaprogramming. This time we use it to recall the appropriate module to get the pitches from.</p>
+<p>What does flog think about this?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>⇒ flog tuner_without_tunings.rb
+</span></span><span style="display:flex;"><span>21.9: flog total
+</span></span><span style="display:flex;"><span>4.4: flog/method average
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>8.5: Tuner#tune
+</span></span><span style="display:flex;"><span>6.8: Tuner#tuning_class_name
+</span></span><span style="display:flex;"><span>3.6: Tuner#pitches_for
+</span></span></code></pre></div><p>Our <code>Tuner</code> class has a flog score under 50, and all the methods are under 10. But, like last time, did we just shift the complexity into our extracted tuning modules?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>⇒ flog standard_tuning.rb -a
+</span></span><span style="display:flex;"><span>1.5: flog total
+</span></span><span style="display:flex;"><span>1.5: flog/method average
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>1.5: StandardTuning::pitches
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>⇒ flog down_half_step_tuning.rb -a
+</span></span><span style="display:flex;"><span>1.5: flog total
+</span></span><span style="display:flex;"><span>1.5: flog/method average
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>1.5: DownHalfStepTuning::pitches
+</span></span></code></pre></div><p>Each of these is lightweight - a single method returning an array of hashes. According to Ruby Science&rsquo;s heuristics, we no longer have complex methods or classes!</p>
+<h2 id="flog-as-a-forcing-function">Flog as a forcing function <a href="#flog-as-a-forcing-function">🔗</a></h2>
+<p>At the time I didn&rsquo;t refer to flog when making these changes. But it was interesting to reconstruct them with a dedicated focus on their flog scores. When you don&rsquo;t have any intuition around the complexity of a piece of code, it can help as an objective source.</p>
+<p>Choosing to lean on some of these changes would require more than only the score. Introducing the metaprogramming would depend on my team&rsquo;s attitude towards that language feature.</p>
+<p>Those high flog numbers may have driven me to explore different options. I may not have gotten to the point of building separate modules for the tunings. That freed any given class to know about <em>every</em> different tuning. Paying attention to the flog score pushed me in ways I may not have otherwise considered.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/composing-our-own-guitar-amps-from-inherited-gear/"><i class="fa fa-chevron-circle-left"></i> Composing Our Own Guitar Amps From Inherited Gear</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2023 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+
+</body>
+
+</html>
+

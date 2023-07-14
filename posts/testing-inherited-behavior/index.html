@@ -1,0 +1,407 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Testing Inherited Behavior - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="This post describes different ways of testing inherited behavior, including duplicating the tests, not testing the inherited behavior, and using a shared example." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/testing-inherited-behavior/">
+<meta property="og:title" content="Testing Inherited Behavior" />
+<meta property="og:description" content="This post describes different ways of testing inherited behavior, including duplicating the tests, not testing the inherited behavior, and using a shared example." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/testing-inherited-behavior/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-14T19:00:24-04:00" />
+<meta property="article:modified_time" content="2023-07-14T19:00:24-04:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Testing Inherited Behavior"/>
+<meta name="twitter:description" content="This post describes different ways of testing inherited behavior, including duplicating the tests, not testing the inherited behavior, and using a shared example."/>
+
+<meta name="generator" content="Hugo 0.109.0">
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RVD6VLNE04', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://ruby.social/@kevin_j_m" title="Mastodon">
+               <i class="fab fa-mastodon fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+        <li>
+          <a rel="me" href="https://ruby.social/@kevin_j_m">
+          </a>
+        </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Testing Inherited Behavior</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2023-07-14T19:00:24-04:00">Jul 14, 2023</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/testing">#testing</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/rspec">#rspec</a>
+                
+            </em>
+        </li>
+        
+
+        <li>9 minute read | 1761 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <h2 id="getting-it-on-record">Getting It On Record <a href="#getting-it-on-record">🔗</a></h2>
+<p>Recently I asked on <a href="https://ruby.social/@kevin_j_m/110668925217643586">Mastodon</a>:</p>
+<blockquote>
+<p>How do you prefer to see methods that are inherited from another class unit tested?</p>
+<p>I&rsquo;m applying this to #ruby code, but this question is meant to be language-agnostic to cover how you test inherited behavior in OO languages.</p>
+</blockquote>
+<p>This is something that I&rsquo;ve waffled on, and changed my opinion on, seemingly each time I have to deal with this. For me, a lot of the tension comes from choosing why I&rsquo;m testing. Am I testing to verify the correctness of the code, or am I testing to document expected behavior?</p>
+<p>Let&rsquo;s say we&rsquo;re managing a record collection.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VinylAlbum</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">shape</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">:circle</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">audio_technology</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">:analog</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">max_minutes</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">46</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This all works until we get our first <a href="https://en.wikipedia.org/wiki/Extended_play">extended play</a> (EP) record. To model that, we inherit from our <code>VinylAlbum</code> and override <code>max_minutes</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Ep</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">VinylAlbum</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">max_minutes</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We want to test our new <code>Ep</code> class. What do we do? Here&rsquo;s what respondents to my poll said.</p>
+<figure class="mid"><img src="https://kevinjmurphy.com/img/mastodon_test_inherited_behavior_poll.png"
+         alt="A poll on Mastodon asking how people unit test inherited behavior. 67% say don&#39;t test it. 21% say something fancy (like a shared example). 13% say duplicate the test. 24 responses"/>
+</figure>
+
+<h2 id="duplicate-the-test">Duplicate The Test <a href="#duplicate-the-test">🔗</a></h2>
+<p>This was the least popular response (holding aside &ldquo;Other&rdquo;, which no one answered with). In this case, you can consider the inheritance to be an implementation detail. <code>Ep</code> responds to three methods, so I&rsquo;m going to test how it behaves to receiving those three messages.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">RSpec</span><span style="color:#f92672">.</span>describe <span style="color:#66d9ef">Ep</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  describe <span style="color:#e6db74">&#34;#shape&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    it <span style="color:#e6db74">&#34;is a circle&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      album <span style="color:#f92672">=</span> <span style="color:#66d9ef">Ep</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      expect(album<span style="color:#f92672">.</span>shape)<span style="color:#f92672">.</span>to eq <span style="color:#e6db74">:circle</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  describe <span style="color:#e6db74">&#34;audio_technology&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    it <span style="color:#e6db74">&#34;is analog&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      album <span style="color:#f92672">=</span> <span style="color:#66d9ef">Ep</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      expect(album<span style="color:#f92672">.</span>audio_technology)<span style="color:#f92672">.</span>to eq <span style="color:#e6db74">:analog</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  describe <span style="color:#e6db74">&#34;#max_minutes&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    it <span style="color:#e6db74">&#34;is 30 minutes&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      album <span style="color:#f92672">=</span> <span style="color:#66d9ef">Ep</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      expect(album<span style="color:#f92672">.</span>max_minutes)<span style="color:#f92672">.</span>to eq <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This is documenting the public API surface of the unit under test. I&rsquo;m signaling when reading or running these tests that <code>Ep</code> has these methods and responds in this way to them.</p>
+<p>The cost here is in maintaining these tests. Any changes to <code>VinylRecord</code> will mean changing not only its tests, but also <code>Ep</code>&rsquo;s tests. These tests also run in the regression suite forever. That contributes time to run tests that you might consider to be testing the same thing twice.</p>
+<h3 id="testing-inherited-behavior-creates-an-integration-test">Testing Inherited Behavior Creates An Integration Test <a href="#testing-inherited-behavior-creates-an-integration-test">🔗</a></h3>
+<p>I also received <a href="https://ruby.social/@acute_distress/110672196493618303">feedback</a> to consider testing in this way an integration test. And my question was specifically about <em>unit testing</em>.</p>
+<blockquote>
+<p>only test what YOUR UNIT does and nothing else&hellip;Otherwise you are writing integration tests. It’s a grey area especially if you have added a private method to the child. Then you’ve got to ask yourself is your design correct.</p>
+</blockquote>
+<p>I don&rsquo;t think this opinion is wrong. It may be a little at odds with how free I <em>tend</em> to see people be with the term &ldquo;unit test&rdquo;. Particularly in the Ruby, and especially Rails, community. I&rsquo;ve seen more than my share of what we call unit tests of models in a Rails app that hit the database. That test is not <strong>technically</strong> a unit test. It&rsquo;s not only collaborating with another class. It&rsquo;s working with a whole other <em>external dependency</em>. Testing the behavior we&rsquo;re inheriting doesn&rsquo;t seem that out of line in comparison.</p>
+<h3 id="wheres-the-line">Where&rsquo;s The Line? <a href="#wheres-the-line">🔗</a></h3>
+<p>Let&rsquo;s take this to the extreme though and look at a class that has no behavior defined in Ruby.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> foo <span style="color:#f92672">=</span> <span style="color:#66d9ef">Foo</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">003</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> foo<span style="color:#f92672">.</span>public_methods<span style="color:#f92672">.</span>count
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">64</span>
+</span></span></code></pre></div><p>Are you writing tests for those 64 methods you get from <code>BasicObject</code> and wherever else? I know I&rsquo;m not.</p>
+<p>Maybe instead we say we&rsquo;ll only test behavior that we explicitly inherit.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ApplicationRecord</span>; <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> foo <span style="color:#f92672">=</span> <span style="color:#66d9ef">Foo</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">003</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> foo<span style="color:#f92672">.</span>public_methods<span style="color:#f92672">.</span>count
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">466</span>
+</span></span></code></pre></div><p>I&rsquo;m not writing tests for all the behavior I get from Active Record either.</p>
+<p>So why duplicate the tests? It seems here that the decision is to test behavior inherited from code that I own, or that&rsquo;s defined in my codebase. I&rsquo;m trusting that Active Record is testing its behavior. I don&rsquo;t trust <em>my</em> behavior I inherit from <code>VinylRecord</code>.</p>
+<h2 id="dont-test">Don&rsquo;t Test <a href="#dont-test">🔗</a></h2>
+<p>This was the most popular option. We trust Ruby to test the methods it defines. And we trust Active Record to test the methods it defines. As opposed to the duplication section, here we <em>also</em> trust <code>VinylAlbum</code> to test the methods it defines.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">RSpec</span><span style="color:#f92672">.</span>describe <span style="color:#66d9ef">Ep</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  describe <span style="color:#e6db74">&#34;#max_minutes&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    it <span style="color:#e6db74">&#34;is 30 minutes&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      album <span style="color:#f92672">=</span> <span style="color:#66d9ef">Ep</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      expect(album<span style="color:#f92672">.</span>max_minutes)<span style="color:#f92672">.</span>to eq <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The <code>VinylAlbum</code> tests are already testing <code>shape</code> and <code>audio_technology</code>. <code>max_minutes</code> is different, and defined in the implementation of the <code>Ep</code> class, so we only test that.</p>
+<h2 id="something-fancy-shared-examples">Something Fancy (Shared Examples) <a href="#something-fancy-shared-examples">🔗</a></h2>
+<p>This was the second most popular response. I suggested a <a href="https://rspec.info/features/3-12/rspec-core/example-groups/shared-examples/">shared example</a> as an implementation of something fancy. I received no responses explaining another fancy method. So I&rsquo;m assuming that all the respondents meant a shared example.</p>
+<p>For this, we document the behavior that makes up a vinyl album.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">RSpec</span><span style="color:#f92672">.</span>shared_examples <span style="color:#e6db74">&#34;an album&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  describe <span style="color:#e6db74">&#34;#shape&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    it <span style="color:#e6db74">&#34;is a circle&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      expect(album<span style="color:#f92672">.</span>shape)<span style="color:#f92672">.</span>to eq <span style="color:#e6db74">:circle</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  describe <span style="color:#e6db74">&#34;audio_technology&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    it <span style="color:#e6db74">&#34;is analog&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      expect(album<span style="color:#f92672">.</span>audio_technology)<span style="color:#f92672">.</span>to eq <span style="color:#e6db74">:analog</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  describe <span style="color:#e6db74">&#34;#max_minutes&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    it <span style="color:#e6db74">&#34;is 30 minutes&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      expect(album<span style="color:#f92672">.</span>max_minutes)<span style="color:#f92672">.</span>to eq <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>And then each of the classes that have this behavior include this shared example in their tests.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">RSpec</span><span style="color:#f92672">.</span>describe <span style="color:#66d9ef">VinylAlbum</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  it_behaves_like <span style="color:#e6db74">&#34;an album&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">RSpec</span><span style="color:#f92672">.</span>describe <span style="color:#66d9ef">Ep</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  it_behaves_like <span style="color:#e6db74">&#34;an album&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This tests the full API surface of the classes inheriting this behavior. That may satisfy a need you feel where you&rsquo;d otherwise duplicate the test. All that without actually having to write the tests over again.</p>
+<p>There&rsquo;s just one problem: the <code>Ep</code> tests don&rsquo;t pass. That&rsquo;s because of the <code>max_minutes</code> method, which is overridden. An EP can&rsquo;t be 46 minutes; it can be no more than 30.</p>
+<p>Now, we can get around that a couple of ways.</p>
+<h3 id="passing-parameters-to-the-shared-example">Passing Parameters To The Shared Example <a href="#passing-parameters-to-the-shared-example">🔗</a></h3>
+<p>We can pass a parameter to the shared example.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">RSpec</span><span style="color:#f92672">.</span>shared_examples <span style="color:#e6db74">&#34;an album&#34;</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>max_minutes<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>  describe <span style="color:#e6db74">&#34;#max_minutes&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    it <span style="color:#e6db74">&#34;is </span><span style="color:#e6db74">#{</span>max_minutes<span style="color:#e6db74">}</span><span style="color:#e6db74"> minutes&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      expect(album<span style="color:#f92672">.</span>max_minutes)<span style="color:#f92672">.</span>to eq max_minutes
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>And then specify that in each of our usages of the shared example.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">RSpec</span><span style="color:#f92672">.</span>describe <span style="color:#66d9ef">VinylAlbum</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  it_behaves_like <span style="color:#e6db74">&#34;an album&#34;</span>, <span style="color:#ae81ff">46</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">RSpec</span><span style="color:#f92672">.</span>describe <span style="color:#66d9ef">Ep</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  it_behaves_like <span style="color:#e6db74">&#34;an album&#34;</span>, <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The tests now pass. However, I&rsquo;d argue this is a bit confusing. Read the invocation of the shared example in a vacuum. You have no idea what that number has to do with the shared example. It causes the test to pass, but it&rsquo;s lacking explanatory information. You need to read the shared example to see what 46 or 30 refers to.</p>
+<h3 id="passing-context-to-the-shared-example">Passing Context To The Shared Example <a href="#passing-context-to-the-shared-example">🔗</a></h3>
+<p>We can provide it a name by instead passing the context of that number to the shared example. The shared example will implicitly use an <code>expected_max_minutes</code> reference.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">RSpec</span><span style="color:#f92672">.</span>shared_examples <span style="color:#e6db74">&#34;an album&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  describe <span style="color:#e6db74">&#34;#max_minutes&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    it <span style="color:#e6db74">&#34;has a maximum number of minutes&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>      expect(album<span style="color:#f92672">.</span>max_minutes)<span style="color:#f92672">.</span>to eq expected_max_minutes
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Each of the tests will define <code>expected_max_minutes</code> in a block.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">RSpec</span><span style="color:#f92672">.</span>describe <span style="color:#66d9ef">VinylAlbum</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  it_behaves_like <span style="color:#e6db74">&#34;an album&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    let(<span style="color:#e6db74">:expected_max_minutes</span>) { <span style="color:#ae81ff">46</span> }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">RSpec</span><span style="color:#f92672">.</span>describe <span style="color:#66d9ef">Ep</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  it_behaves_like <span style="color:#e6db74">&#34;an album&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    let(<span style="color:#e6db74">:expected_max_minutes</span>) { <span style="color:#ae81ff">30</span> }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This adds clarity about what the number refers to when we call the shared example. However, the test description had to become more vague. We can&rsquo;t use it to say how many minutes it should be. Instead, we just say it has a maximum number of minutes, whatever that may be.</p>
+<h3 id="customizing-the-shared-example">Customizing The Shared Example <a href="#customizing-the-shared-example">🔗</a></h3>
+<p>In either case, we needed to take some action to get our tests to pass. That&rsquo;s because behavior was overridden - the <code>max_minutes</code> method.</p>
+<p>That can get unwieldy over time if you have a large inheritance tree. Whether that be with long branches or a large number of leaves on one branch. Any time there&rsquo;s a customization of the default behavior, we need to account for it. The base shared example needs to change and every use of the shared example needs to handle it.</p>
+<p>We could use the shared example to test only the behavior that&rsquo;s consistent in all classes. Here that would mean <code>max_minutes</code> isn&rsquo;t in the shared example. Instead we&rsquo;d test that within the implementations of both the classes. That can become difficult as more classes inherit and customize behavior. We&rsquo;ll continue pulling items from the shared example. We need to have the discipline to remember to test them in all the implementing classes.</p>
+<p>We could also build multiple shared examples. There could be one that tests all the behavior that is common. Anything overridden could then move into a separate shared example. All the existing inheriting classes would use that new shared example. The new class that overrides it would test its customization itself. That again requires discipline to manage as the inheritance structure grows and changes.</p>
+<h2 id="setting-the-record-straight">Setting The Record Straight <a href="#setting-the-record-straight">🔗</a></h2>
+<p>I&rsquo;ll admit - I&rsquo;m drawn to duplicating the tests. I like using my tests as documentation. I like showing what to expect it to respond to, and how it will react.</p>
+<p>I also don&rsquo;t think that stands up to logical scrutiny when compared to a lot of <strong>other</strong> values I hold dear. That&rsquo;s where the tension comes from that led me to make this poll.</p>
+<p>I don&rsquo;t test code that I don&rsquo;t own or control. As an aside, there&rsquo;s always an exception. But, in general, as already mentioned, I&rsquo;m not testing the methods that come along &ldquo;for free&rdquo; on any Ruby object. Or testing the full API surface of a class inheriting from <code>ApplicationRecord</code>. For some reason, I&rsquo;m called to test inherited behavior that&rsquo;s defined in the codebase.</p>
+<p>I care very deeply about maintenance. I care about minimizing the negative impact that code today will have on my team tomorrow and next year. Those duplicated tests have a big cost the team needs to manage over the life of that code.</p>
+<p>In that light, a shared example may feel like a welcome compromise. With a one liner, I&rsquo;ve tested all those methods and no one&rsquo;s the wiser. Except - we are. We <em>still</em> need to maintain them. And those tests are still running, testing the same behavior, multiple times. That makes the feedback loop from our test suite slower.</p>
+<p>Not adding the tests sounds like the choice I should make, in light of what I value. However, my interest in using tests to document behavior tells me otherwise. Perhaps thinking of those tests as integration tests will help tamp down the feeling. I&rsquo;ll keep it in mind going forward.</p>
+<p>Thanks to everyone who responded to my poll. Are there more topics you&rsquo;d like to see a poll about and have me write up my thoughts on? <a href="https://ruby.social/@kevin_j_m">Let me know</a>.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://kevinjmurphy.com/posts/joining-bluesky/"><i class="fa fa-chevron-circle-left"></i> Available on Bluesky</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2023 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
+}
+</script>
+
+
+</body>
+
+</html>
+

@@ -6,10 +6,19 @@
    <description>Recent content in ruby on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2023 - Kevin Murphy</copyright>
-   <lastBuildDate>Sat, 19 Aug 2023 15:23:22 -0400</lastBuildDate>
+   <lastBuildDate>Thu, 21 Sep 2023 08:00:00 -0400</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Ruby on Rails Podcast Co-Host?!?</title>
+       <link>https://kevinjmurphy.com/posts/ruby-on-rails-podcast-cohost/</link>
+       <pubDate>Thu, 21 Sep 2023 08:00:00 -0400</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/ruby-on-rails-podcast-cohost/</guid>
+       <description>&lt;h2 id=&#34;the-ruby-on-rails-podcast&#34;&gt;The Ruby on Rails Podcast &lt;a href=&#34;#the-ruby-on-rails-podcast&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I co-hosted &lt;a href=&#34;https://www.therubyonrailspodcast.com/488&#34;&gt;episode 488&lt;/a&gt; of The Ruby on Rails Podcast. Brittany and I talked with Allison McMillan and Chelsea Kaufman about all the plans for RubyConf 2023.&lt;/p&gt;&lt;p&gt;All the thanks to Brittany Martin for asking me to join. I didn&amp;rsquo;t have podcast hosting on my career bingo card.&lt;/p&gt;&lt;iframe src=&#34;https://player.fireside.fm/v2/3OC19MC9+EypbCECp?theme=dark&#34; width=&#34;740&#34; height=&#34;200&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34;&gt;&lt;/iframe&gt;</description>
+     </item>
    
      <item>
        <title>Building Conference Talk Content</title>

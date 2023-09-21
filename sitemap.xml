@@ -2,25 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2023-09-21T08:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2023-09-21T08:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/rails/</loc>
+    <lastmod>2023-09-21T08:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2023-09-21T08:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/ruby-on-rails-podcast-cohost/</loc>
+    <lastmod>2023-09-21T08:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2023-09-21T08:00:00-04:00</lastmod>
+  </url><url>
     <loc>https://kevinjmurphy.com/posts/building-conference-talk-content/</loc>
     <lastmod>2023-09-15T18:23:22-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/conference/</loc>
     <lastmod>2023-09-15T18:23:22-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2023-09-15T18:23:22-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2023-09-15T18:23:22-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
-    <lastmod>2023-09-15T18:23:22-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/posts/keeping-up-with-ruby-news/</loc>
-    <lastmod>2023-08-19T15:23:22-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
     <lastmod>2023-08-19T15:23:22-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/rspec/</loc>
@@ -63,9 +69,6 @@
     <lastmod>2023-03-15T17:23:22-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/modify-frozen-hash/</loc>
-    <lastmod>2023-02-17T19:00:00-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/rails/</loc>
     <lastmod>2023-02-17T19:00:00-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/ruby-on-rails-podcast-appearance/</loc>

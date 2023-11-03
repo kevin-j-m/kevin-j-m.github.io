@@ -6,10 +6,19 @@
    <description>Recent content in Tags on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2023 - Kevin Murphy</copyright>
-   <lastBuildDate>Sat, 14 Oct 2023 18:23:22 -0400</lastBuildDate>
+   <lastBuildDate>Thu, 02 Nov 2023 20:00:00 -0400</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/tags/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Ruby for All Podcast Guest Appearance</title>
+       <link>https://kevinjmurphy.com/posts/ruby-for-all-guest-2023/</link>
+       <pubDate>Thu, 02 Nov 2023 20:00:00 -0400</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/ruby-for-all-guest-2023/</guid>
+       <description>&lt;h2 id=&#34;ruby-for-all-podcast&#34;&gt;Ruby for All Podcast &lt;a href=&#34;#ruby-for-all-podcast&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I was a guest on &lt;a href=&#34;https://www.rubyforall.com/s2/50&#34;&gt;episode 50&lt;/a&gt; of the Ruby forAll podcast. I joined Julie and Andrew to talk about conference speaking (and attending).&lt;/p&gt;&lt;p&gt;From the episode description:&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;In this episode of Ruby for All, join Andrew and Julie as they welcome Kevin Murphy, a software developer at Pubmark, to discuss the fascinating world of speaking at conferences.  Kevin shares his journey as a speaker and describes his experiences at conferences. The conversation dives into the nuances of submitting conference talk proposals, the challenges in the review process, and the importance of feedback.  They also explore of the dynamics of attending and presenting at conferences, both virtually and in person, and they share some valuable advice for those interested in sharing their expertise through speaking engagements. Don’t miss this insightful and supportive discussion about the Ruby community and the art of conference talks.&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;Give it a &lt;a href=&#34;https://www.rubyforall.com/s2/50&#34;&gt;listen&lt;/a&gt; and let me know what youthink!&lt;/p&gt;</description>
+     </item>
    
      <item>
        <title>Preparing Conference Talk Delivery</title>

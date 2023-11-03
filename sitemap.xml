@@ -2,25 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://kevinjmurphy.com/tags/conference/</loc>
-    <lastmod>2023-10-14T18:23:22-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2023-10-14T18:23:22-04:00</lastmod>
+    <lastmod>2023-11-02T20:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/podcast/</loc>
+    <lastmod>2023-11-02T20:00:00-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2023-11-02T20:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2023-11-02T20:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/ruby-for-all-guest-2023/</loc>
+    <lastmod>2023-11-02T20:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2023-11-02T20:00:00-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/conference/</loc>
     <lastmod>2023-10-14T18:23:22-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/preparing-conference-talk-delivery/</loc>
     <lastmod>2023-10-14T18:23:22-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
-    <lastmod>2023-10-14T18:23:22-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/tags/rails/</loc>
-    <lastmod>2023-09-21T08:00:00-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
     <lastmod>2023-09-21T08:00:00-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/ruby-on-rails-podcast-cohost/</loc>
@@ -162,9 +168,6 @@
     <lastmod>2022-05-11T16:53:59-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/coding-coders-podcast-2022/</loc>
-    <lastmod>2022-05-11T08:27:36-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/podcast/</loc>
     <lastmod>2022-05-11T08:27:36-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/self-promotion/</loc>

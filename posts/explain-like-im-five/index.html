@@ -162,7 +162,7 @@ if (!doNotTrack) {
         </li>
         
 
-        <li>5 minute read | 897 words</li>
+        <li>5 minute read | 908 words</li>
     </ul>
 </aside>
 
@@ -191,8 +191,7 @@ execution plan.</p>
 </span></span><span style="display:flex;"><span>   <span style="color:#e6db74">Filter</span>: ((email)<span style="color:#f92672">::</span>text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;test@example.com&#39;</span><span style="color:#f92672">::</span>text)
 </span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">2</span> rows)
 </span></span></code></pre></div><p>This gives us a great starting point, and works across various databases.
-However, if you want some additional features, like <a href="https://www.postgresql.org/docs/current/sql-explain.html">running</a> <code>EXPLAIN ANALYZE</code>,
-you&rsquo;ll need to look elsewhere.</p>
+However, if you want some additional features, like <a href="https://www.postgresql.org/docs/current/sql-explain.html">running</a> <code>EXPLAIN ANALYZE</code>, you&rsquo;ll need to look elsewhere. Unless you&rsquo;re using ActiveRecord 7.1 or higher, where it&rsquo;s <a href="https://www.bigbinary.com/blog/rails-7-1-adds-options-to-activerecord-relation-explain#analyze">now available</a>.</p>
 <h2 id="2-interpolating-a-query-in-an-activerecord-connection">2. Interpolating a Query in an ActiveRecord Connection <a href="#2-interpolating-a-query-in-an-activerecord-connection">🔗</a></h2>
 <p>You can fall back to creating your own SQL statement and passing that into
 ActiveRecord&rsquo;s <code>execute</code> method. However, you probably don&rsquo;t want to go through

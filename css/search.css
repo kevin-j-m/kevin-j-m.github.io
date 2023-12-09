@@ -1,6 +1,4 @@
 #search {
-  padding-bottom: 10px;
-
   button {
     position: absolute;
   }
@@ -14,4 +12,8 @@
     --pagefind-ui-border: #152028;
     --pagefind-ui-tag: #152028;
   }
+}
+
+.search-space {
+  padding-bottom: 10px;
 }

@@ -3,6 +3,11 @@
     position: absolute;
     color: var(--pagefind-ui-text);
   }
+
+  input::placeholder {
+    color: var(--pagefind-ui-text);
+    font-weight: lighter;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

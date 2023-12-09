@@ -1,12 +1,10 @@
-.search-container {
-  button {
-    position: absolute;
-    color: var(--pagefind-ui-text);
-  }
+.pagefind-ui__search-clear {
+  position: absolute;
+  color: var(--pagefind-ui-text);
+}
 
-  .pagefind-ui__search-input::placeholder {
-    opacity: .7;
-  }
+.pagefind-ui__search-input::placeholder {
+  opacity: .7;
 }
 
 @media (prefers-color-scheme: dark) {

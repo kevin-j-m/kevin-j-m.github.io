@@ -4,10 +4,9 @@
     color: var(--pagefind-ui-text);
   }
 
-  ::placeholder {
-    color: var(--pagefind-ui-text);
-    font-weight: lighter;
-  }
+  .pagefind-ui__search-input::placeholder {
+    opacity: .7;
+}
 }
 
 @media (prefers-color-scheme: dark) {

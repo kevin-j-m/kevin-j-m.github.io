@@ -4,7 +4,7 @@
     color: var(--pagefind-ui-text);
   }
 
-  input::placeholder {
+  ::placeholder {
     color: var(--pagefind-ui-text);
     font-weight: lighter;
   }

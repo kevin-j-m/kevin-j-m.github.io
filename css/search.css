@@ -9,7 +9,7 @@
 }
 
 #search {
-  .button {
+  button {
     position: absolute;
     color: var(--pagefind-ui-text);
   }

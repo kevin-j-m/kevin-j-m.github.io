@@ -1,3 +1,17 @@
-#search button {
-  position: absolute;
+#search {
+  padding-bottom: 10px;
+
+  button {
+    position: absolute;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  #search {
+    --pagefind-ui-primary: #eeeeee;
+    --pagefind-ui-text: #eeeeee;
+    --pagefind-ui-background: #152028;
+    --pagefind-ui-border: #152028;
+    --pagefind-ui-tag: #152028;
+  }
 }

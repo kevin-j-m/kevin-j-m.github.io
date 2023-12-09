@@ -9,14 +9,14 @@
 }
 
 #search {
-  button {
-    position: absolute;
-    color: var(--pagefind-ui-text);
-  }
-
   ::placeholder {
     opacity: .7;
   }
+}
+
+#search button {
+  position: absolute;
+  color: var(--pagefind-ui-text);
 }
 
 .search-space {

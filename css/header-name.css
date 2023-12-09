@@ -1,0 +1,10 @@
+.header-name {
+  font-size: 2.4rem;
+  font-family: "Ruda", sans-serif;
+  margin: .67em 0;
+  line-height: 1.15;
+
+  a {
+    text-decoration: none;
+  }
+}

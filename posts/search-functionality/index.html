@@ -174,69 +174,28 @@ if (!doNotTrack) {
     
 
 
-    <p>I&rsquo;m no stranger to <a href="https://kevinjmurphy.com/posts/searching-for-a-reason/">search</a>. Give me <a href="https://kevinjmurphy.com/posts/browser-history/">25
-minutes</a> and I&rsquo;ll tell you my thoughts on
-how and why we search for things. All that said, one thing you couldn&rsquo;t do on
-this site for a long time was search. I&rsquo;m proud to announce on behalf of the
-entire team responsible for this site (me) that an innovative new feature is now
-available: <a href="https://kevinjmurphy.com/search/">search</a>.</p>
+    <p>I&rsquo;m no stranger to <a href="https://kevinjmurphy.com/posts/searching-for-a-reason/">search</a>. Give me <a href="https://kevinjmurphy.com/posts/browser-history/">25 minutes</a> and I&rsquo;ll tell you my thoughts on how and why we search for things. All that said, one thing you couldn&rsquo;t do on this site for a long time was search. I&rsquo;m proud to announce on behalf of the entire team responsible for this site (me) that an innovative new feature is now available: <a href="https://kevinjmurphy.com/search/">search</a>.</p>
 <p>Any questions?</p>
 <h2 id="what-took-so-long">What took so long? <a href="#what-took-so-long">🔗</a></h2>
-<p>Two main reasons: self-esteem and laziness. I don&rsquo;t think anyone else will use
-this functionality. I don&rsquo;t think people will read <em>this</em>. Many times, I write
-for myself. So I want to reference my own posts on occasion. And for myself, I
-know what I&rsquo;m looking for and when I published it in comparison to other posts.
-So I&rsquo;ve just been paginating through my results until I find the post.</p>
-<p>The other piece is that I don&rsquo;t want to spend a lot of time working on my
-website design/layout/features. That&rsquo;s time I could be writing for my website,
-or doing literally anything else. My site is intentionally in Hugo, because
-while I&rsquo;ve written Golang, I&rsquo;m not apt to change code in there. The templating
-engine is easy enough to do what I want, but I&rsquo;ve long resisted the urge to
-revamp the theme I chose when starting the site.</p>
+<p>Two main reasons: self-esteem and laziness. I don&rsquo;t think anyone else will use this functionality. I don&rsquo;t think people will read <em>this</em>. Many times, I write for myself. So I want to reference my own posts on occasion. And for myself, I know what I&rsquo;m looking for and when I published it in comparison to other posts. So I&rsquo;ve just been paginating through my results until I find the post.</p>
+<p>The other piece is that I don&rsquo;t want to spend a lot of time working on my website design/layout/features. That&rsquo;s time I could be writing for my website, or doing literally anything else. My site is intentionally in Hugo, because while I&rsquo;ve written Golang, I&rsquo;m not apt to change code in there. The templating engine is easy enough to do what I want, but I&rsquo;ve long resisted the urge to revamp the theme I chose when starting the site.</p>
 <h2 id="why-now">Why now? <a href="#why-now">🔗</a></h2>
-<p>I was inspired by Justin Searls, who <a href="https://justin.searls.co/links/2023-11-29-shout-out-to-pagefind-static-search/">recently
-wrote</a>
-about adding search to his site. If Justin is actually trumpeting some tech and
-not sharing cursed bugs with it, then it&rsquo;s worth my attention.</p>
-<p>And as a side-benefit, maybe I wouldn&rsquo;t have to page through my own site as
-often.</p>
+<p>I was inspired by Justin Searls, who <a href="https://justin.searls.co/links/2023-11-29-shout-out-to-pagefind-static-search/">recently wrote</a> about adding search to his site. If Justin is actually trumpeting some tech and not sharing cursed bugs with it, then it&rsquo;s worth my attention.</p>
+<p>And as a side-benefit, maybe I wouldn&rsquo;t have to page through my own site as often.</p>
 <h2 id="how-did-the-implementation-process-go">How did the implementation process go? <a href="#how-did-the-implementation-process-go">🔗</a></h2>
-<p>Just like Justin, I&rsquo;m using <a href="https://pagefind.app/">Pagefind</a>. The process of
-implementing the index was really straightforward. I followed their <a href="https://pagefind.app/docs/">Quick Start
-guide</a> and the indexing was done.</p>
-<p>With a one-line change to my deploy script, I was set to have this indexing
-process update for each change to my site. Great work Pagefind!</p>
-<p>The part that took time was my inability to know how my own site works and how
-to make it look nice. My theme has a light and dark mode. After adding Pagefind,
-I had to wrap up the initial implementation by turning off dark mode, otherwise
-the Pagefind results were illegible. This felt like a fine trade-off on a Friday
-night, as I imagine it would only affect me - and I was going to sleep.</p>
+<p>Just like Justin, I&rsquo;m using <a href="https://pagefind.app/">Pagefind</a>. The process of implementing the index was really straightforward. I followed their <a href="https://pagefind.app/docs/">Quick Start guide</a> and the indexing was done.</p>
+<p>With a one-line change to my deploy script, I was set to have this indexing process update for each change to my site. Great work Pagefind!</p>
+<p>The part that took time was my inability to know how my own site works and how to make it look nice. My theme has a light and dark mode. After adding Pagefind, I had to wrap up the initial implementation by turning off dark mode, otherwise the Pagefind results were illegible. This felt like a fine trade-off on a Friday night, as I imagine it would only affect me - and I was going to sleep.</p>
 <p>The Pagefind docs clearly suggest how to <a href="https://pagefind.app/docs/ui-usage/#customising-the-styles">change the Pagefind styles</a>, even including recommendations for a dark mode. Well done, Pagefind!</p>
-<p>The trouble was I needed to understand how my site even implements dark mode.
-Through this, I learned about CSS&rsquo;s <code>prefers-color-scheme</code>
-<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">feature</a>.
-I told you, I don&rsquo;t really want to know implementation details in my site so I&rsquo;m
-not tempted to change them. I also revisited CSS <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties">custom properties</a> and styling
-input <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/::placeholder">placeholder values</a>.</p>
+<p>The trouble was I needed to understand how my site even implements dark mode. Through this, I learned about CSS&rsquo;s <code>prefers-color-scheme</code> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">feature</a>. I told you, I don&rsquo;t really want to know implementation details in my site so I&rsquo;m not tempted to change them. I also revisited CSS <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties">custom properties</a> and styling input <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/::placeholder">placeholder values</a>.</p>
 <p>Did you know Firefox&rsquo;s inspector has the ability to <a href="https://www.linuxadictos.com/en/firefox-87-adds-an-option-to-its-inspector-that-allows-us-to-switch-between-light-and-dark-mode-if-the-web-allows-it.html">toggle light mode and dark mode</a> for a site? I didn&rsquo;t, but now I do!</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/firefox_inspector_light_dark.png"
          alt="The Firefox inspector with arrows pointing to how to change to light and dark mode"/>
 </figure>
 
 <h2 id="how-do-you-feel-now">How do you feel now? <a href="#how-do-you-feel-now">🔗</a></h2>
-<p>I&rsquo;m satisfied. I can <a href="https://kevinjmurphy.com/search/">search</a> my site.
-All with very little effort on my behalf. Again, thanks Pagefind! And Justin for
-the suggestion. I could dig into
-<a href="https://pagefind.app/docs/weighting/">modifying</a> my index, or
-<a href="https://pagefind.app/docs/sorts/">sorting</a> results, but I&rsquo;m going to stick with
-the default experience for now. Those incremental improvements wouldn&rsquo;t have the
-value add compared to what this already provides. Before there was no search,
-and now there is!</p>
-<p>Is it my greatest work? Something I would put into production at work? Not the
-way I wrote it. This is not a reflection on Pagefind. I <em>would</em> recommend that
-for a static site. However, I&rsquo;ve committed some <a href="https://github.com/kevin-j-m/kjm-blog/commit/a36f1cbcc6b665ce69c281addd8e31a90fb56b50">terrible
-atrocities</a>
-to HTML and CSS to fit it into my site&rsquo;s theme.</p>
+<p>I&rsquo;m satisfied. I can <a href="https://kevinjmurphy.com/search/">search</a> my site. All with very little effort on my behalf. Again, thanks Pagefind! And Justin for the suggestion. I could dig into <a href="https://pagefind.app/docs/weighting/">modifying</a> my index, or <a href="https://pagefind.app/docs/sorts/">sorting</a> results, but I&rsquo;m going to stick with the default experience for now. Those incremental improvements wouldn&rsquo;t have the value add compared to what this already provides. Before there was no search, and now there is!</p>
+<p>Is it my greatest work? Something I would put into production at work? Not the way I wrote it. This is not a reflection on Pagefind. I <em>would</em> recommend that for a static site. However, I&rsquo;ve committed some <a href="https://github.com/kevin-j-m/kjm-blog/commit/a36f1cbcc6b665ce69c281addd8e31a90fb56b50">terrible atrocities</a> to HTML and CSS to fit it into my site&rsquo;s theme.</p>
 <p>But, I did that styling while <a href="https://www.netflix.com/TITLE/81128389">Emily&rsquo;s Wonder Lab</a> was playing on TV. And they were making a tornado. So I wanted to wrap this up and watch it with my daughter. So, it&rsquo;s good enough for me, for now. I hope you enjoy it too.</p>
 <p>Happy <a href="https://kevinjmurphy.com/search/">searching</a>!</p>
 

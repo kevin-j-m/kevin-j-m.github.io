@@ -6,10 +6,19 @@
    <description>Recent content in Posts on Kevin Murphy</description>
    <generator>Hugo -- gohugo.io</generator>
    <copyright>Copyright &amp;copy; 2023 - Kevin Murphy</copyright>
-   <lastBuildDate>Sat, 13 Apr 2024 18:00:22 -0400</lastBuildDate>
+   <lastBuildDate>Sat, 20 Apr 2024 20:00:00 -0400</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/posts/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Another Ruby for All Podcast Guest Appearance</title>
+       <link>https://kevinjmurphy.com/posts/ruby-for-all-guest-2024/</link>
+       <pubDate>Sat, 20 Apr 2024 20:00:00 -0400</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/ruby-for-all-guest-2024/</guid>
+       <description>&lt;h2 id=&#34;ruby-for-all-podcast&#34;&gt;Ruby for All Podcast &lt;a href=&#34;#ruby-for-all-podcast&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I was a guest on &lt;a href=&#34;https://www.rubyforall.com/s2/66&#34;&gt;episode 66&lt;/a&gt; of the Ruby for All podcast. Julie and I are both on the RailsConf 2024 Program Committee. I joined Julie and Andrew to talk about RailsConf 2024 and what it&amp;rsquo;s been like being on the Program Committee.&lt;/p&gt;&lt;p&gt;From the episode description:&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;In this episode of &amp;lsquo;Ruby For All&amp;rsquo;, hosts Andrew and Julie welcome guest Kevin Murphy, Software Developer at Pubmark and member of the RailsConf program committee. The discussion kicks off with Andrew and Julie catching up, then transitions into an in-depth conversation about the RailsConf planning process. Kevin and Julie, the Speaker Liaison, share insights into the workings of the program committee, the selection criteria for conference talks, and the challenges and rewards of organizing RailsConf. Additionally, Kevin elaborates on his role in the committee, the theme for this year&amp;rsquo;s conference, and his goals for impact, and Julie looks forward to supporting speakers and managing workshops. The episode emphasizes the importance of volunteer contributions to the success of RailsConf and encourages attendees to express their gratitude to the organizers, and to go check out all the details at RailsConf.org and buy your tickets now!&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;Give it a &lt;a href=&#34;https://www.rubyforall.com/s2/66&#34;&gt;listen&lt;/a&gt; and let me know what youthink!&lt;/p&gt;</description>
+     </item>
    
      <item>
        <title>Making a (Sidekiq) Batch Recipe</title>

@@ -1,0 +1,303 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Access Request Headers in a Rails Controller - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="This post explores where to access request headers by looking at the Rails source code after unexpectedly accessing the response headers." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="https://kevinjmurphy.com/posts/access-request-headers-in-rails-controller/">
+<meta property="og:url" content="https://kevinjmurphy.com/posts/access-request-headers-in-rails-controller/">
+  <meta property="og:site_name" content="Kevin Murphy">
+  <meta property="og:title" content="Access Request Headers in a Rails Controller">
+  <meta property="og:description" content="This post explores where to access request headers by looking at the Rails source code after unexpectedly accessing the response headers.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-07-11T18:04:22-05:00">
+    <meta property="article:modified_time" content="2024-07-11T18:04:22-05:00">
+    <meta property="article:tag" content="Ruby">
+    <meta property="article:tag" content="Rails">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Access Request Headers in a Rails Controller">
+  <meta name="twitter:description" content="This post explores where to access request headers by looking at the Rails source code after unexpectedly accessing the response headers.">
+
+<meta name="generator" content="Hugo 0.128.2">
+    
+
+  <link rel="stylesheet" href="https://kevinjmurphy.com/css/normalize.min.css" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/header-name.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/search.css'>
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="header-name">
+        <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
+      </div>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://ruby.social/@kevin_j_m" title="Mastodon">
+               <i class="fab fa-mastodon fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+        <li>
+          <a rel="me" href="https://ruby.social/@kevin_j_m">
+          </a>
+        </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://kevinjmurphy.com/search/">
+                <i class="fa-li fa  fa-lg"></i><span>Search</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Access Request Headers in a Rails Controller</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" data-pagefind-sort="date:2024-07-11" datetime="2024-07-11T18:04:22-05:00">Jul 11, 2024</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://kevinjmurphy.com/tags/rails">#rails</a>
+                
+            </em>
+        </li>
+        
+
+        <li>3 minute read | 453 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+      
+
+    
+
+    <h2 id="heads-up">Heads Up <a href="#heads-up">🔗</a></h2>
+<p>A coworker presented a failing request spec. They asked if they were passing headers incorrectly in the test.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;reports to be a teapot when asked to brew coffee&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  headers <span style="color:#f92672">=</span> { <span style="color:#e6db74">&#34;X-COMMAND&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;brew coffee&#34;</span> }
+</span></span><span style="display:flex;"><span>  get drinks_url, <span style="color:#e6db74">headers</span>: headers
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(response<span style="color:#f92672">.</span>status)<span style="color:#f92672">.</span>to eq <span style="color:#ae81ff">418</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>They wrote the test exactly like I&rsquo;d <a href="https://rspec.info/features/6-0/rspec-rails/request-specs/request-spec/">expect</a>. But, rather than providing the 418, a 200 OK was the status code. I then looked at the controller this request spec was accessing.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> headers<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;X-COMMAND&#34;</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;brew coffee&#34;</span>
+</span></span><span style="display:flex;"><span>    head <span style="color:#ae81ff">418</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  @drinks <span style="color:#f92672">=</span> <span style="color:#66d9ef">Drink</span><span style="color:#f92672">.</span>all
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Nothing <em>obvious</em> caught my attention. But now that I&rsquo;d been effectively <a href="https://xkcd.com/356/">nerd sniped</a>, I had to figure out what was going on.</p>
+<h2 id="heading-in-for-a-closer-look">Heading In For a Closer Look <a href="#heading-in-for-a-closer-look">🔗</a></h2>
+<p>I added a breakpoint inside the controller to inspect the headers when the test was running.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#e6db74">irb</span>:<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> headers
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>{<span style="color:#e6db74">&#34;X-Frame-Options&#34;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#34;SAMEORIGIN&#34;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#34;X-XSS-Protection&#34;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#34;0&#34;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#34;X-Content-Type-Options&#34;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#34;nosniff&#34;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#34;X-Download-Options&#34;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#34;noopen&#34;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#34;X-Permitted-Cross-Domain-Policies&#34;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#34;none&#34;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#34;Referrer-Policy&#34;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#34;strict-origin-when-cross-origin&#34;</span>}
+</span></span></code></pre></div><p>As expected, given the failing test, the <code>X-COMMAND</code> header was nowhere to be found. But luckily, they did seem familiar to me. They looked to be Rails&rsquo; <a href="https://github.com/rails/rails/blob/f1aa436d738af1852b610189aeb93a5609bfe3b0/actionpack/lib/action_dispatch/railtie.rb#L30">default headers</a>. But those <a href="https://edgeguides.rubyonrails.org/configuring.html#config-action-dispatch-default-headers">default headers</a> are for the <strong>response</strong>, not the <em>request</em>.</p>
+<p>I still had my console session with my breakpoint, so I asked what kind of headers we were interacting with.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#e6db74">irb</span>:<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> headers<span style="color:#f92672">.</span>class
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Response</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Header</span>
+</span></span></code></pre></div><p>This confirmed we were dealing with the response, not request, headers.</p>
+<h2 id="heads-down">Heads Down <a href="#heads-down">🔗</a></h2>
+<p>I needed to trace my way backwards from what I have or know. I asked what defines the headers method by asking for the <a href="https://ruby-doc.org/3.2.1/Method.html#method-i-source_location">source location</a>. That&rsquo;ll tell me the file and line number.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#e6db74">irb</span>:<span style="color:#ae81ff">003</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> method(<span style="color:#e6db74">&#34;headers&#34;</span>)<span style="color:#f92672">.</span>source_location
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;.../gems/actionpack-7.0.3.1/lib/action_controller/metal.rb&#34;</span>, <span style="color:#ae81ff">147</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><p><a href="https://github.com/rails/rails/blob/7-0-stable/actionpack/lib/action_controller/metal.rb#L147">That line</a> shows <code>headers</code> delegated to an <a href="https://guides.rubyonrails.org/active_support_core_extensions.html#internal-attributes">internal attribute</a> <code>@_response</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>delegate <span style="color:#e6db74">:headers</span>, <span style="color:#e6db74">:status</span><span style="color:#f92672">=</span>, <span style="color:#e6db74">:location</span><span style="color:#f92672">=</span>, <span style="color:#e6db74">:content_type</span><span style="color:#f92672">=</span>,
+</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">:status</span>, <span style="color:#e6db74">:location</span>, <span style="color:#e6db74">:content_type</span>, <span style="color:#e6db74">:media_type</span>, <span style="color:#e6db74">to</span>: <span style="color:#e6db74">&#34;@_response&#34;</span>
+</span></span></code></pre></div><p>That internal attribute is accessible in the controller by calling <code>response</code>. We can see that from the <code>attr_internal</code> definition on <a href="https://github.com/rails/rails/blob/7-0-stable/actionpack/lib/action_controller/metal.rb#L145">line 145</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>attr_internal <span style="color:#e6db74">:response</span>, <span style="color:#e6db74">:request</span>
+</span></span></code></pre></div><p><code>response</code> isn&rsquo;t the ONLY internal attribute on that line though. There&rsquo;s ALSO a <code>request</code>. In our console, let&rsquo;s see what that request is.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#e6db74">irb</span>:<span style="color:#ae81ff">004</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> request<span style="color:#f92672">.</span>class
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Request</span>
+</span></span></code></pre></div><p>That class also <a href="https://api.rubyonrails.org/classes/ActionDispatch/Request.html#method-i-headers">responds to</a> <code>headers</code>, providing the <a href="https://api.rubyonrails.org/classes/ActionDispatch/Http/Headers.html">request headers</a>.</p>
+<h2 id="heading-in-for-the-close">Heading In For The Close <a href="#heading-in-for-the-close">🔗</a></h2>
+<p>The change to get our test to pass is small. We don&rsquo;t want the response headers, which is what the <code>headers</code> variable is. We need the request headers, which are accessible at <code>request.headers</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>headers<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;X-COMMAND&#34;</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;brew coffee&#34;</span>
+</span></span><span style="display:flex;"><span>    head <span style="color:#ae81ff">418</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  @drinks <span style="color:#f92672">=</span> <span style="color:#66d9ef">Drink</span><span style="color:#f92672">.</span>all
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Now that we&rsquo;re accessing the headers of the <strong>request</strong> our test passes.</p>
+<p>Naming is hard. Asking for a controller&rsquo;s headers could be either the request or the response headers. Turns out, Rails will give you the response headers. To access the request headers, explicitly ask for them from the request object.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="https://kevinjmurphy.com/posts/4-things-railsconf-2024/"><i class="fa fa-chevron-circle-left"></i> Four Things To Take Away From RailsConf 2024</a>
+        
+        </li>
+        <li>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2023 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
+
+  
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
+
+
+</body>
+
+</html>
+

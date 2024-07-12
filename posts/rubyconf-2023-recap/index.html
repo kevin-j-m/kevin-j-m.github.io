@@ -10,49 +10,52 @@
 <meta name="author" content="Kevin Murphy" />
 
 <link rel="canonical" href="https://kevinjmurphy.com/posts/rubyconf-2023-recap/">
-<meta property="og:title" content="RubyConf 2023 Recap" />
-<meta property="og:description" content="A summary of my time at RubyConf 2023" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://kevinjmurphy.com/posts/rubyconf-2023-recap/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-11-17T21:00:24-04:00" />
-<meta property="article:modified_time" content="2023-11-17T21:00:24-04:00" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/rubyconf-2023-recap/">
+  <meta property="og:site_name" content="Kevin Murphy">
+  <meta property="og:title" content="RubyConf 2023 Recap">
+  <meta property="og:description" content="A summary of my time at RubyConf 2023">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-11-17T21:00:24-04:00">
+    <meta property="article:modified_time" content="2023-11-17T21:00:24-04:00">
+    <meta property="article:tag" content="Ruby">
+    <meta property="article:tag" content="Conference">
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="RubyConf 2023 Recap"/>
-<meta name="twitter:description" content="A summary of my time at RubyConf 2023"/>
 
-<meta name="generator" content="Hugo 0.109.0">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RubyConf 2023 Recap">
+  <meta name="twitter:description" content="A summary of my time at RubyConf 2023">
+
+<meta name="generator" content="Hugo 0.128.2">
     
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/css/normalize.min.css" />
   <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
   
   
   <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/header-name.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/search.css'>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
-}
-</script>
-
   
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-RVD6VLNE04', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
 
 </head>
 
@@ -175,7 +178,9 @@ if (!doNotTrack) {
     
 
     
+      
 
+    
 
     <h2 id="rubyconf-2023">RubyConf 2023 <a href="#rubyconf-2023">🔗</a></h2>
 <p>RubyConf recently wrapped up in San Diego, California. This post is meant to highlight the great work from all involved. I hope you&rsquo;ll seek out the full videos of all the sessions that interest you once they are available. Unfortunately, I couldn&rsquo;t be everywhere, so this covers what I saw.</p>
@@ -206,19 +211,19 @@ if (!doNotTrack) {
 <h3 id="opening-keynote">Opening Keynote <a href="#opening-keynote">🔗</a></h3>
 <p><a href="https://rubyconf-2023.sessionize.com/session/560574">Yukihiro &ldquo;Matz&rdquo; Matsumoto</a> started the conference after the opening remarks. This was a pre-recorded message. He talked about learning from the history of language design and evolution, to inform the future of Ruby.</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/rubyconf_2023_matz.jpg"
-         alt="Matz at RubyConf 2023"/>
+    alt="Matz at RubyConf 2023">
 </figure>
 
 <h3 id="which-time-is-it">Which Time Is It? <a href="#which-time-is-it">🔗</a></h3>
 <p><a href="https://rubyconf-2023.sessionize.com/session/531537">Joël Quenneville</a> started the talk sessions. He provided a distinction between looking at a moment in time versus a duration of time. He cautions to think through what types of time can interact with each other (the way that you want or expect). Consider the operator you&rsquo;re using and what it means. Catch the full session to learn more about why you can&rsquo;t add two time instances together.</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/rubyconf2023_joel_stage.jpg"
-         alt="Joël Quenneville at RubyConf 2023"/>
+    alt="Joël Quenneville at RubyConf 2023">
 </figure>
 
 <h3 id="get-your-data-prod-ready-fast-with-ruby-polars">Get your Data prod ready, Fast, with Ruby Polars! <a href="#get-your-data-prod-ready-fast-with-ruby-polars">🔗</a></h3>
 <p><a href="https://rubyconf-2023.sessionize.com/session/530118">Paul Reece</a> gave an introduction to the Polars library. This started with an introduction to the Series and Data Frame data structures. Paul then walked through data cleaning operations available in Polars. He shared a <a href="https://github.com/paulreece/polars_resources">repository</a> of resources and code samples at the end of his session.</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/rubyconf2023_paul_stage.jpg"
-         alt="Paul Reece at RubyConf 2023"/>
+    alt="Paul Reece at RubyConf 2023">
 </figure>
 
 <h3 id="ruby-content-creators">Ruby Content Creators <a href="#ruby-content-creators">🔗</a></h3>
@@ -226,45 +231,45 @@ if (!doNotTrack) {
 <h3 id="the-future-of-understanding-ruby-code">The Future of Understanding Ruby Code <a href="#the-future-of-understanding-ruby-code">🔗</a></h3>
 <p><a href="https://rubyconf-2023.sessionize.com/session/531482">Kevin Newton</a> talked about <a href="https://github.com/ruby/prism">Prism</a>, a new Ruby parser. He discussed the challenges that come with parsing Ruby. He shared what&rsquo;s next, and what we can and should expect from our Ruby tooling in the future. He ended with an impassioned discussion about building a contributor community around a single tool.</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/rubyconf2023_kevin_newton.jpg"
-         alt="Kevin Newton at RubyConf 2023"/>
+    alt="Kevin Newton at RubyConf 2023">
 </figure>
 
 <h3 id="the-unbreakable-code-whose-breaking-won-wwii">The Unbreakable Code Whose Breaking Won WWII <a href="#the-unbreakable-code-whose-breaking-won-wwii">🔗</a></h3>
 <p><a href="https://rubyconf-2023.sessionize.com/session/529111">Aji Slater</a> took us back to Bletchley Park to model an Enigma machine with object-oriented principles. This session features monumentally brilliant illustrations and fantastic storytelling.</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/rubyconf2023_aji.jpg"
-         alt="Aji Slater at RubyConf 2023"/>
+    alt="Aji Slater at RubyConf 2023">
 </figure>
 
 <h3 id="closing-keynote">Closing Keynote <a href="#closing-keynote">🔗</a></h3>
 <p><a href="https://rubyconf-2023.sessionize.com/session/560579">Sharon Steed</a> ended the first day of talks with a keynote on actionable empathy. We heard about its relationship with vulnerability and how trust is the bedrock to empathy.</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/rubyconf2023_sharon.jpg"
-         alt="Sharon Steed at RubyConf 2023"/>
+    alt="Sharon Steed at RubyConf 2023">
 </figure>
 
 <h2 id="day-3">Day 3 <a href="#day-3">🔗</a></h2>
 <h3 id="opening-keynote-1">Opening Keynote <a href="#opening-keynote-1">🔗</a></h3>
 <p><a href="https://rubyconf-2023.sessionize.com/session/560580">Saron Yitbarek</a> opened the last day of RubyConf discussing our superpower. Loving what we do is an underrated source of competitive advantage for us to wield.</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/rubyconf2023_saron.jpg"
-         alt="Saron Yitbarek at RubyConf 2023"/>
+    alt="Saron Yitbarek at RubyConf 2023">
 </figure>
 
 <h3 id="meet-the-pragmatic-bookshelf">Meet the Pragmatic Bookshelf <a href="#meet-the-pragmatic-bookshelf">🔗</a></h3>
 <p><a href="https://rubyconf-2023.sessionize.com/session/560583">Noel Rappin</a> joined Dave Thomas and Dave Copeland for a panel discussion on writing. This particularly focused on books with Pragmatic Programmers. We heard about the entire process, from proposal to publication.</p>
 <p>One note I found interesting was how the voice of their books changes over time. It intentionally starts with an authoritative tone, telling the reader what to do. As the book progresses and the reader is more familiar with the domain, the tone shifts. Now the tone is more collaborative. The author consults with the reader and uses &ldquo;we&rdquo; more.</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/rubyconf2023_prag_prog.jpg"
-         alt="Noel Rappin, Dave Thomas, and Dave Copeland at RubyConf 2023"/>
+    alt="Noel Rappin, Dave Thomas, and Dave Copeland at RubyConf 2023">
 </figure>
 
 <h3 id="the-secret-ingredient-how-to-understand-and-resolve-just-about-any-flaky-test">The Secret Ingredient: How To Understand and Resolve Just About Any Flaky Test <a href="#the-secret-ingredient-how-to-understand-and-resolve-just-about-any-flaky-test">🔗</a></h3>
 <p><a href="https://rubyconf-2023.sessionize.com/session/527141">Alan Ridlehoover</a> walked through a progression of steps to resolve tests failing due to non-determinism, order dependence, and race conditions. With an eye to keeping specs to have one, and only one, reason to exist, he proposes tools and methodologies to trace down these test failures.</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/rubyconf2023_alan.jpg"
-         alt="Alan Ridlehoover at RubyConf 2023"/>
+    alt="Alan Ridlehoover at RubyConf 2023">
 </figure>
 
 <h3 id="livin-la-vida-hanami">Livin’ La Vida Hanami <a href="#livin-la-vida-hanami">🔗</a></h3>
 <p><a href="https://rubyconf-2023.sessionize.com/session/518035">Tim Riley</a> introduced Hanami as the everything framework. The framework is not our app, but enables our application logic through its layers. While it has support for web essentials, you can choose to not include them and still benefit from the underlying framework benefits.</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/rubyconf2023_tim_stage.jpg"
-         alt="Tim Riley at RubyConf 2023"/>
+    alt="Tim Riley at RubyConf 2023">
 </figure>
 
 <h3 id="open-source-ruby">Open Source Ruby <a href="#open-source-ruby">🔗</a></h3>
@@ -272,7 +277,7 @@ if (!doNotTrack) {
 <h3 id="closing">Closing <a href="#closing">🔗</a></h3>
 <p><a href="https://rubyconf-2023.sessionize.com/session/3298cf7c-e3ad-4ade-bb53-61ae24e97b2c">Adarsh Pandit</a> wrapped up RubyConf. We learned that RubyConf 2024 will be in Chicago in the fall. That&rsquo;s following a visit to Detroit in the spring for RailsConf.</p>
 <figure class="mid"><img src="https://kevinjmurphy.com/img/rubyconf2023_adarsh.jpg"
-         alt="Adarsh Pandit at RubyConf 2023"/>
+    alt="Adarsh Pandit at RubyConf 2023">
 </figure>
 
 <h2 id="appreciation">Appreciation <a href="#appreciation">🔗</a></h2>
@@ -290,16 +295,16 @@ if (!doNotTrack) {
 
 <section class="post-nav">
     <ul>
-        
         <li>
+        
             <a href="https://kevinjmurphy.com/posts/ruby-friends-rubyconf-2023/"><i class="fa fa-chevron-circle-left"></i> Ruby Friends at RubyConf 2023</a>
+        
         </li>
-        
-        
         <li>
-            <a href="https://kevinjmurphy.com/posts/search-functionality/">Site Search Now Available <i class="fa fa-chevron-circle-right"></i> </a>
-        </li>
         
+            <a href="https://kevinjmurphy.com/posts/search-functionality/">Site Search Now Available <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
     </ul>
 </section>
   
@@ -323,16 +328,25 @@ if (!doNotTrack) {
 <script src="https://kevinjmurphy.com/js/scripts.js"></script>
 
   
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
-}
-</script>
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
 
 
 </body>

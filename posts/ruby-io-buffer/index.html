@@ -10,49 +10,51 @@
 <meta name="author" content="Kevin Murphy" />
 
 <link rel="canonical" href="https://kevinjmurphy.com/posts/ruby-io-buffer/">
-<meta property="og:title" content="Buffered IO Streams In Ruby" />
-<meta property="og:description" content="Ruby IO may not immediately write where you are asking it to. Here we explore where writing to a stream goes and when it may or may not be committed where you would expect it to." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://kevinjmurphy.com/posts/ruby-io-buffer/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-09-20T09:00:07-04:00" />
-<meta property="article:modified_time" content="2021-09-20T09:00:07-04:00" />
+<meta property="og:url" content="https://kevinjmurphy.com/posts/ruby-io-buffer/">
+  <meta property="og:site_name" content="Kevin Murphy">
+  <meta property="og:title" content="Buffered IO Streams In Ruby">
+  <meta property="og:description" content="Ruby IO may not immediately write where you are asking it to. Here we explore where writing to a stream goes and when it may or may not be committed where you would expect it to.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-09-20T09:00:07-04:00">
+    <meta property="article:modified_time" content="2021-09-20T09:00:07-04:00">
+    <meta property="article:tag" content="Ruby">
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Buffered IO Streams In Ruby"/>
-<meta name="twitter:description" content="Ruby IO may not immediately write where you are asking it to. Here we explore where writing to a stream goes and when it may or may not be committed where you would expect it to."/>
 
-<meta name="generator" content="Hugo 0.109.0">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Buffered IO Streams In Ruby">
+  <meta name="twitter:description" content="Ruby IO may not immediately write where you are asking it to. Here we explore where writing to a stream goes and when it may or may not be committed where you would expect it to.">
+
+<meta name="generator" content="Hugo 0.128.2">
     
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/css/normalize.min.css" />
   <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
   
   
   <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/header-name.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/search.css'>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
-}
-</script>
-
   
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-RVD6VLNE04', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
 
 </head>
 
@@ -172,7 +174,9 @@ if (!doNotTrack) {
     
 
     
+      
 
+    
 
     <h2 id="object-permanence">Object Permanence <a href="#object-permanence">🔗</a></h2>
 <p>We have some really important information in our console.</p>
@@ -300,16 +304,16 @@ the impact that writing to a stream had on the item being written to.</p>
 
 <section class="post-nav">
     <ul>
-        
         <li>
+        
             <a href="https://kevinjmurphy.com/posts/remote-ruby-143/"><i class="fa fa-chevron-circle-left"></i> Best Practices Are The Best For Whom?</a>
+        
         </li>
-        
-        
         <li>
-            <a href="https://kevinjmurphy.com/posts/code-golf-conditionally-add-to-array/">Code Golf: Conditionally Add To An Array <i class="fa fa-chevron-circle-right"></i> </a>
-        </li>
         
+            <a href="https://kevinjmurphy.com/posts/code-golf-conditionally-add-to-array/">Code Golf: Conditionally Add To An Array <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
     </ul>
 </section>
   
@@ -333,16 +337,25 @@ the impact that writing to a stream had on the item being written to.</p>
 <script src="https://kevinjmurphy.com/js/scripts.js"></script>
 
   
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-RVD6VLNE04', { 'anonymize_ip': false });
-}
-</script>
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
 
 
 </body>

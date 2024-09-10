@@ -7,10 +7,19 @@
    <generator>Hugo -- gohugo.io</generator>
    <language>en</language>
    <copyright>Copyright &amp;copy; 2023 - Kevin Murphy</copyright>
-   <lastBuildDate>Thu, 11 Jul 2024 18:04:22 -0500</lastBuildDate>
+   <lastBuildDate>Tue, 10 Sep 2024 17:40:50 -0500</lastBuildDate>
    
        <atom:link href="https://kevinjmurphy.com/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Frequently Played Sept 2024</title>
+       <link>https://kevinjmurphy.com/posts/frequently-played-2024-09/</link>
+       <pubDate>Tue, 10 Sep 2024 17:40:50 -0500</pubDate>
+       
+       <guid>https://kevinjmurphy.com/posts/frequently-played-2024-09/</guid>
+       <description>&lt;h2 id=&#34;frequently-played&#34;&gt;Frequently Played &lt;a href=&#34;#frequently-played&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I tend to listen to the same songs or albums on repeat that are evocative of how I&amp;rsquo;m feeling or what&amp;rsquo;s going on with me. Here is what I&amp;rsquo;m currently listening to over, and over, and over, and over, again.&lt;/p&gt;&lt;h2 id=&#34;the-blues-mary&#34;&gt;The Blues, Mary &lt;a href=&#34;#the-blues-mary&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/d5hJV3dM5OA?si=ZVDhPccPCyvMoFxf&#34; title=&#34;YouTube video player&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;p&gt;Brian Fallon may be best known as the lead singer of The Gaslight Anthem. I appreciate his solo work during their hiatus too. I think future entries of this series will feature a lot of Brian&amp;rsquo;s output.&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://genius.com/Brian-fallon-the-blues-mary-lyrics&#34;&gt;Full Lyrics&lt;/a&gt;&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;I learned how to cry&lt;br&gt;In them lonesome September nights&lt;br&gt;I learned to get by&lt;br&gt;With the dogs and the dirt and the charm of the street&lt;br&gt;I fell asleep most nights&lt;br&gt;With your pictures right behind my eyes, your eyes&lt;br&gt;&amp;hellip;&lt;br&gt;And cause your smile&lt;br&gt;Is bright like the ramparts on the 4th of July&lt;br&gt;And my baby swings like a boxer&lt;br&gt;And sends her right hooks under my chin&lt;br&gt;She cries like a baby&lt;br&gt;And she wears me just like a ring&lt;br&gt;Cries like a baby&lt;br&gt;And she wears me just like a ring&lt;br&gt;I&amp;rsquo;d rather go than watch you leave&lt;/p&gt;&lt;/blockquote&gt;&lt;h2 id=&#34;and-all-that-could-have-been&#34;&gt;And All That Could Have Been &lt;a href=&#34;#and-all-that-could-have-been&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/2U0flA_Yp64?si=k2V_SmRzUMzxsTf3&#34; title=&#34;YouTube video player&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;p&gt;This is my favorite Nine Inch Nails song. However, I can only listen to it when I&amp;rsquo;m in a certain mood. And when I do listen to it, it&amp;rsquo;s on repeat.&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://genius.com/Nine-inch-nails-and-all-that-could-have-been-lyrics&#34;&gt;Full Lyrics&lt;/a&gt;&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;Please&lt;br&gt;Take this&lt;br&gt;And run far away&lt;br&gt;Far as you can see&lt;br&gt;I am tainted&lt;br&gt;And happiness&lt;br&gt;And peace of mind&lt;br&gt;Were never meant for me&lt;br&gt;All these pieces&lt;br&gt;And promises&lt;br&gt;And left-behinds&lt;br&gt;If only I could see&lt;br&gt;In my nothing&lt;br&gt;You meant everything&lt;br&gt;Everything to me&lt;/p&gt;&lt;/blockquote&gt;</description>
+     </item>
    
      <item>
        <title>Access Request Headers in a Rails Controller</title>

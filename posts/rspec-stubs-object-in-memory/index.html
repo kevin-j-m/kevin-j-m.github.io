@@ -1,0 +1,334 @@
+<!doctype html>
+
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>RSpec Stubs The Object In Memory - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="This article demonstrates a short-coming with using RSpec mocks in code which accesses objects out of a database." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="http://localhost:1313/posts/rspec-stubs-object-in-memory/">
+<meta property="og:url" content="http://localhost:1313/posts/rspec-stubs-object-in-memory/">
+  <meta property="og:site_name" content="Kevin Murphy">
+  <meta property="og:title" content="RSpec Stubs The Object In Memory">
+  <meta property="og:description" content="This article demonstrates a short-coming with using RSpec mocks in code which accesses objects out of a database.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-09-09T15:00:10-04:00">
+    <meta property="article:modified_time" content="2024-09-09T15:00:10-04:00">
+    <meta property="article:tag" content="Ruby">
+    <meta property="article:tag" content="Rspec">
+    <meta property="article:tag" content="Testing">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RSpec Stubs The Object In Memory">
+  <meta name="twitter:description" content="This article demonstrates a short-coming with using RSpec mocks in code which accesses objects out of a database.">
+
+<meta name="generator" content="Hugo 0.128.2">
+    
+
+  <link rel="stylesheet" href="http://localhost:1313/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="http://localhost:1313/css/styles.css" /><link rel='stylesheet' href='http://localhost:1313/css/link-style.css'><link rel='stylesheet' href='http://localhost:1313/css/code-scroll.css'><link rel='stylesheet' href='http://localhost:1313/css/coverage-emoji.css'><link rel='stylesheet' href='http://localhost:1313/css/header-name.css'><link rel='stylesheet' href='http://localhost:1313/css/search.css'>
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="header-name">
+        <a href="http://localhost:1313/">Kevin Murphy</a>
+      </div>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://ruby.social/@kevin_j_m" title="Mastodon">
+               <i class="fab fa-mastodon fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+        <li>
+          <a rel="me" href="https://ruby.social/@kevin_j_m">
+          </a>
+        </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="http://localhost:1313/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/search/">
+                <i class="fa-li fa  fa-lg"></i><span>Search</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>RSpec Stubs The Object In Memory</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" data-pagefind-sort="date:2024-09-09" datetime="2024-09-09T15:00:10-04:00">Sep 9, 2024</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="http://localhost:1313/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="http://localhost:1313/tags/rspec">#rspec</a>
+                
+                    , 
+                    <a href="http://localhost:1313/tags/testing">#testing</a>
+                
+            </em>
+        </li>
+        
+
+        <li>6 minute read | 1079 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+      
+
+    
+
+    <h2 id="publish-or-perish">Publish or Perish <a href="#publish-or-perish">🔗</a></h2>
+<p>Let&rsquo;s say we&rsquo;ve been sitting on a handful of blog posts that are ready to publish, but we haven&rsquo;t released yet. This is a fictional story that in no way mirrors reality of any particular writer. Certainly not the author writing this post now. In a spirit of inspiration, we decide to write a small class to publish all these posts that exist in our system.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DraftPost</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">publish_all</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">Post</span><span style="color:#f92672">.</span>draft<span style="color:#f92672">.</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:publish</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Rather than actually publish them, we&rsquo;ve successfully procrastinated. We have a <em>way</em> to publish them, eventually. While we&rsquo;re busy not actually publishing them, let&rsquo;s test this method works.</p>
+<h2 id="prolonged-publication-procrastination">Prolonged Publication Procrastination <a href="#prolonged-publication-procrastination">🔗</a></h2>
+<p>We want to verify that we send the <code>publish</code> message to each of these posts. We don&rsquo;t actually want to execute the <code>publish</code> method. Perhaps that integrates with a third-party API. We don&rsquo;t want to manage <a href="http://localhost:1313/posts/testing-dependencies/">testing that interaction</a> here.</p>
+<p>Instead, we&rsquo;ll stub out the response using <a href="https://rspec.info/features/3-12/rspec-mocks/">RSpec mocks</a>.</p>
+<p>With that goal, we write our test.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;publishes all draft posts&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  draft <span style="color:#f92672">=</span> <span style="color:#66d9ef">Post</span><span style="color:#f92672">.</span>create(<span style="color:#e6db74">draft</span>: <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>  allow(draft)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:publish</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">DraftPost</span><span style="color:#f92672">.</span>publish_all
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(draft)<span style="color:#f92672">.</span>to have_received(<span style="color:#e6db74">:publish</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This test <em>fails</em>. We put a breakpoint in our test. We confirm that a post with the same database ID as <code>draft</code> <strong>does</strong> get the <code>publish</code> method called on it.</p>
+<p>Even though these objects pass the equality check, the issue is that they are <em>not</em> the same object in memory. Compare the <code>object_id</code> of the <code>draft</code> object to the object pulled out of the database. They&rsquo;re different. The post published in <code>DraftPost.publish_all</code> does not have the stub applied to it.</p>
+<p>The stub operates on that <code>draft</code> object in memory, and only that object. Even though the other object is equal to the <code>draft</code> object, it is not the <em>same</em> as the <code>draft</code> object. Because of that, our assertion does not pass.</p>
+<h2 id="any-instance-of">Any Instance Of <a href="#any-instance-of">🔗</a></h2>
+<p>At this point, we may try to instead test what&rsquo;s returned from <code>publish_all</code> while still not having the <code>publish</code> method called on the posts.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;publishes all draft posts&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  draft <span style="color:#f92672">=</span> <span style="color:#66d9ef">Post</span><span style="color:#f92672">.</span>create(<span style="color:#e6db74">draft</span>: <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  allow_any_instance_of(<span style="color:#66d9ef">Post</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:publish</span>)<span style="color:#f92672">.</span>and_return(<span style="color:#e6db74">&#34;called publish&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(<span style="color:#66d9ef">DraftPost</span><span style="color:#f92672">.</span>publish_all)<span style="color:#f92672">.</span>to eq <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;called publish&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Our test now passes. However, we have some drawbacks. First off, <a href="https://rspec.info/features/3-12/rspec-mocks/working-with-legacy-code/any-instance/">RSpec itself</a> considers using <code>allow_any_instance_of</code> to be suspect.</p>
+<blockquote>
+<p>This feature is sometimes useful when working with legacy code, though in general we discourage its use for a number of reasons</p>
+</blockquote>
+<p>Now, this doesn&rsquo;t mean it&rsquo;s <em>wrong</em>. But, I&rsquo;d argue to only use it after carefully considering other options.</p>
+<p>The other thing we changed here is our testing philosophy. Now we&rsquo;re testing what&rsquo;s returned by the method, rather than what the method does. And we did this by stubbing out what any Post should return when we call the <code>publish</code> method on it.</p>
+<p>That again may be fine, but it may not test that we publish all the draft posts, which is our goal. Instead, it confirms what the <code>publish_all</code> method returns.</p>
+<p>This may be hyperbolic, but if we changed the implementation to look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DraftPost</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">publish_all</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;called publish&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Now our test that asserts this method is calling <code>publish</code> still passes, but we&rsquo;re definitely not publishing any posts.</p>
+<h2 id="change-the-implementation">Change the Implementation <a href="#change-the-implementation">🔗</a></h2>
+<p>Let&rsquo;s change <code>publish_all</code> so we pass all the posts to publish into it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DraftPost</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">publish_all</span>(posts)
+</span></span><span style="display:flex;"><span>    posts<span style="color:#f92672">.</span>map(<span style="color:#f92672">&amp;</span><span style="color:#e6db74">:publish</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Now we can use the RSpec mock as we want.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;publishes all draft posts&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  draft <span style="color:#f92672">=</span> <span style="color:#66d9ef">Post</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">draft</span>: <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>  allow(draft)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:publish</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">DraftPost</span><span style="color:#f92672">.</span>publish_all(<span style="color:#f92672">[</span>draft<span style="color:#f92672">]</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(draft)<span style="color:#f92672">.</span>to have_received(<span style="color:#e6db74">:publish</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This test passes, and as a bonus, we don&rsquo;t need to access the database in our test anymore. What a speed improvement!</p>
+<p>Once again, this choice comes with some careful consideration. First off, modifying the implementation to satisfy the way we want to test it may be undesirable. I do want to point out that I don&rsquo;t think this is true generally. I do believe in using your tests as your first consumer of your code. If something is tough to test, it may be hard to use or confusing to understand. There&rsquo;s value in receiving that signal and deciding to change the code&rsquo;s design or structure in that case.</p>
+<p>Stepping back here, passing in the posts makes the name of this class pretty meaningless. This should only work on draft posts. However, we can pass any kind of post (really, anything that responds to <code>publish</code>) and this will still work.</p>
+<p>Maybe we want something that&rsquo;ll generically publish any kind of post. If so, we probably shouldn&rsquo;t have that inside a <code>DraftPost</code> class. If this should only operate on draft posts, then this may not be the choice we want to make.</p>
+<p>Passing in the posts allows our stub to work. Passing in the posts may allow us to achieve some purity of using dependency injection. Passing in the posts may make this method less usable. Enough to the point where perhaps it shouldn&rsquo;t exist at all.</p>
+<h2 id="stub-the-db-interaction">Stub the DB Interaction <a href="#stub-the-db-interaction">🔗</a></h2>
+<p>We still want to use the mock. We don&rsquo;t want to use RSpec features that the core team themselves recommend against. We don&rsquo;t want to change the implementation. It turns out we like the benefit of not needing to access the database. We can achieve all those goals by <em>also</em> stubbing out the database call.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;publishes all draft posts&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span> draft <span style="color:#f92672">=</span> <span style="color:#66d9ef">Post</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">draft</span>: <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span> allow(<span style="color:#66d9ef">Post</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:draft</span>)<span style="color:#f92672">.</span>and_return(<span style="color:#f92672">[</span>draft<span style="color:#f92672">]</span>)
+</span></span><span style="display:flex;"><span> allow(draft)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:publish</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">DraftPost</span><span style="color:#f92672">.</span>publish_all
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> expect(draft)<span style="color:#f92672">.</span>to have_received(<span style="color:#e6db74">:publish</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="finally-publishing-the-post">Finally Publishing The Post <a href="#finally-publishing-the-post">🔗</a></h2>
+<p>We confirm that we send the right message (<code>publish</code>) without invoking its implementation. We do give up some confidence in that we don&rsquo;t know for sure that <code>Post.draft</code> works how we expect. We can regain that confidence by having other tests specific for that method.</p>
+<p>One could argue this gives us more flexibility. If the implementation of <code>Post.draft</code> changes, this test will continue to work. It can get posts from a database or third-party API. Our method doesn&rsquo;t care.</p>
+<p>On the flip side, one could also argue that this test is tying us to a particular implementation. If <code>DraftPost.publish_all</code> changed to instead use <code>Post.where(draft: true)</code>, then this test will no longer work. Unfortunately, there is no <em>right</em> answer. We must consider the trade-offs we&rsquo;re willing to make to achieve our goal. What ✨magic✨ you&rsquo;re interested in maintaining is up to you.</p>
+<p>Keep in mind that RSpec mocks only work on that particular object in memory. If the implementation pulls the same record fresh out of the database, the mock will not apply. When using RSpec mocks in your tests, objects in memory may be farther than they appear.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/posts/access-request-headers-in-rails-controller/"><i class="fa fa-chevron-circle-left"></i> Access Request Headers in a Rails Controller</a>
+        
+        </li>
+        <li>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2023 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://localhost:1313/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="http://localhost:1313/js/scripts.js"></script>
+
+  
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
+
+
+</body>
+
+</html>
+

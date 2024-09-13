@@ -11,10 +11,28 @@
     <loc>https://kevinjmurphy.com/search/</loc>
     <lastmod>2023-12-08T17:37:33-05:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/posts/frequently-played-2024-09/</loc>
-    <lastmod>2024-09-10T17:40:50-05:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2024-09-13T15:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2024-09-13T15:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/rspec/</loc>
+    <lastmod>2024-09-13T15:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/rspec-stubs-object-in-memory/</loc>
+    <lastmod>2024-09-13T15:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2024-09-13T15:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2024-09-13T15:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/testing/</loc>
+    <lastmod>2024-09-13T15:00:10-04:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/frequently-played-2024-09/</loc>
     <lastmod>2024-09-10T17:40:50-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/music/</loc>
@@ -23,19 +41,10 @@
     <loc>https://kevinjmurphy.com/tags/personal/</loc>
     <lastmod>2024-09-10T17:40:50-05:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2024-09-10T17:40:50-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
-    <lastmod>2024-09-10T17:40:50-05:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/posts/access-request-headers-in-rails-controller/</loc>
     <lastmod>2024-07-11T18:04:22-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/rails/</loc>
-    <lastmod>2024-07-11T18:04:22-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
     <lastmod>2024-07-11T18:04:22-05:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/conference/</loc>
@@ -103,12 +112,6 @@
   </url><url>
     <loc>https://kevinjmurphy.com/posts/keeping-up-with-ruby-news/</loc>
     <lastmod>2023-08-19T15:23:22-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/rspec/</loc>
-    <lastmod>2023-07-14T19:00:24-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/testing/</loc>
-    <lastmod>2023-07-14T19:00:24-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/testing-inherited-behavior/</loc>
     <lastmod>2023-07-14T19:00:24-04:00</lastmod>

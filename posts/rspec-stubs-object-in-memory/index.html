@@ -2,23 +2,23 @@
 
 <html lang="en">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <title>RSpec Stubs The Object In Memory - Kevin Murphy</title>
   <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="This article demonstrates a short-coming with using RSpec mocks in code which accesses objects out of a database." />
 <meta name="author" content="Kevin Murphy" />
 
-<link rel="canonical" href="http://localhost:1313/posts/rspec-stubs-object-in-memory/">
-<meta property="og:url" content="http://localhost:1313/posts/rspec-stubs-object-in-memory/">
+<link rel="canonical" href="https://kevinjmurphy.com/posts/rspec-stubs-object-in-memory/">
+<meta property="og:url" content="https://kevinjmurphy.com/posts/rspec-stubs-object-in-memory/">
   <meta property="og:site_name" content="Kevin Murphy">
   <meta property="og:title" content="RSpec Stubs The Object In Memory">
   <meta property="og:description" content="This article demonstrates a short-coming with using RSpec mocks in code which accesses objects out of a database.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2024-09-09T15:00:10-04:00">
-    <meta property="article:modified_time" content="2024-09-09T15:00:10-04:00">
+    <meta property="article:published_time" content="2024-09-13T15:00:10-04:00">
+    <meta property="article:modified_time" content="2024-09-13T15:00:10-04:00">
     <meta property="article:tag" content="Ruby">
     <meta property="article:tag" content="Rspec">
     <meta property="article:tag" content="Testing">
@@ -31,13 +31,13 @@
 <meta name="generator" content="Hugo 0.128.2">
     
 
-  <link rel="stylesheet" href="http://localhost:1313/css/normalize.min.css" />
-  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/css/normalize.min.css" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
   
   
-  <link rel="stylesheet" type="text/css" href="http://localhost:1313/css/styles.css" /><link rel='stylesheet' href='http://localhost:1313/css/link-style.css'><link rel='stylesheet' href='http://localhost:1313/css/code-scroll.css'><link rel='stylesheet' href='http://localhost:1313/css/coverage-emoji.css'><link rel='stylesheet' href='http://localhost:1313/css/header-name.css'><link rel='stylesheet' href='http://localhost:1313/css/search.css'>
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/header-name.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/search.css'>
   
     
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
@@ -64,7 +64,7 @@
   <div id="container">
     <header>
       <div class="header-name">
-        <a href="http://localhost:1313/">Kevin Murphy</a>
+        <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
       </div>
 
       <ul id="social-media">
@@ -108,25 +108,25 @@
     <ul>
         
         <li>
-            <a class="" href="http://localhost:1313/">
+            <a class="" href="https://kevinjmurphy.com/">
                 <i class="fa-li fa  fa-lg"></i><span>Home</span>
             </a>
         </li>
         
         <li>
-            <a class="" href="http://localhost:1313/about/">
+            <a class="" href="https://kevinjmurphy.com/about/">
                 <i class="fa-li fa  fa-lg"></i><span>About</span>
             </a>
         </li>
         
         <li>
-            <a class="" href="http://localhost:1313/speaking/">
+            <a class="" href="https://kevinjmurphy.com/speaking/">
                 <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
             </a>
         </li>
         
         <li>
-            <a class="" href="http://localhost:1313/search/">
+            <a class="" href="https://kevinjmurphy.com/search/">
                 <i class="fa-li fa  fa-lg"></i><span>Search</span>
             </a>
         </li>
@@ -153,7 +153,7 @@
       <aside>
     <ul>
         <li>
-            <time class="post-date" data-pagefind-sort="date:2024-09-09" datetime="2024-09-09T15:00:10-04:00">Sep 9, 2024</time>
+            <time class="post-date" data-pagefind-sort="date:2024-09-13" datetime="2024-09-13T15:00:10-04:00">Sep 13, 2024</time>
         </li>
         
         
@@ -163,19 +163,19 @@
             <em>
                 
                     
-                    <a href="http://localhost:1313/tags/ruby">#ruby</a>
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
                 
                     , 
-                    <a href="http://localhost:1313/tags/rspec">#rspec</a>
+                    <a href="https://kevinjmurphy.com/tags/rspec">#rspec</a>
                 
                     , 
-                    <a href="http://localhost:1313/tags/testing">#testing</a>
+                    <a href="https://kevinjmurphy.com/tags/testing">#testing</a>
                 
             </em>
         </li>
         
 
-        <li>6 minute read | 1079 words</li>
+        <li>6 minute read | 1095 words</li>
     </ul>
 </aside>
 
@@ -195,7 +195,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
 </span></span></code></pre></div><p>Rather than actually publish them, we&rsquo;ve successfully procrastinated. We have a <em>way</em> to publish them, eventually. While we&rsquo;re busy not actually publishing them, let&rsquo;s test this method works.</p>
 <h2 id="prolonged-publication-procrastination">Prolonged Publication Procrastination <a href="#prolonged-publication-procrastination">🔗</a></h2>
-<p>We want to verify that we send the <code>publish</code> message to each of these posts. We don&rsquo;t actually want to execute the <code>publish</code> method. Perhaps that integrates with a third-party API. We don&rsquo;t want to manage <a href="http://localhost:1313/posts/testing-dependencies/">testing that interaction</a> here.</p>
+<p>We want to verify that we send the <code>publish</code> message to each of these posts. We don&rsquo;t actually want to execute the <code>publish</code> method. Perhaps that integrates with a third-party API. We don&rsquo;t want to manage <a href="https://kevinjmurphy.com/posts/testing-dependencies/">testing that interaction</a> here.</p>
 <p>Instead, we&rsquo;ll stub out the response using <a href="https://rspec.info/features/3-12/rspec-mocks/">RSpec mocks</a>.</p>
 <p>With that goal, we write our test.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;publishes all draft posts&#34;</span> <span style="color:#66d9ef">do</span>
@@ -267,7 +267,8 @@
 </span></span></code></pre></div><h2 id="finally-publishing-the-post">Finally Publishing The Post <a href="#finally-publishing-the-post">🔗</a></h2>
 <p>We confirm that we send the right message (<code>publish</code>) without invoking its implementation. We do give up some confidence in that we don&rsquo;t know for sure that <code>Post.draft</code> works how we expect. We can regain that confidence by having other tests specific for that method.</p>
 <p>One could argue this gives us more flexibility. If the implementation of <code>Post.draft</code> changes, this test will continue to work. It can get posts from a database or third-party API. Our method doesn&rsquo;t care.</p>
-<p>On the flip side, one could also argue that this test is tying us to a particular implementation. If <code>DraftPost.publish_all</code> changed to instead use <code>Post.where(draft: true)</code>, then this test will no longer work. Unfortunately, there is no <em>right</em> answer. We must consider the trade-offs we&rsquo;re willing to make to achieve our goal. What ✨magic✨ you&rsquo;re interested in maintaining is up to you.</p>
+<p>On the flip side, one could also argue that this test is tying us to a particular implementation. If <code>DraftPost.publish_all</code> changed to instead use <code>Post.where(draft: true)</code>, then this test will no longer work. Even though using the scope or using where will retrieve the same records from the database.</p>
+<p>Unfortunately, there is no <em>right</em> answer. We must consider the trade-offs we&rsquo;re willing to make to achieve our goal. What ✨magic✨ you&rsquo;re interested in maintaining is up to you.</p>
 <p>Keep in mind that RSpec mocks only work on that particular object in memory. If the implementation pulls the same record fresh out of the database, the mock will not apply. When using RSpec mocks in your tests, objects in memory may be farther than they appear.</p>
 
 
@@ -278,7 +279,7 @@
     <ul>
         <li>
         
-            <a href="http://localhost:1313/posts/access-request-headers-in-rails-controller/"><i class="fa fa-chevron-circle-left"></i> Access Request Headers in a Rails Controller</a>
+            <a href="https://kevinjmurphy.com/posts/frequently-played-2024-09/"><i class="fa fa-chevron-circle-left"></i> Frequently Played Sept 2024</a>
         
         </li>
         <li>
@@ -301,10 +302,10 @@
 
         <h6>Copyright © 2023 - Kevin Murphy |
             Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
-            <a href="http://localhost:1313/index.xml">RSS </a></h6>
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
     </footer>
 </div>
-<script src="http://localhost:1313/js/scripts.js"></script>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
 
   
   

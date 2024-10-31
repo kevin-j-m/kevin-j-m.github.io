@@ -1,0 +1,559 @@
+<!doctype html>
+
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>Formatting SQL with anbt-sql-formatter - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="This post documents the different configuration settings available in the anbt-sql-formatter gem." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="http://localhost:1313/posts/format-sql-anbt-sql-formatter/">
+<meta property="og:url" content="http://localhost:1313/posts/format-sql-anbt-sql-formatter/">
+  <meta property="og:site_name" content="Kevin Murphy">
+  <meta property="og:title" content="Formatting SQL with anbt-sql-formatter">
+  <meta property="og:description" content="This post documents the different configuration settings available in the anbt-sql-formatter gem.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-10-19T18:23:22-04:00">
+    <meta property="article:modified_time" content="2024-10-19T18:23:22-04:00">
+    <meta property="article:tag" content="Sql">
+    <meta property="article:tag" content="Ruby">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Formatting SQL with anbt-sql-formatter">
+  <meta name="twitter:description" content="This post documents the different configuration settings available in the anbt-sql-formatter gem.">
+
+<meta name="generator" content="Hugo 0.128.2">
+    
+
+  <link rel="stylesheet" href="http://localhost:1313/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="http://localhost:1313/css/styles.css" /><link rel='stylesheet' href='http://localhost:1313/css/link-style.css'><link rel='stylesheet' href='http://localhost:1313/css/code-scroll.css'><link rel='stylesheet' href='http://localhost:1313/css/coverage-emoji.css'><link rel='stylesheet' href='http://localhost:1313/css/header-name.css'><link rel='stylesheet' href='http://localhost:1313/css/search.css'>
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="header-name">
+        <a href="http://localhost:1313/">Kevin Murphy</a>
+      </div>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://ruby.social/@kevin_j_m" title="Mastodon">
+               <i class="fab fa-mastodon fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+        <li>
+          <a rel="me" href="https://ruby.social/@kevin_j_m">
+          </a>
+        </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="http://localhost:1313/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/search/">
+                <i class="fa-li fa  fa-lg"></i><span>Search</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Formatting SQL with anbt-sql-formatter</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" data-pagefind-sort="date:2024-10-19" datetime="2024-10-19T18:23:22-04:00">Oct 19, 2024</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="http://localhost:1313/tags/sql">#sql</a>
+                
+                    , 
+                    <a href="http://localhost:1313/tags/ruby">#ruby</a>
+                
+            </em>
+        </li>
+        
+
+        <li>10 minute read | 2005 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+      
+
+    
+
+    <h2 id="seeing-sql">Seeing SQL <a href="#seeing-sql">🔗</a></h2>
+<p>Have you ever needed to display the SQL query used to generate the data in the report you&rsquo;re also showing? Me neither.</p>
+<p>UNTIL I DID.</p>
+<p>And when I did, I wanted it to look nice. Readable. Formatted.</p>
+<p>Something that didn&rsquo;t look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#e6db74">&#34;SELECT * from FOOS join bars on foos.id = bars.foo_id WHERE A = true AND B = &#39;test&#39; OR coalesce(status, &#39;unknown&#39;) &lt;&gt; &#39;unknown&#39;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> from <span style="color:#66d9ef">FOOS</span> join bars on foos<span style="color:#f92672">.</span>id <span style="color:#f92672">=</span> bars<span style="color:#f92672">.</span>foo_id <span style="color:#66d9ef">WHERE</span> A <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">AND</span> B <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;test&#39;</span> <span style="color:#66d9ef">OR</span> coalesce(status, <span style="color:#e6db74">&#39;unknown&#39;</span>) <span style="color:#f92672">&lt;&gt;</span> <span style="color:#e6db74">&#39;unknown&#39;</span>
+</span></span></code></pre></div><p>Reading that, I felt broken. And not in the <a href="https://thebloggess.com/broken/">best possible way</a>. I didn&rsquo;t feel any positive vibes. Still don&rsquo;t.</p>
+<p>I started thinking about needing to ante up for the <a href="https://blog.ansi.org/sql-standard-iso-iec-9075-2023-ansi-x3-135/">standard documentation</a> and do some light reading of the nine parts. And then I&rsquo;d <a href="https://en.wikipedia.org/wiki/Parsing">parse</a> the statement, using a <a href="https://en.wikipedia.org/wiki/Lexical_analysis">lexer</a> to generate tokens to determine how to format this string.</p>
+<p>Then I realized what time it was. I forgot to mention this, but it was 4pm on Friday. Not exactly the best time to delve into this intellectual pursuit when I had a weekend of not parsing SQL planned.</p>
+<p>So instead I did the next best thing - I searched for the result of someone else&rsquo;s intellectual pursuit of the same problem to see if I could apply it. And that&rsquo;s how I found the <a href="https://github.com/sonota88/anbt-sql-formatter">anbt-sql-formatter</a> gem.</p>
+<h2 id="initial-formatting">Initial Formatting <a href="#initial-formatting">🔗</a></h2>
+<p>Very generally, anbt-sql-formatter works by setting up the set of rules you want it to use to format the SQL, supplying that to a formatter, and then asking the formatter to apply those rules to the SQL.</p>
+<p>You&rsquo;re not on your own to define these rules. With no modifications, it&rsquo;ll apply a default set of rules.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> require <span style="color:#e6db74">&#34;anbt-sql-formatter/formatter&#34;</span>
+</span></span><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> rule <span style="color:#f92672">=</span> <span style="color:#66d9ef">AnbtSql</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Rule</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">003</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> formatter <span style="color:#f92672">=</span> <span style="color:#66d9ef">AnbtSql</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Formatter</span><span style="color:#f92672">.</span>new(rule)
+</span></span><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">004</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts formatter<span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;SELECT * from FOOS WHERE A = true AND B = &#39;test&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">FOOS</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">WHERE</span>
+</span></span><span style="display:flex;"><span>        A <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">AND</span> B <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;test&#39;</span>
+</span></span></code></pre></div><p>Now, that may not be to your taste, but that&rsquo;s ok - as I mentioned, we can tweak the rules. The rest of this post will describe the different options we can use to customize these rules.</p>
+<p>As a starting point, we&rsquo;ll build a class to encapsulate this formatting:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>require <span style="color:#e6db74">&#34;anbt-sql-formatter/formatter&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SqlFormatter</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">format</span>(sql)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span><span style="color:#f92672">.</span>format(sql)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>
+</span></span><span style="display:flex;"><span>    @formatter <span style="color:#f92672">=</span> <span style="color:#66d9ef">AnbtSql</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Formatter</span><span style="color:#f92672">.</span>new(rule)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">format</span>(sql)
+</span></span><span style="display:flex;"><span>    @formatter<span style="color:#f92672">.</span>format(sql)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rule</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">AnbtSql</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Rule</span><span style="color:#f92672">.</span>new<span style="color:#f92672">.</span>tap <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>rule<span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span>      rules(rule)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The currently empty <code>rules</code> method is what we&rsquo;ll modify to demonstrate each option.</p>
+<h2 id="rule-summary">Rule Summary <a href="#rule-summary">🔗</a></h2>
+<p>The rest of this post serves as a reference to describe the different rules you can apply. If you don&rsquo;t want to read this from top to bottom, you may use this summary to guide what sections to dig into.</p>
+<ul>
+<li><a href="#keyword">keyword</a>: What casing to apply to all keywords.</li>
+<li><a href="#indent_string">indent_string</a>: The string used to show indentation.</li>
+<li><a href="#function_names">function_names</a>: The list of known function names.</li>
+<li><a href="#space_after_comma">space_after_comma</a>: Whether to add a space after a comma.</li>
+<li><a href="#kw_plus1_indent_x_nl">kw_plus1_indent_x_nl</a>: The list of keywords to add a newline after and indent what follows one level deeper.</li>
+<li><a href="#kw_minus1_indent_nl_x_plus1_indent">kw_minus1_indent_nl_x_plus1_indent</a>: The list of keywords to add a newline before, one level of indentation shallower, and then indenting what follows one level deeper.</li>
+<li><a href="#kw_nl_x">kw_nl_x</a>: The list of keywords to add a newline before.</li>
+<li><a href="#kw_nl_x_plus1_indent">kw_nl_x_plus1_indent</a>: The list of keywords to add a newline before, indented one level deeper.</li>
+<li><a href="#kw_multi_words">kw_multi_words</a>: The list of multi-word keywords.</li>
+<li><a href="#in_values_num">in_values_num</a>: The number of entries in an <code>IN</code> statement to display on one line.</li>
+</ul>
+<h2 id="keyword">keyword <a href="#keyword">🔗</a></h2>
+<p>I tend to use a lot of UPPERCASE when I write SQL. I don&rsquo;t know why. Maybe you do too. And maybe you&rsquo;d wish it displayed lowercase. Or you want to write it in whatever casing you&rsquo;d like, but have the keywords show up in uppercase consistently. That&rsquo;s what this first rule can dictate for us, with the help of some constants.</p>
+<h3 id="none">none <a href="#none">🔗</a></h3>
+<p>With this option, no modifications are made to the casing of keywords.</p>
+<p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>keyword <span style="color:#f92672">=</span> <span style="color:#66d9ef">AnbtSql</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Rule</span><span style="color:#f92672">::</span><span style="color:#66d9ef">KEYWORD_NONE</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;SELECT * from FOOS&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    from
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">FOOS</span>
+</span></span></code></pre></div><p>Here, the <code>SELECT</code> keyword is in uppercase characters, as it was in the original string. The <code>from</code> keyword is in lowercase, also matching the input string. No changes were made to either keyword.</p>
+<h3 id="uppercase">uppercase <a href="#uppercase">🔗</a></h3>
+<p>We can also force all keywords to be in uppercase.</p>
+<p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>keyword <span style="color:#f92672">=</span> <span style="color:#66d9ef">AnbtSql</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Rule</span><span style="color:#f92672">::</span><span style="color:#66d9ef">KEYWORD_UPPER_CASE</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;SELECT * from FOOS&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">FOOS</span>
+</span></span></code></pre></div><h3 id="lowercase">lowercase <a href="#lowercase">🔗</a></h3>
+<p>Or all keywords can be transformed to lowercase.</p>
+<p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>keyword <span style="color:#f92672">=</span> <span style="color:#66d9ef">AnbtSql</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Rule</span><span style="color:#f92672">::</span><span style="color:#66d9ef">KEYWORD_LOWER_CASE</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;SELECT * from FOOS&#34;</span>)
+</span></span><span style="display:flex;"><span>select
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    from
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">FOOS</span>
+</span></span></code></pre></div><h2 id="indent_string">indent_string <a href="#indent_string">🔗</a></h2>
+<p>Sure, a certain number of spaces seems like a reasonable <a href="https://github.com/sonota88/anbt-sql-formatter/blob/97827ccc8519d19b93e613901bec434eb43c210e/lib/anbt-sql-formatter/rule.rb#L60">default</a>. But, with this rule, we can use anything we want.</p>
+<p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>indent_string <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;-&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;SELECT * from FOOS&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;-&gt;&lt;-&gt;*</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;-&gt;</span><span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;-&gt;&lt;-&gt;</span><span style="color:#66d9ef">FOOS</span>
+</span></span></code></pre></div><p>Now, this may seem ridiculous. And that&rsquo;s because this example is. However, it became incredibly useful for how I needed to apply this. I needed to show the SQL query on a website using Rails. I used the <code>simple_format</code> <a href="https://api.rubyonrails.org/classes/ActionView/Helpers/TextHelper.html#method-i-simple_format">method</a> to format the text. However, one thing it didn&rsquo;t do is apply the spaces for indentation.</p>
+<p>But, by using a <a href="https://en.wikipedia.org/wiki/Sentence_spacing_in_digital_media#Character_encodings">special character</a> for indentation, the <code>simple_format</code> helper method now indents my text.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>indent_string <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&amp;emsp;&#34;</span>
+</span></span></code></pre></div><h2 id="function_names">function_names <a href="#function_names">🔗</a></h2>
+<p>By <a href="https://github.com/sonota88/anbt-sql-formatter/blob/97827ccc8519d19b93e613901bec434eb43c210e/lib/anbt-sql-formatter/rule.rb#L87-L115">default</a>, the gem recognizes a set of functions as&hellip;functions. And it formats functions by placing the entirety of the function on one line. However, there may be other functions you want formatted as a function, which will put it on it&rsquo;s own line.</p>
+<p>Consider the default formatting of our use of <code>COALESCE</code>, which is a function the gem does not recognize by default.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;SELECT COALESCE(status, &#39;unknown&#39;) from FOOS&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">COALESCE</span> (
+</span></span><span style="display:flex;"><span>             status
+</span></span><span style="display:flex;"><span>             ,<span style="color:#e6db74">&#39;unknown&#39;</span>
+</span></span><span style="display:flex;"><span>         )
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">FOOS</span>
+</span></span></code></pre></div><p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>function_names <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;COALESCE&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;SELECT COALESCE(status, &#39;unknown&#39;) from FOOS&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">COALESCE</span>( status ,<span style="color:#e6db74">&#39;unknown&#39;</span> )
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">FOOS</span>
+</span></span></code></pre></div><h2 id="space_after_comma">space_after_comma <a href="#space_after_comma">🔗</a></h2>
+<p>The specifies the highly-important standard of whether a comma in the SQL statement should be followed by a space. By <a href="https://github.com/sonota88/anbt-sql-formatter/blob/97827ccc8519d19b93e613901bec434eb43c210e/lib/anbt-sql-formatter/rule.rb#L62">default</a>, there is no space after the comma.</p>
+<p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>function_names <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;COALESCE&#34;</span> <span style="color:#75715e"># See function_names section for details</span>
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>space_after_comma <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;SELECT coalesce(status, &#39;unknown&#39;) from FOOS&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">COALESCE</span>( status , <span style="color:#e6db74">&#39;unknown&#39;</span> )
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">FOOS</span>
+</span></span></code></pre></div><h2 id="kw_plus1_indent_x_nl">kw_plus1_indent_x_nl <a href="#kw_plus1_indent_x_nl">🔗</a></h2>
+<p>This is specifying how particular keywords (kw) should be formatted. The &ldquo;x&rdquo; refers to the keyword, &ldquo;nl&rdquo; is for a newline. The name of the setting is meant to demonstrate how this will format the keyword. This is showing that the keyword will be followed by a newline that&rsquo;s indented one level in from the prior line.</p>
+<p>There are a set of keywords that have this formatting applied by <a href="https://github.com/sonota88/anbt-sql-formatter/blob/97827ccc8519d19b93e613901bec434eb43c210e/lib/anbt-sql-formatter/rule.rb#L66">default</a>.</p>
+<p>With no change in default formatting, here is how the gem formats the <code>JOIN</code> keyword:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos join bars on foos.id = bars.foo_id&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos <span style="color:#66d9ef">JOIN</span> bars
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">ON</span> foos<span style="color:#f92672">.</span>id <span style="color:#f92672">=</span> bars<span style="color:#f92672">.</span>foo_id
+</span></span></code></pre></div><p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>kw_plus1_indent_x_nl <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;JOIN&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos join bars on foos.id = bars.foo_id&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos <span style="color:#66d9ef">JOIN</span>
+</span></span><span style="display:flex;"><span>            bars
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">ON</span> foos<span style="color:#f92672">.</span>id <span style="color:#f92672">=</span> bars<span style="color:#f92672">.</span>foo_id
+</span></span></code></pre></div><h2 id="kw_minus1_indent_nl_x_plus1_indent">kw_minus1_indent_nl_x_plus1_indent <a href="#kw_minus1_indent_nl_x_plus1_indent">🔗</a></h2>
+<p>This is specifying how particular keywords (kw) should be formatted. The &ldquo;x&rdquo; refers to the keyword, &ldquo;nl&rdquo; is for a newline. The name of the setting is meant to demonstrate how this will format the keyword. This is showing that the keyword will be put on a newline that&rsquo;s indented one level out from the prior line. The line following the keyword will be indented one level in from the line with the keyword. From what I&rsquo;ve seen, the next word following the keyword is immediately placed on the next line with the indenting, though the setting name does not have a &ldquo;nl&rdquo; after the keyword &ldquo;x&rdquo;.</p>
+<p>There are a set of keywords that have this formatting applied by <a href="https://github.com/sonota88/anbt-sql-formatter/blob/97827ccc8519d19b93e613901bec434eb43c210e/lib/anbt-sql-formatter/rule.rb#L71-L72">default</a>.</p>
+<p>With no change in default formatting, here is how the gem formats the <code>JOIN</code> keyword:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos join bars on foos.id = bars.foo_id&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos <span style="color:#66d9ef">JOIN</span> bars
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">ON</span> foos<span style="color:#f92672">.</span>id <span style="color:#f92672">=</span> bars<span style="color:#f92672">.</span>foo_id
+</span></span></code></pre></div><p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>kw_minus1_indent_nl_x_plus1_indent <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;JOIN&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos join bars on foos.id = bars.foo_id&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">JOIN</span>
+</span></span><span style="display:flex;"><span>        bars
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">ON</span> foos<span style="color:#f92672">.</span>id <span style="color:#f92672">=</span> bars<span style="color:#f92672">.</span>foo_id
+</span></span></code></pre></div><h2 id="kw_nl_x">kw_nl_x <a href="#kw_nl_x">🔗</a></h2>
+<p>This is specifying how particular keywords (kw) should be formatted. The &ldquo;x&rdquo; refers to the keyword, &ldquo;nl&rdquo; is for a newline. The name of the setting is meant to demonstrate how this will format the keyword. This is showing that the keyword will be put on a newline at the same level of indentation as the prior line.</p>
+<p>There are a set of keywords that have this formatting applied by <a href="https://github.com/sonota88/anbt-sql-formatter/blob/97827ccc8519d19b93e613901bec434eb43c210e/lib/anbt-sql-formatter/rule.rb#L80">default</a>.</p>
+<p>With no change in default formatting, here is how the gem formats the <code>JOIN</code> keyword:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos join bars on foos.id = bars.foo_id&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos <span style="color:#66d9ef">JOIN</span> bars
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">ON</span> foos<span style="color:#f92672">.</span>id <span style="color:#f92672">=</span> bars<span style="color:#f92672">.</span>foo_id
+</span></span></code></pre></div><p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>kw_nl_x <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;JOIN&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos join bars on foos.id = bars.foo_id&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">JOIN</span> bars
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">ON</span> foos<span style="color:#f92672">.</span>id <span style="color:#f92672">=</span> bars<span style="color:#f92672">.</span>foo_id
+</span></span></code></pre></div><h2 id="kw_nl_x_plus1_indent">kw_nl_x_plus1_indent <a href="#kw_nl_x_plus1_indent">🔗</a></h2>
+<p>This is specifying how particular keywords (kw) should be formatted. The &ldquo;x&rdquo; refers to the keyword, &ldquo;nl&rdquo; is for a newline. The name of the setting is meant to demonstrate how this will format the keyword. This is showing that the keyword will be put on a newline that&rsquo;s indented one level in from the prior line.</p>
+<p>There are a set of keywords that have this formatting applied by <a href="https://github.com/sonota88/anbt-sql-formatter/blob/97827ccc8519d19b93e613901bec434eb43c210e/lib/anbt-sql-formatter/rule.rb#L76">default</a>.</p>
+<p>With no change in default formatting, here is how the gem formats the <code>JOIN</code> keyword:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos join bars on foos.id = bars.foo_id&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos <span style="color:#66d9ef">JOIN</span> bars
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">ON</span> foos<span style="color:#f92672">.</span>id <span style="color:#f92672">=</span> bars<span style="color:#f92672">.</span>foo_id
+</span></span></code></pre></div><p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>kw_nl_x_plus1_indent <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;JOIN&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos join bars on foos.id = bars.foo_id&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">JOIN</span> bars
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">ON</span> foos<span style="color:#f92672">.</span>id <span style="color:#f92672">=</span> bars<span style="color:#f92672">.</span>foo_id
+</span></span></code></pre></div><h2 id="kw_multi_words">kw_multi_words <a href="#kw_multi_words">🔗</a></h2>
+<p>Some keywords that you want to apply formatting to are actually more than one word in SQL. This allows you to specify the multi-word combinations that should be treated as a keyword. There is a <a href="https://github.com/sonota88/anbt-sql-formatter/blob/97827ccc8519d19b93e613901bec434eb43c210e/lib/anbt-sql-formatter/rule.rb#L83">default</a> set of multi-word keywords the gem uses.</p>
+<p><strong>Setting the rule</strong></p>
+<p>Here we&rsquo;ll use this to specify <code>INNER JOIN</code> as a multi-word keyword and also apply how we want that keyword to be <a href="#kw_nl_x">formatted</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>kw_multi_words <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;INNER JOIN&#34;</span>
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>kw_nl_x <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;INNER JOIN&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos inner join bars on foos.id = bars.foo_id&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> bars
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">ON</span> foos<span style="color:#f92672">.</span>id <span style="color:#f92672">=</span> bars<span style="color:#f92672">.</span>foo_id
+</span></span></code></pre></div><h2 id="in_values_num">in_values_num <a href="#in_values_num">🔗</a></h2>
+<p>This is used to specify how many items inside of an <code>IN</code> statement will appear on a single line.</p>
+<h3 id="default">Default <a href="#default">🔗</a></h3>
+<p>With no modifications, each element inside the <code>IN</code> statement will appear on its own line.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">002</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos where baz in (&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">WHERE</span>
+</span></span><span style="display:flex;"><span>        baz <span style="color:#66d9ef">IN</span> (
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;a&#39;</span>
+</span></span><span style="display:flex;"><span>            ,<span style="color:#e6db74">&#39;b&#39;</span>
+</span></span><span style="display:flex;"><span>            ,<span style="color:#e6db74">&#39;c&#39;</span>
+</span></span><span style="display:flex;"><span>            ,<span style="color:#e6db74">&#39;d&#39;</span>
+</span></span><span style="display:flex;"><span>        )
+</span></span></code></pre></div><h3 id="one-line">One Line <a href="#one-line">🔗</a></h3>
+<p>You can force all the elements to appear on a single line using a special constant.</p>
+<p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>in_values_num <span style="color:#f92672">=</span> <span style="color:#66d9ef">AnbtSql</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Rule</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ONELINE_IN_VALUES_NUM</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos where baz in (&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">WHERE</span>
+</span></span><span style="display:flex;"><span>        baz <span style="color:#66d9ef">IN</span> (
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;a&#39;</span> ,<span style="color:#e6db74">&#39;b&#39;</span> ,<span style="color:#e6db74">&#39;c&#39;</span> ,<span style="color:#e6db74">&#39;d&#39;</span>
+</span></span><span style="display:flex;"><span>        )
+</span></span></code></pre></div><h3 id="specifying-the-number">Specifying the number <a href="#specifying-the-number">🔗</a></h3>
+<p>You can also define an explicit number of elements to appear on a single line.</p>
+<p><strong>Setting the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rules</span>(rule)
+</span></span><span style="display:flex;"><span>    rule<span style="color:#f92672">.</span>in_values_num <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><strong>Using the rule</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>irb(main):<span style="color:#ae81ff">001</span>:<span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> puts <span style="color:#66d9ef">SqlFormatter</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;select * from foos where baz in (&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">FROM</span>
+</span></span><span style="display:flex;"><span>        foos
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">WHERE</span>
+</span></span><span style="display:flex;"><span>        baz <span style="color:#66d9ef">IN</span> (
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;a&#39;</span> ,<span style="color:#e6db74">&#39;b&#39;</span>
+</span></span><span style="display:flex;"><span>            ,<span style="color:#e6db74">&#39;c&#39;</span> ,<span style="color:#e6db74">&#39;d&#39;</span>
+</span></span><span style="display:flex;"><span>        )
+</span></span></code></pre></div><h2 id="conclusion">Conclusion <a href="#conclusion">🔗</a></h2>
+<p>The <a href="https://github.com/sonota88/anbt-sql-formatter">anbt-sql-formatter</a> gem is a great starting point for formatting SQL statements and includes many customizations to modify the formatting to your liking.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/posts/two-drawer-end-tables/"><i class="fa fa-chevron-circle-left"></i> Two Drawer End Tables Construction</a>
+        
+        </li>
+        <li>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2023 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://localhost:1313/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="http://localhost:1313/js/scripts.js"></script>
+
+  
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
+
+
+</body>
+
+</html>
+

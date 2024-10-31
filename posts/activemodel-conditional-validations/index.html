@@ -1,0 +1,358 @@
+<!doctype html>
+
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>ActiveModel Conditional Validations - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="There are options to applying validations conditionally in ActiveModel, but consider other ways to model your rules." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="http://localhost:1313/posts/activemodel-conditional-validations/">
+<meta property="og:url" content="http://localhost:1313/posts/activemodel-conditional-validations/">
+  <meta property="og:site_name" content="Kevin Murphy">
+  <meta property="og:title" content="ActiveModel Conditional Validations">
+  <meta property="og:description" content="There are options to applying validations conditionally in ActiveModel, but consider other ways to model your rules.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-10-20T18:00:22-04:00">
+    <meta property="article:modified_time" content="2024-10-20T18:00:22-04:00">
+    <meta property="article:tag" content="Ruby">
+    <meta property="article:tag" content="Rails">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ActiveModel Conditional Validations">
+  <meta name="twitter:description" content="There are options to applying validations conditionally in ActiveModel, but consider other ways to model your rules.">
+
+<meta name="generator" content="Hugo 0.128.2">
+    
+
+  <link rel="stylesheet" href="http://localhost:1313/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="http://localhost:1313/css/styles.css" /><link rel='stylesheet' href='http://localhost:1313/css/link-style.css'><link rel='stylesheet' href='http://localhost:1313/css/code-scroll.css'><link rel='stylesheet' href='http://localhost:1313/css/coverage-emoji.css'><link rel='stylesheet' href='http://localhost:1313/css/header-name.css'><link rel='stylesheet' href='http://localhost:1313/css/search.css'>
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="header-name">
+        <a href="http://localhost:1313/">Kevin Murphy</a>
+      </div>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/kevin_j_m" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://ruby.social/@kevin_j_m" title="Mastodon">
+               <i class="fab fa-mastodon fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+        <li>
+          <a rel="me" href="https://ruby.social/@kevin_j_m">
+          </a>
+        </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="http://localhost:1313/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/search/">
+                <i class="fa-li fa  fa-lg"></i><span>Search</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>ActiveModel Conditional Validations</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" data-pagefind-sort="date:2024-10-20" datetime="2024-10-20T18:00:22-04:00">Oct 20, 2024</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="http://localhost:1313/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="http://localhost:1313/tags/rails">#rails</a>
+                
+            </em>
+        </li>
+        
+
+        <li>5 minute read | 983 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+      
+
+    
+
+    <h2 id="validating-the-problem-domain">Validating The Problem Domain <a href="#validating-the-problem-domain">🔗</a></h2>
+<p>Today we&rsquo;re modeling a system that involves providing validated parking. It&rsquo;s a benefit provided by different businesses. They offer their customers a discount at a nearby parking lot. The lot has the following rules:</p>
+<ol>
+<li>All parking validation tickets must have an expiration time when they&rsquo;re issued.</li>
+<li>The parking lot owner has a special ticket that does not expire. Instead, the owner provides a PIN after scanning their ticket for free parking.</li>
+<li>Please avoid hitting parked cars.</li>
+</ol>
+<p>The last rule is more of a guideline than anything and won&rsquo;t factor into our modeling.</p>
+<p>We will use the <code>ActiveModel::Validations</code> <a href="https://api.rubyonrails.org/classes/ActiveModel/Validations.html">module</a> to implement these system restrictions.</p>
+<h2 id="parking-expiration">Parking Expiration <a href="#parking-expiration">🔗</a></h2>
+<p>Parking validation tickets must have an expiration time. We will use a <a href="https://guides.rubyonrails.org/active_record_validations.html#presence">presence validation</a> to help enforce that.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ValidatedParkingTicket</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">ActiveModel</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Validations</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_accessor</span> <span style="color:#e6db74">:expires_at</span>
+</span></span><span style="display:flex;"><span>  validates <span style="color:#e6db74">:expires_at</span>, <span style="color:#e6db74">presence</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We will exercise this with a test.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;is invalid without an expiration timestamp&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  ticket <span style="color:#f92672">=</span> <span style="color:#66d9ef">ValidatedParkingTicket</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>  expect(ticket<span style="color:#f92672">.</span>valid?)<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ticket<span style="color:#f92672">.</span>expires_at <span style="color:#f92672">=</span> <span style="color:#66d9ef">Time</span><span style="color:#f92672">.</span>current
+</span></span><span style="display:flex;"><span>  expect(ticket<span style="color:#f92672">.</span>valid?)<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>By including the <code>ActiveModel::Validations</code> module, we gain the ability to set validations. You may have seen these in <code>ActiveRecord</code> models. We can also determine if the instance is valid, as well as seeing any errors.</p>
+<h2 id="owner-pin">Owner PIN <a href="#owner-pin">🔗</a></h2>
+<p>Our second rule states that there is a special ticket. One that the owner has with a PIN.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ValidatedParkingTicket</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">ActiveModel</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Validations</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_accessor</span> <span style="color:#e6db74">:owner_pin</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>It&rsquo;s not enough to have the ability to get and set a PIN for the owner&rsquo;s ticket. We need to make sure that the owner&rsquo;s ticket has a PIN. But other kinds of tickets explicitly should not have a PIN. They&rsquo;re not an owner!</p>
+<p>You may have seen validations that only apply during certain lifecycle events. Perhaps you&rsquo;ve seen something like a field only needs to be present when creating an instance. Or another attribute must be greater than one when updating the record.</p>
+<p>These conditional validations use the <code>on</code> option. And these lifecycle events are contexts within which the validation is applicable.</p>
+<p>However, you&rsquo;re not limited to these events. You can define a <a href="https://guides.rubyonrails.org/active_record_validations.html#on">custom context</a>.</p>
+<p>Let&rsquo;s do that to make sure that the PIN is required within the context of an owner.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ValidatedParkingTicket</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">ActiveModel</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Validations</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_accessor</span> <span style="color:#e6db74">:owner_pin</span>
+</span></span><span style="display:flex;"><span>  validates <span style="color:#e6db74">:owner_pin</span>, <span style="color:#e6db74">presence</span>: <span style="color:#66d9ef">true</span>, <span style="color:#e6db74">on</span>: <span style="color:#e6db74">:owner</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We must explicitly tell ActiveModel&rsquo;s methods about the context.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;requires a PIN when applying the owner context&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  ticket <span style="color:#f92672">=</span> <span style="color:#66d9ef">ValidatedParkingTicket</span><span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span>  expect(ticket<span style="color:#f92672">.</span>valid?(<span style="color:#e6db74">:owner</span>))<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ticket<span style="color:#f92672">.</span>owner_pin <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1234&#34;</span>
+</span></span><span style="display:flex;"><span>  expect(ticket<span style="color:#f92672">.</span>valid?(<span style="color:#e6db74">:owner</span>))<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>When we don&rsquo;t specify the context, the validation does not apply.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;does not require a PIN without the owner context&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  ticket <span style="color:#f92672">=</span> <span style="color:#66d9ef">ValidatedParkingTicket</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">expires_at</span>: <span style="color:#66d9ef">Time</span><span style="color:#f92672">.</span>current)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(ticket<span style="color:#f92672">.</span>valid?)<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="owner-expiration">Owner Expiration <a href="#owner-expiration">🔗</a></h2>
+<p>Recall that we also require a parking validation to have an expiration timestamp. That doesn&rsquo;t apply for the owner. Their ticket is always valid. As long as they can provide the PIN following swiping their ticket, they don&rsquo;t pay to park.</p>
+<p>To accomplish this, we will use another form of conditional validations, the <code>if</code> <a href="https://guides.rubyonrails.org/active_record_validations.html#using-a-proc-with-if-and-unless">option</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ValidatedParkingTicket</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">ActiveModel</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Validations</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_accessor</span> <span style="color:#e6db74">:expires_at</span>
+</span></span><span style="display:flex;"><span>  validates <span style="color:#e6db74">:expires_at</span>, <span style="color:#e6db74">presence</span>: <span style="color:#66d9ef">true</span>, <span style="color:#66d9ef">if</span>: <span style="color:#f92672">-&gt;</span> { validation_context <span style="color:#f92672">!=</span> <span style="color:#e6db74">:owner</span> }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Note the use of <code>validation_context</code>. We&rsquo;re still using contexts here to know whether the expiration applies. This allows us to find out <a href="https://api.rubyonrails.org/classes/ActiveModel/Validations.html#method-i-validation_context">what context</a> we&rsquo;re operating in. If it&rsquo;s not an owner, then we require the expiration timestamp.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;is valid without an expiration date when applying the owner context&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  ticket <span style="color:#f92672">=</span> <span style="color:#66d9ef">ValidatedParkingTicket</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">owner_pin</span>: <span style="color:#e6db74">&#34;1234&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(ticket<span style="color:#f92672">.</span>valid?(<span style="color:#e6db74">:owner</span>))<span style="color:#f92672">.</span>to eq <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="stay-in-your-spot">Stay in Your Spot <a href="#stay-in-your-spot">🔗</a></h2>
+<p>Put together, we have the following setup to model our rules.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ValidatedParkingTicket</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">ActiveModel</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Validations</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_accessor</span> <span style="color:#e6db74">:expires_at</span>
+</span></span><span style="display:flex;"><span>  validates <span style="color:#e6db74">:expires_at</span>, <span style="color:#e6db74">presence</span>: <span style="color:#66d9ef">true</span>, <span style="color:#66d9ef">if</span>: <span style="color:#f92672">-&gt;</span> { validation_context <span style="color:#f92672">!=</span> <span style="color:#e6db74">:owner</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_accessor</span> <span style="color:#e6db74">:owner_pin</span>
+</span></span><span style="display:flex;"><span>  validates <span style="color:#e6db74">:owner_pin</span>, <span style="color:#e6db74">presence</span>: <span style="color:#66d9ef">true</span>, <span style="color:#e6db74">on</span>: <span style="color:#e6db74">:owner</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>You might notice we have very divergent behavior. Our validations depend on the context we&rsquo;re operating in. We need to remember to apply the context in the appropriate situations. That involves using some <code>ActiveModel</code> functionality that may be less familiar to some.</p>
+<p>This can lead to situations where our data is unclearly validated. Maybe we forget one time to apply the owner context. This happens when setting up a new ticket for the owner after they lose their original ticket. They&rsquo;ll be coming back soon frustrated when their ticket expired.</p>
+<p>We can alternatively avoid these conditional validations entirely. Instead, we can treat these as separate entities. Most of the time, visitors receive these tickets from businesses. They require an expiration date and don&rsquo;t know anything about a PIN.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VisitorParkingTicket</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">ActiveModel</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Validations</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_accessor</span> <span style="color:#e6db74">:expires_at</span>
+</span></span><span style="display:flex;"><span>  validates <span style="color:#e6db74">:expires_at</span>, <span style="color:#e6db74">presence</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The owner has a special ticket. It has a PIN and no concept of an expiration timestamp.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LotOwnerParkingTicket</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">ActiveModel</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Validations</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">attr_accessor</span> <span style="color:#e6db74">:pin</span>
+</span></span><span style="display:flex;"><span>  validates <span style="color:#e6db74">:pin</span>, <span style="color:#e6db74">presence</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>These validations are unambiguous. A <code>LotOwnerParkingTicket</code> must have a PIN. The naming of the class itself makes it clear what kind of ticket we&rsquo;re dealing with.</p>
+<p>This can also help with behavior that&rsquo;s specific to the types of tickets. Let&rsquo;s say we need to determine if a parking ticket has expired. For a owner ticket, that doesn&rsquo;t apply. It&rsquo;s valid as long as they provide the proper PIN. For the visitor, the ticket expires at a certain time.</p>
+<p>We can apply those concepts without needing to intertwine the different cases. We do that with separate classes here.</p>
+<h2 id="exiting-the-lot">Exiting the Lot <a href="#exiting-the-lot">🔗</a></h2>
+<p>There are options to conditionally applying validations to classes. We can specify the context(s) within which certain validations apply. We can use <code>if</code> (and its counterpart <code>unless</code>) to provide limitations on when the validation takes place.</p>
+<p>When you&rsquo;re reaching for these types of validations, stop for a moment. Consider if there&rsquo;s a different modeling approach that&rsquo;ll apply the validations. This does not mean to never use this functionality. They&rsquo;re valid and have their place. When introducing them, consider it an opportunity to revisit your approach. Think if there&rsquo;s another way to organize your rules.</p>
+<p>And watch out for parked cars.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/posts/two-drawer-end-tables/"><i class="fa fa-chevron-circle-left"></i> Two Drawer End Tables Construction</a>
+        
+        </li>
+        <li>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2023 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://localhost:1313/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="http://localhost:1313/js/scripts.js"></script>
+
+  
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
+
+
+</body>
+
+</html>
+

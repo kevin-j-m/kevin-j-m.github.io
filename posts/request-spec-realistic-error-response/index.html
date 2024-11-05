@@ -175,7 +175,7 @@
         </li>
         
 
-        <li>4 minute read | 651 words</li>
+        <li>4 minute read | 684 words</li>
     </ul>
 </aside>
 
@@ -238,7 +238,7 @@
 </span></span><span style="display:flex;"><span>    env_config <span style="color:#f92672">=</span> <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>env_config
 </span></span><span style="display:flex;"><span>    original_show_exceptions <span style="color:#f92672">=</span> env_config<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;action_dispatch.show_exceptions&#34;</span><span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>    original_show_detailed_exceptions <span style="color:#f92672">=</span> env_config<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;action_dispatch.show_detailed_exceptions&#34;</span><span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>    env_config<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;action_dispatch.show_exceptions&#34;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    env_config<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;action_dispatch.show_exceptions&#34;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">:all</span>
 </span></span><span style="display:flex;"><span>    env_config<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;action_dispatch.show_detailed_exceptions&#34;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">yield</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">ensure</span>
@@ -247,6 +247,7 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
 </span></span></code></pre></div><p>We <a href="https://kevinjmurphy.com/posts/temporary-state-in-tests/">pass a block</a> to this method in our test. We store the initial values of the environment configuration, then set <code>show_exceptions</code> and <code>show_details_exceptions</code> to match production. After our block executes, we return them to their original value.</p>
+<p>Note that prior to Rails 7.1, you&rsquo;ll want to set the value of <code>show_exceptions</code> to <code>true</code>. From 7.1 on, the configuration accepts a <a href="https://guides.rubyonrails.org/configuring.html#config-action-dispatch-show-exceptions">set of symbols</a> and using true or false is deprecated.</p>
 <p>Let&rsquo;s update our test to use this method.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;does not find a large tree&#34;</span> <span style="color:#66d9ef">do</span>
 </span></span><span style="display:flex;"><span>  respond_without_detailed_exceptions <span style="color:#66d9ef">do</span>

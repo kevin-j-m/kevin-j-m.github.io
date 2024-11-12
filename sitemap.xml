@@ -11,22 +11,34 @@
     <loc>https://kevinjmurphy.com/search/</loc>
     <lastmod>2023-12-08T17:37:33-05:00</lastmod>
   </url><url>
+    <loc>https://kevinjmurphy.com/posts/at_rubyconf2024/</loc>
+    <lastmod>2024-11-12T05:40:50-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/conference/</loc>
+    <lastmod>2024-11-12T05:40:50-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/</loc>
+    <lastmod>2024-11-12T05:40:50-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/personal/</loc>
+    <lastmod>2024-11-12T05:40:50-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/posts/</loc>
+    <lastmod>2024-11-12T05:40:50-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
+    <lastmod>2024-11-12T05:40:50-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/rubyconf/</loc>
+    <lastmod>2024-11-12T05:40:50-05:00</lastmod>
+  </url><url>
+    <loc>https://kevinjmurphy.com/tags/</loc>
+    <lastmod>2024-11-12T05:40:50-05:00</lastmod>
+  </url><url>
     <loc>https://kevinjmurphy.com/posts/frequently-played-2024-11/</loc>
     <lastmod>2024-11-06T20:00:50-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/</loc>
-    <lastmod>2024-11-06T20:00:50-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/tags/music/</loc>
-    <lastmod>2024-11-06T20:00:50-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/personal/</loc>
-    <lastmod>2024-11-06T20:00:50-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/posts/</loc>
-    <lastmod>2024-11-06T20:00:50-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/</loc>
     <lastmod>2024-11-06T20:00:50-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/happy-halloween-2024/</loc>
@@ -53,9 +65,6 @@
     <loc>https://kevinjmurphy.com/posts/rspec-stubs-object-in-memory/</loc>
     <lastmod>2024-09-13T15:00:10-04:00</lastmod>
   </url><url>
-    <loc>https://kevinjmurphy.com/tags/ruby/</loc>
-    <lastmod>2024-09-13T15:00:10-04:00</lastmod>
-  </url><url>
     <loc>https://kevinjmurphy.com/tags/testing/</loc>
     <lastmod>2024-09-13T15:00:10-04:00</lastmod>
   </url><url>
@@ -67,9 +76,6 @@
   </url><url>
     <loc>https://kevinjmurphy.com/tags/rails/</loc>
     <lastmod>2024-07-11T18:04:22-05:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/conference/</loc>
-    <lastmod>2024-05-13T19:00:24-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/4-things-railsconf-2024/</loc>
     <lastmod>2024-05-13T19:00:24-04:00</lastmod>
@@ -111,9 +117,6 @@
     <lastmod>2023-11-15T19:00:00-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/posts/ruby-friends-rubyconf-2023/</loc>
-    <lastmod>2023-11-15T19:00:00-04:00</lastmod>
-  </url><url>
-    <loc>https://kevinjmurphy.com/tags/rubyconf/</loc>
     <lastmod>2023-11-15T19:00:00-04:00</lastmod>
   </url><url>
     <loc>https://kevinjmurphy.com/tags/rubyfriends/</loc>

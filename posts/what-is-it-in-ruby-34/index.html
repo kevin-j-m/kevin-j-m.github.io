@@ -2,40 +2,40 @@
 
 <html lang="en">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <title>What Is It (in Ruby 3.4)? - Kevin Murphy</title>
   <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="Kevin Murphy: Software Developer" />
+<meta name="description" content="An explanation of the it block parameter introduced in Ruby 3.4" />
 <meta name="author" content="Kevin Murphy" />
 
-<link rel="canonical" href="http://localhost:1313/posts/what-is-it-in-ruby-34/">
-<meta property="og:url" content="http://localhost:1313/posts/what-is-it-in-ruby-34/">
+<link rel="canonical" href="https://kevinjmurphy.com/posts/what-is-it-in-ruby-34/">
+<meta property="og:url" content="https://kevinjmurphy.com/posts/what-is-it-in-ruby-34/">
   <meta property="og:site_name" content="Kevin Murphy">
   <meta property="og:title" content="What Is It (in Ruby 3.4)?">
-  <meta property="og:description" content="It’s it!">
+  <meta property="og:description" content="An explanation of the it block parameter introduced in Ruby 3.4">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-01-04T06:40:50-05:00">
-    <meta property="article:modified_time" content="2025-01-04T06:40:50-05:00">
+    <meta property="article:published_time" content="2025-01-10T15:40:50-05:00">
+    <meta property="article:modified_time" content="2025-01-10T15:40:50-05:00">
     <meta property="article:tag" content="Ruby">
 
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="What Is It (in Ruby 3.4)?">
-  <meta name="twitter:description" content="It’s it!">
+  <meta name="twitter:description" content="An explanation of the it block parameter introduced in Ruby 3.4">
 
 <meta name="generator" content="Hugo 0.128.2">
     
 
-  <link rel="stylesheet" href="http://localhost:1313/css/normalize.min.css" />
-  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/css/normalize.min.css" />
+  <link rel="stylesheet" href="https://kevinjmurphy.com/fontawesome/css/all.min.css" />
   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
   
   
-  <link rel="stylesheet" type="text/css" href="http://localhost:1313/css/styles.css" /><link rel='stylesheet' href='http://localhost:1313/css/link-style.css'><link rel='stylesheet' href='http://localhost:1313/css/code-scroll.css'><link rel='stylesheet' href='http://localhost:1313/css/coverage-emoji.css'><link rel='stylesheet' href='http://localhost:1313/css/header-name.css'><link rel='stylesheet' href='http://localhost:1313/css/search.css'>
+  <link rel="stylesheet" type="text/css" href="https://kevinjmurphy.com/css/styles.css" /><link rel='stylesheet' href='https://kevinjmurphy.com/css/link-style.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/code-scroll.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/coverage-emoji.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/header-name.css'><link rel='stylesheet' href='https://kevinjmurphy.com/css/search.css'>
   
     
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
@@ -62,7 +62,7 @@
   <div id="container">
     <header>
       <div class="header-name">
-        <a href="http://localhost:1313/">Kevin Murphy</a>
+        <a href="https://kevinjmurphy.com/">Kevin Murphy</a>
       </div>
 
       <ul id="social-media">
@@ -106,25 +106,25 @@
     <ul>
         
         <li>
-            <a class="" href="http://localhost:1313/">
+            <a class="" href="https://kevinjmurphy.com/">
                 <i class="fa-li fa  fa-lg"></i><span>Home</span>
             </a>
         </li>
         
         <li>
-            <a class="" href="http://localhost:1313/about/">
+            <a class="" href="https://kevinjmurphy.com/about/">
                 <i class="fa-li fa  fa-lg"></i><span>About</span>
             </a>
         </li>
         
         <li>
-            <a class="" href="http://localhost:1313/speaking/">
+            <a class="" href="https://kevinjmurphy.com/speaking/">
                 <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
             </a>
         </li>
         
         <li>
-            <a class="" href="http://localhost:1313/search/">
+            <a class="" href="https://kevinjmurphy.com/search/">
                 <i class="fa-li fa  fa-lg"></i><span>Search</span>
             </a>
         </li>
@@ -151,7 +151,7 @@
       <aside>
     <ul>
         <li>
-            <time class="post-date" data-pagefind-sort="date:2025-01-04" datetime="2025-01-04T06:40:50-05:00">Jan 4, 2025</time>
+            <time class="post-date" data-pagefind-sort="date:2025-01-10" datetime="2025-01-10T15:40:50-05:00">Jan 10, 2025</time>
         </li>
         
         
@@ -161,13 +161,13 @@
             <em>
                 
                     
-                    <a href="http://localhost:1313/tags/ruby">#ruby</a>
+                    <a href="https://kevinjmurphy.com/tags/ruby">#ruby</a>
                 
             </em>
         </li>
         
 
-        <li>3 minute read | 596 words</li>
+        <li>3 minute read | 620 words</li>
     </ul>
 </aside>
 
@@ -197,7 +197,7 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;What is it? It&#39;s it&#34;</span>,
 </span></span><span style="display:flex;"><span><span style="color:#f92672">]</span>
 </span></span></code></pre></div><p>The block we pass to <code>map</code> does not define a name for the parameter to represent the variable we&rsquo;re manipulating in each iteration. Instead, Ruby knows <code>it</code> refers to that variable.</p>
-<p>Starting in Ruby 3.3, we had access to numbered parameters in a block with an underscore. We can write that same example using numbered parameters.</p>
+<p>Starting in Ruby 2.7, we had access to numbered parameters in a block with an underscore. We can write that same example using numbered parameters.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">[</span><span style="color:#e6db74">&#34;What is it?&#34;</span><span style="color:#f92672">].</span>map { _1 <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; It&#39;s it&#34;</span> } <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span>
@@ -207,7 +207,7 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;What is it? It&#39;s it&#34;</span>,
 </span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;What is it? It&#39;s it&#34;</span>,
 </span></span><span style="display:flex;"><span><span style="color:#f92672">]</span>
-</span></span></code></pre></div><p>Before Ruby 3.3, we would define the name of a variable in a block, which we can still do with more recent versions of Ruby.</p>
+</span></span></code></pre></div><p>Before Ruby 2.7, we would define the name of a variable in a block, which we can still do with more recent versions of Ruby.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#f92672">[</span><span style="color:#e6db74">&#34;What is it?&#34;</span><span style="color:#f92672">].</span>map { <span style="color:#f92672">|</span>i<span style="color:#f92672">|</span> i <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; It&#39;s it&#34;</span> } <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span>
@@ -280,6 +280,11 @@
 </span></span><span style="display:flex;"><span><span style="color:#f92672">]</span>
 </span></span></code></pre></div><h2 id="youve-got-to-share-it-so-you-dare-it">You&rsquo;ve got to share it, so you dare it <a href="#youve-got-to-share-it-so-you-dare-it">🔗</a></h2>
 <p>If you want to learn more about this new feature, check out the <a href="https://bugs.ruby-lang.org/issues/18980">proposal</a> and the <a href="https://docs.ruby-lang.org/en/3.4/Proc.html#class-Proc-label-it">documentation</a>.</p>
+<blockquote>
+<p>You can touch it, smell it, taste it, so sweet<br>
+But it makes no difference &lsquo;cause it knocks you off your feet</p>
+</blockquote>
+<p>That&rsquo;s it.</p>
 
 
 </article>
@@ -289,7 +294,7 @@
     <ul>
         <li>
         
-            <a href="http://localhost:1313/posts/2024-review/"><i class="fa fa-chevron-circle-left"></i> 2024 Year-End Review</a>
+            <a href="https://kevinjmurphy.com/posts/frequently-played-2025-01/"><i class="fa fa-chevron-circle-left"></i> Frequently Played Jan 2025</a>
         
         </li>
         <li>
@@ -312,10 +317,10 @@
 
         <h6>Copyright © 2023 - Kevin Murphy |
             Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
-            <a href="http://localhost:1313/index.xml">RSS </a></h6>
+            <a href="https://kevinjmurphy.com/index.xml">RSS </a></h6>
     </footer>
 </div>
-<script src="http://localhost:1313/js/scripts.js"></script>
+<script src="https://kevinjmurphy.com/js/scripts.js"></script>
 
   
   

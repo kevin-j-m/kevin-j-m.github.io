@@ -1,0 +1,440 @@
+<!doctype html>
+
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>Preserving Flash Messages in Rails - Kevin Murphy</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="This post explains part of the conditions by which Rails determines to preserve flash messages." />
+<meta name="author" content="Kevin Murphy" />
+
+<link rel="canonical" href="http://localhost:1313/posts/preserving-flash-messages-in-rails/">
+<meta property="og:url" content="http://localhost:1313/posts/preserving-flash-messages-in-rails/">
+  <meta property="og:site_name" content="Kevin Murphy">
+  <meta property="og:title" content="Preserving Flash Messages in Rails">
+  <meta property="og:description" content="This post explains part of the conditions by which Rails determines to preserve flash messages.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-03-06T18:00:22-04:00">
+    <meta property="article:modified_time" content="2025-03-06T18:00:22-04:00">
+    <meta property="article:tag" content="Ruby">
+    <meta property="article:tag" content="Rails">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Preserving Flash Messages in Rails">
+  <meta name="twitter:description" content="This post explains part of the conditions by which Rails determines to preserve flash messages.">
+
+<meta name="generator" content="Hugo 0.128.2">
+    
+
+  <link rel="stylesheet" href="http://localhost:1313/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="http://localhost:1313/css/styles.css" /><link rel='stylesheet' href='http://localhost:1313/css/link-style.css'><link rel='stylesheet' href='http://localhost:1313/css/code-scroll.css'><link rel='stylesheet' href='http://localhost:1313/css/coverage-emoji.css'><link rel='stylesheet' href='http://localhost:1313/css/header-name.css'><link rel='stylesheet' href='http://localhost:1313/css/search.css'>
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
+
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="header-name">
+        <a href="http://localhost:1313/">Kevin Murphy</a>
+      </div>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/kevin-j-m" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/kevinmurphydev" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://ruby.social/@kevin_j_m" title="Mastodon">
+               <i class="fab fa-mastodon fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://dev.to/kevin_j_m" title="devto">
+               <i class="fab fa-dev fa-lg"></i>
+               </a>
+             </li>
+        <li>
+          <a rel="me" href="https://ruby.social/@kevin_j_m">
+          </a>
+        </li>
+      </ul>
+      
+      <p><em>Software Developer</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="http://localhost:1313/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/about/">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/speaking/">
+                <i class="fa-li fa  fa-lg"></i><span>Speaking</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="http://localhost:1313/search/">
+                <i class="fa-li fa  fa-lg"></i><span>Search</span>
+            </a>
+        </li>
+        
+        <li>
+          <a href="https://newsletter.kevinjmurphy.com">
+                <i class="fa-li fa fa-lg"></i><span>Newsletter</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Preserving Flash Messages in Rails</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" data-pagefind-sort="date:2025-03-06" datetime="2025-03-06T18:00:22-04:00">Mar 6, 2025</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="http://localhost:1313/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="http://localhost:1313/tags/rails">#rails</a>
+                
+            </em>
+        </li>
+        
+
+        <li>9 minute read | 1784 words</li>
+    </ul>
+</aside>
+
+    
+
+    
+      
+
+    
+
+    <h2 id="flash-sale">Flash Sale! <a href="#flash-sale">🔗</a></h2>
+<p>We&rsquo;re offering our best deals on select products for a limited time. We&rsquo;re going to link to this flash sale from many different pages on our site. The call-to-action (CTA) we display at the top of the flash sale page will change based on which page you access the flash sale from.</p>
+<p>We&rsquo;re going to store that text in a flash message. For example, let&rsquo;s say you&rsquo;re looking for the contact information for everyone at the shop. If you click a link on that page to visit the flash sale, we reference that you were just on the contact page.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ContactsController</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ApplicationController</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">FlashSale</span><span style="color:#f92672">.</span>on?
+</span></span><span style="display:flex;"><span>      flash<span style="color:#f92672">[</span><span style="color:#e6db74">:sale</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Thanks to you for looking to contact us&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Keep in mind this sale may be over in&hellip;a flash. In between loading the contacts page and clicking the link to view the flash sale, it may be over. If that&rsquo;s the case, we still want to show the CTA. However, we&rsquo;ll send you to the general products page, rather than the flash sale page.</p>
+<p>We sample some of our requests to log information about them. If we&rsquo;re sampling this request, and they&rsquo;re getting redirected because the flash sale is over, we want to log what CTA brought them there. That way we can figure out what page they were on.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FlashSalesController</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ApplicationController</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">FlashSale</span><span style="color:#f92672">.</span>off?
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">AttemptLogger</span><span style="color:#f92672">.</span>log?
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>logger<span style="color:#f92672">.</span>info <span style="color:#e6db74">&#34;CTA &#39;</span><span style="color:#e6db74">#{</span>flash<span style="color:#f92672">[</span><span style="color:#e6db74">:sale</span><span style="color:#f92672">]</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39; used to access flash sale after it&#39;s over&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      redirect_to products_path <span style="color:#f92672">and</span> <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @products <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>      donner_red_hss_starter_kit,
+</span></span><span style="display:flex;"><span>      martin_junior_acoustic,
+</span></span><span style="display:flex;"><span>      squier_affinity_strat_junior_hss,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>The view for the products page displays the flash message. We still have the experience of referencing the page they came from. Even if it isn&rsquo;t our best deals.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>&lt;h1&gt;All Products&lt;/h1&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;% <span style="color:#66d9ef">if</span> flash<span style="color:#f92672">[</span>:sale<span style="color:#f92672">]</span>.present? %&gt;
+</span></span><span style="display:flex;"><span>  &lt;p&gt; &lt;%<span style="color:#f92672">=</span> flash<span style="color:#f92672">[</span>:sale<span style="color:#f92672">]</span> %&gt; &lt;/p&gt;
+</span></span><span style="display:flex;"><span>&lt;% end %&gt;
+</span></span></code></pre></div><h2 id="gone-in-a-flash">Gone In A Flash <a href="#gone-in-a-flash">🔗</a></h2>
+<p>Let&rsquo;s confirm this behavior by writing some <a href="https://guides.rubyonrails.org/testing.html#system-testing">system tests</a>. We&rsquo;ll start by verifying the redirect when the flash sale ends before they can view the deals.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;redirects to the products page with the flash message when the flash sale has ended&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  allow(<span style="color:#66d9ef">FlashSale</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:on?</span>)<span style="color:#f92672">.</span>and_return(<span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>  visit contacts_path
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  allow(<span style="color:#66d9ef">FlashSale</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:off?</span>)<span style="color:#f92672">.</span>and_return(<span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>  click_link <span style="color:#e6db74">&#34;View Deals&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(page)<span style="color:#f92672">.</span>to have_selector <span style="color:#e6db74">&#34;h1&#34;</span>, <span style="color:#e6db74">text</span>: <span style="color:#e6db74">&#34;All Products&#34;</span>
+</span></span><span style="display:flex;"><span>  expect(page)<span style="color:#f92672">.</span>to have_content <span style="color:#e6db74">&#34;Thanks to you for looking to contact us&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Our test passes!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>⇒ rspec spec/system/flash_sales_spec.rb:8
+</span></span><span style="display:flex;"><span>Run options: include <span style="color:#f92672">{</span>:locations<span style="color:#f92672">=</span>&gt;<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;./spec/system/flash_sales_spec.rb&#34;</span><span style="color:#f92672">=</span>&gt;<span style="color:#f92672">[</span>8<span style="color:#f92672">]}}</span>
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Finished in 0.12213 seconds <span style="color:#f92672">(</span>files took 1.89 seconds to load<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> example, <span style="color:#ae81ff">0</span> failures
+</span></span></code></pre></div><p>Next we&rsquo;ll iterate on this by verifying the same user behavior when we log the CTA.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>it <span style="color:#e6db74">&#34;logs the flash message when the flash sale has ended and the log sampler wants the message&#34;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  allow(<span style="color:#66d9ef">FlashSale</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:on?</span>)<span style="color:#f92672">.</span>and_return(<span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>  visit contacts_path
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  allow(<span style="color:#66d9ef">FlashSale</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:off?</span>)<span style="color:#f92672">.</span>and_return(<span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>  allow(<span style="color:#66d9ef">AttemptLogger</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:log?</span>)<span style="color:#f92672">.</span>and_return(<span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>  click_link <span style="color:#e6db74">&#34;View Deals&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  expect(page)<span style="color:#f92672">.</span>to have_selector <span style="color:#e6db74">&#34;h1&#34;</span>, <span style="color:#e6db74">text</span>: <span style="color:#e6db74">&#34;All Products&#34;</span>
+</span></span><span style="display:flex;"><span>  expect(page)<span style="color:#f92672">.</span>to have_content <span style="color:#e6db74">&#34;Thanks to you for looking to contact us&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Unfortunately, we have a different result here.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>⇒ rspec spec/system/flash_sales_spec.rb:17
+</span></span><span style="display:flex;"><span>Run options: include <span style="color:#f92672">{</span>:locations<span style="color:#f92672">=</span>&gt;<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;./spec/system/flash_sales_spec.rb&#34;</span><span style="color:#f92672">=</span>&gt;<span style="color:#f92672">[</span>17<span style="color:#f92672">]}}</span>
+</span></span><span style="display:flex;"><span>F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Failures:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  1<span style="color:#f92672">)</span> Flash Sale logs the flash message when the flash sale has ended and the log sampler wants the message
+</span></span><span style="display:flex;"><span>     Failure/Error: expect<span style="color:#f92672">(</span>page<span style="color:#f92672">)</span>.to have_content <span style="color:#e6db74">&#34;As thanks to you for looking to contact us&#34;</span>
+</span></span><span style="display:flex;"><span>       expected to find text <span style="color:#e6db74">&#34;As thanks to you for looking to contact us&#34;</span> in <span style="color:#e6db74">&#34;All Products&#34;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#75715e"># ./spec/system/flash_sales_spec.rb:26:in `block (2 levels) in &lt;top (required)&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Finished in 0.21189 seconds <span style="color:#f92672">(</span>files took 1.98 seconds to load<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> example, <span style="color:#ae81ff">1</span> failure
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Failed examples:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rspec ./spec/system/flash_sales_spec.rb:17 <span style="color:#75715e"># Flash Sale logs the flash message when the flash sale has ended and the log sampler wants the message</span>
+</span></span></code></pre></div><p>Our flash message is nowhere to be found. For an almost identical test. After <a href="http://localhost:1313/posts/searching-for-a-reason/">searching</a> through the documentation, we find <a href="https://api.rubyonrails.org/classes/ActionDispatch/Flash.html">this</a>:</p>
+<blockquote>
+<p>Anything you place in the flash will be exposed to the very next action and then cleared out.</p>
+</blockquote>
+<p>That leaves us even <em>more</em> confused. Our first test passed, even though we went from the flash sale endpoint to the products endpoint. Is that two actions? And if not, why did it clear it before exposing it to the user when we log the message?</p>
+<h2 id="viewing-source-in-a-flash">Viewing Source In A Flash <a href="#viewing-source-in-a-flash">🔗</a></h2>
+<p>That documentation tells us where to find the implementation for the flash: <code>actionpack/lib/action_dispatch/middleware/flash.rb</code>. We can use <a href="https://bundler.io/man/bundle-open.1.html">bundle open</a> to explore the source code.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ bundle open actionpack
+</span></span></code></pre></div><p>We navigate to the flash file and look around. In there we see a <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/middleware/flash.rb#L71">method</a> called <code>commit_flash</code>. Based only on the name, we guess that might have something to do with keeping the values of the flash. In one of our tests, we aren&rsquo;t keeping the values. Did we find a bug in Rails?</p>
+<p>We drop a breakpoint in the method, changing Rails&rsquo; source code (temporarily) for our application. Then we can run our tests again to investigate.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">commit_flash</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>  binding<span style="color:#f92672">.</span>irb <span style="color:#75715e"># Added by us!</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">unless</span> session<span style="color:#f92672">.</span>enabled?
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span> flash_hash <span style="color:#f92672">&amp;&amp;</span> (flash_hash<span style="color:#f92672">.</span>present? <span style="color:#f92672">||</span> session<span style="color:#f92672">.</span>key?(<span style="color:#e6db74">&#34;flash&#34;</span>))
+</span></span><span style="display:flex;"><span>     session<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;flash&#34;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> flash_hash<span style="color:#f92672">.</span>to_session_value
+</span></span><span style="display:flex;"><span>     self<span style="color:#f92672">.</span>flash <span style="color:#f92672">=</span> flash_hash<span style="color:#f92672">.</span>dup
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span> session<span style="color:#f92672">.</span>loaded? <span style="color:#f92672">&amp;&amp;</span> session<span style="color:#f92672">.</span>key?(<span style="color:#e6db74">&#34;flash&#34;</span>) <span style="color:#f92672">&amp;&amp;</span> session<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;flash&#34;</span><span style="color:#f92672">].</span>nil?
+</span></span><span style="display:flex;"><span>     session<span style="color:#f92672">.</span>delete(<span style="color:#e6db74">&#34;flash&#34;</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="a-flash-in-the-pan">A Flash In The Pan <a href="#a-flash-in-the-pan">🔗</a></h2>
+<p>We oberve the following behavior when running our tests:</p>
+<ol>
+<li>When we don&rsquo;t log the message in the <code>FlashSalesController#index</code> method, the value of <code>flash_hash</code> in <code>commit_flash</code> is <code>nil</code> at the end of processing the flash sale index action.</li>
+<li>When we <em>do</em> log the message, <code>flash_hash</code> has a value.</li>
+</ol>
+<p>That still seems backwards from the behavior we&rsquo;re seeing. When we try to show the flash message on the products page, it&rsquo;s not there when we log the message. But that&rsquo;s the scenario where <code>flash_hash</code> has a value. Now we need to take a detour to understand where this <code>flash_hash</code> comes from. We find it&rsquo;s a <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/middleware/flash.rb#L67">method</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">flash_hash</span>
+</span></span><span style="display:flex;"><span>  get_header <span style="color:#66d9ef">Flash</span><span style="color:#f92672">::</span><span style="color:#66d9ef">KEY</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>That leads us to wonder what can <em>set</em> that header. And we see <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/middleware/flash.rb#L63">just above</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">flash</span><span style="color:#f92672">=</span>(flash)
+</span></span><span style="display:flex;"><span>  set_header <span style="color:#66d9ef">Flash</span><span style="color:#f92672">::</span><span style="color:#66d9ef">KEY</span>, flash
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>As our eyes continue to look up, we find a <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/middleware/flash.rb#L57">method</a> that calls <code>flash=</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">flash</span>
+</span></span><span style="display:flex;"><span>  flash <span style="color:#f92672">=</span> flash_hash
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> flash <span style="color:#66d9ef">if</span> flash
+</span></span><span style="display:flex;"><span>  self<span style="color:#f92672">.</span>flash <span style="color:#f92672">=</span> <span style="color:#66d9ef">Flash</span><span style="color:#f92672">::</span><span style="color:#66d9ef">FlashHash</span><span style="color:#f92672">.</span>from_session_value(session<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;flash&#34;</span><span style="color:#f92672">]</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>This feels a bit circular in the beginning. We look to see if <code>flash_hash</code> is set and return that if so. But we&rsquo;re looking here to see how <code>flash_hash</code> could get a value. It is the <em>last</em> line that&rsquo;s setting the header that <code>flash_hash</code> uses. So, that&rsquo;s called when <code>flash_hash</code> doesn&rsquo;t have a value. The flash object is grabbed from the session and converted to a <code>FlashHash</code>.</p>
+<p>That will store that <code>FlashHash</code> instance in the header. We can then access that by calling the <code>flash_hash</code> method.</p>
+<p>We also see a <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/middleware/flash.rb#L54C9-L54C86">comment</a> above the <code>flash</code> method.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#75715e"># Access the contents of the flash. Returns a ActionDispatch::Flash::FlashHash.</span>
+</span></span></code></pre></div><p><em>This</em> is what we&rsquo;re calling when we call <code>flash[:sale]</code> in our logging message. <code>FlashHash</code> defines the <code>[]</code> <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/middleware/flash.rb#L169">method</a>.</p>
+<h2 id="flash-back">Flash Back <a href="#flash-back">🔗</a></h2>
+<p>Let&rsquo;s revisit each conditional in <code>commit_flash</code> and explore how they relate to our test scenarios.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> flash_hash <span style="color:#f92672">&amp;&amp;</span> (flash_hash<span style="color:#f92672">.</span>present? <span style="color:#f92672">||</span> session<span style="color:#f92672">.</span>key?(<span style="color:#e6db74">&#34;flash&#34;</span>))
+</span></span><span style="display:flex;"><span>  session<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;flash&#34;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> flash_hash<span style="color:#f92672">.</span>to_session_value
+</span></span><span style="display:flex;"><span>  self<span style="color:#f92672">.</span>flash <span style="color:#f92672">=</span> flash_hash<span style="color:#f92672">.</span>dup
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>When this is called after the <code>FlashSalesController#index</code> action and we <em>don&rsquo;t</em> log a message, <code>flash_hash</code> is <code>nil</code>. That&rsquo;s because we never call <code>flash</code>, which will set the header that <code>flash_hash</code> reads from. We never enter the conditional block in that scenario.</p>
+<p>However, when we do log the message, the header is there, and <code>flash_hash</code> is present. That causes the contents of <code>flash_hash</code> to be converted to a session value and stored back in the session.</p>
+<p>Converting a <code>FlashHash</code> instance to its <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/middleware/flash.rb#L143">session value</a> does the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">to_session_value</span>
+</span></span><span style="display:flex;"><span>  flashes_to_keep <span style="color:#f92672">=</span> @flashes<span style="color:#f92672">.</span>except(<span style="color:#f92672">*</span>@discard)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">if</span> flashes_to_keep<span style="color:#f92672">.</span>empty?
+</span></span><span style="display:flex;"><span>  { <span style="color:#e6db74">&#34;discard&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[]</span>, <span style="color:#e6db74">&#34;flashes&#34;</span> <span style="color:#f92672">=&gt;</span> flashes_to_keep }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>When we make a flash <em>from</em> the session, we send <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/middleware/flash.rb#L135">all the keys</a> as <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/middleware/flash.rb#L150">discard values</a>. As a result, when we&rsquo;re converting back <em>to</em> the session, <code>flashes_to_keep</code> is empty. This returns <code>nil</code>. And that&rsquo;s what we set <code>session[&quot;flash&quot;]</code> to.</p>
+<p>The second conditional in <code>commit_flash</code> is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> session<span style="color:#f92672">.</span>loaded? <span style="color:#f92672">&amp;&amp;</span> session<span style="color:#f92672">.</span>key?(<span style="color:#e6db74">&#34;flash&#34;</span>) <span style="color:#f92672">&amp;&amp;</span> session<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;flash&#34;</span><span style="color:#f92672">].</span>nil?
+</span></span><span style="display:flex;"><span>  session<span style="color:#f92672">.</span>delete(<span style="color:#e6db74">&#34;flash&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>When we log the message, we load the session by calling <code>flash[:sale]</code>. That&rsquo;s because we&rsquo;re reading from the session to pass a value to <code>FlashHash.from_session_value</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">flash</span>
+</span></span><span style="display:flex;"><span>  flash <span style="color:#f92672">=</span> flash_hash
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> flash <span style="color:#66d9ef">if</span> flash
+</span></span><span style="display:flex;"><span>  self<span style="color:#f92672">.</span>flash <span style="color:#f92672">=</span> <span style="color:#66d9ef">Flash</span><span style="color:#f92672">::</span><span style="color:#66d9ef">FlashHash</span><span style="color:#f92672">.</span>from_session_value(session<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;flash&#34;</span><span style="color:#f92672">]</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>Accessing the session <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/request/session.rb#L115">loads the session for reading</a>, which through the <code>load!</code> <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/request/session.rb#L256">method</a> sets the <code>@loaded</code> <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/request/session.rb#L280">instance variable</a> that is used to <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/request/session.rb#L236">determine if a session is loaded</a>.</p>
+<p>Because the session is loaded, it has a flash key, <strong>and</strong> the value is <code>nil</code> (because converting it to a session value discarded all the keys), then we delete flash from the session entirely.</p>
+<p>If we never invoke <code>flash</code> before redirecting, we never load it from the session, never convert it back to a session value, and never delete it from the session. It remains available when processing the <code>ProductsController#index</code> action.</p>
+<p>When we do call <code>flash</code> to write the log message, we <em>do</em> delete it from the session, so <code>ProductsController#index</code> doesn&rsquo;t have it.</p>
+<h2 id="flash-forward">Flash Forward <a href="#flash-forward">🔗</a></h2>
+<p>This is great that we understand <em>why</em> this is happening. But none of this actually fixes our problem. We want our tests to pass. We <em>don&rsquo;t</em> want the flash removed from the session. We want the <code>:sale</code> key to still exist.</p>
+<p>Recall the conditions by which the flash is deleted from the session:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> session<span style="color:#f92672">.</span>loaded? <span style="color:#f92672">&amp;&amp;</span> session<span style="color:#f92672">.</span>key?(<span style="color:#e6db74">&#34;flash&#34;</span>) <span style="color:#f92672">&amp;&amp;</span> session<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;flash&#34;</span><span style="color:#f92672">].</span>nil?
+</span></span><span style="display:flex;"><span>  session<span style="color:#f92672">.</span>delete(<span style="color:#e6db74">&#34;flash&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>When we log the message, we need to load the session to access the flash, so we can&rsquo;t get around that. However, if the value of <code>session[&quot;flash&quot;]</code> wasn&rsquo;t <code>nil</code>, that&rsquo;d be enough to preserve it.</p>
+<p>The reason <code>session[&quot;flash&quot;]</code> is <code>nil</code> is because we didn&rsquo;t have any flashes to keep when converting the object to a session value.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">to_session_value</span>
+</span></span><span style="display:flex;"><span>  flashes_to_keep <span style="color:#f92672">=</span> @flashes<span style="color:#f92672">.</span>except(<span style="color:#f92672">*</span>@discard)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">if</span> flashes_to_keep<span style="color:#f92672">.</span>empty?
+</span></span><span style="display:flex;"><span>  { <span style="color:#e6db74">&#34;discard&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#f92672">[]</span>, <span style="color:#e6db74">&#34;flashes&#34;</span> <span style="color:#f92672">=&gt;</span> flashes_to_keep }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>We do have an option to explicitly keep the entire flash (or a particular key). It&rsquo;s the aptly-named <a href="https://github.com/rails/rails/blob/v8.0.1/actionpack/lib/action_dispatch/middleware/flash.rb#L250">keep</a> method. That removes keys from the <code>@discard</code> set, so they&rsquo;ll be retained.</p>
+<p>Let&rsquo;s update our flash sale controller to use this.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FlashSalesController</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ApplicationController</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">FlashSale</span><span style="color:#f92672">.</span>off?
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">AttemptLogger</span><span style="color:#f92672">.</span>log?
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>logger<span style="color:#f92672">.</span>info <span style="color:#e6db74">&#34;CTA &#39;</span><span style="color:#e6db74">#{</span>flash<span style="color:#f92672">[</span><span style="color:#e6db74">:sale</span><span style="color:#f92672">]</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39; used to access flash sale after it&#39;s over&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>        flash<span style="color:#f92672">.</span>keep(<span style="color:#e6db74">:sale</span>)
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       redirect_to products_path <span style="color:#f92672">and</span> <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     @products <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>       donner_red_hss_starter_kit,
+</span></span><span style="display:flex;"><span>       martin_junior_acoustic,
+</span></span><span style="display:flex;"><span>       squier_affinity_strat_junior_hss,
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>With that one call to <code>keep</code>, both of our tests pass. Whether we log the flash CTA or not, it&rsquo;s available for the <code>ProductsController#index</code> action to display.</p>
+<h2 id="an-illuminating-flash">An Illuminating Flash <a href="#an-illuminating-flash">🔗</a></h2>
+<p>Our goal was to preserve a flash message. Instead, it seems we learned more about the conditions by which we destroy the flash message. That allowed us to back up and explore options to fail that conditional.</p>
+<p>The Rails source code <em>is</em> vast and dense, but it&rsquo;s also readily available. We discovered the reason behind the behavior we saw <strong>and</strong> a solution by being willing to explore it. Consider <code>bundle open</code>ing the next dependency you&rsquo;re confused or interested by. See what you can learn. It may take a while, or you may have your answer in a flash.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/posts/frequently-played-2025-02/"><i class="fa fa-chevron-circle-left"></i> Frequently Played Feb 2025</a>
+        
+        </li>
+        <li>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+      <script async data-uid="7a2e7a1bb1" src="https://kevinjmurphy.ck.page/7a2e7a1bb1/index.js"></script>
+
+        <h6>Copyright © 2023 - Kevin Murphy |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="http://localhost:1313/index.xml">RSS </a></h6>
+    </footer>
+</div>
+<script src="http://localhost:1313/js/scripts.js"></script>
+
+  
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD6VLNE04"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RVD6VLNE04');
+        }
+      </script>
+    
+  
+
+
+
+</body>
+
+</html>
+
